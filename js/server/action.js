@@ -89,7 +89,7 @@ exports.Action = function Action(player, map, fileManager) {
         */
         var splitRemainderString = function(aString){
             //note, any split words with spaces must be earlier than their component words!
-            var splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 'fomr', 'for', 'at', 'on', 'off', 'off of', 'in', 'out', 'is', 'are', 'my', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over']; //the words we'll try to split on.
+            var splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 'fomr', 'for', 'at', 'off and on', 'on and off', 'on', 'off', 'off of', 'as', 'in', 'out', 'is', 'are', 'my', 'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over',]; //the words we'll try to split on.
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
@@ -190,7 +190,7 @@ exports.Action = function Action(player, map, fileManager) {
             _object1 = " "+_objects[1]; 
 
             //remove some junk words
-            var stopWords = ["the", "some", "a", "an"];
+            var stopWords = ["the", "some", "a", "an", "again"];
             for (var i=0; i<stopWords.length; i++) {
                 if (_object0) {
                 _object0 = _object0.replace(" "+stopWords[i]+" ", " ");
@@ -1176,9 +1176,14 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'who':
                     case 'what':
+                    case 'whats':
                     case 'when':
                     case 'why':
+                    case 'whys':
                     case 'how':
+                        if (_verb.substr(_verb.length - 1) == "s") {
+                            _verb = _verb.substr(0, _verb.length - 1);
+                        };
                         if (!_inConversationWith) {
                             _ticks = 0;
                             description = tools.initCap(_verb)+" indeed...<br><br>Only <i>you</i> have the power to find out all there is to know here.";
@@ -1203,8 +1208,10 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'autograph':
                     case 'tag':
                         if (_object1) {
-                            //handle "sign x in y" - note, sign, tag and autograph will always overwrite with username
-                            _object0 = _object1;
+                            if (_splitWord != "as") {
+                                //handle "sign x in y" - note, sign, tag and autograph will always overwrite with username
+                                _object0 = _object1;
+                            };
                         };
                         description = _player.writeOrDraw('sign', "$player", _object0);
                         break;

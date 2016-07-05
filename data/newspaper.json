@@ -1,0 +1,21 @@
+﻿{
+  "object": "artefact",
+  "name": "guardian newspaper",
+  "description": "copy of today's Guardian newspaper",
+  "detailedDescription": "Middle class pulp propaganda trash.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 1,
+    "attackStrength": 2,
+    "type": "book",
+    "canCollect": true,
+    "defaultResult": "Blah blah government... blah scandal blah crucial blah liberal blah economics etc.",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "guardian",
+    "newspaper",
+    "news",
+    "paper"
+  ]
+}

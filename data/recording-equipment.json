@@ -1,0 +1,21 @@
+﻿{
+  "object": "artefact",
+  "name": "equipment",
+  "description": "recording equipment",
+  "detailedDescription": "It's basically a microphone and miniature mixing desk.",
+  "attributes": {
+    "type": "scenery",
+    "weight": 6,
+    "defaultResult": "You have absolutely no idea how this works. Leave it alone."
+  },
+  "synonyms": [
+    "equipment",
+    "record",
+    "recording",
+    "microphone",
+    "desk",
+    "mix",
+    "mixing",
+    "mixing desk"
+  ]
+}

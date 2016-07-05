@@ -4,16 +4,18 @@
     "displayName": "Poppy meeting room",
     "description": "You're in the Poppy meeting room. The AV equipment in here could use some love.",
     "exits": [
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "poppy",
-            "destination": "southwest-corridor-ground-floor"
-        }
+      {
+        "object": "exit",
+        "longname": "East",
+        "direction": "e",
+        "source": "poppy",
+        "destination": "southwest-corridor-ground-floor"
+      }
     ],
     "inventory": [
-        {"file": "projector"},
-        {"file": "simon-galbraith"}
+      { "file": "chairs" },
+      { "file": "table" },
+      { "file": "projector" },
+      { "file": "simon-galbraith" }
     ]
   }

@@ -1,0 +1,27 @@
+﻿{
+  "object": "artefact",
+  "name": "black book",
+  "description": "unassuming small black book",
+  "detailedDescription": "This looks like a bit of an eye-opener about the challenges of theft in offices.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 2,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "affinityModifier": -1,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "manual",
+    "book",
+    "black",
+    "theft book",
+    "corporate theft book",
+    "theft manual",
+    "corporate theft manual"
+  ],
+  "missions": [
+    {"file": "mission-learntosteal"}
+  ]
+}

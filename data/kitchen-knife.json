@@ -1,0 +1,19 @@
+﻿{
+    "object": "artefact",
+    "name": "kitchen knife",
+    "description": "old kitchen knife",
+    "detailedDescription": "It's rusty and old but still extremely sharp.<br>Is that dried blood on the hilt?",
+    "attributes": {
+        "weight": 2,
+        "attackStrength": 22,
+        "type": "weapon",
+        "subType": "sharp",
+        "canCollect": true,
+        "imageName": "knife.jpg"
+    },
+    "synonyms": [
+        "knife",
+        "old kitchen knife",
+        "old knife"
+    ]
+}

@@ -25,6 +25,10 @@
           "windows",
           "outside"
         ]
-      }
+      },
+      { "file": "chairs" },
+      { "file": "table" },
+      { "file": "recording-equipment" }
+
      ]
 }

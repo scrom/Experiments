@@ -30,7 +30,6 @@ var removeAllDoorsInMap = function(map) {
 exports.setUp = function (callback) {
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
-    console.log("artefact setup:"+a0);
     callback(); 
 };
 
@@ -93,7 +92,6 @@ exports.canCreateCreatureWithMultipleObjects = function (test) {
     var anotherArtefactDescription = 'second artefact of little consequence';
     var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
-    console.log('checking a0: '+a0.getDetailedDescription());
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
                                     //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
@@ -1678,12 +1676,13 @@ exports.friendlyCreatureWillFollowPlayer.meta = { traits: ["Creature Test", "Fol
 
 
 exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:120, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He grabs the slab of sugary goodness with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
@@ -1696,12 +1695,13 @@ exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharg
 exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehind = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:10, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He pulls at the slab of sugary goodness, chews a small piece off to eat and leaves the remainder on the floor for later.";
@@ -1714,12 +1714,13 @@ exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBeh
 exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehind.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:10, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He pulls at the slab of sugary goodness and devours it all noisily in front of you.";
@@ -1732,12 +1733,13 @@ exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll =
 exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'an animal',{weight:10, attackStrength:50, gender:'male', type:'animal', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     var expected = "He sniffs at the slab of sugary goodness, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
     var actual = c0.receive(food, p0);
@@ -1750,12 +1752,13 @@ exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood.meta = { traits: [
 
 
 exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He eats the slab";
@@ -1768,12 +1771,13 @@ exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) 
 exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood.meta = { traits: ["Creature Test", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 2, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var resultString = c0.receive(food, p0);
@@ -1787,12 +1791,13 @@ exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood 
 exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood.meta = { traits: ["Creature Test", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
-    var l = new location.Location("room","a room", false, true, 0);
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
     c0.go(null,l); 
     var expected = "The creature takes a slab of sugary goodness.";
     var actual = c0.receive(food, p0);
@@ -1804,13 +1809,14 @@ exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood = function (test) 
 exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood.meta = { traits: ["Creature Test", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
 
 exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory = function (test) {
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
     var l = new location.Location("room","a room", false, true, 0);
-    c0.go(null,l); 
+    c0.go(null, l);
+    p0.setLocation(l);
     c0.receive(food, p0)
     var expected = true;
     var actual = c0.check(food.getName());
@@ -1863,7 +1869,7 @@ exports.feedingInjuredCreatureIncreaseHealth.meta = { traits: ["Creature Test", 
 exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
 
     var hitcount = 0;
@@ -1887,7 +1893,7 @@ exports.healthyCreatureDoesFullDamageWhenHittingOthers.meta = { traits: ["Creatu
 exports.creatureOccasionallyMissesPlayerWhenHitting = function (test) {
     
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({ username: "player" }, m);
     
     var misscount = 0;
@@ -1919,7 +1925,7 @@ exports.creatureOccasionallyMissesPlayerWhenHitting.meta = { traits: ["Creature 
 exports.bleedingCreatureDoesReducedDamageWhenHittingOthers = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 73, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
 
     var hitcount = 0;
@@ -1943,7 +1949,7 @@ exports.bleedingCreatureDoesReducedDamageWhenHittingOthers.meta = { traits: ["Cr
 exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
 
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
-    var m = mb.buildMap();
+    var m = new map.Map();
     var p0 = new player.Player({ username: "player" }, m);
 
     var hitcount = 0;
@@ -2039,7 +2045,7 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     test.done();
 };
 
-exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
+exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Creature Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
 
 
 exports.CreatureCanSlipAndDieOnWetFloor = function (test) { 
@@ -2093,7 +2099,7 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     test.done();
 };
 
-exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Player Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
+exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Creature Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
 
 
 exports.CreatureWillEnactContagion = function (test) {
@@ -2129,7 +2135,7 @@ exports.CreatureWillEnactContagion = function (test) {
     test.done();
 };
 
-exports.CreatureWillEnactContagion.meta = { traits: ["Player Test", "Contagion Trait", "Tick Trait"], description: "Test that creature will bite if contagious." };
+exports.CreatureWillEnactContagion.meta = { traits: ["Creature Test", "Contagion Trait", "Tick Trait"], description: "Test that creature will bite if contagious." };
 
 exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
 
@@ -2168,6 +2174,72 @@ exports.otherCreatureWillStillEatChocolate = function (test) {
     test.done();
 };
 exports.otherCreatureWillStillEatChocolate.meta = { traits: ["Creature Test", "Receive Trait", "Mission Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
+
+exports.creatureDescriptionIncludesSalesInventory = function (test) {
+    
+    var m0 = new map.Map();
+    //l0 = new location.Location('home', 'home', 'a home location');
+   
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    //var p0 = new player.Player({ username: "player" }, m0, mb);
+    //p0.setStartLocation(l0);
+    //p0.setLocation(l0);    
+    //seller.go(null, m.getLocation('home'));
+   
+    var expected = "A random guy who occasionally has ice cream for sale.<br>He has 15 99 flake ice creams (price: &pound;3.50 each) for sale.<br><br>He wants to <i>talk</i> to you about something.$imageicecreamman.jpg/$image";
+    var actual = seller.getDetailedDescription(0, m0, 0);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureDescriptionIncludesSalesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature reports their sales inventory correctly" };
+
+exports.creatureCanSellItemToPlayer = function (test) {
+    
+    var m0 = new map.Map();
+    var l0 = new location.Location('home', 'home', 'a home location');
+    m0.addLocation(l0);
+    
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    var p0 = new player.Player({ username: "player" }, m0, mb);
+    p0.setStartLocation(l0);
+    p0.setLocation(l0);    
+    seller.go(null, m0.getLocation('home'));
+    
+    var expected = "The ice cream man sells you a 99 flake ice cream.";
+    var actual = seller.sell("ice cream", p0);
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureCanSellItemToPlayer.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature can sell an item to player" };
+
+exports.creatureSellingItemReducesInventory = function (test) {
+    
+    var m0 = new map.Map();
+    var l0 = new location.Location('home', 'home', 'a home location');
+    m0.addLocation(l0);
+    
+    var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    var p0 = new player.Player({ username: "player" }, m0, mb);
+    p0.setStartLocation(l0);
+    p0.setLocation(l0);    
+    seller.go(null, m0.getLocation('home'));
+    
+    var salesInventory = seller.getSalesInventoryObject();
+    var originalInventorySize = salesInventory.getWeight();
+    seller.sell("ice cream", p0);
+    var newInventorySize = salesInventory.getWeight();
+    var expected = 1;
+    var actual = originalInventorySize - newInventorySize;
+    console.log("expected:" + expected);
+    console.log("actual:" + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+exports.creatureSellingItemReducesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature selling an item to player reduces remaining inventory" };
 
 
 /*

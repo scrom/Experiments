@@ -39,7 +39,7 @@ exports.consumingItemWithAntibodiesProvidesImmunity = function (test) {
     var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
     
     var playerAttributes = { "username": "player"};
-    var m0 = mb.buildMap();
+    var m0 = new map.Map();
     var p0 = new player.Player(playerAttributes, m0, mb);
     var inv = p0.getInventoryObject();
     inv.add(a);
@@ -73,7 +73,7 @@ exports.consumingItemWithAntibodiesCuresContagion = function (test) {
     var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
     
     var playerAttributes = { "username": "player", "contagion": [{ "object": "Contagion", "name": "zombie", "displayName": "zombieism", "attributes": { "incubationPeriod": 10, "communicability": 0.5, "symptoms": [{ "action": "bite", "frequency": 0.3, "escalation": 0 }] } }] };
-    var m0 = mb.buildMap();
+    var m0 = new map.Map();
     var p0 = new player.Player(playerAttributes, m0, mb);
     var inv = p0.getInventoryObject();
     inv.add(a);

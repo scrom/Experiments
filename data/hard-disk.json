@@ -1,0 +1,26 @@
+﻿{
+  "object": "artefact",
+  "name": "hard disk",
+  "description": "hard disk",
+  "detailedDescription": "It's a server hard disk. This one looks like it's seen better days.<br>Our IS team are pretty handy with these things though.",
+  "attributes": {
+    "weight": 0.75,
+    "attackStrength": 5,
+    "canCollect": true,
+    "isBreakable": true,
+    "isDamaged": true,
+    "price": 50,
+    "componentOf": [
+      "server"
+    ]
+  },
+  "synonyms": [
+    "disc",
+    "drive",
+    "hard drive",
+    "disk",
+    "hard disc",
+    "disc drive",
+    "disk drive"
+  ]
+}

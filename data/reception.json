@@ -107,44 +107,6 @@
       }
     ],
     "missions": [
-      {
-        "object": "mission",
-        "name": "keyfob",
-        "displayName": "get a keyfob",
-        "description": "(You need to <i>sign in</i> to get a keyfob for the office.)",
-        "attributes": {
-          "parent": "talktovic",
-          "missionObject": "visitors book",
-          "static": true
-        },
-        "conditionAttributes": {
-          "writings": [
-            "$player"
-          ]
-        },
-        "reward": {
-          "delivers": {
-            "object": "artefact",
-            "name": "keyfob",
-            "description": "key fob",
-            "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
-            "attributes": {
-              "weight": 0.1,
-              "type": "key",
-              "affinityModifier": -1,
-              "canCollect": true,
-              "unlocks": "office door"
-            },
-            "synonyms": [
-              "key fob",
-              "fob",
-              "keyring",
-              "key ring"
-            ]
-          },
-          "score": 10,
-          "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
-        }
-      }
+      {"file": "mission-keyfob"}
     ]
   }

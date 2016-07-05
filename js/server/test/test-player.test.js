@@ -39,7 +39,7 @@ exports.setUp = function (callback) {
     bed = new artefact.Artefact('bed', 'somewhere to rest', 'rest rest rest', bedAttributes, null);
     playerName = 'player';
     playerAttributes = {"username":playerName, "consumedObjects":[JSON.parse(food.toString())]};
-    m0 = mb.buildMap();
+    m0 = new map.Map();
     p0 = new player.Player(playerAttributes, m0, mb);
     l0 = new location.Location('home', 'home', 'a home location');
     l0.addExit("s", "home", "new");
@@ -94,6 +94,7 @@ exports.tearDown = function (callback) {
 };  
 
 exports.canCreatePlayer = function (test) {
+    m0 = mb.buildMap();
     var playerAttribs = {"username":playerName};
     var p1 = new player.Player(playerAttribs, m0, mb);
     var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"atrium"}';
@@ -481,6 +482,7 @@ exports.movingWhenExhaustedTellsPlayer.meta = { traits: ["Player Test", "Invento
 
 
 exports.cannotClimbWhenExhausted = function (test) {
+    m0 = mb.buildMap();
     p0.setLocation(m0.getLocation("roof"));
     p0.increaseTimeSinceResting(250);
     //p0.reduceHitPoints(6);
@@ -496,6 +498,7 @@ exports.cannotClimbWhenExhausted.meta = { traits: ["Player Test", "Inventory Tra
 
 
 exports.canStillClimbWhentired = function (test) {
+    m0 = mb.buildMap();
     p0.setLocation(m0.getLocation("roof"));
     p0.increaseTimeSinceResting(125);
     //p0.reduceHitPoints(6);
@@ -510,6 +513,7 @@ exports.canStillClimbWhentired = function (test) {
 exports.canStillClimbWhentired.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Run Trait", "Exhaustion Trait"], description: "Test that moving when exhausted gives correct feedback." };
 
 exports.canNormallyRunThroughARequiredRunExit = function (test) {
+    m0 = mb.buildMap();
     var atrium = m0.getLocation("atrium");
     var runExit = atrium.getExit("north");
     runExit.setRequiredAction("run"); //make it necessary to "run" out only.
@@ -527,6 +531,7 @@ exports.canNormallyRunThroughARequiredRunExit.meta = { traits: ["Player Test", "
 
 
 exports.cannotRunWhentired = function (test) {
+    m0 = mb.buildMap();
     var atrium = m0.getLocation("atrium");
     var runExit = atrium.getExit("north");
     runExit.setRequiredAction("run"); //make it necessary to "run" out only.
@@ -545,6 +550,7 @@ exports.cannotRunWhentired.meta = { traits: ["Player Test", "Inventory Trait", "
 
 
 exports.cannotClimbWhenBleeding = function (test) {
+    m0 = mb.buildMap();
     p0.hurt(51); //past bleeding threshold
     p0.setLocation(m0.getLocation("roof"))
     var expectedResult = "You're too weak to make the climb. You need to get your injuries seen to first.";
@@ -559,6 +565,7 @@ exports.cannotClimbWhenBleeding.meta = { traits: ["Player Test", "Inventory Trai
 
 
 exports.canClimbWhenNeeded = function (test) {
+    m0 = mb.buildMap();
     p0.setLocation(m0.getLocation("roof"));
     var expectedResult = "You climb down...";
     var actualResult = p0.go("climb", "down", m0).substr(0,17);
@@ -797,7 +804,8 @@ exports.eatLiquidAutomaticallyDrinksInstead = function (test) {
 exports.eatLiquidAutomaticallyDrinksInstead.meta = { traits: ["Player Test", "Inventory Trait", "Action Trait", "Food Trait", "Liquid Trait", "Eat Trait", "Drink Trait"], description: "Test that eating a liquid item reverts to 'drink'." };
 
 exports.canInjectAVaccineIntoSelf = function (test) {
-    var supportFromAlice = m0.getNamedMission("supportfromalice");
+    m0 = new map.Map();
+    var supportFromAlice = mb.buildMission({ "file": "mission-supportfromalice" });
     var reward = supportFromAlice.success();
     var syringe = reward.delivers;
     var venomData = {file: "venom" };
@@ -833,7 +841,8 @@ exports.cannotDrinkVenom.meta = { traits: ["Player Test", "Drink Trait", "Action
 
 
 exports.injectingAVaccineProvidesAntibodies = function (test) {
-    var supportFromAlice = m0.getNamedMission("supportfromalice");
+    m0 = new map.Map();
+    var supportFromAlice = mb.buildMission({ "file": "mission-supportfromalice" });
     var reward = supportFromAlice.success();
     var syringe = reward.delivers;
     var venomData = { file: "venom" };
@@ -843,6 +852,7 @@ exports.injectingAVaccineProvidesAntibodies = function (test) {
     p0.get('get', syringe.getName());
     console.log(p0.examine("examine", "syringe", null, m0));
     console.log(p0.get('get', venom.getName()));
+    console.log(p0.inject('venom', 'self'));
     console.log(p0.inject('venom', 'self'));
     console.log(p0.inject('venom', 'self')); //often fails to take on first attempt.
     var expectedResult = true;
@@ -1088,7 +1098,7 @@ exports.canGiveHighAffinityObjectToFriendlyCreature.meta = { traits: ["Player Te
 exports.cannotGiveHighAffinityObjectToUnfriendlyCreature = function (test) {
     l0.addObject(a1);
     p0.get(a1.getName());
-    var expectedResult = "The evil is unwilling to accept gifts from you at the moment.";
+    var expectedResult = "It's not willing to accept gifts from you at the moment.";
     var actualResult = p0.give('give',a1.getName(), c1.getName());
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
@@ -1887,6 +1897,7 @@ exports.canExamineContainer.meta = { traits: ["Player Test", "Inventory Trait", 
 
 
 exports.canLookInDirectionAndSeeDestination = function (test) {
+    m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "West leads to 'Reception'.";
@@ -1899,8 +1910,52 @@ exports.canLookInDirectionAndSeeDestination = function (test) {
 
 exports.canLookInDirectionAndSeeDestination.meta = { traits: ["Player Test", "Action Trait", "Examine Trait"], description: "Test that a player can look in a direction and see destination." };
 
+exports.canGetRecommendedDirectionForObjectIfInLineOfSight = function (test) {
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
+    var actualResult = p0.goObject("go", "to", "coffee machine", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetRecommendedDirectionForObjectIfInLineOfSight.meta = { traits: ["Player Test", "Action Trait", "Navigation Trait"], description: "Test that a player can attempt to go to an object and get a recommendation if visible." };
+
+exports.canGetRecommendedDirectionIfInLineOfSight = function (test) {
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
+    var actualResult = p0.goObject("go", "to", "kitchen", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.canGetRecommendedDirectionIfInLineOfSight.meta = { traits: ["Player Test", "Action Trait", "Navigation Trait"], description: "Test that a player can attempt to go to a location and get a recommendation if visible." };
+
+
+exports.cannotGetRecommendedDirectionIfNotInLineOfSight = function (test) {
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "You'll need to explore and find your way there yourself I'm afraid.";
+    var actualResult = p0.goObject("go", "to", "poppy", m0);
+    console.log("Expected: " + expectedResult);
+    console.log("Actual  : " + actualResult);
+    test.equal(actualResult, expectedResult);
+    test.done();
+};
+
+exports.cannotGetRecommendedDirectionIfNotInLineOfSight.meta = { traits: ["Player Test", "Action Trait", "Navigation Trait"], description: "Test that a player can attempt to go to a location and not get a recommendation if not visible." };
+
 
 exports.canLookInDirectionWithNoExitAndSeeNothing = function (test) {
+    m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You peer north but there's nothing else to see there.";
@@ -1914,6 +1969,7 @@ exports.canLookInDirectionWithNoExitAndSeeNothing = function (test) {
 exports.canLookInDirectionWithNoExitAndSeeNothing.meta = { traits: ["Player Test", "Action Trait", "Examine Trait"], description: "Test that a player can look in a direction and see destination." };
 
 exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor = function (test) {
+    m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You see a door leading south.<br>Peering through the window you see serious people in suits looking busy and important.<br>It's locked.";
@@ -1927,6 +1983,7 @@ exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor = function (
 exports.canLookInDirectionWithClosedDoorWithWindowAndSeeThroughDoor.meta = { traits: ["Player Test", "Action Trait", "Examine Trait", "Window Trait"], description: "Test that a player can look in a direction and see destination." };
 
 exports.canLookInDirectionWithClosedDoorAndSeeDoor = function (test) {
+    m0 = mb.buildMap();
     var reception = m0.getLocation("reception");
     p0.setLocation(reception);
     var expectedResult = "You see an office door.<br>It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.<br>It's locked.";
@@ -2595,6 +2652,8 @@ exports.playerCannotHealAHealthyCreature = function (test) {
 exports.playerCannotHealAHealthyCreature.meta = { traits: ["Player Test", "Heal Trait"], description: "Test that a healthy creature cannot be healed by a player." };
 
 exports.openingADoorOpensRelatedDoor = function (test) {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var currentLocationName = "first-floor-toilet"
     var currentLocation = m0.getLocation(currentLocationName);
     p0.setLocation(currentLocation);
@@ -2617,6 +2676,8 @@ exports.openingADoorOpensRelatedDoor.meta = { traits: ["Player Test", "Door Trai
 
 
 exports.openingAndClosingDoorClosesRelatedDoor = function (test) {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var currentLocationName = "first-floor-toilet"
     var currentLocation = m0.getLocation(currentLocationName);
     p0.setLocation(currentLocation);

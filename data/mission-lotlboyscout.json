@@ -1,0 +1,19 @@
+﻿{
+  "object": "mission",
+  "name": "lotlboyscout",
+  "displayName": "read LOTL boy scout article",
+  "description": "<a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+  "attributes": {
+    "missionObject": "article on the boy scout principle",
+    "static": true
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "read": true
+  },
+  "reward": {
+    "score": 20,
+    "repairSkill": "clean code",
+    "message": "Congratulations. You've learned a simple approach to keeping code clean."
+  }
+}

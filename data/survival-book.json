@@ -25,22 +25,6 @@
         "tattered book"
     ],
     "missions": [
-        {
-            "object": "mission",
-            "name": "survivezombies",
-            "displayName": "learn how to survive a zombie apocalypse",
-            "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.<br><br>I'm sure you'll never need to know any of this, right?",
-            "attributes": {
-                "missionObject": "survival book",
-                "static": true
-            },
-            "conditionAttributes": {
-                "isDestroyed": false,
-                "read": true
-            },
-            "reward": {
-                "message": "<br>Well that was an odd read."
-            }
-        }
+        {"file": "mission-survivezombies"}
     ]
 }

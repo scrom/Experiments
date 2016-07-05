@@ -1,0 +1,19 @@
+﻿{
+  "object": "mission",
+  "name": "lotlsecurity",
+  "displayName": "read the lotl security article",
+  "description": "<a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+  "attributes": {
+    "missionObject": "article on software security",
+    "static": true
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "read": true
+  },
+  "reward": {
+    "score": 20,
+    "repairSkill": "security",
+    "message": "Congratulations. You've learned a basic mnemonic for considering software security."
+  }
+}

@@ -1,0 +1,23 @@
+﻿{
+  "object": "creature",
+  "name": "justin heron",
+  "displayName": "Justin Heron",
+  "description": "Justin Heron",
+  "detailedDescription": "He's a master of selling!",
+  "attributes": {
+      "template": "creature-male-l3",
+      "imageName": "justinheron.jpg"
+  },
+  "inventory": [
+      {"file": "keyfob"}
+  ],
+  "synonyms": [
+    "justin",
+    "jh",
+    "heron",
+    "him"
+  ],
+  "missions": [
+    {"file": "mission-hidejameswig"}
+  ]
+}

@@ -1,25 +1,45 @@
 ﻿{
-    "object": "location",
-    "name": "enterprise-meeting-room",
-    "displayName": "Enterpri(z)e meeting room",
-    "description": "You're in the Enterprise meeting room. You peer through the window at the people coming and going from the office.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "enterprise-meeting-room",
-        "destination": "support-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "It's a long way down.",
-        "attributes": {
-          "viewDestination": "office-front"
-        }
-      }
-    ]
+  "object": "location",
+  "name": "enterprise-meeting-room",
+  "displayName": "Enterpri(z)e meeting room",
+  "description": "You're in the Enterprise meeting room. Mostly it's just another meeting room. Like most rooms at the front of the building it offers a great opportunity to peer through the window at the people coming and going from the office.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "enterprise-meeting-room",
+      "destination": "support-east"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "It's a long way down.",
+      "attributes": {
+        "viewDestination": "office-front"
+      },
+      "synonyms": [
+        "people"
+      ]
+    },
+        {
+      "object": "artefact",
+      "template": "chairs",
+      "description": "pair of office chairs"
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "detailedDescription": "It's a plain circular meeting room table.",
+      "synonyms": [
+        "plain table",
+        "meeting room table",
+        "plain circular table",
+        "plain circular meeting room table",
+        "circular table"
+      ]
+    }
+  ]
   }

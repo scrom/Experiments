@@ -14,7 +14,10 @@
   },
   "synonyms": [
     "old projector",
-    "broken projector"
+    "broken projector",
+    "equipment",
+    "av",
+    "av equipment"
   ],
   "missions": [
       {"file": "mission-repairprojector"}

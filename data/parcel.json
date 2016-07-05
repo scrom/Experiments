@@ -1,0 +1,56 @@
+﻿{
+  "object": "artefact",
+  "name": "parcel",
+  "description": "parcel from Co____ D____t",
+  "detailedDescription": "The label's smudged and it's hard to tell who it's from or to.<br>With a bit of creative deciphering (clever you!) it really does look like it's addressed to '$player' but you're not expecting anything.<br>Maybe John had you mixed up with someone else.<br>",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 2,
+    "carryWeight": 7,
+    "attackStrength": 2,
+    "type": "container",
+    "canCollect": true,
+    "isBreakable": true,
+    "isDamaged": true,
+    "affinityModifier": 0,
+    "canOpen": true,
+    "canDrawOn": true,
+    "smell": "Mmmm it smells of fresh coffee."
+  },
+  "synonyms": [
+    "package",
+    "my parcel",
+    "my package",
+    "coffee parcel",
+    "coffee package",
+    "box"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "bag",
+      "description": "giant bag",
+      "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
+      "attributes": {
+        "defaultAction": "open",
+        "weight": 2,
+        "carryWeight": 5,
+        "attackStrength": 2,
+        "type": "container",
+        "canCollect": true,
+        "affinityModifier": 0,
+        "canOpen": true,
+        "smell": "You can almost taste the coffee beans."
+      },
+      "synonyms": [
+        "bean bag",
+        "bag of beans",
+        "giant bag",
+        "big bag"
+      ],
+      "inventory": [
+        {"file": "beans"}
+      ]
+    }
+  ]
+}

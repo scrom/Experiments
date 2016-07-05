@@ -1,0 +1,22 @@
+﻿{
+  "object": "creature",
+  "name": "alex freeman",
+  "displayName": "Alex Freeman",
+  "description": "Alex Freeman",
+  "detailedDescription": "Can haz mor Accountz. Alex is one of our account sales managers.",
+  "attributes": {
+      "template": "creature-male-l4",
+      "imageName": "alexfreeman.jpg"
+  },
+  "inventory": [
+      {"file": "keyfob"}
+  ],
+  "synonyms": [
+    "alex",
+    "alex f",
+    "af",
+    "freeman",
+    "al",
+    "him"
+  ]
+}

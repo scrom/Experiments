@@ -450,7 +450,7 @@ exports.Map = function Map() {
             return locationsAsString;
         };
 
-        self.getLocation = function(aName){
+        self.getLocation = function(aName, useDisplayName){
             var index = _locationIndexMap.indexOf(aName);
             var returnLocation = _locations[index];
             if (returnLocation) {
@@ -467,8 +467,18 @@ exports.Map = function Map() {
                     console.log("Map.getLocation: location index map corrupted, working manually for now but performance will be impacted");   
                     return _locations[index];
                 };
-           };
-           //console.log('location not found: '+aName);
+            };
+
+            //try one more time with displayName instead...
+            if (useDisplayName) {
+                for (var index = 0; index < _locations.length; index++) {
+                    if (_locations[index].getDisplayName().toLowerCase() == aName) {
+                        //console.log('location found using displayName: '+aName+' index: '+index);
+                        return _locations[index];
+                    };
+                };
+            };
+            //console.log('location not found: '+aName);
         };
 
         self.getStartLocation = function() {
@@ -576,16 +586,67 @@ exports.Map = function Map() {
             return null;
         };
         
-        self.getObjectLocationName = function (objectName) {
+        self.lineOfSightPathToDestination = function (destinationName, homeLocation, currentLocation, lastDirection, visitedLocations) {
+            if (!(currentLocation)) { currentLocation = homeLocation; };
+                
+            if (!(visitedLocations)) { visitedLocations = [currentLocation.getName()]; }
+            else { visitedLocations.push(currentLocation.getName()) };
+                
+            //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
+                
+            if (currentLocation.getName() == destinationName) {
+                //pathfinder destination found;
+                return [];
+            };
+                
+            var exits = currentLocation.getAvailableExits(false, null, false); //use only open exits
+            if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) { return null; };
+                
+            for (var e = 0; e < exits.length; e++) {
+                
+                var direction = exits[e].getDirection();
+                //only work in a straight line from home location
+                if (direction != lastDirection && currentLocation.getName() != homeLocation.getName()) {
+                    continue;
+                };
+                    
+                if (exits[e].getDestinationName() == homeLocation.getName()) {
+                    continue;
+                };
+                    
+                if (visitedLocations.indexOf(exits[e].getDestinationName()) > -1) {
+                    continue;
+                };
+                    
+                var newPath = self.lineOfSightPathToDestination(destinationName, homeLocation, self.getLocation(exits[e].getDestinationName()), direction, visitedLocations);
+                    
+                if (newPath) {
+                    newPath.push(exits[e].getDirection());
+                    return newPath;
+                };
+            };
+        };
+        
+        self.getObjectLocationName = function (objectName, includeHiddenObjects, minObjectSize, searchCreatures) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* retrieve creatures
+            
+            if (!minObjectSize) {
+                minObjectSize = 0;
+            };
             
             //loop through each location and location inventory. 
             //Get object (by synonym)
             //return when found
             for (var i = 0; i < _locations.length; i++) {
-                var object = _locations[i].getObject(objectName);
-                if (object) { return _locations[i].getName() };
+                var object = _locations[i].getObject(objectName, false, searchCreatures);
+                if (object) {
+                    if ((!object.isHidden()) || includeHiddenObjects) {
+                        if (object.getWeight() >= minObjectSize) {
+                            return _locations[i].getName()
+                        };
+                    };
+                };
             };
             return null;
         };
