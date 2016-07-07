@@ -14924,7 +14924,7 @@
               "weight": 0.1,
               "type": "key",
               "canCollect": true,
-              "affinityModifier": -1,
+              "affinityModifier": -999,
               "unlocks": "office door"
             },
             "synonyms": [

@@ -466,13 +466,27 @@ exports.friendlyCreaturesWillAcceptSmallGifts = function (test) {
 
 exports.friendlyCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
+exports.friendlyCreaturesWillNotAccept99LevelAffinityGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 50, affinity: 1 });
+    var expected = false;
+    var playerAggression = 0;
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', { affinityModifier: 98, canCollect: true }, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
+    console.log("expected: " + expected);
+    console.log("actual: " + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.friendlyCreaturesWillNotAccept99LevelAffinityGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
 exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
     var expected = true;
     var playerAggression = 0;
-    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:99,canCollect:true}, null);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:98,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
@@ -483,12 +497,28 @@ exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
 exports.friendlyCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
 
 
+exports.waryCreaturesWillNotAccept99LevelAffinityGifts = function (test) {
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 50, affinity: -1 });
+    var expected = true;
+    var playerAggression = 0;
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', { affinityModifier: 99, canCollect: true }, null);
+    var actual = c0.willAcceptGift(playerAggression, gift);
+    console.log("expected: " + expected);
+    console.log("actual: " + actual);
+    test.equal(actual, expected);
+    test.done();
+};
+
+exports.waryCreaturesWillNotAccept99LevelAffinityGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
+
+
 exports.waryCreaturesWillAcceptLargeGifts = function (test) {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 0;
-    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:99,canCollect:true}, null);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:98,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
