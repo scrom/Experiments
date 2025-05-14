@@ -256,3 +256,6 @@ js/server/test/testdata/mvta.savedGames.json
 /.ntvs_analysis.dat
 /js/server/test/testdata/generated.json
 /.vs/config/applicationhost.config
+/.vs
+/.vscode
+/package-lock.json
