@@ -37,7 +37,8 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
-        app.get('/new/*', function (request, response) {
+        ///^\/api/
+        app.get(/^\/new/, function (request, response) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
@@ -45,7 +46,8 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
-        app.get('/list*', function (request, response) {
+        //
+        app.get(/^\/list/, function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
@@ -53,7 +55,7 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
-        app.get('/action/*', function (request, response) {
+        app.get(/^\/action/, function (request, response) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
@@ -61,7 +63,7 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
-        app.get('/save/*', function (request, response) {
+    app.get(/^\/save/, function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
 
             var callbackFunction = function(result) {
@@ -73,7 +75,7 @@ exports.Server = function Server(anInterpreter) {
             _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
         });
 
-        app.get('/load/*', function (request, response) {
+    app.get(/^\/load/, function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
 
             var callbackFunction = function(result) {
@@ -84,7 +86,7 @@ exports.Server = function Server(anInterpreter) {
             _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
         });
         
-        app.get('/quit/*', function (request, response) {
+    app.get(/^\/quit/, function (request, response) {
             
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
@@ -94,7 +96,7 @@ exports.Server = function Server(anInterpreter) {
 
         });
 
-        app.get('/image/*', function (request, response) {
+    app.get(/^\/image/, function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
             var fileURL = _interpreter.translate(sanitisedRequestURL,config);
@@ -106,7 +108,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //event source handler(!ooh) 
-        app.get('/events*', function (request, response) {
+    app.get(/^\/events/, function (request, response) {
             request.socket.setTimeout(0);
             var sanitisedRequestURL = sanitiseString(request.url);
 
@@ -119,7 +121,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //fire an event
-        app.get('/fire*', function (request, response) {
+    app.get(/^\/fire/, function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
             response.write('firing '+_waitingResponses.length+' messages...');  
@@ -133,7 +135,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //serve data
-        app.get('/data/locations.json*', function (request, response) {
+        app.get('/data/locations.json', function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
             //response.writeHead(200, {'Content-type':'text/plain'});
             //response.write(_interpreter.getData(0));
@@ -142,10 +144,12 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //serve default dynamic
+        /*
         app.get('*', function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
             response.send(_interpreter.translate(sanitisedRequestURL,config));
         });
+        */
 
         //post handling
         app.post('/post/', function (request, response) {
