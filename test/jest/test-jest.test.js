@@ -1,5 +1,5 @@
 // Jest test file
-
+/*
 const { describe, it, expect } = require('@jest/globals');
 
 describe('test-jest', () => {
@@ -9,3 +9,4 @@ describe('test-jest', () => {
       expect(input).toBe(expectedOutput);
   });
 });
+*/

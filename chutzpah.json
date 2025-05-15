@@ -1,0 +1,52 @@
+{
+  "Framework": "mocha",
+
+  "EnableTestFileBatching": "true",
+
+  "IgnoreResourceLoadingErrors": "true",
+
+  "TestFileTimeout": 10000,
+
+  "TestHarnessLocationMode": "TestFileAdjacent",
+
+  "TestHarnessReferenceMode": "Normal",
+
+  "RootReferencePathMode": "SettingsFileDirectory",
+
+  "CodeCoverageIncludes": [],
+
+  "CodeCoverageExcludes": [],
+
+  "CodeCoverageIgnores": [],
+
+  "CodeCoverageExecutionMode": "Always",
+
+  "CodeCoverageSuccessPercentage": 20,
+
+  "References": [
+    {
+      "Path": "server/js",
+      "Includes": [ "*.js" ],
+      "Excludes": []
+    },
+    {
+      "Path": "client/js",
+      "Includes": [ "*.js" ],
+      "Excludes": ["thirdparty"]
+    },
+    {
+      "Path": "js/test",
+      "Includes": [ "*.js" ],
+      "Excludes": ["*.test.js"]
+    },
+    {
+      "Path": "node_modules/",
+      "Includes": [ "*.js" ],
+      "Excludes": []
+    }
+  ],
+
+  "Tests": [
+    { "Path": "test/mocha", "Includes": ["*.test.js", "*.spec.js"], "Excludes": [] }
+  ]
+}

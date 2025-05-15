@@ -1,6 +1,6 @@
 "use strict";
 var contagion = require('../contagion.js');
-var stubFactory = require('./stubs/stubFactory.js');
+var stubFactory = require('../stubs/stubFactory.js');
 var player = require('../player.js');
 var map = require('../map.js');
 var location = require('../location.js');

@@ -229,3 +229,4 @@ js/server/test/testdata/mvta.savedGames.json
 /.vscode
 /package-lock.json
 /client/js/main.js
+_Chutzpah.coverage.html

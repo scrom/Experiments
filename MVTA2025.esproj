@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2752196">
   <PropertyGroup>
     <JavaScriptTestRoot>test\</JavaScriptTestRoot>
-    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+    <JavaScriptTestFramework>Mocha</JavaScriptTestFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="test\cache\**" />

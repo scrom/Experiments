@@ -1,14 +1,14 @@
 ﻿var assert = require('assert');
-var player = require('../../player.js');
-var creature = require('../../creature.js');
-var location = require('../../location.js');
-var artefact = require('../../artefact.js');
-var filemanager = require('../../filemanager.js');
-var fm = new filemanager.FileManager(true, "mocha/testdata/");
-var mapBuilder = require('../../mapbuilder.js');
-var map = require('../../map.js');
-var mb = new mapBuilder.MapBuilder('mocha/testdata/', 'test-root-locations');
-var canonicalData = require("../testdata/test-canonical.json")
+var player = require('../../server/js/player.js');
+var creature = require('../../server/js/creature.js');
+var location = require('../../server/js/location.js');
+var artefact = require('../../server/js/artefact.js');
+var filemanager = require('../../server/js/filemanager.js');
+var fm = new filemanager.FileManager(true, "../../test/testdata/");
+var mapBuilder = require('../../server/js/mapbuilder.js');
+var map = require('../../server/js/map.js');
+var mb = new mapBuilder.MapBuilder('../../test/testdata/', 'test-root-locations');
+var canonicalData = require("../../test/testdata/test-canonical.json")
 
 describe('Destinations', function() {
     describe('TestData:', function () {
