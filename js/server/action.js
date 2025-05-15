@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 //action object - manager user actions and pack/unpack JSON equivalents
 exports.Action = function Action(player, map, fileManager) {
     try{
@@ -368,14 +368,14 @@ exports.Action = function Action(player, map, fileManager) {
                             description = "Stuck already? Ok...";
                         };
                         description += "<br> I accept basic commands to move e.g. <i>'north','south','up','in'</i> etc.<br>" +
-                                        "You can interact with objects and creatures by supplying a <i>verb</i> and the <i>name</i> of the object or creature. e.g. <i>'get sword'</i> or <i>'eat apple'</i>.<br>" +
-                                        "You can also <i>'use'</i> objects on others (and creatures) e.g. <i>'give sword to farmer'</i>, <i>'hit door with sword'</i> or <i>'put key in box'</i>.<br>" +
-                                        "<br>Two of the most useful verbs to remember are <i>'look'</i> and <i>'examine'</i>.<br>" +
-                                        "In general I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.<br>" +
-                                        "<br>To find out more about how you're doing, try <i>'stats'</i> or <i>'status'</i><br>" +  
-                                        "In many cases, your positive or negative interactions within the game may impact how others respond to you, use this knowledge wisely.<br>" +
-                                        "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>" +
-                                        "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";
+                            "You can interact with objects and creatures by supplying a <i>verb</i> and the <i>name</i> of the object or creature. e.g. <i>'get sword'</i> or <i>'eat apple'</i>.<br>" +
+                            "You can also <i>'use'</i> objects on others (and creatures) e.g. <i>'give sword to farmer'</i>, <i>'hit door with sword'</i> or <i>'put key in box'</i>.<br>" +
+                            "<br>Two of the most useful verbs to remember are <i>'look'</i> and <i>'examine'</i>.<br>" +
+                            "In general I understand a fairly limited set of interactions (and I won't tell you them all, that'd spoil the fun) but hopefully they'll be enough for you to enjoy something more than a minimum viable adventure.<br>" +
+                            "<br>To find out more about how you're doing, try <i>'stats'</i> or <i>'status'</i><br>" +
+                            "In many cases, your positive or negative interactions within the game may impact how others respond to you, use this knowledge wisely.<br>" +
+                            "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>" +
+                            "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";
                         break;
                     case 'map':
                         _ticks = 0;
@@ -422,7 +422,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'show':
                     case 'look':
                     case 'stare':
-                    case 'check':                       
+                    case 'check':
                     case 'peer':
                         //trap a few junk words - will return "look" with no object. 
                         var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
@@ -431,7 +431,10 @@ exports.Action = function Action(player, map, fileManager) {
                             //if just looking around, use a little less time.
                             _ticks = 1;
                         };
-                        if (_object0 && _object1) {
+                        if (_object0 == "inventory") {
+                            _ticks = 0;
+                            description = _player.describeInventory();
+                        } else if (_object0 && _object1) {
                             //e.g. "examine sugar in cup"
                             description = _player.examine(_verb, _object0, _object1, _map);
                         } else if (_object1) {
@@ -472,6 +475,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'follow':
+                    case 'chase':
                         if (!(_object0)) { _object0 = _object1 };
                         description = _player.follow(_verb, _object0, map);
                         break;
@@ -606,6 +610,7 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'offer':
                     case 'give':
+                    case 'hand':
                     case 'feed': //give food or drink to creature (if specific food not specified, use lowest value)
                         if (_splitWord == "with" && _verb == "feed") {
                             description = _player.give(_verb, _object1, _object0);
@@ -614,6 +619,13 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'throw':
+                    case 'chuck':
+                        if (tools.directions.indexOf(_object0) > -1) {
+                            _ticks = 0;
+                            description = "I'm sorry, "+_verb+" what now?";
+                            break;
+                        }
+
                         if (_object0 && _splitWord == "at" && _object1) {
                             //throw x at y
                             _ticks = 1;
@@ -1624,6 +1636,13 @@ exports.Action = function Action(player, map, fileManager) {
                     description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
                     return description;
                 };
+
+                //handle cash actions crudely (for now)
+                if ((_object0 == "cash" || _object0 == "money") && _verb != "give" && _verb != "offer" && _verb != "hand") {
+                    _ticks = 0;
+                    description = "You should probably look after your "+_object0 +" for now.";
+                    return description;
+                }
             };
             if (_object1) {
                 var firstWord = _object1.split(" ")[0].trim();
