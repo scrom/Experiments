@@ -1,1 +1,14 @@
-<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2752196" />
+﻿<Project Sdk="Microsoft.VisualStudio.JavaScript.Sdk/1.0.2752196">
+  <PropertyGroup>
+    <JavaScriptTestRoot>test\</JavaScriptTestRoot>
+    <JavaScriptTestFramework>Jest</JavaScriptTestFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="test\cache\**" />
+    <TypeScriptConfiguration Remove="test\cache\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="test\coverage\" />
+    <Folder Include="TestResults\" />
+  </ItemGroup>
+</Project>
