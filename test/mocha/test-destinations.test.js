@@ -17,10 +17,12 @@ describe('Destinations', function() {
             fm.writeFile("test-generated.json", m0.getLocationsJSON(), true);  //save file for manual copying to canonical form
             var expectedResult = JSON.stringify(canonicalData);
             var actualResult = JSON.stringify(m0.getLocationsJSON());
-            console.log("Expected: " + expectedResult);
-            console.log("Actual  : " + actualResult);
+
             if (actualResult == expectedResult) {
                 fm.deleteFile("test-generated.json");
+            } else {
+                console.log("Expected: " + expectedResult);
+                console.log("Actual  : " + actualResult);
             };
             assert.equal(actualResult, expectedResult, "Generated test map data does not match checked in canonical version");
         })

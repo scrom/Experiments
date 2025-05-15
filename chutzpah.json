@@ -1,27 +1,24 @@
 {
   "Framework": "mocha",
-
-  "EnableTestFileBatching": "true",
-
-  "IgnoreResourceLoadingErrors": "true",
-
+  "EnableTestFileBatching": true,
+  "IgnoreResourceLoadingErrors": true,
   "TestFileTimeout": 10000,
-
   "TestHarnessLocationMode": "TestFileAdjacent",
-
-  "TestHarnessReferenceMode": "Normal",
-
+  "TestHarnessReferenceMode": "AMD",
   "RootReferencePathMode": "SettingsFileDirectory",
-
   "CodeCoverageIncludes": [],
-
   "CodeCoverageExcludes": [],
-
   "CodeCoverageIgnores": [],
-
-  "CodeCoverageExecutionMode": "Always",
-
+  "CodeCoverageExecutionMode": "Manual",
   "CodeCoverageSuccessPercentage": 20,
+
+  "Tests": [
+    {
+      "Path": "test/mocha",
+      "Includes": [ "*.test.js", "*.spec.js" ],
+      "Excludes": []
+    }
+  ],
 
   "References": [
     {
@@ -32,21 +29,13 @@
     {
       "Path": "client/js",
       "Includes": [ "*.js" ],
-      "Excludes": ["thirdparty"]
+      "Excludes": [ "thirdparty" ]
     },
     {
-      "Path": "js/test",
-      "Includes": [ "*.js" ],
-      "Excludes": ["*.test.js"]
+      "Path": "node_modules/require/bin/require-command.js"
     },
     {
-      "Path": "node_modules/",
-      "Includes": [ "*.js" ],
-      "Excludes": []
+      "Path": "node_modules/mocha/bin/mocha.js"
     }
-  ],
-
-  "Tests": [
-    { "Path": "test/mocha", "Includes": ["*.test.js", "*.spec.js"], "Excludes": [] }
   ]
 }

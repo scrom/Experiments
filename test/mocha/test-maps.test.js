@@ -1,9 +1,10 @@
 ﻿var assert = require('assert');
-var mapBuilder = require('/server/js//mapbuilder.js');
-var mb = new mapBuilder.MapBuilder('/data/', 'root-locations');
-var filemanager = require('/server/js/filemanager.js');
-var fm = new filemanager.FileManager(true, "/test/testdata/");
-var canonicalData = require("/test/testdata/canonical-game-data.json");
+console.log("Current directory:", __dirname);
+var mapBuilder = require('../../server/js/mapbuilder.js');
+var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+var filemanager = require('../../server/js/filemanager.js');
+var fm = new filemanager.FileManager(true, "../../test/testdata/");
+var canonicalData = require("../../test/testdata/canonical-game-data.json");
 
 
 describe('Map:', function () {
@@ -18,10 +19,12 @@ describe('Map:', function () {
             fm.writeFile("generated.json", m0.getLocationsJSON(), true);  //save file for manual copying to canonical form
             var expectedResult = JSON.stringify(canonicalData);
             var actualResult = JSON.stringify(m0.getLocationsJSON());
-            console.log("Expected: " + expectedResult);
-            console.log("Actual  : " + actualResult);
+
             if (actualResult == expectedResult) {
                 fm.deleteFile("generated.json");
+            } else {
+                console.log("Expected: " + expectedResult);
+                console.log("Actual  : " + actualResult);
             };
             assert.equal(actualResult, expectedResult, "Generated map data does not match checked in canonical version");
         })

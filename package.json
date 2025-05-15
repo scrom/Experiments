@@ -8,7 +8,7 @@
   "main": "js/server/main.js",
   "scripts": {
     "start": "node js/server/main.js",
-    "test": "mocha"
+    "test": "mocha --recursive \"test/mocha/**/*.test.js\""
   },
   "author": "simon.cromarty",
   "repository": {

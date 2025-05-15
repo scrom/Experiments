@@ -8,8 +8,7 @@ function add(a, b) {
 describe('add', function () {
     it('should return the sum of two numbers', function () {
         const result = add(2, 3);
-        //assert.strictEqual(result, 5);
-        return true
+        assert.strictEqual(result, 5);
     });
 
     it('should return 0 when adding 0 and 0', function () {
