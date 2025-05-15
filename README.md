@@ -3,9 +3,10 @@ Experiments
 
 Getting back into coding
 
-IF-Node. March 2014: (Readme last updated December 2014)
+MVTA. March 2014: (Readme last updated May 2025)
 
-*** This game is live and running at: http://mvta.herokuapp.com/ ***
+*** This game was originally live and running at: http://mvta.herokuapp.com/ ***
+Currently being updated to 2025 versions of Node and related packages, upgrading tests to a new frameworkd and then finding a new location to host.
 
 About:
 ------
@@ -79,7 +80,9 @@ I've not verified this bit yet though.
 
 Running the server
 ------------------
-MVTA has a predefined Procfile that should allow easy deployment on Heroku however if you want to run locally on a windows machine (as I have done for the last 6 months), whilst there are "better" ways to run the server the simplest is to write a batch file that sets the working directory to 
+MVTA has a predefined Procfile that should allow easy deployment on Heroku.
+When running directly from visual studio, the launch file is defined under /.vscode/launch.json
+If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to 
 - 	<your drive>\<your installation location>\js\server
 
 Once at the working location, the game runs from the file "main.js". E.g.
@@ -93,7 +96,7 @@ Client Configuration
 --------------------
 The client consists of an index.html page in the root of the project and a series of referenced JS files under the js/client folder.
 There's also a css folder with some *very* basic layout and styling.
-The express server coded into the server.js file will automatically serve static files from the root of the node project (where the index.html file lives). 
+The express server coded into the server.js file should automatically serve static files from the root of the node project (where the index.html file lives). 
 
 The client runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
@@ -135,44 +138,34 @@ Platform
 --------
 This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
 
-Whilst the game was originally developed in Visual Studio 2012, when I'm not in the office I've been updating and testing from a standard Windows laptop running Sublime Text or a similar basic JS editor plus command-line tooling. 
-
-For editing the game data files, I heartily recommend "JSON Editor Online" for editing the large JSON game data file - it's fast, syntax checks and formats easily. (way better than Visual Studio). (see http://www.jsoneditoronline.org)
+Whilst the game was originally developed in Visual Studio 2012, it's now under development in VS2022. 
 
 
 Tests
 -----
-For each server class, there is (or will be) a corresponding NodeUnit test file. 
-these are found in \IF-Node\js\server\test\
+As of May 2025, The NodeUnit tests in VS are dead - over the next few days (weeks) I'll be migrating tests to Jest (or similar) and resurrecting them one by one
 
-The file naming convention for these tests is test-<classname>.test.js This allows optimum doscoverability from the VS testRunner whilst being very clear what they are.
+For most server classes, there is currently a corresponding NodeUnit test file. 
+these are found in the \test\ folder.
 
-When writing new tests, please ensure every test has its metadata correctly set to define which class it is running tests for and the set of traits being tested. This makes running subsets of tests much easier and allows us to see when a "family" of tests or traits has a problem. (you'll notice some of the existing tests have copy-paste errors in these - surprise!!!)
+The file naming convention for these tests is test-<classname>.test.js This allows optimum discoverability from the VS testRunner whilst being very clear what they are.
 
-Please use one test file per class as much as possible and please keep these passing and growing.
 The tests in here are a mix of unit and functional regression tests - sad but realistic!
 
 
 Module Dependencies
 -------------------
-The game is designed to run on Node version 0.10.33 (this is the latest version that is also available on Windows) but runs fine on 0.10.34 on Linux too.
+The game was originally designed to run on Node version 0.10.33 but has now been upgraded to run on Node 22.15.0 and upward.
 
-Node Module dependencies are defined in \IF-Node\package.json
-As of 21st September 2015 they are...
+Node Module dependencies are defined in \package.json
+As of 15th May 2025 they are...
 
 For the server:
--     "express": "^4.13.3",
--     "body-parser": "^1.14.0",
--     "morgan": "^1.6.1"
--     "jsonfile": "^2.2.2",
--     "redis": "^0.12.1"
--     "require-directory": "^2.1.1"
-
-For running NodeUnit:
--     "nodeunit": "^0.9.1",
--     "coffee-script": "^1.10.0",
--     "iced-coffee-script": "^1.8.0-e",
--     "streamline": "^0.10.17"
-
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "jsonfile": "^6.1.0",
+    "morgan": "^1.10.0",
+    "redis": "^5.0.1",
+    "require-directory": "^2.1.1"
 
 End. Thanks for reading! ;)
