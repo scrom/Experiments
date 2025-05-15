@@ -225,3 +225,4 @@ js/server/test/testdata/mvta.savedGames.json
 /.vs
 /.vscode
 /package-lock.json
+/client/js/main.js

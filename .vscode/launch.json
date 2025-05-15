@@ -6,7 +6,7 @@
       "request": "launch",
       "name": "Launch Program",
       "skipFiles": [ "<node_internals>/**" ],
-      "program": "${workspaceFolder}/js/server/main.js",
+      "program": "${workspaceFolder}/server/js/main.js",
       "cwd": "${workspaceFolder}",
       "console": "externalTerminal"
     }
