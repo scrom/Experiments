@@ -3204,12 +3204,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };                    
                 };
 
-                if (tools.stringIsEmpty(receiverName)){ 
-                    return "'"+speech+"'"+"<br>"+resultString;               
-                };
-
                 if (shoutedAtAnimal) {
                     return resultString;
+                };
+
+                if (tools.stringIsEmpty(receiverName)) { 
+                    var creatures = _currentLocation.getCreatures();
+                    if (creatures.length == 1) { //if there's only 1 character in the roomm...
+                         receiverName = creature[0].getName();
+                    } else { //enhance in future to handle when there are 0 vs multiple creatures here more interestingly
+                        return "'" + speech + "'" + "<br>" + resultString;     
+                    };                    
                 };
 
                 //get receiver if it exists
