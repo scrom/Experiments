@@ -1,7 +1,8 @@
 "use strict";
 //main bootstrap code for game client
-var serverHost = "mvta.herokuapp.com";
-var serverPort;
+var url = new URL(window.location.href);
+var serverHost = url.hostname;
+var serverPort = url.port;
 var ui;
 var client;
 var debug = false; //enable/disable client console logging

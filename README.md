@@ -100,17 +100,7 @@ The express server coded into the server.js file should automatically serve stat
 
 The client runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
-In order to support some of the scripted calls, the client needs to know it's paired with the server. This means you need to edit a client file...
-
-1: Modify /js/client/main.js to set the node Server name and port number:
--     var serverHost = 'Your-Server';
--     var serverPort = 1337;
-The values for these 2 variables should match the corresponding environment variables on your server.
-If the server is running on port 80, leave serverPort undefined (but keep the variable). 
-
-These *must* match the entries supplied in config.js on the server.
-
-You can also enable client "console" output by setting 
+You can enable client "console" output by setting 
 - var debug = true; 
 in the client main.js file
 
@@ -130,6 +120,7 @@ The code is deliberately written in an old-fashioned static OO style for the mos
 This is the case for both client and server code although the client is closer to more "correct" javascript object/prototypal definitions.
 
 Whilst JS is a dynamic language, this was as much an exercise in poor OO design and maintainability. 
+(Having said that, I relied heavily on some loose typing for some areas rather than implementing inheritance fully)
 To this end, please stick to the same javascript object style that's in use if extending.
 On the server side, I'm trying to keep the main game engine away from node-specific features and code as much as posssible. 
 
@@ -143,15 +134,23 @@ Whilst the game was originally developed in Visual Studio 2012, it's now under d
 
 Tests
 -----
-As of May 2025, The NodeUnit tests in VS are dead - over the next few days (weeks) I'll be migrating tests to Jest (or similar) and resurrecting them one by one
+For most server classes, there are corresponding test files. 
+These are found in a relevant subfolder of the \test\ folder for each test framework used - e.g. /test/nodeunit  /test/jest  /test/mocha.
+The file naming convention for tests is <classname><subset>.test.js - This follows pretty much standard JS test frameworks copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
 
-For most server classes, there is currently a corresponding NodeUnit test file. 
-these are found in the \test\ folder.
+The tests in here are a mix of unit and functional regression tests - sad but realistic given the era these were first written (when writing tests was manual and slow).
 
-The file naming convention for these tests is test-<classname>.test.js This allows optimum discoverability from the VS testRunner whilst being very clear what they are.
+NodeUnit tests are deprecated.  They still run (and pass!!) from the command line if you install nodeunit via NPM - but it's very old, clunky, and insecure.
+There is also support/config in here for running Mocha tests (with some samples). These run happily from the CLI with the right command line incantation:  mocha --recursive "test/mocha/**/*.test.js" . 
 
-The tests in here are a mix of unit and functional regression tests - sad but realistic!
+The main test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
+Jest configuration can be found in the file jest.config.js (as well as some basics in package.json).
 
+<em>Over the next few days/weeks; more of the old nodeunit and mocha tests will be migrated to Jest.</em>
+
+I've also been using Github Copilot to speed up that test migration and to generate additional tests (once migrated tests are passing)
+It's incredible how much more productive creating meaningful tests is using Copilot.  
+Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of.
 
 Module Dependencies
 -------------------
@@ -161,11 +160,13 @@ Node Module dependencies are defined in \package.json
 As of 15th May 2025 they are...
 
 For the server:
-    "body-parser": "^2.2.0",
-    "express": "^5.1.0",
-    "jsonfile": "^6.1.0",
-    "morgan": "^1.10.0",
-    "redis": "^5.0.1",
-    "require-directory": "^2.1.1"
+    "body-parser": "^2.2.0",<br>
+    "express": "^5.1.0",<br>
+    "jsonfile": "^6.1.0",<br>
+    "morgan": "^1.10.0",<br>
+    "redis": "^5.0.1",<br>
+    "require-directory": "^2.1.1"<br>
+
+Take a look at the rest of the package file for dev dependencies and other config info.
 
 End. Thanks for reading! ;)
