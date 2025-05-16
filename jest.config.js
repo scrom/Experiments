@@ -12,7 +12,7 @@ const config = {
   // bail: 0,
 
   // The directory where Jest should store its cached dependency information
-  cacheDirectory: "D:\\Development\\src\\MTVA2025\\test\\cache",
+  //cacheDirectory: "D:\\Development\\src\\MTVA2025\\test\\cache",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
@@ -35,12 +35,12 @@ const config = {
   coverageProvider: "v8",
 
   // A list of reporter names that Jest uses when writing coverage reports
-  // coverageReporters: [
+   coverageReporters: [
   //   "json",
-  //   "text",
+    "text"
   //   "lcov",
   //   "clover"
-  // ],
+],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: undefined,
@@ -72,9 +72,9 @@ const config = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+   moduleDirectories: [
+     "node_modules"
+   ],
 
   // An array of file extensions your modules use
    moduleFileExtensions: [
@@ -122,7 +122,7 @@ const config = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  // rootDir: /,
+  rootDir: "test/jest/",
 
   // A list of paths to directories that Jest should use to search for files in
   // roots: [
@@ -139,7 +139,7 @@ const config = {
   // setupFilesAfterEnv: [],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
-  slowTestThreshold: 2,
+  slowTestThreshold: 5,
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
@@ -155,7 +155,7 @@ const config = {
 
   // The glob patterns Jest uses to detect test files
    testMatch: [
-     "**/test/**/*.[jt]s?(x)"
+     "**/test/**/*.test.js"
   //   "**/?(*.)+(spec|test).[tj]s?(x)"
    ],
 

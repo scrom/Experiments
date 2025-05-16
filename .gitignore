@@ -208,6 +208,7 @@ pip-log.txt
 /test/cache
 /test/TestResults
 /test/coverage
+/test/jest/coverage
 .coverage
 .tox
 
