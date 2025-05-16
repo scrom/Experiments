@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"name": "Experiments",
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+		"mocha.files.glob": "test/mocha/**/*.js",
+		"mocha.runTestsOnSave": "true",
+		"mocha.showInExplorer": true,
+		"quokka.automaticRestart": true,
+		"javascript.suggest.completeFunctionCalls": true,
+		"javascript.format.insertSpaceAfterConstructor": true,
+		"javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
+		"javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
+		"javascript.format.placeOpenBraceOnNewLineForFunctions": true,
+		"javascript.format.semicolons": "insert",
+		"javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+		"javascript.inlayHints.parameterNames.enabled": "all",
+		"javascript.inlayHints.parameterTypes.enabled": true,
+		"javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+		"javascript.inlayHints.variableTypes.enabled": true,
+		"typescript.inlayHints.enumMemberValues.enabled": true,
+		"typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+		"typescript.inlayHints.parameterNames.enabled": "all",
+		"typescript.inlayHints.parameterTypes.enabled": false,
+		"liveshare.accessibility.voice": "en-GB-Sonia",
+		"wallaby.codeLensFeature.runTest": true,
+		"workbench.colorTheme": "Visual Studio Dark",
+		"workbench.preferredDarkColorTheme": "Visual Studio Dark",
+		"workbench.sideBar.location": "right",
+		"mocha.subdirectory": "C:\\D:\\Development\\src\\Experiments\\test\\mocha"
+	}
+}
