@@ -1,11 +1,11 @@
 ﻿"use strict";
-var player = require('../player.js');
-var creature = require('../creature.js');
-var location = require('../location.js');
-var artefact = require('../artefact.js');
-var contagion = require('../contagion.js');
-var mapBuilder = require('../mapbuilder.js');
-var map = require('../map.js');
+var player = require('../../server/js/player.js');
+var creature = require('../../server/js/creature.js');
+var location = require('../../server/js/location.js');
+var artefact = require('../../server/js/artefact.js');
+var contagion = require('../../server/js/contagion.js');
+var mapBuilder = require('../../server/js/mapbuilder.js');
+var map = require('../../server/js/map.js');
 var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
 
 //these are used in setup and teardown - need to be accessible to all tests

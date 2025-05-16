@@ -1,5 +1,5 @@
 ﻿"use strict";
-var tools = require('../tools.js');
+var tools = require('../../server/js/tools.js');
 
 exports.setUp = function (callback) {
     callback();

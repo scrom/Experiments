@@ -1,5 +1,5 @@
 ﻿"use strict";
-var fileManager= require('../filemanager.js');
+var fileManager= require('../../server/js/filemanager.js');
 var fm= new fileManager.FileManager(true);
 
 exports.setUp = function (callback) {

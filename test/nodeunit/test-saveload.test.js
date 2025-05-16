@@ -1,12 +1,12 @@
 ﻿"use strict";
-var mapbuilder = require('../mapbuilder.js');
-var player = require('../player.js');
-var location = require('../location.js');
-var gamecontroller = require('../gamecontroller.js');
-var game = require('../game.js');
-var filemanager = require('../filemanager.js');
+var mapbuilder = require('../../server/js/mapbuilder.js');
+var player = require('../../server/js/player.js');
+var location = require('../../server/js/location.js');
+var gamecontroller = require('../../server/js/gamecontroller.js');
+var game = require('../../server/js/game.js');
+var filemanager = require('../../server/js/filemanager.js');
 var mb = new mapbuilder.MapBuilder('../../data/','root-locations');
-var fm = new filemanager.FileManager(true, "./test/testdata/");
+var fm = new filemanager.FileManager(true, "../testdata/");
 var gc = new gamecontroller.GameController(mb, fm);
 
 exports.setUp = function (callback) {

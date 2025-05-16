@@ -1,8 +1,8 @@
 ﻿"use strict";
-var mission = require('../mission.js');
-var artefact = require('../artefact.js');
-var location = require('../location.js');
-var creature = require('../creature.js');
+var mission = require('../../server/js/mission.js');
+var artefact = require('../../server/js/artefact.js');
+var location = require('../../server/js/location.js');
+var creature = require('../../server/js/creature.js');
 
 exports.setUp = function (callback) {
     callback(); 

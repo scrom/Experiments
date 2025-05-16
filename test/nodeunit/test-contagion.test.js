@@ -1,12 +1,12 @@
 "use strict";
-var contagion = require('../contagion.js');
+var contagion = require('../../server/js/contagion.js');
 var stubFactory = require('../stubs/stubFactory.js');
-var player = require('../player.js');
-var map = require('../map.js');
-var location = require('../location.js');
-var creature = require('../creature.js');
-var artefact = require('../artefact.js');
-var mapBuilder = require('../mapbuilder.js');
+var player = require('../../server/js/player.js');
+var map = require('../../server/js/map.js');
+var location = require('../../server/js/location.js');
+var creature = require('../../server/js/creature.js');
+var artefact = require('../../server/js/artefact.js');
+var mapBuilder = require('../../server/js/mapbuilder.js');
 //var sf = new stubFactory.StubFactory();
 
 exports.setUp = function (callback) {

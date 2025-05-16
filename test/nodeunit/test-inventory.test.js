@@ -1,8 +1,8 @@
 ﻿"use strict";
-var inventory = require('../inventory.js');
-var creature = require('../creature.js');
-var location = require('../location.js');
-var artefact = require('../artefact.js');
+var inventory = require('../../server/js/inventory.js');
+var creature = require('../../server/js/creature.js');
+var location = require('../../server/js/location.js');
+var artefact = require('../../server/js/artefact.js');
 
 //these are used in setup and teardown - need to be accessible to all tests
 var junkAttributes;

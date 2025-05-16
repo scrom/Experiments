@@ -1,10 +1,10 @@
 ﻿"use strict";
-var artefact = require('../artefact.js');
-var location = require('../location.js');
-var inventory = require('../inventory.js');
-var player = require('../player.js');
-var map = require('../map.js');
-var mapBuilder = require('../mapbuilder.js');
+var artefact = require('../../server/js/artefact.js');
+var location = require('../../server/js/location.js');
+var inventory = require('../../server/js/inventory.js');
+var player = require('../../server/js/player.js');
+var map = require('../../server/js/map.js');
+var mapBuilder = require('../../server/js/mapbuilder.js');
 var mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
 var a0;
 var attributes = null;

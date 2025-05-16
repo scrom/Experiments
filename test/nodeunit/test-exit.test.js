@@ -1,5 +1,5 @@
 ﻿"use strict";
-var exit = require('../exit.js');
+var exit = require('../../server/js/exit.js');
 
 exports.setUp = function (callback) {
     callback(); 
