@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node server/js/main.js",
     "test-mocha": "mocha --recursive \"test/mocha/**/*.test.js\"",
-    "test-jest": "jest --collectCoverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=html --coveragePathIgnorePatterns=\"/node_modules/\""
+    "test": "jest --collectCoverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=html --coveragePathIgnorePatterns=\"/node_modules/\""
   },
   "author": "simon.cromarty",
   "repository": {

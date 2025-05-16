@@ -113,7 +113,9 @@ var self = module.exports= {
     },
 
     pluraliseDescription: function (aDescription, aCount) {
-        if (aCount == 1) { return aDescription; };
+        //pluralise a description based on the count provided.
+        if (self.stringIsEmpty(aDescription)) { return ""; };    
+        if (aCount == 1 || self.stringIsEmpty(aCount)) { return aDescription; };
         var wordToReplace = aDescription;
         var replacement = wordToReplace;
 
@@ -125,20 +127,48 @@ var self = module.exports= {
             };
         };
 
-        if (wordToReplace.substr(-1) == "x") {
-            replacement = wordToReplace + "es";
-        } else if (wordToReplace.substr(-2) == "us") {
-            replacement = wordToReplace + "es";
-        } else if (wordToReplace.substr(-2) == "sh") {
-            replacement = wordToReplace + "es";
-        } else if (wordToReplace.substr(-1) == "s") {
-            replacement = wordToReplace + "es";
-        } else if (wordToReplace.substr(-3) == "ing") {
+        if (wordToReplace == "child") {
+            replacement = "children";
+        } else if (wordToReplace == "foot") {
+            replacement = "feet";
+        } else if (wordToReplace == "tooth") {
+            replacement = "teeth";
+        } else if (wordToReplace == "mouse") {
+            replacement = "mice";
+        } else if (wordToReplace == "person") {
+            replacement = "people";
+        } else if (
+            wordToReplace == "cactus" ||
+            wordToReplace == "fungus" ||
+            wordToReplace == "nucleus" ||
+            wordToReplace == "focus" ||
+            wordToReplace == "radius" ||
+            wordToReplace == "stimulus" ||
+            wordToReplace == "virus"
+        ) {
+            // Words ending with 'us' that become 'i' in plural
+            replacement = wordToReplace.replace(/us$/, "i");
+        } else if (
+            wordToReplace == "sheep" ||
+            wordToReplace == "deer" ||
+            wordToReplace == "fish" ||
+            wordToReplace == "species"
+        ) {
+            // Irregular nouns that do not change in plural
             replacement = wordToReplace;
+        } else if (wordToReplace.substr(-2) == "sh" ||
+               wordToReplace.substr(-2) == "ch" ||
+               wordToReplace.substr(-2) == "us") {
+            replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-1) == "x" ||
+               wordToReplace.substr(-1) == "s" ||
+               wordToReplace.substr(-1) == "f") {
+            replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-1) == "y") {
+            replacement = wordToReplace.slice(0, -1) + "ies";
         } else {
             replacement = wordToReplace + "s";
-        };
-
+        }
         var resultString = aDescription.replace(wordToReplace, replacement);
         if (aCount) { resultString = aCount + " " + resultString;};
 
