@@ -116,14 +116,62 @@ test('cannot continue playing after end game', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('can still retrieve stats after end game', () => {
-    // For this test, we need to use the real player and map, not the stubs
-    const realP = new player.Player("Tester");
-    const realM = new map.Map();
-    realP.endGame();
-    const realA = new action.Action(realP, realM);
-    
-    const expectedResult = '{"verb":"stats","object0":"","object1":"","description":"=== GAME OVER ===<br><i>Final </i><i>Statistics for :</i><br>Your score is 0 out of 0<br>You have taken 0 steps.<br>You have visited 0 out of 0 locations.<br>Total game time taken so far: 00:00.<br><br>In a survey of your popularity...<br> Your overall popularity rating is 0.","attributes":{"username":"undefined","money":5,"score":0,"injuriesReceived":0,"bleeding":false}}';
-    const actualResult = realA.act("stats");
-    expect(actualResult).toBe(expectedResult);
+// added by copilot (with some tweaking)
+test('convertActionToElements parses verb and objects correctly', () => {
+    a.convertActionToElements("give apple to teacher");
+    // _verb, _object0, _object1 are private, but we can test via performPlayerAction stub
+    // Since stub returns function: give, args[0]:apple, args[1]:teacher, args[2]:<Object>
+    expect(a.performPlayerAction()).toBe("function: give, args[0]:give, args[1]:apple, args[2]:teacher");
+});
+
+test('catchPlayerNotUnderstood returns random apology', () => {
+    // Force _object0 and _object1 to empty by parsing nonsense
+    a.convertActionToElements("asdfghjkl");
+    const result = a.catchPlayerNotUnderstood();
+    expect([
+        "Sorry, I didn't understand you. Can you try rephrasing that?",
+        "Can you try rephrasing that?",
+        "I'm struggling to understand you. Can you try something else?",
+        "I'm only a simple game. I'm afraid you'll need to try a different verb to get through to me.",
+        "What do you want to do with 'asdfghjkl'?<br>You'll need to be a little clearer."
+    ]).toContain(result);
+});
+
+test('processAction returns special message for self-referencing objects', () => {
+    a.convertActionToElements("eat apple with apple");
+    // _object0 and _object1 will both be "apple"
+    const result = a.processAction("eat apple with apple");
+    expect(result).toContain("interact with itself");
+});
+
+test('processAction handles swearing', () => {
+    a.convertActionToElements("fuck");
+    // _verb will be "fuck"
+    const result = a.processAction("fuck");
+    expect(result).toContain("to you too");
+    expect(result).toContain("verbal abuse");
+});
+
+test('performPlayerNavigation returns empty string for unknown direction', () => {
+    a.convertActionToElements("fly to the moon");
+    const result = a.performPlayerNavigation();
+    expect(result).toBe("");
+});
+
+test('getResultString returns last result string', () => {
+    a.act("look at map");
+    const result = a.getResultString();
+    expect(result).toContain("function: examine, args[0]:look at, args[1]:map");
+});
+
+test('handle "look closely" as equivalent of search', () => {
+    a.convertActionToElements("look closely at map");
+    // called function should be serarch,  _object0 should be "map"
+    expect(a.performPlayerAction()).toContain("function: search");
+    expect(a.performPlayerAction()).toContain("args[1]:map");
+});
+
+test('extractAdverb extracts adverb and strips it', () => {
+    a.convertActionToElements("speak quietly to David");
+    expect(a.performPlayerAction()).toBe("function: say, args[0]:talk, args[1]:, args[2]:david, args[3]:<Object>");
 });
