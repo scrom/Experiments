@@ -14,6 +14,9 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         var filePath = path.resolve(path.join(__dirname, usergamePath || "../../data/usergames/"));
         var imagePath = path.resolve(path.join(__dirname, imagePath || "../../data/images/"));
 
+        console.log("FileManager: filePath = "+filePath);
+        console.log("FileManager: imagePath = "+imagePath);
+
         var pwd = process.env.REDISPWD;
         var redisServer = process.env.REDISSERVER;
         var redisPort = process.env.REDISPORT;
@@ -27,6 +30,17 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             redis = require('redis');
              
             client = redis.createClient(redisPort, redisServer, {no_ready_check: true});
+
+            (async () => {
+            // Connect to redis server
+                await client.connect();
+            })();
+
+            //client.on('connect', () => {
+            //    console.log('REDIS Connected.');
+            //};
+            
+
             //redis.debug_mode = true;
             client.on("error", function (err) {
                 console.log("REDIS Error: " + err);
