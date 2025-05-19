@@ -367,6 +367,7 @@ module.exports.MissionController = function MissionController() {
         ////end public methods
     }
     catch (err) {
-        console.log('Unable to create MissionController object: ' + err);
+        console.error('Unable to create MissionController object: ' + err);
+        throw err;
     };
 };

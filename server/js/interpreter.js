@@ -223,7 +223,8 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         //end member functions
     }
     catch(err) {
-	    console.log('Unable to create Interpreter object: '+err);
+	    console.error('Unable to create Interpreter object: '+err);
+        throw err;
     };
 
 };

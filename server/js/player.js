@@ -5954,6 +5954,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
     }
     catch(err) {
-	    console.log('Unable to create Player object: '+err.stack);
+	    console.error('Unable to create Player object: '+err.stack);
+        throw err;
     }
 };

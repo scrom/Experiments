@@ -1876,7 +1876,8 @@ exports.Action = function Action(player, map, fileManager) {
         //console.log(objectName + ' created');
     }
     catch(err) {
-	    console.log('Unable to create Action object: '+err);
+	    console.error('Unable to create Action object: '+err);
+        throw err;
     };	    
 };
 

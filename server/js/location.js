@@ -832,6 +832,7 @@ exports.Location = function Location(name, displayName, description, attributes)
 
     }
     catch(err) {
-	    console.log('Unable to create Location object: '+err);
+	    console.error('Unable to create Location object: '+err);
+        throw err;
     };	
 };

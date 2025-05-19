@@ -368,6 +368,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
         ////end public methods
     }
     catch (err) {
-        console.log('Unable to create Contagion object: ' + err);
+        console.error('Unable to create Contagion object: ' + err);
+        throw err;
     };
 };

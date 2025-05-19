@@ -4690,7 +4690,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 	    //console.log(_objectName + ' created: '+_name);
     }
     catch(err) {
-	    console.log('Unable to create Creature object: '+err);
+	    console.error('Unable to create Creature object: '+err);
+        throw err;
     };
 
 };

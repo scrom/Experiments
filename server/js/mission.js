@@ -1018,6 +1018,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create Mission object: '+err);
+	    console.error('Unable to create Mission object: '+err);
+        throw err;
     };	
 };

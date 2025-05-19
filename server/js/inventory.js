@@ -903,6 +903,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create Inventory object: '+err);
+	    console.error('Unable to create Inventory object: '+err);
+        throw err;
     };	
 };

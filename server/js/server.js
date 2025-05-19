@@ -205,7 +205,8 @@ exports.Server = function Server(anInterpreter) {
         console.log(_objectName + ' created');
     }
     catch (err) {
-        console.log('Unable to create Server object: ' + err);
+        console.error('Unable to create Server object: ' + err);
+        throw err;
     };
 
 };

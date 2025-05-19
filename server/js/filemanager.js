@@ -311,6 +311,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create FileManager object: '+err);
+	    console.error('Unable to create FileManager object: '+err);
+        throw err;
     };	
 };

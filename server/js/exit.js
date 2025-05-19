@@ -18,7 +18,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         var _hidden = false;
         if (isHidden == true || isHidden == "true") { _hidden = true;};
 
-        var _possibleActions = ["run", "climb", "jump", "crawl", "drive", "sail", "fly", "ride", "",undefined];
+        var _possibleActions = ["run", "climb", "jump", "crawl", "drive", "sail", "fly", "ride", "swim","",undefined];
         var _requiredAction = requiredAction; //"run", "climb", "jump", "crawl", "drive", "sail", "fly", "ride", ""
 
         if (_possibleActions.indexOf(_requiredAction) == -1) { throw "'" + requiredAction + "' is not a valid action.";}; 
@@ -110,6 +110,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create Exit object: '+err);
+	    console.error('Unable to create Exit object: '+err);
+        throw err;
     };	
 };

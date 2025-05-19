@@ -16,6 +16,7 @@ module.exports.ObjectStub = function ObjectStub() {
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create ObjectStub object: '+err);
+	    console.error('Unable to create ObjectStub object: '+err);
+        throw err;
     };	
 };

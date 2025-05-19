@@ -939,6 +939,7 @@ exports.Map = function Map() {
     }
 
     catch(err) {
-	    console.log('Unable to create Map object: '+err.stack);
+	    console.error('Unable to create Map object: '+err.stack);
+        throw err;
     };
 };	

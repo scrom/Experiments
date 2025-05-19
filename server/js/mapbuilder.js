@@ -737,6 +737,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
     }
 
     catch(err) {
-	    console.log('Unable to create MapBuilder object: '+err.stack);
+	    console.error('Unable to create MapBuilder object: '+err.stack);
+        throw err;
     };
 };	

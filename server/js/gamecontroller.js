@@ -295,7 +295,8 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
     }
     catch(err) {
-	    console.log('Unable to create GameController object: '+err);
+	    console.error('Unable to create GameController object: '+err);
+        throw err;
     };	
 
 };

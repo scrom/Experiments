@@ -143,6 +143,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         ////end public methods
     }
     catch(err) {
-	    console.log('Unable to create Game object: '+err);
+	    console.error('Unable to create Game object: '+err);
+        throw err;
     };
 };

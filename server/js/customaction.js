@@ -1,6 +1,7 @@
 ﻿"use strict";
 //customAction library used by mission reward processor and custom actions
 var self = module.exports = {
+
     
     processAffinityModifiers: function (map, actionData) {
         //console.log("Processing affinity modifiers from custom action");
@@ -143,6 +144,5 @@ var self = module.exports = {
         
         return resultString;
     }
-
 };
 
