@@ -65,7 +65,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                 if (!(dataExists)) {
                     //console.log("writing new game data");
                     _player.incrementSaveCount();
-                    _fm.writeGameData(_filename, self.fullState(), true, postSaveGameCallback);
+                    _fm.writeGameDataSync(_filename, self.fullState(), true, postSaveGameCallback); //@todo - rework for async/redis
                 } else {                    
                     newIndex++;
                     if (newIndex>=25) {
@@ -90,7 +90,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
                     _fm.gameDataExists(_filename, postDataCheckCallback);
                 } else {
                     _player.incrementSaveCount();
-                    _fm.writeGameData(_filename, self.fullState(), true, postSaveGameCallback);
+                    _fm.writeGameDataSync(_filename, self.fullState(), true, postSaveGameCallback); //@todo - rework for async/redis
                 };
             };
             

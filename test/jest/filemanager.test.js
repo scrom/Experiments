@@ -118,13 +118,24 @@ describe('FileManager', () => {
         });
     });
 
-    test('writeGameData writes dummy game data file', done => {
+
+    test('writeGameDataSync writes dummy game data file', done => {
         const data = [JSON.stringify({ foo: 1 }), JSON.stringify({ bar: 2 })];
-        fm.writeGameData('testfile', data, true, () => {
+
+         const callbackFunction = function(result, savedGame) {
             const readData = fm.readFile(testFileName);
             expect(readData).toEqual([{ foo: 1 }, { bar: 2 }]);
             done();
-        });
+        };
+
+        fm.writeGameDataSync('testfile', data, true, callbackFunction);
+    });
+
+    test('writeGameData writes dummy game data file', async () => {
+        const data = [JSON.stringify({ foo: 1 }), JSON.stringify({ bar: 2 })];
+        await fm.writeGameData('testfile', data, true);
+        const readData = fm.readFile(testFileName);
+        expect(readData).toEqual([{ foo: 1 }, { bar: 2 }]);
     });
 
     test('readGameData reads real game data file', done => {
