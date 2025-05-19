@@ -207,8 +207,11 @@ pip-log.txt
 # Unit test / coverage reports
 /test/cache
 /test/TestResults
+/test/testdata/generated.json
+test/testdata/mvta.savedGames.json
 /test/coverage
 /test/jest/coverage
+_Chutzpah.coverage.html
 .coverage
 .tox
 
@@ -220,14 +223,12 @@ pip-log.txt
 
 #node install
 node_modules/
+
+#other
 data/usergames/
 /
-js/server/test/testdata/mvta.savedGames.json
 /.ntvs_analysis.dat
-/js/server/test/testdata/generated.json
 /.vs/config/applicationhost.config
 /.vs
-/.vscode
 /package-lock.json
-/client/js/main.js
-_Chutzpah.coverage.html
+
