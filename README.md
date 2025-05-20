@@ -1,12 +1,12 @@
 Experiments
 ===========
-
-Getting back into coding
-
-MVTA. March 2014: (Readme last updated May 2025)
-
 *** This game was originally live and running at: http://mvta.herokuapp.com/ ***
-This game has now been updated to 2025 versions of Node and related packages, and tests migrated to Jest.
+
+MVTA: March 2014 to May 2025.
+
+After a 10 year hiatus, we are back in active development - at least for a while...
+
+The game has now been updated to 2025 versions of Node and related packages, and tests migrated to Jest.
 More work is needed to resolve updated (async) Redis support along with a new approach to secure deployment.
 
 About:
@@ -25,22 +25,28 @@ Invariably the adventure would descend into silliness around Justin Bieber ridin
 
 In the end, it's become just another text adventure engine at the moment but I still have a desire to add that real-time interaction back in (one day).
 
-Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. The need to rework poor design decisions but not having the support of working tests.
+Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. 
+- Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. 
+- Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. 
+- The need to rework poor design decisions but not having the support of working tests.
+- Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
 
-Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
-
-*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
+*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. 
+All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. 
+This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
 
 I know it's not the "right" way but it's how a lot of projects end up under pressure.
-In some way therefore, the commit history on this will be a history lesson in how to not write good software and then how to recover from it (or survive) later.
+In some way therefore, the commit history on this will be a history lesson in how *not* to write good software - and then how to recover from it (or survive) later.
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
+As the game currently stands it's on course to becoming quite an advanced text adventure engine. 
+It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
- - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players  to choose, extend and reuse maps. Right now, there's just the one.
- - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done - if the player has achieved enough to save their game*
+ - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently assembled form a series of json files and the set of attributes available for everything isn't documented. (Hey, that's not bad - for a while it was all in a single file!)
+ - Eventually I'd like players to choose, extend and reuse maps. Right now, there's just the one.
+ - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done, now broken (2025) needs a Redis overhaul - if the player has achieved enough to save their game*
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
  - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host. *done*
  - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
@@ -53,7 +59,7 @@ Technical stuff:
 ================
 Server Configuration
 --------------------
-1: Ensure NodeJS is installed and the relevant module dependencies are installed unsing NPM.
+1: Ensure a current version of NodeJS is installed and the relevant module dependencies are installed unsing NPM. (see module dependencies in this readme)
 
 2: Set the following server environment variables to configure the application hostname and port
 - 	HOSTNAME (e.g. mvta.herokuapp.com)
@@ -66,12 +72,12 @@ Note, if the game is running on port 80, you don't need to explicitly set port n
 If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
 Once you have a store available, set the following environment variables for your Redis data store 
 - REDISSERVER (the addressable hostname of your redis server)
-- REDISPWD (the auth password of your redis server in plain text)
+- REDISPWD (the auth password of your redis server **in plain text at the moment - this needs securing**)
 - REDISPORT (the port number of your redis host)
 
 *If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
-As of October 2014, Redis support is fully functional. 
-Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment)
+As of October 2014, Redis support was fully functional. Sadly after upgrading in 2025 it needs fixing. (in progress)
+Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment) - I wonder if this is now fixed?!
 
 4: NodeJS may still have a default limit on the number of active http connections to 5.
 In order to support more connections, you'll need to set another environment variable (I think)...
@@ -82,7 +88,8 @@ I've not verified this bit yet though.
 Running the server
 ------------------
 MVTA has a predefined Procfile that should allow easy deployment on Heroku.
-When running directly from visual studio, the launch file is defined under /.vscode/launch.json
+When running directly from Visual Studio or VSCode, the launch file is defined under /.vscode/launch.json
+
 If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to 
 - 	<your drive>\<your installation location>\js\server
 
@@ -99,7 +106,7 @@ The client consists of an index.html page in the root of the project and a serie
 There's also a css folder with some *very* basic layout and styling.
 The express server coded into the server.js file should automatically serve static files from the root of the node project (where the index.html file lives). 
 
-The client runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
+The client currenly runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
 You can enable client "console" output by setting 
 - var debug = true; 
