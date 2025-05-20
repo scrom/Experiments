@@ -1,23 +1,21 @@
 ﻿"use strict";
-var player = require('../../server/js/player.js');
-var creature = require('../../server/js/creature.js');
-var location = require('../../server/js/location.js');
-var artefact = require('../../server/js/artefact.js');
+const player = require('../../server/js/player.js');
+const location = require('../../server/js/location.js');
+const artefact = require('../../server/js/artefact.js');
 
-//these are used in setup and teardown - need to be accessible to all tests
-var junkAttributes;
-var fixedAttributes;
-var containerAttributes;
-var playerName;
-var p0; // player object.
-var l0; //location object.
-var a0; //artefact object.
-var a1; //artefact object.
-var container; //container object
+let junkAttributes;
+let fixedAttributes;
+let containerAttributes;
+let playerName;
+let p0; // player object.
+let l0; //location object.
+let a0; //artefact object.
+let a1; //artefact object.
+let container; //container object
 
-exports.setUp = function (callback) {
+beforeEach(() => {
     playerName = 'player';
-    p0 = new player.Player(playerName);
+    p0 = new player.Player({"username": playerName});
     l0 = new location.Location('home','a home location');
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};    
@@ -28,10 +26,9 @@ exports.setUp = function (callback) {
     a1 = new artefact.Artefact('box', 'box', 'just a box',junkAttributes, null);
     l0.addObject(a0);
     l0.addObject(container);
-    callback(); 
-};
+});
 
-exports.tearDown = function (callback) {
+afterEach(() => {
     playerName = null;
     p0 = null;
     l0 = null;
@@ -40,470 +37,273 @@ exports.tearDown = function (callback) {
     containerAttributes = null;
     a0 = null;
     a1 = null;
-
     container = null;
-    callback();
-};  
+});
 
+test("Test that a player can get an object.", () => {
+    const expectedResult = "You get an artefact of little consequence.";
+    const actualResult = p0.get('get', a0.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetObject = function (test) {
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
-    var expectedResult = "You get an artefact of little consequence.";
-    var actualResult = p0.get('get', a0.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+test("Test that a player can get all objects in a location.", () => {
+    const expectedResult = "You collected 2 items.";
+    const actualResult = p0.get('get', 'all');
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetObject.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get an object." };
-
-exports.canGetAllObjects = function (test) {
-    var expectedResult = "You collected 2 items.";
-    var actualResult = p0.get('get', 'all');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetAllObjects.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player can get all objects in a location." };
-
-exports.canGetContainer = function (test) {
-    var artefactDescription = container.getDescription();
-    var artefactName = container.getName()
+test("Test that a player can get a container-type object.", () => {
     container.receive(a1);
-    var expectedResult = "You get a container.";
-    var actualResult = p0.get('get', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You get a container.";
+    const actualResult = p0.get('get', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetContainer.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can get a container-type object." };
-
-
-exports.canGetObjectFromOpenContainerInInventory = function (test) {
+test("Test that a player can get an object from an open container they're carrying.", () => {
     container.moveOrOpen('open');    
     container.receive(a1);
     p0.get('get', container.getName());
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
-    var expectedResult = "You take a box from your container.";
-    var actualResult = p0.get('get', a1.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You take a box from your container.";
+    const actualResult = p0.get('get', a1.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetObjectFromOpenContainerInInventory.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player can get an object from an open container they're carrying." };
-
-exports.cannotGetObjectFromClosedContainerInInventory = function (test) {
+test("Test that a player cannot get an object from a closed container they're carrying.", () => {
     container.receive(a1);
     p0.get('get', container.getName());
+    const objectName = "box";
+    const expectedResults = [
+        "There's no "+objectName+" here and you're not carrying any either.",
+        "You can't see any "+objectName+" around here.",
+        "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.",
+        "You'll need to try somewhere (or someone) else for that.",
+        "There's no "+objectName+" available here at the moment."
+    ];
+    const actualResult = p0.get('get', a1.getName());
+    expect(expectedResults).toContain(actualResult);
+});
 
-    var objectName = "box";
-    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
-    var expectedResult = false;
-    var actualResult = p0.get('get', a1.getName());
-    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(true, expectedResult);
-    test.done();
-};
-
-exports.cannotGetObjectFromClosedContainerInInventory.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot get an object from a closed container they're carrying." };
-
-
-exports.canGetObjectFromOpenContainerInLocation = function (test) {
+test("Test that a player can get an object from an open container in a location.", () => {
     container.moveOrOpen('open');  
     container.receive(a1);
-    var artefactDescription = 'a box';
-    var artefactName = 'box'
-    var expectedResult = "You get a box.";
-    var actualResult = p0.get('get', a1.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You get a box.";
+    const actualResult = p0.get('get', a1.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetObjectFromOpenContainerInLocation.meta = { traits: ["Player.Get Test", "Inventory Trait", "Location Trait", "Action Trait", "Container Trait"], description: "Test that a player can get an object from an open container in a location." };
+test("Test that a player cannot get an object from an closed container in a location.", () => {
+    container.moveOrOpen('open');  
+    container.receive(a1);
+    container.close('close');
+    const objectName = "box";
+    const expectedResults = [
+        "There's no "+objectName+" here and you're not carrying any either.",
+        "You can't see any "+objectName+" around here.",
+        "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.",
+        "You'll need to try somewhere (or someone) else for that.",
+        "There's no "+objectName+" available here at the moment."
+    ];
+    const actualResult = p0.get('get', a1.getName());
+    expect(expectedResults).toContain(actualResult);
+});
 
-exports.cannotGetObjectFromClosedContainerInLocation = function (test) {
-    console.log(container.moveOrOpen('open'));  
-    console.log(container.receive(a1));
-    console.log(container.close('close'));
-    console.log(container.isOpen());
-    var artefactDescription = 'a box';
-    var actualResult = p0.get('get', a1.getName());
-    var objectName = "box";
-    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
-    var expectedResult = false;
-    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(true, expectedResult);
-    test.done();
-};
+test("Test that a player cannot get an object that doesn't exist.", () => {
+    const objectName = "nothing";
+    const expectedResults = [
+        "There's no "+objectName+" here and you're not carrying any either.",
+        "You can't see any "+objectName+" around here.",
+        "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.",
+        "You'll need to try somewhere (or someone) else for that.",
+        "There's no "+objectName+" available here at the moment."
+    ];
+    const actualResult = p0.get('get', 'nothing');
+    expect(expectedResults).toContain(actualResult);
+});
 
-exports.cannotGetObjectFromClosedContainerInLocation.meta = { traits: ["Player.Get Test", "Inventory Trait", "Location Trait", "Action Trait", "Container Trait"], description: "Test that a player cannot get an object from an closed container in a location." };
+test("Test that a player cannot get an '' object.", () => {
+    const expectedResult = "get what?";
+    const actualResult = p0.get('get', '');
+    expect(actualResult).toBe(expectedResult);
+});
 
-
-exports.cannotGetNonexistentObject = function (test) {
-    var actualResult = p0.get('get', 'nothing');
-    var objectName = "nothing";
-    var expectedResults = ["There's no "+objectName+" here and you're not carrying any either.", "You can't see any "+objectName+" around here.", "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no "+objectName+" available here at the moment."];
-    var expectedResult = false;
-    if (expectedResults.indexOf(actualResult) >-1) {expectedResult = true;};
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(true, expectedResult);
-    test.done();
-};
-
-exports.cannotGetNonexistentObject.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player cannot get an object that doesn't exist." };
-
-exports.cannotGetNullObject = function (test) {
-    var expectedResult = "get what?";
-    var actualResult = p0.get('get', '');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.cannotGetNullObject.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait"], description: "Test that a player cannot get an '' object." };
-
-
-exports.canGetHiddenObjectByNameFromOpenContainerInLocation = function (test) {
+test("Test that a player can get a named hidden object from an open container in a location.", () => {
     container.moveOrOpen('open');  
     container.receive(a1);
     a1.hide();
-    var expectedResult = "You get a box.";
-    var actualResult = p0.get('get', a1.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You get a box.";
+    const actualResult = p0.get('get', a1.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetHiddenObjectByNameFromOpenContainerInLocation.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Location Trait", "Action Trait", "Container Trait"], description: "Test that a player can get a named hidden object from an open container in a location." };
-
-
-exports.searchingRevealsNothingNew = function (test) {
+test("Test that a player can search an object and gain nothing - 0 items collected, 0 items collectable,  0 items found.", () => {
     container.moveOrOpen('open');  
     container.receive(a1);
-    var expectedResult = "You search the container and discover nothing new.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover nothing new.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.searchingRevealsNothingNew.meta = { traits: ["Player.Get Test", "Inventory Trait", "Action Trait", "Search Trait"], description: "Test that a player can search an object and gain nothing - 0 items collected, 0 items collectable,  0 items found." };
-
-
-exports.canGetSingleHiddenObjectBySearching = function (test) {
+test("Test that a player can get a hidden object by searching - 1 item  collected, 1 item  collectable,  1 item  found.", () => {
     container.moveOrOpen('open');  
     container.receive(a1);
     a1.hide();
-    var expectedResult = "You search the container and discover a box.<br>You collect the box.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box.<br>You collect the box.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetSingleHiddenObjectBySearching.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get a hidden object by searching - 1 item  collected, 1 item  collectable,  1 item  found." };
-
-
-exports.canGetTwoHiddenObjectsBySearching = function (test) {
+test("Test that a player can get hidden objects by searching - 2 items collected, 2 items collectable,  2 items found.", () => {
     container.moveOrOpen('open');
-      
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
     container.receive(a1);
     container.receive(a2);
     a1.hide();
     a2.hide();
-    var artefactDescription = 'a box';
-    var artefactName = 'box'
-    var expectedResult = "You search the container and discover a box and a box two.<br>You collect up all your discoveries.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box and a box two.<br>You collect up all your discoveries.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetTwoHiddenObjectsBySearching.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get hidden objects by searching - 2 items collected, 2 items collectable,  2 items found." };
-
-
-exports.cannotGetSingleHiddenFixedObjectBySearching = function (test) {
+test("Test that a player can get hidden objects by searching - 0 items collected, 0 items collectable,  1 item found.", () => {
     container.moveOrOpen('open');
-      
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',fixedAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',fixedAttributes, null);
     container.receive(a2);
     a2.hide();
-    var artefactDescription = 'a box';
-    var artefactName = 'box'
-    var expectedResult = "You search the container and discover a box two.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box two.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.cannotGetSingleHiddenFixedObjectBySearching.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get hidden objects by searching - 0 items collected, 0 items collectable,  1 item found." };
-
-
-exports.cannotGetSingleHiddenObjectBySearchingWhenInventoryIsFull = function (test) {
+test("Test that a player cannot get a hidden object by searching when they cannot carry it - 0 items collected, 1 item  collectable,  1 item  found.", () => {
     container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 20, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
+    const heavyAttributes = {weight: 20, canCollect: true};
+    const heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
+    const playerInventory = p0.getInventoryObject();
     playerInventory.add(heavy);
 
     container.receive(a1);
     a1.hide();
-    var expectedResult = "You search the container and discover a box.<br>Unfortunately you can't carry it right now.<br>You might want to come back for it later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box.<br>Unfortunately you can't carry it right now.<br>You might want to come back for it later or <i>drop</i> something else you're carrying.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.cannotGetSingleHiddenObjectBySearchingWhenInventoryIsFull.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player cannot get a hidden object by searching when they cannot carry it - 0 items collected, 1 item  collectable,  1 item  found." };
-
-exports.cannotGetTwoHiddenObjectsBySearchingWhenInventoryIsFull = function (test) {
+test("Test that a player cannot get a hidden object by searching when they cannot carry it - 0 items collected, 2 items collectable,  2 items found.", () => {
     container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 20, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
+    const heavyAttributes = {weight: 20, canCollect: true};
+    const heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
+    const playerInventory = p0.getInventoryObject();
     playerInventory.add(heavy);
 
     container.receive(a1);
     a1.hide();
 
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
     container.receive(a2);
     a2.hide();
 
-    var expectedResult = "You search the container and discover a box and a box two.<br>Unfortunately you can't carry any more right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box and a box two.<br>Unfortunately you can't carry any more right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.cannotGetTwoHiddenObjectsBySearchingWhenInventoryIsFull.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player cannot get a hidden object by searching when they cannot carry it - 0 items collected, 2 items collectable,  2 items found." };
-
-
-exports.cannotGetTwoHiddenFixedObjectsBySearching = function (test) {
+test("Test that a player cannot get a _fixed_ hidden object by searching - 0 items collected, 0 items collectable,  2 items found.", () => {
     container.moveOrOpen('open');  
 
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',fixedAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',fixedAttributes, null);
     container.receive(a2);
     a2.hide();
 
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
+    const a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box two and a box three.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box two and a box three.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.cannotGetTwoHiddenFixedObjectsBySearching.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player cannot get a hidden object by searchin - 0 items collected, 0 items collectable,  2 items found." };
-
-
-exports.canGetOneOfTwoHiddenObjectsBySearchingWhenOneIsFixed = function (test) {
-    container.moveOrOpen('open');  
+test("Test that a player can get some hidden objects by searching but not fixed one - 1 item collected, 1 item collectable,  2 items found.", () => {
+    container.moveOrOpen('open');
 
     container.receive(a1);
     a1.hide();
 
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
+    const a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box and a box three.<br>You collect the box.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box and a box three.<br>You collect the box.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetOneOfTwoHiddenObjectsBySearchingWhenOneIsFixed.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objectd by searching - 1 item collected, 1 item collectable,  2 items found." };
+test("Test that a player cannot get overweight and fixed hidden objects by searching - 0 items collected, 1 item collectable,  2 items found.", () => {
+    container.moveOrOpen('open');
 
-
-exports.cannotGetOneOfTwoHiddenObjectsBySearchingWhenOneIsFixedAndInventoryIsFull = function (test) {
-    container.moveOrOpen('open');  
-
-    var heavyAttributes = {weight: 20, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
+    const heavyAttributes = {weight: 20, canCollect: true};
+    const heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
+    const playerInventory = p0.getInventoryObject();
     playerInventory.add(heavy);
 
     container.receive(a1);
     a1.hide();
 
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
+    const a3 = new artefact.Artefact('box three', 'box three', 'a third box',fixedAttributes, null);
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box and a box three.<br>Unfortunately you can't carry any more right now.<br>You might want to come back for something here later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box and a box three.<br>Unfortunately you can't carry any more right now.<br>You might want to come back for something here later or <i>drop</i> something else you're carrying.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.cannotGetOneOfTwoHiddenObjectsBySearchingWhenOneIsFixedAndInventoryIsFull.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objectd by searching - 0 items collected, 1 item collectable,  2 items found." };
-
-
-exports.canGetTwoOfThreeHiddenObjectsBySearchingWhenInventoryIsNearlyFull = function (test) {
+test("Test that a player can get two carryable hidden objects by searching but not the heavy one  - 2 items collected, 3 items collectable,  3 items found.", () => {
     container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 14, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
+    const heavyAttributes = {weight: 14, canCollect: true};
+    const heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
+    const playerInventory = p0.getInventoryObject();
     playerInventory.add(heavy);
 
     container.receive(a1);
     a1.hide();
 
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
     container.receive(a2);
     a2.hide();
 
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
+    const a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
     container.receive(a3);
     a3.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two, and a box three.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for the box three later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    const expectedResult = "You search the container and discover a box, a box two, and a box three.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for the box three later or <i>drop</i> something else you're carrying.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetTwoOfThreeHiddenObjectsBySearchingWhenInventoryIsNearlyFull.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objects by searching  - 2 items collected, 3 items collectable,  3 items found." };
-
-
-exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFull = function (test) {
+test("Test that a player can get two out of 4 hidden objects by searching. Limited by weight  - 2 items collected, 4 items collectable,  4 items found.", () => {
     container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 14, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
+    const heavyAttributes = {weight: 14, canCollect: true};
+    const heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
+    const playerInventory = p0.getInventoryObject();
     playerInventory.add(heavy);
 
     container.receive(a1);
     a1.hide();
 
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
+    const a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
     container.receive(a2);
     a2.hide();
 
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
+    const a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
     container.receive(a3);
     a3.hide();
 
-    var a4 = new artefact.Artefact('box four', 'box four', 'a fourth box',junkAttributes, null);
+    const a4 = new artefact.Artefact('box four', 'box four', 'a fourth box',junkAttributes, null);
     container.receive(a4);
     a4.hide();
 
-    var expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFull.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objects by searching  - 2 items collected, 4 items collectable,  4 items found." };
-
-
-exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneItemIsFixed = function (test) {
-    container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 14, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
-    playerInventory.add(heavy);
-
-    container.receive(a1);
-    a1.hide();
-
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
-    container.receive(a2);
-    a2.hide();
-
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
-    container.receive(a3);
-    a3.hide();
-
-    var a4 = new artefact.Artefact('box four', 'box four', 'a fourth box',fixedAttributes, null);
-    container.receive(a4);
-    a4.hide();
-
-    var expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry everything right now.<br>You might want to come back for one more later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetTwoOfFourHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneItemIsFixed.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objects by searching  - 2 items collected, 3 items collectable,  4 items found." };
-
-
-exports.canGetTwoOfFiveHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneItemIsFixed = function (test) {
-    container.moveOrOpen('open');  
-    var heavyAttributes = {weight: 14, canCollect: true};
-    var heavy = new artefact.Artefact('heavy', 'heavy', 'inventory filler',heavyAttributes, null);
-    var playerInventory = p0.getInventoryObject();
-    playerInventory.add(heavy);
-
-    container.receive(a1);
-    a1.hide();
-
-    var a2 = new artefact.Artefact('box two', 'box two', 'another box',junkAttributes, null);
-    container.receive(a2);
-    a2.hide();
-
-    var a3 = new artefact.Artefact('box three', 'box three', 'a third box',junkAttributes, null);
-    container.receive(a3);
-    a3.hide();
-
-    var a4 = new artefact.Artefact('box four', 'box four', 'a fourth box',junkAttributes, null);
-    container.receive(a4);
-    a4.hide();
-
-    var a5 = new artefact.Artefact('box five', 'box five', 'a fifth box',fixedAttributes, null);
-    container.receive(a5);
-    a5.hide();
-
-    var expectedResult = "You search the container and discover a box, a box two, a box three, a box four, and a box five.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
-    var actualResult = p0.search('search', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetTwoOfFiveHiddenObjectsBySearchingWhenInventoryIsNearlyFullAndOneItemIsFixed.meta = { traits: ["Player.Get Test", "Inventory Trait", "Hide Trait", "Action Trait", "Search Trait"], description: "Test that a player can get some hidden objects by searching  - 2 items collected, 4 items collectable,  5 items found." };
+    const expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
+    const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
