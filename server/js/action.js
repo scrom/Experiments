@@ -1582,6 +1582,7 @@ exports.Action = function Action(player, map, fileManager) {
                     if (item) {
                         var itemString = item.toString();
                         itemString = itemString.replace(/<br>/g, '&lt;br>');
+                        itemString = itemString.replace(/\\/g, '\\\\');
                         return itemString.replace(/"/g, '\\"');
                     };
                     return "cannot find " + _object0;
