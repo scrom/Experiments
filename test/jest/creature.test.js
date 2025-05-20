@@ -1,17 +1,18 @@
 ﻿"use strict";
-var creature = require('../../server/js/creature.js');
-var player = require('../../server/js/player.js');
-var artefact = require('../../server/js/artefact.js');
-var contagion = require('../../server/js/contagion.js');
-var mission = require('../../server/js/mission.js');
-var location = require('../../server/js/location.js');
-var mapBuilder = require('../../server/js/mapbuilder.js');
-var map = require('../../server/js/map.js');
-var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
-var junkAttributes;
-var a0;
+const creature = require('../../server/js/creature.js');
+const player = require('../../server/js/player.js');
+const artefact = require('../../server/js/artefact.js');
+const contagion = require('../../server/js/contagion.js');
+const mission = require('../../server/js/mission.js');
+const location = require('../../server/js/location.js');
+const mapBuilder = require('../../server/js/mapbuilder.js');
+const map = require('../../server/js/map.js');
 
-var removeAllDoorsInMap = function(map) {
+let mb;
+let junkAttributes;
+let a0;
+
+const removeAllDoorsInMap = function(map) {
     var locations = map.getLocations();
     for (var l=0;l<locations.length;l++) {
         var doors = locations[l].getAllObjectsOfType("door");
@@ -24,384 +25,238 @@ var removeAllDoorsInMap = function(map) {
         };
         var exits = locations[l].getE
     };
-
 };
 
-exports.setUp = function (callback) {
+beforeEach(() => {
+    mb = new mapBuilder.MapBuilder('../../data/','root-locations');
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
-    callback(); 
-};
+});
 
-exports.tearDown = function (callback) {
+afterEach(() => {
     junkAttributes = null;
     a0 = null;
-    callback();
-};  
+    mb = null;
+});
 
 //creature constructor params are: (aname, aDescription, aDetailedDescription, weight, aType, carryWeight, health, affinity, carrying)
-exports.canCreateCreature = function (test) {
+test('canCreateCreature', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expectedResult = '{"object":"creature","name":"creature","displayName":"the creature","description":"beastie","detailedDescription":"a big beastie with teeth","attributes":{"weight":120,"attackStrength":50,"type":"creature","carryWeight":50,"health":150}}';
     var actualResult = c0.toString();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canCreateCreature.meta = { traits: ["Creature Test", "Constructor Trait"], description: "Test that a creature object can be created." };
-
-
-exports.canRetrieveACurrentAttribute = function (test) {
+test('canRetrieveACurrentAttribute', () => {
     var expectedResult = 120;
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});  
     var actualResult = c0.getCurrentAttributes().weight;
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canRetrieveACurrentAttribute.meta = { traits: ["Creature Test", "Attribute Trait"], description: "Test that a creature object can return its current attributes." };
-
-
-exports.canCreateCreatureWithSingleObject = function (test) {
+test('canCreateCreatureWithSingleObject', () => {
     var creatureName = 'creature';
     var creatureDescription = 'beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
     var artefactDescription = 'artefact of little consequence';
-    var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, a0);
-    console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = creatureDetailedDescription+"<br>"+"It's carrying an "+artefactDescription+'.';
-    console.log("expect: "+expectedResult);
-       test.equal(c0.getDetailedDescription(), expectedResult);
-    test.done();
-};
+    expect(c0.getDetailedDescription()).toBe(expectedResult);
+});
 
-exports.canCreateCreatureWithSingleObject.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
-
-exports.canCreateCreatureWithMultipleObjects = function (test) {
+test('canCreateCreatureWithMultipleObjects', () => {
     var creatureName = 'creature';
     var creatureDescription = 'beastie'
     var creatureDetailedDescription = "It's a big beastie with teeth.";
     var artefactDescription = 'artefact of little consequence';
     var anotherArtefactDescription = 'second artefact of little consequence';
-    var artefactName = 'artefact'
     var anotherArtefactName = 'another artefact'
     var a1 = new artefact.Artefact(anotherArtefactName, anotherArtefactDescription, 'not much to say really',junkAttributes, null);
-                                    //aName, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying
     var c0 = new creature.Creature(creatureName, creatureDescription, creatureDetailedDescription,{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0}, [a0,a1]);
-    console.log('actual: '+c0.getDetailedDescription());
     var expectedResult = "It's a big beastie with teeth.<br>It's carrying an artefact of little consequence and a second artefact of little consequence.";
-    console.log("expect: "+expectedResult);
-    test.equal(c0.getDetailedDescription(), expectedResult);
-    test.done();
-};
+    expect(c0.getDetailedDescription()).toBe(expectedResult);
+});
 
-exports.canCreateCreatureWithMultipleObjects.meta = { traits: ["Creature Test", "Constructor Trait", "Inventory Trait", "Artefact Trait", "Description Trait"], description: "Test that a creature object can be created." };
-
-
-exports.creatureToStringReturnsValidJSON = function (test) {
+test('creatureToStringReturnsValidJSON', () => {
     var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
     var fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
     var parcel = new artefact.Artefact('parcel', 'a parcel', "A Parcel with key attributes - odd.", keyAttributes);
     var keyFob = new mission.Mission('keyFob', null,"Vic has a key fob for you.",{"missionObject": "Vic","static": true,"dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."]},null,{isBroken: false}, null,{score: 10, delivers: fob, message: "Have 10 points."});
-
-    //Mission(name, displayName, description, attributes, initialAttributes, conditionAttributes, reward)
-
     var receptionist = new creature.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
     receptionist.addSyns(['receptionist','vic','heidi','her']);
-
     receptionist.addMission(keyFob);
-
     var bookMission = new mission.Mission('vicsBook', null,"Vic has a parcel for you but she'd like something to read first.",{"missionObject": "small book","destination": "Vic","static": true},null,{isDestroyed: false,isBroken: false}, null,{score: 50, delivers: parcel, message: "Congratulations. Vic likes the book! Have 50 points."});
     receptionist.addMission(bookMission);
-
     var expectedResult = '{"object":"creature","name":"vic","displayName":"Vic","description":"Vic the receptionist","detailedDescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215},"synonyms":["receptionist","vic","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","attributes":{"missionObject":"Vic", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}, {"object":"mission","name":"vicsbook","description":"Vic has a parcel for you but she\'d like something to read first.","attributes":{"missionObject":"small book", "destination":"Vic", "static":true},"conditionAttributes":{"isDestroyed":false, "isBroken":false},"reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailedDescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Congratulations. Vic likes the book! Have 50 points."}}]}';
     var actualResult = receptionist.toString();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.creatureToStringReturnsValidJSON.meta = { traits: ["Creature Test", "JSON Trait", "Mission Trait"], description: "Test that a creature object converts to valid JSON via toString." };
-
-exports.creatureCanReceiveObject = function (test) {
+test('creatureCanReceiveObject', () => {
     var creatureName = 'creature';
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = "The creature takes an artefact of little consequence.";
     var actual = c0.receive(a0);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureCanReceiveObject.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature object can receive an object." };
+// Skipping the commented out test 'unfriendlyCreatureWontShareObject'
 
-/*
-exports.unfriendlyCreatureWontShareObject = function (test) {
-    var creatureName = 'creature';
-    var artefactDescription = 'an artefact of little consequence';
-    var artefactName = 'artefact'
-    var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
-    var expected = "The creature now owns an artefact of little consequence.";
-    var actual = c0.receive(a0);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-}
-
-exports.unfriendlyCreatureWontShareObject.meta = { traits: ["Creature Test", "Inventory Trait", "Relinquish Trait"], description: "Test that an unfriendly creature won't share." };
-*/
-
-exports.creatureIsUnfriendlyWhenAffinityLessThan0 = function (test) {
+test('creatureIsUnfriendlyWhenAffinityLessThan0', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = false;
     var playerAggression = 0;
     var actual = c0.isFriendly(playerAggression);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsUnfriendlyWhenAffinityLessThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a low affinity creature is unfriendly." };
-
-exports.creatureIsUnfriendlyWhenAffinityIs0 = function (test) {
+test('creatureIsUnfriendlyWhenAffinityIs0', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = false;
     var playerAggression = 0;
     var actual = c0.isFriendly(playerAggression);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsUnfriendlyWhenAffinityIs0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a 0 affinity creature is unfriendly." };
-
-exports.creatureIsFriendlyWhenAffinityIsGreaterThan0 = function (test) {
+test('creatureIsFriendlyWhenAffinityIsGreaterThan0', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var playerAggression = 0;
     var actual = c0.isFriendly(playerAggression);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsFriendlyWhenAffinityIsGreaterThan0.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is friendly when player is not aggressive." };
-
-exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression = function (test) {
+test('creatureIsFriendlyWhenAffinityEqualsPlayerAggression', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var playerAggression = 1;
     var actual = c0.isFriendly(playerAggression);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsFriendlyWhenAffinityEqualsPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that an a positive affinity creature is friendly when affinity matches player aggression level." };
-
-exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression = function (test) {
+test('creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = false;
     var playerAggression = 2;
     var actual = c0.isFriendly(playerAggression);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsUnfriendlyWhenAffinityLessThanPlayerAggression.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a positive affinity creature is *not* friendly when affinity is less than player aggression level.." };
-
-exports.unfriendlyCreatureWontShare = function (test) {
+test('unfriendlyCreatureWontShare', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = false;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, 1);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.unfriendlyCreatureWontShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share" };
-
-
-exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact = function (test) {
+test('unfriendlyCreatureWontShareRegardlessOfAffinityImpact', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = false;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, -99);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.unfriendlyCreatureWontShareRegardlessOfAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that an unfriendly creature won't share even if taking an item from them actually *increases* affinity" };
+// --- End Jest conversion of first 15 tests ---
+// Jest conversions of the selected nodeunit tests
 
-
-exports.friendlyCreatureWillShare = function (test) {
+test('friendlyCreatureWillShare', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, 1);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreatureWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
-
-exports.friendlyCreatureWillShareItemWith0AffinityImpact = function (test) {
+test('friendlyCreatureWillShareItemWith0AffinityImpact', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, 1);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreatureWillShareItemWith0AffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature will share" };
-
-
-exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact = function (test) {
+test('friendlyCreatureWontShareSomethingWithHighAffinityImpact', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = false;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, 2);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreatureWontShareSomethingWithHighAffinityImpact.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait"], description: "Test that a friendly creature won't share something that reduces affinity below 0" };
-
-
-exports.deadCreatureWithNegativeAffinityWillShare = function (test) {
+test('deadCreatureWithNegativeAffinityWillShare', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
     var expected = true;
     var playerAggression = 0;
     var actual = c0.willShare(playerAggression, 1);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.deadCreatureWithNegativeAffinityWillShare.meta = { traits: ["Creature Test", "Affinity Trait", "Share Trait", "Dead Trait"], description: "Test that a dead creature will share" };
-
-
-exports.deadCreaturesCantAcceptGifts = function (test) {
-
+test('deadCreaturesCantAcceptGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:-1});
     var expected = false;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.deadCreaturesCantAcceptGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait", "Dead Trait"], description: "Test that a dead creature can't accept gifts" };
-
-exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive = function (test) {
+test('waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsNotAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact" };
-
-
-exports.neutralCreaturesWillAcceptSmallGifts = function (test) {
+test('neutralCreaturesWillAcceptSmallGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:0});
     var expected = true;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.neutralCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a neutral creature will accept gifts with minor affinity impact" };
-
-exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive = function (test) {
+test('waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 1;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.waryCreaturesWillAcceptSmallGiftsIfPlayerIsBarelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will accept gifts with minor affinity impact is player is only slightly aggressive" };
-
-
-exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive = function (test) {
+test('waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = false;
     var playerAggression = 2;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.waryCreaturesWillRefuseSmallGiftsIfPlayerIsModeratelyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts with minor affinity impact is player is aggressive" };
-
-
-exports.waryCreaturesWillRefuseMissionObjects = function (test) {
+test('waryCreaturesWillRefuseMissionObjects', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
@@ -410,123 +265,77 @@ exports.waryCreaturesWillRefuseMissionObjects = function (test) {
     var expected = false;
     var playerAggression = 0;    
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-
-exports.waryCreaturesWillRefuseMissionObjects.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a wary creature will not accept gifts if they're a mission object" };
-
-
-exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive = function (test) {
+    expect(actual).toBe(expected);
+});
+test('veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
     var expected = true;
     var playerAggression = 1;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.veryUnfriendlyCreaturesWillAcceptSmallGiftsIfPlayerIsOnlyMildlyAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
-
-
-exports.veryUnfriendlyCreaturesWillRefuseLargeGifts = function (test) {
+test('veryUnfriendlyCreaturesWillRefuseLargeGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-5});
     var expected = false;
     var playerAggression = 1;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:5,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.veryUnfriendlyCreaturesWillRefuseLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a very unfriendly creature will accept gifts with minor affinity impact regardless of agression" };
-
-
-exports.friendlyCreaturesWillAcceptSmallGifts = function (test) {
+test('friendlyCreaturesWillAcceptSmallGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
     var expected = true;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:1,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreaturesWillAcceptSmallGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
-
-exports.friendlyCreaturesWillNotAccept99LevelAffinityGifts = function (test) {
+test('friendlyCreaturesWillNotAccept99LevelAffinityGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 50, affinity: 1 });
     var expected = false;
     var playerAggression = 0;
-    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', { affinityModifier: 98, canCollect: true }, null);
+    var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', { affinityModifier: 99, canCollect: true }, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: " + expected);
-    console.log("actual: " + actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreaturesWillNotAccept99LevelAffinityGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
-
-exports.friendlyCreaturesWillAcceptLargeGifts = function (test) {
+test('friendlyCreaturesWillAcceptLargeGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:1});
     var expected = true;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:98,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
-
-
-exports.waryCreaturesWillNotAccept99LevelAffinityGifts = function (test) {
+test('waryCreaturesWillNotAccept99LevelAffinityGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 50, affinity: -1 });
-    var expected = true;
+    var expected = false;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', { affinityModifier: 99, canCollect: true }, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: " + expected);
-    console.log("actual: " + actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.waryCreaturesWillNotAccept99LevelAffinityGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
-
-
-exports.waryCreaturesWillAcceptLargeGifts = function (test) {
+test('waryCreaturesWillAcceptLargeGifts', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:50, affinity:-1});
     var expected = true;
     var playerAggression = 0;
     var gift = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',{affinityModifier:98,canCollect:true}, null);
     var actual = c0.willAcceptGift(playerAggression, gift);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-
-exports.waryCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Affinity Trait", "Give Trait"], description: "Test that a friendly creature will accept gifts with minor affinity impact" };
+    expect(actual).toBe(expected);
+});
 
 
 /*
@@ -540,158 +349,130 @@ exports.waryCreaturesWillAcceptLargeGifts.meta = { traits: ["Creature Test", "Af
             if ((_affinity <-5) && (0-affinityModifier<_affinity)) {return false;};
             if (self.isDead()) {return false;};
 */
+// Jest conversions of the selected nodeunit tests
 
-exports.canGetObjectFromCreature = function (test) {
+test('canGetObjectFromCreature', () => {
     var creatureName = 'creature';
     var artefactDescription = 'an artefact of little consequence'
     var artefactName = 'artefact'
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     c0.receive(a0);
-    test.equal(c0.getObject(artefactName).getName(), artefactName);
-    test.done();
-};
+    expect(c0.getObject(artefactName).getName()).toBe(artefactName);
+});
 
-exports.canGetObjectFromCreature.meta = { traits: ["Creature Test", "Inventory Trait"], description: "Test that a creature is carrying an object that has been added after creation." };
-
-//creature constructor params are: (aname, aDescription, aDetailedDescription, weight, attackStrength, gender, aType, carryWeight, health, affinity, canTravel, carrying)
-exports.canRetrieveAffinity = function (test) {
+test('canRetrieveAffinity', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-5});
     var expected = "<br>It doesn't like you much.";
     var actual = c0.getAffinityDescription();
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.canRetrieveAffinity.meta = { traits: ["Creature Test", "Affinity Trait"], description: "Test that a creature will return affinity." };
-
-exports.creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression = function (test) {
+test('creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var actual = c0.isFriendly(1);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsNotFriendlyWhenPlayerIsAggressive = function (test) {
+test('creatureIsNotFriendlyWhenPlayerIsAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = false;
     var actual = c0.isFriendly(1);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureIsNotFriendlyWhenPlayerIsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive = function (test) {
+test('creatureIsHostileLvl6WhenPlayerIsLessAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-6});
     var expected = true;
     var actual = c0.isHostile(5);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureIsHostileLvl6WhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive = function (test) {
+test('creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-10});
     var expected = true;
     var actual = c0.isHostile(0);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureIsNotHostileWhenPlayerIsAsAggressive = function (test) {
+test('creatureIsNotHostileWhenPlayerIsAsAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2});
     var expected = false;
     var actual = c0.isHostile(2);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureIsNotHostileWhenPlayerIsAsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureWillFleeWhenPlayerIsAsAggressive = function (test) {
+test('creatureWillFleeWhenPlayerIsAsAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(2);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillFleeWhenPlayerIsAsAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility = function (test) {
+test('creatureWillFleeIfNearlyDeadRegardlessOfHostility', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:15, maxHealth:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(0);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillFleeIfNearlyDeadRegardlessOfHostility.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.newCreatureWith50PercentHealthIsCreatedBleeding = function (test) {
+// Jest conversions of the selected nodeunit tests
+
+test('newCreatureWith50PercentHealthIsCreatedBleeding', () => {
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.getCurrentAttributes().bleeding;
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.newCreatureWith50PercentHealthIsCreatedBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleed Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+    expect(actual).toBe(expected);
+});
 
-exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding = function (test) {
+test('newCreatureWithMoreThan50PercentHealthIsNotBleeding', () => {
     //creatures start bleeding at 50% health or lower.
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:76, maxHealth:150, affinity:-2, canTravel:true});
     var expected = false;
     var actual = c0.getCurrentAttributes().bleeding;
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.newCreatureWithMoreThan50PercentHealthIsNotBleeding.meta = { traits: ["Creature Test", "Health Trait", "Bleed Trait"], description: "Test that creating a creature with low health has _bleeding flag set correctly." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile = function (test) {
+test('creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:false});
     var expected = false;
     var actual = c0.willFlee(3);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureWillFleeWhenPlayerIsMoreAggressive = function (test) {
+test('creatureWillFleeWhenPlayerIsMoreAggressive', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(3);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillFleeWhenPlayerIsMoreAggressive.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait"], description: "Test that a creature will return affinity." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.friendlyCreatureWillFindForPlayer = function (test) {
+test('friendlyCreatureWillFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
@@ -700,13 +481,10 @@ exports.friendlyCreatureWillFindForPlayer = function (test) {
     var actual = c0.find("simon g", playerAggression, m);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreatureWillFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
-
-exports.friendlyCreatureWillNotFindForAggresivePlayer = function (test) {
+test('friendlyCreatureWillNotFindForAggresivePlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
@@ -715,14 +493,10 @@ exports.friendlyCreatureWillNotFindForAggresivePlayer = function (test) {
     var actual = c0.find("simon g", playerAggression, m);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.friendlyCreatureWillNotFindForAggresivePlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Aggression Trait", "Find Trait"], description: "Test that a friendly creature will share" };
-
-
-exports.unfriendlyCreatureWillNotFindForPlayer = function (test) {
+test('unfriendlyCreatureWillNotFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
@@ -731,14 +505,10 @@ exports.unfriendlyCreatureWillNotFindForPlayer = function (test) {
     var actual = c0.find("simon g", playerAggression, m);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.unfriendlyCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a friendly creature will share" };
-
-
-exports.neutralCreatureWillNotFindForPlayer = function (test) {
+test('neutralCreatureWillNotFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
@@ -748,14 +518,10 @@ exports.neutralCreatureWillNotFindForPlayer = function (test) {
     var actual = findResult.substr(findResult.indexOf("<br>")+8); //exclude initial random reply
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.neutralCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a neutral creature will not find for player" };
-
-
-exports.neutralCreatureWillNotFindForPlayerAndGivesRandomReply = function (test) {
+test('neutralCreatureWillNotFindForPlayerAndGivesRandomReply', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, affinity: 0 });
@@ -765,14 +531,12 @@ exports.neutralCreatureWillNotFindForPlayerAndGivesRandomReply = function (test)
     var actual = findResult.substr(9,findResult.indexOf("'<br>")-9); //include initial random reply only
     console.log("expected: " + expected);
     console.log("actual: " + actual);
-    test.ok(expected.indexOf(actual) > -1);
-    test.done();
-};
+    expect(expected.indexOf(actual) > -1).toBeTruthy();
+});
 
-exports.neutralCreatureWillNotFindForPlayerAndGivesRandomReply.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait"], description: "Test that a neutral creature will not find for player" };
+// Jest conversion of nodeunit tests
 
-
-exports.deadCreatureWillNotFindForPlayer = function (test) {
+test('deadCreatureWillNotFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:0});
@@ -781,28 +545,20 @@ exports.deadCreatureWillNotFindForPlayer = function (test) {
     var actual = c0.find("simon g", playerAggression, m);
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.deadCreatureWillNotFindForPlayer.meta = { traits: ["Creature Test", "Affinity Trait", "Find Trait", "Dead Trait"], description: "Test that a friendly creature will share" };
-
-//collectBestAvailableWeapon
-exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
+test('weakUnarmedCreatureWillCollectWeapon', () => {
     var l = new location.Location("room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    //var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
-    //var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
-    //var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
 
     l.addObject(weakWeapon);
     l.addObject(lightWeapon);
@@ -810,27 +566,20 @@ exports.weakUnarmedCreatureWillCollectWeapon = function (test) {
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.weakUnarmedCreatureWillCollectWeapon.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that a creature will collect a weapon" };
-
-exports.strongUnarmedCreatureWillNotCollectWeapon = function (test) {
+test('strongUnarmedCreatureWillNotCollectWeapon', () => {
     var l = new location.Location("room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    //var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+
     var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
-    //var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
-    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
 
     l.addObject(weakWeapon);
     l.addObject(lightWeapon);
@@ -838,24 +587,20 @@ exports.strongUnarmedCreatureWillNotCollectWeapon = function (test) {
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.strongUnarmedCreatureWillNotCollectWeapon.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that a creature will not collect a weapon" };
-
-
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
+test('armedCreatureWillCollectBestWeaponAndDropCurrentOne', () => {
     var l = new location.Location("room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
     var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
     var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
     var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
@@ -870,14 +615,10 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne = function (test) {
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOne.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
-
-
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSameLocation = function (test) {
+test('armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSameLocation', () => {
     var l = new location.Location("room", "a room", false, true, 0);
     var m1 = new map.Map();
     m1.addLocation(l);
@@ -887,19 +628,19 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInS
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName, 'beastie', 'a small beastie', { weight: 120, attackStrength: 15, gender: 'unknown', type: 'creature', carryWeight: 50, health: 120, affinity: -10 });
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = { weight: 1, attackStrength: 8, type: "weapon", canCollect: true };
     var lightWeaponAttributes = { weight: 2, attackStrength: 12, type: "weapon", canCollect: true };
     var mediumWeaponAttributes = { weight: 4, attackStrength: 25, type: "weapon", canCollect: true };
     var heavyWeaponAttributes = { weight: 6, attackStrength: 50, type: "weapon", canCollect: true };
-    
+
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
     var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
     var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
-    
+
     c0.receive(weakWeapon);
-    
+
     l.addObject(mediumWeapon);
     l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
@@ -907,24 +648,20 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInS
     var actual = c0.tick(1, m1, p0).substr(0,expected.length);
     console.log("expected: " + expected);
     console.log("actual: " + actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSameLocation.meta = { traits: ["Creature Test", "Weapon Trait", "Tick Trait"], description: "Test that an armed creature will collect a better weapon" };
-
-
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect = function (test) {
+test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect', () => {
     var l = new location.Location("room","room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
     var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
     var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
     var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
@@ -942,23 +679,19 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContents
     var actual = l.describe();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
-
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsAreCorrect = function (test) {
+    expect(actual).toBe(expected);
+});
+test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect', () => {
     var l = new location.Location("room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
     var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
     var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
     var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
@@ -976,46 +709,66 @@ exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContent
     var actual = c0.getDetailedDescription();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsAreCorrect.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will collect a better weapon" };
-
-
-exports.armedCreatureWillIgnoreWeakerWeapons = function (test) {
+test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsAreCorrect', () => {
     var l = new location.Location("room","a room", false, true, 0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-    
+
     var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
     var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
     var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    //var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
-    
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+
+    var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
+    var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
+    var mediumWeapon = new artefact.Artefact("medium", "medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
+    var heavyWeapon = new artefact.Artefact("heavy", "heavy weapon", "heavy and strong", heavyWeaponAttributes);
+
+    c0.receive(weakWeapon);
+
+    l.addObject(mediumWeapon);
+    l.addObject(heavyWeapon);
+    l.addObject(lightWeapon);
+
+    c0.collectBestAvailableWeapon();
+
+    var expected = "a small beastie<br>It seems to like you.<br>It's carrying an heavy weapon.";
+    var actual = c0.getDetailedDescription();
+    console.log("expected: "+expected);
+    console.log("actual: "+actual);
+    expect(actual).toBe(expected);
+});
+
+test('armedCreatureWillIgnoreWeakerWeapons', () => {
+    var l = new location.Location("room","a room", false, true, 0);
+    var creatureName = 'creature';
+    var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
+    c0.go("n", l);
+
+    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
+    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+
     var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
     var mediumWeapon = new artefact.Artefact("medium", "a medium weapon", "moderately heavy, moderately strong", mediumWeaponAttributes);
-    //var heavyWeapon = new artefact.Artefact("heavy", "a heavy weapon", "heavy and strong", heavyWeaponAttributes);
 
     c0.receive(mediumWeapon);
 
     l.addObject(weakWeapon);
-    //l.addObject(heavyWeapon);
     l.addObject(lightWeapon);
     var expected = "";
     var actual = c0.collectBestAvailableWeapon();
     console.log("expected: "+expected);
     console.log("actual: "+actual);
-    test.equal(actual, expected);
-    test.done();
-};
+    expect(actual).toBe(expected);
+});
 
-exports.armedCreatureWillIgnoreWeakerWeapons.meta = { traits: ["Creature Test", "Weapon Trait"], description: "Test that an armed creature will not collect a weaker weapon" };
-
-exports.creatureCanHealAnotherBleedingCreature = function (test) {
-
+test('creatureCanHealAnotherBleedingCreature', () => {
     var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
     var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
 
@@ -1028,13 +781,10 @@ exports.creatureCanHealAnotherBleedingCreature = function (test) {
     var expected = "The creature 2 uses a first aid kit to heal the creature.";
     var actual = c0.heal(medikit, c1);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureCanHealAnotherBleedingCreature.meta = { traits: ["Creature Test", "Heal Trait", "Bleed Trait"], description: "Test that a bleeding creature can be healed by a player." };
+    expect(actual).toBe(expected);
+});
 
-exports.creaturesCanHealThemselves = function (test) {
-
+test('creaturesCanHealThemselves', () => {
     var medikitAttributes =  {"defaultAction": "heal","weight": 1,"type": "medical","canCollect": true,"isBreakable": true,"charges": 5};
     var medikit = new artefact.Artefact("medikit", "first aid kit", "heals many wounds", medikitAttributes);
 
@@ -1046,69 +796,53 @@ exports.creaturesCanHealThemselves = function (test) {
     var expected = "The creature uses a first aid kit to heal itself.";
     var actual = c0.heal(medikit, c0);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creaturesCanHealThemselves.meta = { traits: ["Creature Test", "Heal Trait", "Bleed Trait"], description: "Test that a bleeding creature can be healed by a player." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureCanFindPathToGoal = function (test) {
-
+test('creatureCanFindPathToGoal', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
     removeAllDoorsInMap(m);
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
-    
-    var expected = "e,e,n,e,n,u,s,e,s,s,u,n,n,n,w,w,n,w,s,e,n";
-    //var actual = c0.findPath(destination, m);
+
+    var expected = ["e","e","n","e","n","u","s","e","s","s","u","n","n","n","w","w","n","w","s","e","n"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureCanFindPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toStrictEqual(expected);
+});
 
-exports.creatureCanFindAlternatePathToGoalAvoidingALocation = function (test) {
-
+test('creatureCanFindAlternatePathToGoalAvoidingALocation', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor"]});
     var m = mb.buildMap();
     removeAllDoorsInMap(m);
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
-    var expected = "e,e,n,e,n,u,s,e,s,s,u,w";
-    //var actual = c0.findPath(destination, m);
+    var expected = ["e","e","n","e","n","u","s","e","s","s","u","w"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureCanFindAlternatePathToGoalAvoidingALocation.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toStrictEqual(expected);
+});
 
-
-exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit = function (test) {
-
+test('ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true });
     var m = mb.buildMap();
     removeAllDoorsInMap(m);
     var destination = 'atrium';
     c0.go(null, m.getLocation('machine-room-east'));
 
-    var expected = "e,n,n,e,s,s,s,d,n,n,n,w,s,w,s,w,w,w,n,n,n,e,n,d,s,e,s,s,w,w,w,n,w,w";
-    //var actual = c0.findPath(destination, m);
+    var expected = ["e","n","n","e","s","s","s","d","n","n","n","w","s","w","s","w","w","w","n","n","n","e","n","d","s","e","s","s","w","w","w","n","w","w"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toStrictEqual(expected);
+});
+// Jest conversion of nodeunit tests
 
-exports.creatureCanFindBestPathToGoal = function (test) {
-
+test('creatureCanFindBestPathToGoal', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
     removeAllDoorsInMap(m);
@@ -1123,13 +857,10 @@ exports.creatureCanFindBestPathToGoal = function (test) {
     console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureCanFindBestPathToGoal.meta = { traits: ["Creature Test", "Hunting Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toBe(true);
+});
 
-
-exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination = function (test) {
+test('creatureWillAvoidEmergencyExitsWhenSeekingDestination', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
     var destination = 'smoking-area';
@@ -1148,12 +879,10 @@ exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination = function (test) 
     console.log("Avoiding door, path length should ="+targetLength+". Selected path length="+path.length+". Path: "+path);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureWillAvoidEmergencyExitsWhenSeekingDestination.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toBe(true);
+});
 
-exports.johnCanFindPathToPlantRoom = function (test) {
+test('johnCanFindPathToPlantRoom', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var peacock = m.getLocation("peacock");
@@ -1188,13 +917,10 @@ exports.johnCanFindPathToPlantRoom = function (test) {
     destinations = john.getDestinations();
     console.log(destinations);
     console.log(john.getPath());
-    test.equal(expected, actual);
-    test.done();
-};
-exports.johnCanFindPathToPlantRoom.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.animalCannotFindPathToPlantRoomDueToDoors = function (test) {
+test('animalCannotFindPathToPlantRoomDueToDoors', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var peacock = m.getLocation("peacock");
@@ -1226,14 +952,10 @@ exports.animalCannotFindPathToPlantRoomDueToDoors = function (test) {
     destinations = cat.getDestinations();
     console.log(destinations);
     console.log(cat.getPath());
-    test.ok(actual != expected);
-    test.done();
-};
-exports.animalCannotFindPathToPlantRoomDueToDoors.meta = { traits: ["Creature Test", "Destination Trait", "Path Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).not.toBe(expected);
+});
 
-
-exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
-
+test('creatureCanFindDirectPathToGoalThroughADoor', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var m = mb.buildMap();
     removeAllDoorsInMap(m);
@@ -1248,13 +970,10 @@ exports.creatureCanFindDirectPathToGoalThroughADoor = function (test) {
     console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureCanFindDirectPathToGoalThroughADoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toBe(true);
+});
 
-
-exports.creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor = function (test) {
+test('creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
     var m = mb.buildMap();
@@ -1270,13 +989,10 @@ exports.creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor = function (tes
     console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature can identify a path to a location through a locked door when they have a matching key." };
+    expect(actual).toBe(true);
+});
 
-
-exports.creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor = function (test) {
+test('creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true });
     var m = mb.buildMap();
     //removeAllDoorsInMap(m);
@@ -1291,13 +1007,10 @@ exports.creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor = function (
     console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature can identify a path to a location." };
+    expect(actual).toBe(true);
+});
 
-
-exports.creatureWithKeyWillRelockLinkedDoor = function (test) {
+test('creatureWithKeyWillRelockLinkedDoor', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var destination = 'machine-room-west';    
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { destinations:[destination], weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
@@ -1332,13 +1045,11 @@ exports.creatureWithKeyWillRelockLinkedDoor = function (test) {
     var actual = doorOut.isLocked() && doorIn.isLocked();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual);
-    test.done();
-};
-exports.creatureWithKeyWillRelockLinkedDoor.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature traversing a locked door with matching key will lock it behind them afterward." };
+    expect(actual).toBe(true);
+});
+// Jest conversions of the selected nodeunit tests
 
-
-exports.unlockedTimedDoorWillRelockAfterTicks = function (test) {
+test('unlockedTimedDoorWillRelockAfterTicks', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
@@ -1360,13 +1071,10 @@ exports.unlockedTimedDoorWillRelockAfterTicks = function (test) {
     var actual = doorOut.isLocked();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual);
-    test.done();
-};
-exports.unlockedTimedDoorWillRelockAfterTicks.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+    expect(actual).toBe(true);
+});
 
-
-exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage = function (test) {
+test('unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
@@ -1386,13 +1094,10 @@ exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage = function 
     var actual = corridor.tick(3, m, p0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(expected, actual);
-    test.done();
-};
-exports.unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage.meta = { traits: ["Door Trait", "Lock Trait"], description: "Test that a time lock door locks on its own after specified time." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.unlockedTimedDoorWillStayOpenFor1Tick = function (test) {
+test('unlockedTimedDoorWillStayOpenFor1Tick', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
@@ -1414,13 +1119,10 @@ exports.unlockedTimedDoorWillStayOpenFor1Tick = function (test) {
     var actual = doorOut.isLocked();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual == expected);
-    test.done();
-};
-exports.unlockedTimedDoorWillStayOpenFor1Tick.meta = { traits: ["Door Trait", "Lock Trait", "Tick Trait"], description: "Test that a time lock door locks on its own after specified time." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureHealOnTickConsumesAllOfMedicalKitProperly = function (test) {
-    
+test('creatureHealOnTickConsumesAllOfMedicalKitProperly', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     p0.setLocation(m.getLocation('customer-delight-south-west'));
@@ -1436,19 +1138,15 @@ exports.creatureHealOnTickConsumesAllOfMedicalKitProperly = function (test) {
         console.log(actual);
         alice.hurt(40);
         attempts++;
-    };
+    }
     
     console.log("Total ticks: " + attempts);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureHealOnTickConsumesAllOfMedicalKitProperly.meta = { traits: ["Creature Test", "Heal Trait", "Tick Trait"], description: "Test that a creature that heals when ticking will use their kit up." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = function (test) {
-
+test('ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
@@ -1462,18 +1160,15 @@ exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit = functi
         c0.tick(1, m, p0);
         attempts++;
         actual = c0.getCurrentLocation().getName();
-    };
+    }
 
     console.log("Total ticks: " + attempts);
-    //var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit.meta = { traits: ["Creature Test", "Avoid Trait", "Tick Trait"], description: "Test that a creature doesn't get stuck with avoiding locations." };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureWithKeyWillNotRelockLinkedDoorIfAutoLock = function (test) {
+test('creatureWithKeyWillNotRelockLinkedDoorIfAutoLock', () => {
     var keyfob = new artefact.Artefact("keyfob", "keyfob", "keyfob", { "weight": 0.1, "type": "key", "canCollect": true, "unlocks": "office door" });
     var destination = 'machine-room-west';
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { destinations: [destination], weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true }, [keyfob]);
@@ -1505,14 +1200,10 @@ exports.creatureWithKeyWillNotRelockLinkedDoorIfAutoLock = function (test) {
     var actual = doorOut.isLocked() && doorIn.isLocked();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.ok(actual == expected);
-    test.done();
-};
-exports.creatureWithKeyWillNotRelockLinkedDoorIfAutoLock.meta = { traits: ["Creature Test", "Hunting Trait", "Door Trait", "Lock Trait"], description: "Test that a creature traversing a locked door with matching key will lock it behind them afterward." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (test) {
-
+test('ensureSettingDestinationForMobileNonTravellerAddsReturnHome', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: false});
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
@@ -1523,14 +1214,10 @@ exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome = function (
     var actual = c0.getDestinations().length;
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.ensureSettingDestinationForMobileNonTravellerAddsReturnHome.meta = { traits: ["Creature Test", "Hunting Trait", "Travel Trait"], description: "Test that a creature can return home after travelling." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
-
+test('ensureSettingDestinationForTravellerAddsToList', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true});
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
@@ -1538,73 +1225,57 @@ exports.ensureSettingDestinationForTravellerAddsToList = function (test) {
     c0.setDestination('atrium');
     c0.setDestination('smoking-area');
 
-    var expected = "smoking-area,atrium";
+    var expected = ["smoking-area","atrium"];
     var actual = c0.getDestinations();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.ensureSettingDestinationForTravellerAddsToList.meta = { traits: ["Creature Test", "Hunting Trait", "Travel Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
+    expect(actual).toStrictEqual(expected);
+});
 
-
-exports.ensureSettingDestinationFromAvoidListDoesNotAddDestination = function (test) {
-
+test('ensureSettingDestinationFromAvoidListDoesNotAddDestination', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 75, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding:["atrium"],destinations:["reception", "office-front"]});
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
     c0.setDestination('atrium');
-    var expected = "reception,office-front";
+    var expected = ["reception","office-front"];
     var actual = c0.getDestinations();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.ensureSettingDestinationFromAvoidListDoesNotAddDestination.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that a creature does not receive additional destination if it's in their avoid list" };
+    expect(actual).toStrictEqual(expected);
+});
 
-
-exports.addingNewAvoidLocationRemovesMatchingDestinations = function (test) {
-
+test('addingNewAvoidLocationRemovesMatchingDestinations', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, destinations:["reception", "office-front", "northwest-corridor-ground-floor", "reception", "atrium", "reception"]});
     c0.setAvoiding("reception");
-    var expected = "office-front,northwest-corridor-ground-floor,atrium";
+    var expected = ["office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getDestinations();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.addingNewAvoidLocationRemovesMatchingDestinations.meta = { traits: ["Creature Test", "Hunting Trait", "Avoid Trait"], description: "Test that when an new avoid location is added, it's removed from creature destinations." };
+    expect(actual).toStrictEqual(expected);
+});
 
-exports.addingNewAvoidLocationIsCorrectlyStored = function (test) {
-
+test('addingNewAvoidLocationIsCorrectlyStored', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor"]});
     c0.setAvoiding("atrium");
-    var expected = "reception,office-front,northwest-corridor-ground-floor,atrium";
+    var expected = ["reception","office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getAvoiding();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.addingNewAvoidLocationIsCorrectlyStored.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a new avoid location is added to 'avoiding' array." };
+    expect(actual).toStrictEqual(expected);
+});
+// Jest conversions of the selected nodeunit tests
 
-exports.cannotAddDuplicateAvoidLocations = function (test) {
-
+test('cannotAddDuplicateAvoidLocations', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true, avoiding:["reception", "office-front", "northwest-corridor-ground-floor", "atrium"]});
     c0.setAvoiding("atrium");
-    var expected = "reception,office-front,northwest-corridor-ground-floor,atrium";
+    var expected = ["reception","office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getAvoiding();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.cannotAddDuplicateAvoidLocations.meta = { traits: ["Creature Test", "Avoid Trait"], description: "Test that a duplicate avoid location is not added to 'avoiding' array." };
+    expect(actual).toStrictEqual(expected);
+});
 
-
-exports.creatureRefusesToTravelToAvoidedLocation = function (test) {
+test('creatureRefusesToTravelToAvoidedLocation', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var atrium = m.getLocation("atrium");
@@ -1621,13 +1292,10 @@ exports.creatureRefusesToTravelToAvoidedLocation = function (test) {
     };
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureRefusesToTravelToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Ask Trait"], description: "Test that a player cannot ask a creature to go to an avoided location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureWillAcceptTravelToLocation = function (test) {
+test('creatureWillAcceptTravelToLocation', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var atrium = m.getLocation("atrium");
@@ -1645,13 +1313,10 @@ exports.creatureWillAcceptTravelToLocation = function (test) {
     }    ;
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillAcceptTravelToLocation.meta = { traits: ["Creature Test", "Ask Trait"], description: "Test that a player can ask a creature to go to a location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureWillNotFollowPlayerToAvoidedLocation = function (test) {
+test('creatureWillNotFollowPlayerToAvoidedLocation', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var atrium = m.getLocation("atrium");
@@ -1663,13 +1328,10 @@ exports.creatureWillNotFollowPlayerToAvoidedLocation = function (test) {
     var actual = p0.go("", "e", m);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureWillNotFollowPlayerToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation = function (test) {
+test('highAffinityCreatureWillFollowPlayerToAvoidedLocation', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var atrium = m.getLocation("atrium");
@@ -1681,13 +1343,10 @@ exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation = function (test) 
     var actual = p0.go("", "e", m);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.highAffinityCreatureWillFollowPlayerToAvoidedLocation.meta = { traits: ["Creature Test", "Avoid Trait", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.friendlyCreatureWillFollowPlayer = function (test) {
+test('friendlyCreatureWillFollowPlayer', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     var atrium = m.getLocation("atrium");
@@ -1699,13 +1358,10 @@ exports.friendlyCreatureWillFollowPlayer = function (test) {
     var actual = p0.go("", "e", m);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.friendlyCreatureWillFollowPlayer.meta = { traits: ["Creature Test", "Follow Trait"], description: "Test that a creature will not follow a player to an avoided location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges = function (test) {
+test('receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1719,12 +1375,10 @@ exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharg
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehind = function (test) {
+test('receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehind', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1738,12 +1392,10 @@ exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBeh
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehind.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll = function (test) {
+test('receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1757,12 +1409,10 @@ exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll =
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll.meta = { traits: ["Creature Test", "Animal Trait", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood = function (test) {
+test('receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 11, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1775,13 +1425,10 @@ exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood = function (test) 
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood.meta = { traits: ["Creature Test", "Animal Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) {
+test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1795,12 +1442,10 @@ exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood = function (test) 
     var actual = c0.receive(food, p0).substr(0,16);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingFoodWhenFriendlyCreatureIsHungryConsumesFood.meta = { traits: ["Creature Test", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood = function (test) {
+test('receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 2, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1815,12 +1460,10 @@ exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood 
     var actual = resultString.substr(0,25)+resultString.substr(-38);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood.meta = { traits: ["Creature Test", "Eat Trait", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood = function (test) {
+test('receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1833,12 +1476,10 @@ exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood = function (test) 
     var actual = c0.receive(food, p0);
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood.meta = { traits: ["Creature Test", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory = function (test) {
+test('receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
     var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
@@ -1852,52 +1493,41 @@ exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory = funct
     var actual = c0.check(food.getName());
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory.meta = { traits: ["Creature Test", "Receive Trait", "Food Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent = function (test) {
-
+test('feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:75, maxHealth:150});
     c0.feed(50);
     var expected = "He's really not in good shape.";
     var actual = c0.health();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent.meta = { traits: ["Creature Test", "Feed Trait", "Bleed Trait"], description: "Test that a creature whose health is below the bleed threshold cannot be healed above it." };
+    expect(actual).toBe(expected);
+});
+// Jest conversions of the selected nodeunit tests
 
-exports.feedingNearlyDeadCreatureMarginallyIncreasesHealth = function (test) {
-
+test('feedingNearlyDeadCreatureMarginallyIncreasesHealth', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:5, maxHealth:150});
     c0.feed(500);
     var expected = "He's really not in good shape.";
     var actual = c0.health();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.feedingNearlyDeadCreatureMarginallyIncreasesHealth.meta = { traits: ["Creature Test", "Feed Trait", "Bleed Trait"], description: "Test that a creature who is nearly dead can be fed to heal to just below the bleed threshold but no further." };
+    expect(actual).toBe(expected);
+});
 
-exports.feedingInjuredCreatureIncreaseHealth = function (test) {
-
+test('feedingInjuredCreatureIncreaseHealth', () => {
     var c0 = new creature.Creature('creature','beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'male', type:'creature', carryWeight:50, health:77, maxHealth:150});
     c0.feed(100);
     var expected = "He's generally the picture of health.";
     var actual = c0.health();
     console.log("expected:"+expected);
     console.log("actual:"+actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.feedingInjuredCreatureIncreaseHealth.meta = { traits: ["Creature Test", "Feed Trait"], description: "Test that a creature whose health is above the bleed threshold can be healed with food." };
+    expect(actual).toBe(expected);
+});
 
-exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
-
+test('healthyCreatureDoesFullDamageWhenHittingOthers', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
@@ -1914,46 +1544,37 @@ exports.healthyCreatureDoesFullDamageWhenHittingOthers = function (test) {
     var actual = p0.health();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.healthyCreatureDoesFullDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a healthy (injured but not bleeding) creature creature does full 'hit' damage." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.creatureOccasionallyMissesPlayerWhenHitting = function (test) {
-    
+test('creatureOccasionallyMissesPlayerWhenHitting', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 78, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var m = new map.Map();
     var p0 = new player.Player({ username: "player" }, m);
-    
+
     var misscount = 0;
     var attempts = 0;
-    while (misscount < 1 && attempts <25) {
+    while (misscount < 1 && attempts < 25) {
         attempts++;
         var actualResult = c0.hit(p0, 1);
         if (actualResult == "") { //"" means creature missed.
             misscount++;
         };
     };
-    
+
     var expected = 25;
     var actual = attempts;
     var success = false;
     var achieved = expected - actual;
-    //console.log(achieved);
     if (achieved >= 0) {
         success = true;
     };
     console.log("expected: <25");
     console.log("actual:" + actual + " success? "+success);
-    test.ok(success);
-    test.done();
-};
-exports.creatureOccasionallyMissesPlayerWhenHitting.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a healthy (injured but not bleeding) creature creature does full 'hit' damage." };
+    expect(success).toBeTruthy();
+});
 
-
-exports.bleedingCreatureDoesReducedDamageWhenHittingOthers = function (test) {
-
+test('bleedingCreatureDoesReducedDamageWhenHittingOthers', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 55, gender: 'unknown', type: 'creature', carryWeight: 50, health: 73, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
@@ -1970,14 +1591,10 @@ exports.bleedingCreatureDoesReducedDamageWhenHittingOthers = function (test) {
     var actual = p0.health();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.bleedingCreatureDoesReducedDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Bleed Trait", "Hit Trait"], description: "Test that a bleeding creature creature doesn't do full 'hit' damage." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
-
+test('nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true,  avoiding:['machine-room-west'] });
     var m = new map.Map();
     var p0 = new player.Player({ username: "player" }, m);
@@ -1994,13 +1611,10 @@ exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers = function (test) {
     var actual = p0.health();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers.meta = { traits: ["Creature Test", "Hit Trait"], description: "Test that a nearly dead creature creature does DOUBLE 'hit' damage!" };
+    expect(actual).toBe(expected);
+});
 
-exports.killingCreatureLeavesBloodInLocation = function (test) {
-    
+test('killingCreatureLeavesBloodInLocation', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     l0.addObject(c0);
@@ -2012,34 +1626,25 @@ exports.killingCreatureLeavesBloodInLocation = function (test) {
     var actual = blood.getDescription();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.killingCreatureLeavesBloodInLocation.meta = { traits: ["Creature Test", "Kill Trait", "Blood Trait"], description: "Test that a freshly killed creature leaves blood in location." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.killingCreatureWithInventoryReportsCorrectMessage = function (test) {
-    
+test('killingCreatureWithInventoryReportsCorrectMessage', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 45, gender: 'unknown', type: 'creature', carryWeight: 50, health: 7, maxHealth: 150, affinity: -2, canTravel: true, traveller: true, avoiding: ['machine-room-west'] });
     var l0 = new location.Location('home', 'Home', "You're home", {});
     var inv = c0.getInventoryObject();
     inv.add(a0);
     l0.addObject(c0);
     c0.go(null, l0);
-    
-    
+
     var expected = "<br>The creature is dead. Now you can steal all its stuff.";
     var actual = c0.kill();
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.killingCreatureWithInventoryReportsCorrectMessage.meta = { traits: ["Creature Test", "Kill Trait"], description: "Test that a freshly killed creature with inventory reports right messsage to player." };
+    expect(actual).toBe(expected);
+});
 
-
-exports.CreatureCanSlipOnWetFloor = function (test) { 
-
+test('CreatureCanSlipOnWetFloor', () => {
     var l0 = new location.Location('home','home','a home location');
     var l1 = new location.Location('new','new','a new location');
     var p0 = new player.Player({username:"user"});
@@ -2071,15 +1676,10 @@ exports.CreatureCanSlipOnWetFloor = function (test) {
     var actualResult = c0.tick(5, m1, p0);
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.CreatureCanSlipOnWetFloor.meta = { traits: ["Creature Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
-
-
-exports.CreatureCanSlipAndDieOnWetFloor = function (test) { 
-
+test('CreatureCanSlipAndDieOnWetFloor', () => {
     var l0 = new location.Location('home','home','a home location');
     var l1 = new location.Location('new','new','a new location');
     var p0 = new player.Player({username:"user"});
@@ -2106,9 +1706,6 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     l0.addLiquid("liquid9");
     l0.addLiquid("liquid10");
 
-    //console.log(p0.examine("look"));
-    //console.log(c0.tick(15, m1, p0));
-
     //*note* - occasionaly - even with this much liquid, they might still not slip.
     //this matches player behaviour for fairness.
     var expectedResult = "<br>A beastie wanders in, slips in the mess on the floor and dies from its injuries. Now you can steal all its stuff. ";
@@ -2125,14 +1722,10 @@ exports.CreatureCanSlipAndDieOnWetFloor = function (test) {
     };
     console.log("Expected: "+expectedResult);
     console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.CreatureCanSlipAndDieOnWetFloor.meta = { traits: ["Creature Test", "Slip Trait", "Navigation Trait", "Tick Trait"], description: "Test that player can slip on a wet floor." };
-
-
-exports.CreatureWillEnactContagion = function (test) {
+test('CreatureWillEnactContagion', () => {
     var con = new contagion.Contagion("death", "deathness", { "communicability": 1, "transmission": "bite", "symptoms": [{ "action": "hurt", "health": "3", "frequency": 1 }, { "action": "bite", "frequency": 1 }], "duration": -1 });
     var l0 = new location.Location('home', 'home', 'a home location');
     var p0 = new player.Player({ username: "user" });
@@ -2145,7 +1738,6 @@ exports.CreatureWillEnactContagion = function (test) {
     var inv = c0.getInventoryObject();
     inv.add(a0);
     c0.go(null, l0);
-        
 
     var expectedResult = " The creature lurches in a spasm of pain and bites you. <br>";
     var fullResult = c0.tick(2, m1, p0);
@@ -2158,17 +1750,13 @@ exports.CreatureWillEnactContagion = function (test) {
         actualResult = fullResult.substr(0, expectedResult.length);
         console.log(fullResult);
         attempts++;
-    };
+    }
     console.log("Expected: " + expectedResult);
     console.log("Actual  : " + actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.CreatureWillEnactContagion.meta = { traits: ["Creature Test", "Contagion Trait", "Tick Trait"], description: "Test that creature will bite if contagious." };
-
-exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
-
+test('deneWontEatMissionChocolateEvenWhenHungry', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
     var c0 = m.getCreature("dene boulton");
@@ -2176,18 +1764,15 @@ exports.deneWontEatMissionChocolateEvenWhenHungry = function (test) {
     c0.tick(6, m, p0); //ensure he's hungry
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
- 
+
     var expected = "Dene takes a chocolate.";
     var actual = c0.receive(chocolate, p0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.deneWontEatMissionChocolateEvenWhenHungry.meta = { traits: ["Creature Test", "Receive Trait", "Mission Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
+    expect(actual).toBe(expected);
+});
 
-exports.otherCreatureWillStillEatChocolate = function (test) {
-
+test('otherCreatureWillStillEatChocolate', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
     var c0 = m.getCreature("mark wightman");
@@ -2195,69 +1780,53 @@ exports.otherCreatureWillStillEatChocolate = function (test) {
     c0.tick(6, m, p0); //ensure he's hungry
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
- 
+
     var expected = "He eats some of the chocolate";
     var actual = c0.receive(chocolate, p0).substr(0,29);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.otherCreatureWillStillEatChocolate.meta = { traits: ["Creature Test", "Receive Trait", "Mission Trait"], description: "Test that a creature can receive additional destinations in the correct order" };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureDescriptionIncludesSalesInventory = function (test) {
-    
+test('creatureDescriptionIncludesSalesInventory', () => {
     var m0 = new map.Map();
-    //l0 = new location.Location('home', 'home', 'a home location');
-   
     var seller = mb.buildCreature({ "file": "ice-cream-man" });
-    //var p0 = new player.Player({ username: "player" }, m0, mb);
-    //p0.setStartLocation(l0);
-    //p0.setLocation(l0);    
-    //seller.go(null, m.getLocation('home'));
-   
     var expected = "A random guy who occasionally has ice cream for sale.<br>He has 15 99 flake ice creams (price: &pound;3.50 each) for sale.<br><br>He wants to <i>talk</i> to you about something.$imageicecreamman.jpg/$image";
     var actual = seller.getDetailedDescription(0, m0, 0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureDescriptionIncludesSalesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature reports their sales inventory correctly" };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureCanSellItemToPlayer = function (test) {
-    
+test('creatureCanSellItemToPlayer', () => {
     var m0 = new map.Map();
     var l0 = new location.Location('home', 'home', 'a home location');
     m0.addLocation(l0);
-    
+
     var seller = mb.buildCreature({ "file": "ice-cream-man" });
     var p0 = new player.Player({ username: "player" }, m0, mb);
     p0.setStartLocation(l0);
     p0.setLocation(l0);    
     seller.go(null, m0.getLocation('home'));
-    
+
     var expected = "The ice cream man sells you a 99 flake ice cream.";
     var actual = seller.sell("ice cream", p0);
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureCanSellItemToPlayer.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature can sell an item to player" };
+    expect(actual).toBe(expected);
+});
 
-exports.creatureSellingItemReducesInventory = function (test) {
-    
+test('creatureSellingItemReducesInventory', () => {
     var m0 = new map.Map();
     var l0 = new location.Location('home', 'home', 'a home location');
     m0.addLocation(l0);
-    
+
     var seller = mb.buildCreature({ "file": "ice-cream-man" });
     var p0 = new player.Player({ username: "player" }, m0, mb);
     p0.setStartLocation(l0);
     p0.setLocation(l0);    
     seller.go(null, m0.getLocation('home'));
-    
+
     var salesInventory = seller.getSalesInventoryObject();
     var originalInventorySize = salesInventory.getWeight();
     seller.sell("ice cream", p0);
@@ -2266,10 +1835,8 @@ exports.creatureSellingItemReducesInventory = function (test) {
     var actual = originalInventorySize - newInventorySize;
     console.log("expected:" + expected);
     console.log("actual:" + actual);
-    test.equal(actual, expected);
-    test.done();
-};
-exports.creatureSellingItemReducesInventory.meta = { traits: ["Creature Test", "Sell Trait", "Inventory Trait"], description: "Test that a creature selling an item to player reduces remaining inventory" };
+    expect(actual).toBe(expected);
+});
 
 
 /*
