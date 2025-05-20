@@ -6,7 +6,8 @@ Getting back into coding
 MVTA. March 2014: (Readme last updated May 2025)
 
 *** This game was originally live and running at: http://mvta.herokuapp.com/ ***
-Currently being updated to 2025 versions of Node and related packages, upgrading tests to a new frameworkd and then finding a new location to host.
+This game has now been updated to 2025 versions of Node and related packages, and tests migrated to Jest.
+More work is needed to resolve updated (async) Redis support along with a new approach to secure deployment.
 
 About:
 ------
@@ -128,29 +129,26 @@ On the server side, I'm trying to keep the main game engine away from node-speci
 Platform
 --------
 This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
-
-Whilst the game was originally developed in Visual Studio 2012, it's now under development in VS2022. 
+Having said that, it will likely be deployed to docker linux containers
+Whilst the game was originally developed in Visual Studio 2012 and can be developed in VS2022, it's best to work on it now using VSCode. 
 
 
 Tests
 -----
 For most server classes, there are corresponding test files. 
-These are found in a relevant subfolder of the \test\ folder for each test framework used - e.g. /test/nodeunit  /test/jest  /test/mocha.
-The file naming convention for tests is <classname><subset>.test.js - This follows pretty much standard JS test frameworks copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
+These are found in a test framework-specific subfolder under \test\  e.g. /test/jest
+The file naming convention for tests is <classname>.<subset>.test.js - This follows pretty much standard JS test framework copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
 
 The tests in here are a mix of unit and functional regression tests - sad but realistic given the era these were first written (when writing tests was manual and slow).
+The functional regression tests are pretty important as this game engine is complex - there's a lot that has to hang together to work - especially around complex missions, contagion, and character interactions.
 
-NodeUnit tests are deprecated.  They still run (and pass!!) from the command line if you install nodeunit via NPM - but it's very old, clunky, and insecure.
-There is also support/config in here for running Mocha tests (with some samples). These run happily from the CLI with the right command line incantation:  mocha --recursive "test/mocha/**/*.test.js" . 
-
-The main test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
+The test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
 Jest configuration can be found in the file jest.config.js (as well as some basics in package.json).
 
-<em>Over the next few days/weeks; more of the old nodeunit and mocha tests will be migrated to Jest.</em>
-
-I've also been using Github Copilot to speed up that test migration and to generate additional tests (once migrated tests are passing)
+I relied heavily on Github Copilot to speed up the test migration and will do more with it to generate additional tests.
 It's incredible how much more productive creating meaningful tests is using Copilot.  
-Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of.
+Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of!
+
 
 Module Dependencies
 -------------------
@@ -169,4 +167,7 @@ For the server:
 
 Take a look at the rest of the package file for dev dependencies and other config info.
 
-End. Thanks for reading! ;)
+---------------------------
+End. Thanks for reading!
+
+Simon
