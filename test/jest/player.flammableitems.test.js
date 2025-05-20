@@ -1,38 +1,38 @@
-﻿"use strict";
-var player = require('../../server/js/player.js');
-var creature = require('../../server/js/creature.js');
-var location = require('../../server/js/location.js');
-var artefact = require('../../server/js/artefact.js');
-var contagion = require('../../server/js/contagion.js');
-var mapBuilder = require('../../server/js/mapbuilder.js');
-var map = require('../../server/js/map.js');
-var mb = new mapBuilder.MapBuilder('../../data/','root-locations');
+"use strict";
+const player = require('../../server/js/player.js');
+const creature = require('../../server/js/creature.js');
+const location = require('../../server/js/location.js');
+const artefact = require('../../server/js/artefact.js');
+const contagion = require('../../server/js/contagion.js');
+const mapBuilder = require('../../server/js/mapbuilder.js');
+const map = require('../../server/js/map.js');
+const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
 
 //these are used in setup and teardown - need to be accessible to all tests
-var junkAttributes;
-var breakableJunkAttributes;
-var weaponAttributes;
-var foodAttributes;
-var bedAttributes
-var iceCreamAttributes;
-var containerAttributes;
-var playerName;
-var playerAttributes;
-var p0; // player object.
-var l0; //location object.
-var a0; //artefact object.
-var a1; //artefact object.
-var c0; //creature object.
-var c1; //creature object
-var m0; //map object
-var weapon; //weapon object
-var food; //food object
-var bed; //chair object
-var iceCream; //a bribe
-var container; //container object
-var breakable; //breakable object
+let junkAttributes;
+let breakableJunkAttributes;
+let weaponAttributes;
+let foodAttributes;
+let bedAttributes;
+let iceCreamAttributes;
+let containerAttributes;
+let playerName;
+let playerAttributes;
+let p0; // player object.
+let l0; //location object.
+let a0; //artefact object.
+let a1; //artefact object.
+let c0; //creature object.
+let c1; //creature object
+let m0; //map object
+let weapon; //weapon object
+let food; //food object
+let bed; //chair object
+let iceCream; //a bribe
+let container; //container object
+let breakable; //breakable object
 
-exports.setUp = function (callback) {
+beforeEach(() => {
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom', foodAttributes, null);
     bedAttributes = { weight: 10, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: true};
@@ -66,10 +66,9 @@ exports.setUp = function (callback) {
     l0.addObject(breakable);
     l0.addObject(food);
     l0.addObject(container);
-    callback(); 
-};
+});
 
-exports.tearDown = function (callback) {
+afterEach(() => {
     playerName = null;
     playerAttributes = null;
     p0 = null;
@@ -90,31 +89,57 @@ exports.tearDown = function (callback) {
     container = null;
     c0 = null;
     c1 = null;
-    callback();
-};  
+});
+test('player can ignite a flammable item with personal ignition source', () => {    
+    const candle = mb.buildArtefact({ "file": "candle" });
+    const lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    const expectedResult = "You light the candle with your lighter.";
+    const actualResult = p0.turn('light', "candle", 'on');
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canCreatePlayer = function (test) {
-    m0 = mb.buildMap();
-    var playerAttribs = {"username":playerName};
-    var p1 = new player.Player(playerAttribs, m0, mb);
-    var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"atrium"}';
-    var actualResult = p1.toString();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
+test('player can ignite a flammable item with location ignition source', () => {
+    const candle = mb.buildArtefact({ "file": "candle" });
+    const lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    const expectedResult = "You light the candle with a cigarette lighter you spotted nearby.";
+    const actualResult = p0.turn('light', "candle", 'on');
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canCreatePlayer.meta = { traits: ["Player Test", "Constructor Trait"], description: "Test that a creature object can be created." };
+test('player ignition source will burn out', () => {
+    const candle = mb.buildArtefact({ "file": "candle" });
+    const lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    const expectedResult = "You light the candle with your lighter.<br>Your lighter has run out.<br>";
+    let actualResult = p0.turn('light', "candle", 'on');
+    let loopCount = 0;
+    while (actualResult === "You light the candle with your lighter." && loopCount < 30) {
+        p0.turn('extinguish', "candle", 'out');
+        actualResult = p0.turn('light', "candle", 'on');
+        loopCount++;
+    }
+    expect(actualResult).toBe(expectedResult);
+});
 
-exports.canGetUsername = function (test) {
-    //note player is actually created in "setup" - we're just validating that first step works ok.
-    var expectedResult = playerName;
-    var actualResult = p0.getUsername();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
-    test.equal(actualResult, expectedResult);
-    test.done();
-};
-
-exports.canGetUsername.meta = { traits: ["Player Test", "Attribute Trait"], description: "Test that a creature object can be created." };
+test('player cannot ignite a flammable item with expired ignition source', () => {
+    const candle = mb.buildArtefact({ "file": "candle" });
+    const lighter = mb.buildArtefact({ "file": "lighter" });
+    l0.addObject(candle);
+    p0.get("get", "candle");
+    l0.addObject(lighter);
+    p0.get("get", "lighter");
+    lighter.consume(25);
+    const expectedResult = "You don't have anything to light it with.";
+    const actualResult = p0.turn('light', "candle", 'on');
+    expect(actualResult).toBe(expectedResult);
+});

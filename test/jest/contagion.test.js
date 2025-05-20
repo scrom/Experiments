@@ -31,7 +31,7 @@ describe('Contagion', () => {
             symptoms: [{ action: "bite", frequency: 0.3, escalation: 0 }],
             duration: -1
         });
-        const a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 3, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+        const a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 5, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
         const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
         const playerAttributes = { username: "player" };
         const m0 = new map.Map();
@@ -39,7 +39,9 @@ describe('Contagion', () => {
         const inv = p0.getInventoryObject();
         inv.add(a);
 
-        // try 3 times as it randomly doesn't take (deliberate)
+        // try 5 times as it randomly doesn't take (deliberate)
+        p0.drink("drink", "venom");
+        p0.drink("drink", "venom");
         p0.drink("drink", "venom");
         p0.drink("drink", "venom");
         p0.drink("drink", "venom");
