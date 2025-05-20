@@ -1,32 +1,66 @@
 "use strict";
 exports.Server = function Server(anInterpreter) {
     try{
-        var self = this; //closure so we don't lose this reference in callbacks
-        var _objectName = 'Server'; //for reference
-        var _interpreter = anInterpreter;
+        let self = this; //closure so we don't lose this reference in callbacks
+        const _objectName = 'Server'; //for reference
+        const _interpreter = anInterpreter;
 
         //module deps
-        var _root = __dirname+'/';
-        var express = require('express');
-        var bodyParser = require('body-parser');
-        var logger = require('morgan');
-        var app = express();
+        const _root = __dirname+'/';
+        const express = require('express');
+        const rateLimit = require("express-rate-limit");
+        const slowDown = require("express-slow-down");
+        const bodyParser = require('body-parser');
+        const logger = require('morgan');
+        const app = express();
 
-        var config = require('./config');
+        const config = require('./config');
 
-        var sanitiseString = function(aString) {
+        const sanitiseString = function(aString) {
             return aString.replace(/[^a-zA-Z0-9 +-/%]+/g,"").toLowerCase().substring(0,255); //same as used for client but includes "/" and "%" as well
         };
 
         //Array of responses awaiting replies
-        var _waitingResponses=[];
+        let _waitingResponses=[];
+
+        //slow down requests
+        const speedLimiter = slowDown({
+            windowMs: 5 * 60 * 1000, // 5 minutes
+            delayAfter: 50,
+            delayMs: () => 2000,
+            maxDelayMs: 5000,
+            message: 'This game is speed limited to prevent abuse.', 
+            statusCode: 429, 
+            handler: function(req, res /*, next*/) {
+                console.log('Speed limit handler called');
+                //console.log(req);
+                res.status(this.statusCode).send("Speed limiting in effect. Please wait a moment before trying again.");
+            }
+        });
+
+        app.use(speedLimiter);
+
+        //connection rate limiting
+        const limiter = rateLimit({
+            windowMs: 5 * 60 * 1000, // 5 minutes
+            max: 100, // limit each IP to 100 requests per windowMs
+            message: 'This game is rate limited to prevent abuse. Too many requests, please try again later.',
+            statusCode: 429,
+            handler: function(req, res /*, next*/) {
+                console.log('Rate limit handler called');
+                //console.log(req);
+                res.status(this.statusCode).send("Rate limiting in effect. Please wait a moment before trying again.");
+            }
+        });
+
+        app.use(limiter);
 
         //log requests
         app.use(logger('dev')); //could also use 'common' or 'combined' for alternatives
         app.use(bodyParser.urlencoded({extended:true}));
         app.use(bodyParser.json());
 
-        //serve static files from project root
+        //serve static files from project root *client* folder - not actual root
         app.use(express.static(_root + '../../client/'));
 
         app.get('/config', function (request, response) {
