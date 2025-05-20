@@ -1,12 +1,13 @@
 Experiments
 ===========
-
-Getting back into coding
-
-MVTA. March 2014: (Readme last updated May 2025)
-
 *** This game was originally live and running at: http://mvta.herokuapp.com/ ***
-Currently being updated to 2025 versions of Node and related packages, upgrading tests to a new frameworkd and then finding a new location to host.
+
+MVTA: March 2014 to May 2025.
+
+After a 10 year hiatus, we are back in active development - at least for a while...
+
+The game has now been updated to 2025 versions of Node and related packages, and tests migrated to Jest.
+More work is needed to resolve updated (async) Redis support along with a new approach to secure deployment.
 
 About:
 ------
@@ -24,22 +25,28 @@ Invariably the adventure would descend into silliness around Justin Bieber ridin
 
 In the end, it's become just another text adventure engine at the moment but I still have a desire to add that real-time interaction back in (one day).
 
-Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. The need to rework poor design decisions but not having the support of working tests.
+Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. 
+- Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. 
+- Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. 
+- The need to rework poor design decisions but not having the support of working tests.
+- Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
 
-Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
-
-*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
+*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. 
+All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. 
+This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
 
 I know it's not the "right" way but it's how a lot of projects end up under pressure.
-In some way therefore, the commit history on this will be a history lesson in how to not write good software and then how to recover from it (or survive) later.
+In some way therefore, the commit history on this will be a history lesson in how *not* to write good software - and then how to recover from it (or survive) later.
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
+As the game currently stands it's on course to becoming quite an advanced text adventure engine. 
+It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
- - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently a single (large) json file and the set of attributes available for everything isn't documented.  Eventually I'd like players  to choose, extend and reuse maps. Right now, there's just the one.
- - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done - if the player has achieved enough to save their game*
+ - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently assembled form a series of json files and the set of attributes available for everything isn't documented. (Hey, that's not bad - for a while it was all in a single file!)
+ - Eventually I'd like players to choose, extend and reuse maps. Right now, there's just the one.
+ - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done, now broken (2025) needs a Redis overhaul - if the player has achieved enough to save their game*
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
  - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host. *done*
  - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
@@ -52,7 +59,7 @@ Technical stuff:
 ================
 Server Configuration
 --------------------
-1: Ensure NodeJS is installed and the relevant module dependencies are installed unsing NPM.
+1: Ensure a current version of NodeJS is installed and the relevant module dependencies are installed unsing NPM. (see module dependencies in this readme)
 
 2: Set the following server environment variables to configure the application hostname and port
 - 	HOSTNAME (e.g. mvta.herokuapp.com)
@@ -65,12 +72,12 @@ Note, if the game is running on port 80, you don't need to explicitly set port n
 If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
 Once you have a store available, set the following environment variables for your Redis data store 
 - REDISSERVER (the addressable hostname of your redis server)
-- REDISPWD (the auth password of your redis server in plain text)
+- REDISPWD (the auth password of your redis server **in plain text at the moment - this needs securing**)
 - REDISPORT (the port number of your redis host)
 
 *If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
-As of October 2014, Redis support is fully functional. 
-Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment)
+As of October 2014, Redis support was fully functional. Sadly after upgrading in 2025 it needs fixing. (in progress)
+Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment) - I wonder if this is now fixed?!
 
 4: NodeJS may still have a default limit on the number of active http connections to 5.
 In order to support more connections, you'll need to set another environment variable (I think)...
@@ -81,7 +88,8 @@ I've not verified this bit yet though.
 Running the server
 ------------------
 MVTA has a predefined Procfile that should allow easy deployment on Heroku.
-When running directly from visual studio, the launch file is defined under /.vscode/launch.json
+When running directly from Visual Studio or VSCode, the launch file is defined under /.vscode/launch.json
+
 If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to 
 - 	<your drive>\<your installation location>\js\server
 
@@ -98,7 +106,7 @@ The client consists of an index.html page in the root of the project and a serie
 There's also a css folder with some *very* basic layout and styling.
 The express server coded into the server.js file should automatically serve static files from the root of the node project (where the index.html file lives). 
 
-The client runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
+The client currenly runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
 You can enable client "console" output by setting 
 - var debug = true; 
@@ -128,29 +136,26 @@ On the server side, I'm trying to keep the main game engine away from node-speci
 Platform
 --------
 This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
-
-Whilst the game was originally developed in Visual Studio 2012, it's now under development in VS2022. 
+Having said that, it will likely be deployed to docker linux containers
+Whilst the game was originally developed in Visual Studio 2012 and can be developed in VS2022, it's best to work on it now using VSCode. 
 
 
 Tests
 -----
 For most server classes, there are corresponding test files. 
-These are found in a relevant subfolder of the \test\ folder for each test framework used - e.g. /test/nodeunit  /test/jest  /test/mocha.
-The file naming convention for tests is <classname><subset>.test.js - This follows pretty much standard JS test frameworks copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
+These are found in a test framework-specific subfolder under \test\  e.g. /test/jest
+The file naming convention for tests is <classname>.<subset>.test.js - This follows pretty much standard JS test framework copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
 
 The tests in here are a mix of unit and functional regression tests - sad but realistic given the era these were first written (when writing tests was manual and slow).
+The functional regression tests are pretty important as this game engine is complex - there's a lot that has to hang together to work - especially around complex missions, contagion, and character interactions.
 
-NodeUnit tests are deprecated.  They still run (and pass!!) from the command line if you install nodeunit via NPM - but it's very old, clunky, and insecure.
-There is also support/config in here for running Mocha tests (with some samples). These run happily from the CLI with the right command line incantation:  mocha --recursive "test/mocha/**/*.test.js" . 
-
-The main test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
+The test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
 Jest configuration can be found in the file jest.config.js (as well as some basics in package.json).
 
-<em>Over the next few days/weeks; more of the old nodeunit and mocha tests will be migrated to Jest.</em>
-
-I've also been using Github Copilot to speed up that test migration and to generate additional tests (once migrated tests are passing)
+I relied heavily on Github Copilot to speed up the test migration and will do more with it to generate additional tests.
 It's incredible how much more productive creating meaningful tests is using Copilot.  
-Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of.
+Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of!
+
 
 Module Dependencies
 -------------------
@@ -169,4 +174,7 @@ For the server:
 
 Take a look at the rest of the package file for dev dependencies and other config info.
 
-End. Thanks for reading! ;)
+---------------------------
+End. Thanks for reading!
+
+Simon
