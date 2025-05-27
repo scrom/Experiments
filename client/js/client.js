@@ -32,7 +32,6 @@ function Client(aServerHost, aServerPort, aUi) {
         {"request":{"command":"action"},"response":{"verb":"s","object0":"","object1":"","description":"some text."}}
         {"request":{"command":"list"},"response":{"games":[{"username":"simon","id":"0"}]}}
 
-        We'll need to uncomment the console log from serverRequestCallback when trying to make this work
     */
     var sanitiseString = function(aString) {
         return aString.replace(/[^a-zA-Z0-9 +-.]+/g,"").toLowerCase().substring(0,255);
@@ -63,28 +62,34 @@ function Client(aServerHost, aServerPort, aUi) {
 
     };
 
-    //callback from server request (split out for readability)
-    var serverRequestCallback = function(someData) {
-	    if(debug) {console.append('Server Response: '+someData+'<br>');};
-        processResponse(someData);
-    };
-
-    //make a get request to the server. Might change to POST in future. Uses a callback for async responses.
-    var serverRequest = function(requestString) {
+    //make a get request to the server using FETCH to support async
+    var serverRequest = async function(requestString) {
         if(debug) {console.append('Client Request: '+requestString+'<br>');}
         var timestamp = new Date().getTime(); //used to avoid caching
-            var serverResponse = $.get(serverAddress + requestString+'/'+timestamp, function(data){serverRequestCallback(data);});
+        var url = serverAddress + requestString+'/'+timestamp
+            const response = await fetch(url, {method: "GET"});
+            if(response.ok){
+                var data = await response.text()
+                if(debug) {
+                    console.append('ServerResponse: '+data);
+                };
+                //const data = await response.json();
+	            //if(debug) {console.append('Server Response data: '+data+'<br>');};
+                processResponse(data);                
+            } else {
+                return {"status": response.status, "url": url, "error": "HTTP Fetch failed in "+_objectName+"."};
+            };
     };
 
     //request an action
-    var sendRequest = function(someUserInput) {
-        serverRequest('action/'+someUserInput+'/'+username+'/'+gameId);
+    var sendRequest = async function(someUserInput) {
+        await serverRequest('action/'+someUserInput+'/'+username+'/'+gameId);
     };
 
     //request a new game
-    var requestGame = function(aUsername) {
+    var requestGame = async function(aUsername) {
         var inputString = sanitiseString(aUsername);
-        serverRequest('new/new/'+inputString);
+        await serverRequest('new/new/'+inputString);
     };
 
     //request an image file
@@ -99,30 +104,30 @@ function Client(aServerHost, aServerPort, aUi) {
     };
 
     //load a game
-    var loadGame = function(aFileName) {
+    var loadGame = async function(aFileName) {
         var inputString = sanitiseString(aFileName);
-        serverRequest('load/'+aFileName+'/'+username+'/'+gameId);
+        await serverRequest('load/'+aFileName+'/'+username+'/'+gameId);
     };
 
     //save a game
-    var saveGame = function() {
+    var saveGame = async function() {
         if (!(gameId)) {
             alert("You don't have an active game to save.");
             ui.setState("Cannot save game. You don't have an active game to save.<br>Please either enter your name or <i>load</i> an existing game.");
         } else {
-            serverRequest('save/save/'+username+'/'+gameId);
+            await serverRequest('save/save/'+username+'/'+gameId);
         };
     };
 
     //quit a game
-    var quitGame = function () {
+    var quitGame = async function () {
         if (!(gameId)) {
             alert("You don't have an active game to quit.");
             ui.setState("You've not even started yet. If you've had enough already, feel free to close your browser tab. <br>If not, please either enter your name to start a new game or <i>load</i> an existing game.");
         } else {
             var quit = confirm("Are you sure you want to quit this game? Any progress since you last saved will be lost.")
             if (quit) {
-                serverRequest('quit/quit/' + username + '/' + gameId);
+                await serverRequest('quit/quit/' + username + '/' + gameId);
                 gameId = null;
                 username = "";
             } else {
@@ -132,20 +137,20 @@ function Client(aServerHost, aServerPort, aUi) {
     };
    
     //generic client request
-    var request = function(someUserInput) {
+    var request = async function(someUserInput) {
         var inputString = sanitiseString(someUserInput);
         inputString += " ";
         if (inputString.indexOf("load ") == 0) {
             var fileName = inputString.replace("load ","").trim();
-            loadGame(fileName);
+            await loadGame(fileName);
         } else if
             (inputString.indexOf("restore ") == 0) {
             var fileName = inputString.replace("restore ","").trim();
-            loadGame(fileName);            
+            await loadGame(fileName);            
         } else if (inputString == "save " || inputString == "save game ") {
-            saveGame(); 
+            await saveGame(); 
         } else if (inputString == "quit " || inputString == "quit game " ) {
-            quitGame();
+            await quitGame();
         } else {
             inputString = inputString.trim();
             if (username == ""){
@@ -154,17 +159,17 @@ function Client(aServerHost, aServerPort, aUi) {
                     ui.setState("I don't play with strangers.<br>You need to tell me who you are if you want to play with me.<br>Please type in your name and press &lt;enter> (on your keyboard) to start.");
                     return true;
                 };
-                requestGame(inputString);
+                await requestGame(inputString);
             } else {
-                sendRequest(inputString);
+                await sendRequest(inputString);
             };
         };
     };
     
     //member functions
     //can I talk to the server? If so, return the config
-    Client.prototype.readServerConfig = function() { 
-        serverRequest('config');    
+    Client.prototype.readServerConfig = async function() { 
+        await serverRequest('config');    
     };
 
     //start UI listening with callback to client

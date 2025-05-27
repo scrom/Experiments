@@ -94,6 +94,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         };
 
         var assembleResponse = function(requestJson, responseJSON){
+            //console.log('{"request":'+requestJson+',"response":'+responseJSON+'}')
             return '{"request":'+requestJson+',"response":'+responseJSON+'}';
         };
 
@@ -116,11 +117,45 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                 try {
                         switch(command)
                         {
+                            case 'config':
+                                return('' + JSON.stringify(config));
+                            case 'list':
+                                //list active games
+                                return assembleResponse(commandJson, _gameController.listGames());
+                                break;
+
+                            case 'new':
+                                if (!(validateUser(username))) { return assembleResponse(commandJson, '{"description":"invalid user: ' + username + '"}'); }
+                                //add new user game
+                                var aGameId = _gameController.addGame(username, config.getSessionLimit());
+                                if (aGameId == -1)
+                                {
+                                    //we have a problem
+                                    return assembleResponse(commandJson, '{"description":"We\'re <b>really</b> sorry but we can\'t start a new game game for you at the moment.<br>Chances are there\'s too many active sessions running (which is a surprise to us too!<br>We never thought this would be so popular.<br>We\'d love it if you came back and tried again later though."}');
+                                };
+                                return assembleResponse(commandJson, _gameController.getGameState(username, aGameId));
+                                break;
+
+                            case 'image':
+                                //console.log("image request:"+actionString);
+                                //@todo - improve async handling for images
+                                if (_fm.imageExists(actionString))
+                                {
+                                    return _fm.getImagePath(actionString);
+                                };
+                                return "image " + actionString + " not found.";
+                                break;
+
+                            case 'action':
+                                if (!(validateUser(username))) { return assembleResponse(commandJson, '{"description":"invalid user: ' + username + '"}'); };
+                                return assembleResponse(commandJson, _gameController.userAction(username, gameId, actionString));
+                                break;
+
                            case 'save':
                                 //resolve(_gameController.saveGame(username, gameId));
                                 console.log("saving game");             
                                 if (!(validateUser(username))) {
-                                    resolve(assembleResponse(commandJson,"invalid user: "+username));
+                                    return(assembleResponse(commandJson,'{"description":"invalid user: '+username+'"}'));
                                 };
 
                                 var aGame = _gameController.getGame(username, gameId);
@@ -141,6 +176,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                 };
                                 
                                 break;
+
                             case 'load':
                                 var originalGameID = gameId;
                                 if (actionString == "load" || actionString == "restore") {actionString = "";};
@@ -168,109 +204,33 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                     };
                                 
                                 break;
+
+                            case 'quit':
+                                console.log("user '" + username + "' requested quit game");
+                                if (!(validateUser(username))) { return assembleResponse(commandJson, '{"description":"invalid user: ' + username + '"}'); }
+                                return assembleResponse(commandJson, _gameController.removeGame(username, gameId));
+                                break;
+
+                            case 'data':
+                                //respond to event requests
+                                if (actionString == "locations.json")
+                                {
+                                    return _gameController.getRootMap();
+                                };
+                                return ('Command: "' + command + '" in request "' + aRequestUrl + '" not recognised by Interpreter');
+                                break;
+
+                            case 'events':
+                                //respond to event requests
+                                return 'ping.';
+                                break;
+
                             default:
-                                return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
+                                return ('Command: "' + command + '" in request "' + aRequestUrl + '" not recognised by Interpreter');
                         }
                 } catch (error) {
                     reject(error);
                 };
-        };
-
-        /*top level interpeter command creation*/
-        self.translate = function(aRequestUrl,config, callback) {
-            //console.log('translate called: '+aRequestUrl);
-            //note - only passing config in here until controlling game object is accessible
-
-            var command = extractCommand(aRequestUrl);
-            var commandJson = '{"command":"'+command+'"}';
-            var actionString = extractAction(aRequestUrl);
-            var username = extractUsername(aRequestUrl);
-            var gameId = extractGameId(aRequestUrl);
-            var timestamp = extractTimestamp(aRequestUrl);
-            //console.log("req: "+aRequestUrl);
-            //console.log("cmd: "+command);
-            //console.log("act: "+actionString);
-            //console.log("usr: "+username);
-            //console.log("gid: "+gameId);
-            //console.log(timestamp);
-            //console.log('command: '+command+' action: '+actionString+' username: '+username+', gameId:'+gameId);
-
-            switch(command)
-            {
-                case 'config':
-                    return('' + JSON.stringify(config));
-                case 'image':
-                    //console.log("image request:"+actionString);
-                    if (_fm.imageExists(actionString)) {
-                        return _fm.getImagePath(actionString);
-                    };
-                    return "image "+actionString+" not found.";
-                    break;
-                case 'list':
-                    //list active games
-                    return assembleResponse(commandJson,_gameController.listGames());
-                    break;
-                case 'new':
-                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
-                    //add new user game
-                    var aGameId = _gameController.addGame(username, config.getSessionLimit());
-                    if (aGameId == -1) {
-                        //we have a problem
-                        return assembleResponse(commandJson,'{"description":"We\'re <b>really</b> sorry but we can\'t start a new game game for you at the moment.<br>Chances are there\'s too many active sessions running (which is a surprise to us too!<br>We never thought this would be so popular.<br>We\'d love it if you came back and tried again later though."}');
-                    };
-                    return assembleResponse(commandJson,_gameController.getGameState(username, aGameId));
-                    break;
-                case 'action':
-                    if (!(validateUser(username))) {return assembleResponse(commandJson,"invalid user: "+username);}
-                    return assembleResponse(commandJson, _gameController.userAction(username, gameId,actionString));
-                    break;
-                case 'quit':
-                    console.log("user '" + username + "' requested quit game");
-                    if (!(validateUser(username))) { return assembleResponse(commandJson, "invalid user: " + username); }
-                    return assembleResponse(commandJson, _gameController.removeGame(username, gameId));
-                    break;
-                case 'load':
-                    var originalGameID = gameId;
-                    if (actionString == "load" || actionString == "restore") {actionString = "";};
-
-                    var callbackLoadFunction = function(newGameId) {
-                        console.log("New game id: "+newGameId);
-                        //did we successfully load?...
-                        var response;
-                        var savedUsername = _gameController.getUsernameForGameID(newGameId);
-                        if (savedUsername) {
-                            //file loaded...                       
-                            response = assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
-                        } else {;
-                            //file not loaded
-                            response = assembleResponse(commandJson,'{"description":"Saved game file \''+actionString+'\' not found."}');  
-                        };
-
-                        callback(response);   
-                    };
-
-                    try {
-                        _gameController.loadGame(originalGameID, actionString, username, callbackLoadFunction); 
-                    } catch (err) {
-                         callback(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to load saved game \''+actionString+'\'.<br>The stored game data is either corrupted or incompatible with this release of MVTA."}'));  
-	                     console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
-                    };
-                                
-                    break;
-                case 'data':
-                    //respond to event requests
-                    if (actionString == "locations.json") {
-                        return _gameController.getRootMap();
-                    };
-                    return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
-                    break;
-                case 'events':
-                    //respond to event requests
-                    return 'ping.';
-                    break;
-                default:
-                    return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
-            };            
         };
 
         //end member functions

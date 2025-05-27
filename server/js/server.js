@@ -22,6 +22,7 @@ exports.Server = function Server(anInterpreter) {
 
         //Array of responses awaiting replies
         let _waitingResponses=[];
+        let listener;
 
         //slow down requests
         const speedLimiter = slowDown({
@@ -63,77 +64,88 @@ exports.Server = function Server(anInterpreter) {
         //serve static files from project root *client* folder - not actual root
         app.use(express.static(_root + '../../client/'));
 
-        app.get('/config', function (request, response) {
+        app.get('/config', async function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,config));
+            response.write(result);
             response.end();
         });
 
         ///^\/api/
-        app.get(/^\/new/, function (request, response) {
+        app.get(/^\/new/, async function (request, response) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,config));
+            response.write(result);
             response.end();
         });
 
         //
-        app.get(/^\/list/, function (request, response) {
+        app.get(/^\/list/, async function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,config));
+            response.write(result);
             response.end();
         });
 
-        app.get(/^\/action/, function (request, response) {
+        app.get(/^\/action/, async function (request, response) {
+            request.socket.setTimeout(5);
+            //console.log('Action request: '+request.url);
+            //console.log('Action request: '+request.method);
+            //console.log('Action request: '+request.headers.host);
+            //console.log('Action request: '+JSON.stringify(request.headers));
+            var sanitisedRequestURL = sanitiseString(request.url);
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(result);
+            response.end();
+        });
+
+    app.get(/^\/save/, async function (request, response) {
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
+            //var response = request.res; //get the response object from the request
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+                console.log('save result: '+result);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                response.write(result);
+                response.end();
+            //next();
+        });
+
+    app.get(/^\/load/, async function (request, response) {
+            request.socket.setTimeout(5);
+            var sanitisedRequestURL = sanitiseString(request.url);
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(_interpreter.translate(sanitisedRequestURL,config));
+            response.write(result);
             response.end();
-        });
-
-    app.get(/^\/save/, function (request, response) {
-            var sanitisedRequestURL = sanitiseString(request.url);
-
-            var callbackFunction = function(result) {
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(result);
-                response.end();
-            };
-
-            _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
-        });
-
-    app.get(/^\/load/, function (request, response) {
-            var sanitisedRequestURL = sanitiseString(request.url);
-
-            var callbackFunction = function(result) {
-                response.writeHead(200, {'Content-type':'text/plain'});
-                response.write(result);
-                response.end();
-            };
-            _interpreter.translate(sanitisedRequestURL,config, callbackFunction);
         });
         
-    app.get(/^\/quit/, function (request, response) {
-            
+    app.get(/^\/quit/, async function (request, response) {           
             request.socket.setTimeout(5);
             var sanitisedRequestURL = sanitiseString(request.url);
-            response.writeHead(200, { 'Content-type': 'text/plain' });
-            response.write(_interpreter.translate(sanitisedRequestURL, config));
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
+            response.writeHead(200, {'Content-type':'text/plain'});
+            response.write(result);
             response.end();
 
         });
 
-    app.get(/^\/image/, function (request, response) {
+    app.get(/^\/image/, async function (request, response) {
             request.socket.setTimeout(120);
             var sanitisedRequestURL = sanitiseString(request.url);
-            var fileURL = _interpreter.translate(sanitisedRequestURL,config);
+            var fileURL = await _interpreter.translateAsync(sanitisedRequestURL,config);
             if (fileURL) {
                 response.sendFile(fileURL);
             } else {
@@ -142,7 +154,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //event source handler(!ooh) 
-    app.get(/^\/events/, function (request, response) {
+    app.get(/^\/events/, async function (request, response) {
             request.socket.setTimeout(0);
             var sanitisedRequestURL = sanitiseString(request.url);
 
@@ -155,7 +167,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //fire an event
-    app.get(/^\/fire/, function (request, response) {
+    app.get(/^\/fire/, async function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
             response.writeHead(200, {'Content-type':'text/plain'});
             response.write('firing '+_waitingResponses.length+' messages...');  
@@ -169,29 +181,28 @@ exports.Server = function Server(anInterpreter) {
         });
 
         //serve data
-        app.get('/data/locations.json', function (request, response) {
+        app.get('/data/locations.json', async function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
-            //response.writeHead(200, {'Content-type':'text/plain'});
-            //response.write(_interpreter.getData(0));
-            //response.end();
-            response.send(_interpreter.translate(sanitisedRequestURL,config)); 
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
+
+            response.send(result);
         });
 
         //serve default dynamic
         /*
-        app.get('*', function (request, response) {
+        app.get('*', async function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
-            response.send(_interpreter.translate(sanitisedRequestURL,config));
+            var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
         });
         */
 
         //post handling
-        app.post('/post/', function (request, response) {
+        app.post('/post/', async function (request, response) {
             console.log('Post received: '+request.body.name);    
             response.writeHead(200, {'Content-type':'text/plain'});
             var requestJson = JSON.stringify(request.body);
             //past response work to post request handler
-            var responseJSON = self.processPostRequest(request);
+            var responseJSON = await self.processPostRequest(request);
             var reply =  '{"request":'+requestJson+',"response":'+responseJSON+'}';  
             response.write(reply);
             response.end();
@@ -200,7 +211,7 @@ exports.Server = function Server(anInterpreter) {
         //public member functions
 
         //handle post requests
-        self.processPostRequest = function(request) {
+        self.processPostRequest = async function(request) {
             switch (request.body.object) {
                 default:
                 return '{"description":"Request received for object: '+request.body.object+'"}';
@@ -229,14 +240,36 @@ exports.Server = function Server(anInterpreter) {
             };
         };
 
+        self.fetchCall = async function (url) {
+            const response = await fetch(url, {method: "GET"});
+
+             if(response.ok){
+                //console.log("server response: "+response);
+                const data = await response.json();
+                //console.log(data);
+                return data;
+            } else {
+                return {"status": response.status, "url": url, "error": "HTTP Fetch failed in "+_objectName+"."};
+            };
+            
+        };
+
        //initiate listening with port from config
        self.listen = function () {
             self = this;
-            app.listen(config.port)
+            listener = app.listen(config.port)
             console.log(_objectName + ' '+config.hostname+' listening on port ' + config.port);
         };
 
-        console.log(_objectName + ' created');
+        //close
+       self.close = function () {
+            self = this;
+            listener.close();
+            console.log(_objectName + ' '+config.hostname+' closed.');
+        };
+
+        console.log(_objectName + ' created')
+
     }
     catch (err) {
         console.error('Unable to create Server object: ' + err);
