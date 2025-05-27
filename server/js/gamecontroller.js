@@ -60,9 +60,6 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                         
                         var savedResult = await _games[g].saveAsync();
 
-                        _games[g] = g; //set just ID into game slot
-                        _inactiveGames.push(g);
-
                         //savedGame originally returned as full game object
                             var saved;
                             if (savedResult) {
@@ -74,9 +71,16 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                                 if (saved.description) {
                                     //console.log("saved.description");
                                     if (saved.description.substring(0,10) == "Game saved") {
-                                        _savedGames.push({"username":savedResult.username,"id":savedResult.id, "filename":savedResult.saveid});
-                                        await writeSavedGamesListAsync();
-                                        console.log("Timed out game saved as id:"+savedResult.id+", username:"+savedResult.username+", filename:"+savedResult.saveid);
+                                        if (saved.username && saved.id && saved.saveid) {
+                                            //avoid writing nulls etc - will cause data corruption and problems with loading.
+                                            _savedGames.push({"username":saved.username,"id":saved.id,"filename":saved.saveid});
+                                            await writeSavedGamesListAsync();
+                                            console.log("Timed out game saved as id:"+saved.id+", username:"+saved.username+", filename:"+saved.saveid);
+                                            
+                                            //remove game from controller, store its ID and push into inactiv egames list
+                                            _games[g] = g; //set just ID into game slot
+                                            _inactiveGames.push(g);
+                                        };
                                     };
                                 };
                             };

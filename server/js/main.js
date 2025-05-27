@@ -14,7 +14,7 @@ var mapBuilder = new mapBuilderModule.MapBuilder(gameDataFolder, gameDataJSONFil
 
 var fileManager = new fileManagerModule.FileManager();
 var gameController = new gameControllerModule.GameController(mapBuilder, fileManager);
-gameController.monitor(7, 55); //5,60
+gameController.monitor(7, 55); //poll frequency: 7, timeout: 55 (set to 3,2 or lower for manual testing) - time is in minutes
 
 var interpreter = new interpreterObjectModule.Interpreter(gameController, fileManager);
 var server = new serverObjectModule.Server(interpreter);
