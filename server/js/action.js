@@ -703,6 +703,14 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.shove(_verb, _object0);
                         break;
                     case 'pull':
+                    case 'drag':
+                    case 'tow':
+                    case 'hoist':
+                    case 'lift':
+                    case 'heave':
+                    case 'haul':
+                    case 'yank':
+                    case 'unfurl':
                     case 'open':
                         _ticks = 1;
                         description = _player.open(_verb, _object0);
@@ -713,6 +721,11 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'shut':
                     case 'close':
+                    case 'furl':
+                    case 'lower':
+                    case 'fold':
+                    case 'roll':
+                    case 'seal':                   
                         _ticks = 1;
                         description = _player.close(_verb, _object0);
                         break;
