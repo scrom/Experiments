@@ -103,6 +103,78 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         };
 
         //public member functions
+        self.translateAsync = async function(aRequestUrl, config) {
+            //console.log('translateAsync called: '+aRequestUrl);
+            //note - only passing config in here until controlling game object is accessible
+            var command = extractCommand(aRequestUrl);
+            var commandJson = '{"command":"'+command+'"}';
+            var actionString = extractAction(aRequestUrl);
+            var username = extractUsername(aRequestUrl);
+            var gameId = extractGameId(aRequestUrl);
+            var timestamp = extractTimestamp(aRequestUrl);
+
+                try {
+                        switch(command)
+                        {
+                           case 'save':
+                                //resolve(_gameController.saveGame(username, gameId));
+                                console.log("saving game");             
+                                if (!(validateUser(username))) {
+                                    resolve(assembleResponse(commandJson,"invalid user: "+username));
+                                };
+
+                                var aGame = _gameController.getGame(username, gameId);
+                                if (aGame == "" || aGame == null || aGame == undefined || aGame == "undefined" || (!(aGame))) {
+                                    return(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));
+                                    console.log("game for "+username+", "+gameId+" not found in controller");
+                                } else {
+                                    console.log("game found in controller");
+                                    console.log("game: "+aGame);
+                                };
+                                try {
+                                    var saved = await aGame.saveAsync();
+                                    return(assembleResponse(commandJson,saved));
+
+                                } catch (err) {
+                                    return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));
+                                    console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+                                };
+                                
+                                break;
+                            case 'load':
+                                var originalGameID = gameId;
+                                if (actionString == "load" || actionString == "restore") {actionString = "";};
+
+                                    try {
+                                        var newGameId = await _gameController.loadGameAsync(originalGameID, actionString, username); 
+
+                                        console.log("New game id: "+newGameId);
+                                        //did we successfully load?...
+                                        var response;
+                                        var savedUsername = _gameController.getUsernameForGameID(newGameId);
+                                        if (savedUsername) {
+                                            //file loaded...                       
+                                            response = assembleResponse(commandJson,_gameController.getGameState(savedUsername, newGameId));      
+                                        } else {
+                                            //file not loaded
+                                            response = assembleResponse(commandJson,'{"description":"Saved game file \''+actionString+'\' not found."}');  
+                                        };
+
+                                        return(response);   
+
+                                    } catch (err) {
+                                        return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to load saved game \''+actionString+'\'.<br>The stored game data is either corrupted or incompatible with this release of MVTA."}'));  
+	                                    console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+                                    };
+                                
+                                break;
+                            default:
+                                return('Command: "'+command+'" in request "'+aRequestUrl+'" not recognised by Interpreter');
+                        }
+                } catch (error) {
+                    reject(error);
+                };
+        };
 
         /*top level interpeter command creation*/
         self.translate = function(aRequestUrl,config, callback) {
@@ -156,25 +228,6 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                     console.log("user '" + username + "' requested quit game");
                     if (!(validateUser(username))) { return assembleResponse(commandJson, "invalid user: " + username); }
                     return assembleResponse(commandJson, _gameController.removeGame(username, gameId));
-                    break;
-                case 'save':
-                    console.log("saving game");             
-                    if (!(validateUser(username))) {callback(assembleResponse(commandJson,"invalid user: "+username));};
-                    var aGame = _gameController.getGame(username, gameId);
-                    if (!(aGame)) {callback(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));};
-                    
-                    var callbackFunction = function(result, savedGame) {
-                        var response = assembleResponse(commandJson,result);
-                        callback(response);
-                    };
-
-                    try {
-                        aGame.save(callbackFunction);
-                    } catch (err) {
-                         callback(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));  
-	                     console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
-                    };
-                    
                     break;
                 case 'load':
                     var originalGameID = gameId;

@@ -1,7 +1,7 @@
 ﻿"use strict";
 //game controller object - manages set of games and communication with interpreter
 exports.GameController = function GameController(mapBuilder, fileManager) {
-    try{
+    try {
 	    var self = this; //closure so we don't lose thisUi refernce in callbacks
         var _games = [];
         var _inactiveGames = [];
@@ -15,25 +15,19 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         var gameObjectModule = require('./game');
         var _fm = fileManager;
 
-        var readSavedGames = function() {
-            var callbackFunction = function(data) {
-                if (data) {
-                    for (var i=0;i<data.length;i++) {
-                        _savedGames.push(data[i]);
-                        //console.log(data[i]);
-                    };
-                console.log("Expired game data retrieved on startup - "+_savedGames.length+" references.");
+        var readSavedGamesAsync = async function() {
+            var data = await _fm.readGameDataAsync(_savedGamesDataKey);
+            if (data) {
+                for (var i=0;i<data.length;i++) {
+                    _savedGames.push(data[i]);
+                    //console.log(data[i]);
                 };
+            console.log("Expired game data retrieved on startup - "+_savedGames.length+" references.");
             };
-
-            _fm.readGameData(_savedGamesDataKey, callbackFunction);
         };
 
-        var writeSavedGames = function() {
-            var callbackFunction = function() {
-                console.log("expired game data saved - "+_savedGames.length+" references.");
-                return null;
-            };
+        var writeSavedGamesAsync = async function() {
+
             //'{"username":"'+savedGame.getUsername()+'","id":'+savedGame.getId()+', "filename":"'+savedGame.getFilename()+'"}'
             var saveDataStringArray = [];
 
@@ -44,17 +38,18 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             for (var i=0;i<_savedGames.length;i++) {
                 saveDataStringArray.push('{"username":"'+_savedGames[i].username+'", "id":'+_savedGames[i].id+',"filename":"'+_savedGames[i].filename+'"}');
             };
-            _fm.writeGameData(_savedGamesDataKey, saveDataStringArray, true, callbackFunction); //fileName, data, overwrite, callback
+            await _fm.writeGameDataAsync(_savedGamesDataKey, saveDataStringArray, true); //fileName, data, overwrite
+            console.log("expired game data saved - "+_savedGames.length+" references.");
+            return null;
         };
 
         //retrieve stored data
-        readSavedGames();
-
+        readSavedGamesAsync();
 
         console.log(_objectName + ' created');
 
         //// public methods   
-        self.checkForExpiredGames = function(gameTimeOut) {
+        self.checkForExpiredGames = async function(gameTimeOut) {
             console.log("Checking for expired games...");
             for (var g=0;g<_games.length;g++) {
                 var now = parseInt(new Date().getTime());
@@ -62,31 +57,30 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                     //if not active for the last hour, kill the game
                     if (_games[g].getTimeStamp() < now-gameTimeOut) {
                         console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
+                        
+                        var savedResult = await _games[g].saveAsync();
 
-                        var callbackFunction = function(savedResult, savedGame) {
+                        _games[g] = g; //set just ID into game slot
+                        _inactiveGames.push(g);
+
+                        //savedGame originally returned as full game object
                             var saved;
                             if (savedResult) {
                                 try {
                                     saved = JSON.parse(savedResult);
                                 } catch (e) {console.log("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
                                    
-                                //console.log("saved");
+                                //console.log("saved");  username id saveid
                                 if (saved.description) {
                                     //console.log("saved.description");
                                     if (saved.description.substring(0,10) == "Game saved") {
-                                        _savedGames.push({"username":savedGame.getUsername(),"id":savedGame.getId(), "filename":savedGame.getFilename()});
-                                        writeSavedGames();
-                                        console.log("Timed out game saved as id:"+savedGame.getId()+", username:"+savedGame.getUsername()+", filename:"+savedGame.getFilename());
+                                        _savedGames.push({"username":savedResult.username,"id":savedResult.id, "filename":savedResult.saveid});
+                                        await writeSavedGamesAsync(); //@todo - await this
+                                        console.log("Timed out game saved as id:"+savedResult.id+", username:"+savedResult.username+", filename:"+savedResult.saveid);
                                     };
                                 };
                             };
                             //console.log(_inactiveGames); 
-                        };
-
-                        _games[g].save(callbackFunction);
-
-                        _games[g] = g; //set just ID into game slot
-                        _inactiveGames.push(g);
                           
                     }; 
                 };
@@ -161,7 +155,23 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             return newGameId;
         };
 
-        self.loadGame = function(originalGameId, filename, username, callback) {
+        //adding games into the controller from outside shouldn't be possible - but needed for testing. Probably a code smell!
+        self.addPreMadeGame = function(aGameObject) {
+            var sessionLimit = 10; //minimise the number of games via this route.
+            if (_games.length >= sessionLimit) {return -1;}; //prevent too many active games
+            var gameId = aGameObject.getId();
+            if (gameId in _games) {
+                console.log("Error: Game ID already in use.");
+                return -1;
+            } else {
+                _games[gameId] = aGameObject;
+                console.log('game ID: '+gameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
+                return gameId;
+            };
+
+        };
+
+        self.loadGameAsync = async function(originalGameId, filename, username) {
             if (filename == "") {
                 if (_games[originalGameId]) {
                     if (_games[originalGameId].getUsername() == username) {
@@ -170,47 +180,44 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 };
             };
             
-            //console.log("requested game filename: '"+filename+"'");        
+            console.log("requested game: filename: '"+filename+"' originalGameId: "+originalGameId+" username: '"+username+"'");   
 
-            var callbackFunction = function (gameData) {
-                //console.log("Game Data: "+gameData);
-                var game;
-                //if game file not found, return null.
-                if (!(gameData)) {
-                    callback (null);
-                } else {
-                    //remove from pool of expired games we're tracking
-                    var expiredGamesToKeep = [];
-                    for (var s=0;s<_savedGames.length;s++) {
-                        if (_savedGames[s].filename != filename) {expiredGamesToKeep.push(_savedGames[s]);};
-                    };
+            const gameData = await _fm.readGameDataAsync(filename);
+            //console.log("Game Data: "+gameData);
+            var game;
+            //if game file not found, return null.
+            if (!(gameData)) {
+                return null;
+            } else {
+                //remove from pool of expired games we're tracking
+                var expiredGamesToKeep = [];
+                for (var s=0;s<_savedGames.length;s++) {
+                    if (_savedGames[s].filename != filename) {expiredGamesToKeep.push(_savedGames[s]);};
+                };
                     _savedGames = expiredGamesToKeep;
-                    writeSavedGames();
+                    await writeSavedGamesAsync();
 
                     var playerAttributes = gameData[0];
                     var newMap = _mapBuilder.buildMap(gameData);
-                    //console.log ("game file "+filename+" loaded.");
+                    console.log ("game file "+filename+" loaded.");
 
-                    //console.log("originalGameId:"+originalGameId);
+                    console.log("originalGameId:"+originalGameId);
                     //if loading from within an active game, we want to replace the existing game rather than adding another
-                    if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
+                    if (originalGameId >= 0) {
+                        game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
+                        _games[originalGameId] = game;
+                        console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
+                        return (originalGameId);
+                    } else {
+                    //if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
                         var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
                         game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, filename, _fm);
                         _games[newGameId] = game; 
                         console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
-                        callback (newGameId);
-                    } else {
-                        game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
-                        _games[originalGameId] = game;
-                        console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
-                        callback (originalGameId);
-                    };  
+                        return (newGameId);
+                    };
                 };
 
-            };
-           
-            _fm.readGameData(filename, callbackFunction);                    
-            
         };
 
         ////used when quitting

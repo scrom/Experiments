@@ -84,66 +84,43 @@ describe('FileManager', () => {
         expect(readData).toEqual(data2);
     });
 
-    test('gameDataExists returns true for existing game data', done => {
+    test('gameDataExists returns true for existing game data', async () => {
         fm.writeFile(testFileName, { test: 123 }, true);
-        fm.gameDataExists('testfile', exists => {
-            expect(exists).toBe(true);
-            done();
-        });
+        var exists = await fm.gameDataExistsAsync('testfile')
+        expect(exists).toBe(true);
     });
 
-    test('gameDataExists returns false for non-existing game data', done => {
+    test('gameDataExists returns false for non-existing game data', async () => {
         if (fs.existsSync(testFilePath)) fs.unlinkSync(testFilePath);
-        fm.gameDataExists('testfile', exists => {
-            expect(exists).toBe(false);
-            done();
-        });
+        var exists = await fm.gameDataExistsAsync('testfile');
+        expect(exists).toBe(false);
     });
 
-    test('removeGameData deletes game data file', done => {
+    test('removeGameData deletes game data file', async () => {
         fm.writeFile(testFileName, { test: 123 }, true);
         expect(fs.existsSync(testFilePath)).toBe(true);
-        fm.removeGameData('testfile', () => {
-            expect(fs.existsSync(testFilePath)).toBe(false);
-            done();
-        });
+        await fm.removeGameDataAsync('testfile');
+        expect(fs.existsSync(testFilePath)).toBe(false);
     });
 
-    test('readGameData reads dummy game data file', done => {
+    test('readGameData reads dummy game data file', async () => {
         const data = { foo: "bar" };
         fm.writeFile(testFileName, data, true);
-        fm.readGameData('testfile', readData => {
-            expect(readData).toEqual(data);
-            done();
-        });
+        const readData = await fm.readGameDataAsync('testfile');
+        expect(readData).toEqual(data);
     });
 
-
-    test('writeGameDataSync writes dummy game data file', done => {
+    test('writeGameDataAsync writes dummy game data file', async () => {
         const data = [JSON.stringify({ foo: 1 }), JSON.stringify({ bar: 2 })];
-
-         const callbackFunction = function(result, savedGame) {
-            const readData = fm.readFile(testFileName);
-            expect(readData).toEqual([{ foo: 1 }, { bar: 2 }]);
-            done();
-        };
-
-        fm.writeGameDataSync('testfile', data, true, callbackFunction);
-    });
-
-    test('writeGameData writes dummy game data file', async () => {
-        const data = [JSON.stringify({ foo: 1 }), JSON.stringify({ bar: 2 })];
-        await fm.writeGameData('testfile', data, true);
+        await fm.writeGameDataAsync('testfile', data, true);
         const readData = fm.readFile(testFileName);
         expect(readData).toEqual([{ foo: 1 }, { bar: 2 }]);
     });
 
-    test('readGameData reads real game data file', done => {
-        fm.readGameData('savegame-0', readData => {
-            expect(readData[0].username).toEqual("brian"); // confirm user data object is returned
-            expect(readData[5].name).toEqual("camelids-a"); // check a location on the map exists
-            expect(readData.length).toEqual(137); // check we got the full file back based on number of objects expected
-            done();
-        });
+    test('readGameData reads real game data file', async() => {
+        const readData = await fm.readGameDataAsync('savegame-0');
+        expect(readData[0].username).toEqual("brian"); // confirm user data object is returned
+        expect(readData[5].name).toEqual("camelids-a"); // check a location on the map exists
+        expect(readData.length).toEqual(137); // check we got the full file back based on number of objects expected
     });
 });

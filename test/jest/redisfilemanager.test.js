@@ -27,79 +27,36 @@ describe('REDISFileManager', () => {
             }
         })();
     });
-
-    /*
-    test('readGameData reads dummy game data from REDIS', done => {
+  
+    test('readGameData reads dummy game data from REDIS', async() => {
         jest.setTimeout(10000);
-        const data = { foo: "bar" };
-        fm.writeGameData(testFileName, data, true, () => {
-            fm.readGameData(testFileName, (err, readData) => {
-                expect(err).toBeNull();
-                expect(readData).toEqual(data);
-                done();
-            });
-        });
+        const data = ["{\"foo\":\"bar\"}", "{\"baz\":\"qux\"}", "{\"quux\":\"corge\"}", "{\"grault\":\"garply\"}", "{\"waldo\":\"fred\"}", "{\"plugh\":\"xyzzy\"}", "{\"thud\":\"foo\"}"];
+        await fm.writeGameDataAsync(testFileName, data, true);
+        expect (await fm.gameDataExistsAsync(testFileName)).toBe(true);
+        var readData = await fm.readGameDataAsync(testFileName);
+        expect (JSON.stringify(readData[6])).toBe(data[6]); //confirm final block matches
+    }); 
+
+    test('writeGameData writes to REDIS with no errors - using async', async () => {
+        jest.setTimeout(10000);
+        const data = ["{\"foo\":\"bar\"}", "{\"baz\":\"qux\"}", "{\"quux\":\"corge\"}", "{\"grault\":\"garply\"}", "{\"waldo\":\"fred\"}", "{\"plugh\":\"xyzzy\"}", "{\"thud\":\"foo\"}"];;
+        try {
+            const success = await fm.writeGameDataAsync(testFileName, data, true);
+            expect(success).toBe(true);
+            expect(await fm.gameDataExistsAsync(testFileName)).toBe(true);
+        } catch (err) {
+            console.error("Error writing game data:", err);
+            expect(err).toBeNull();
+        }
     });
 
-    test('deleteGameData removes data from REDIS', done => {
+    test('removeGameData removes data from REDIS', async () => {
         jest.setTimeout(10000);
         const data = { foo: "bar" };
-        fm.writeGameData(testFileName, data, true, () => {
-            fm.deleteGameData(testFileName, (err) => {
-                expect(err).toBeNull();
-                fm.readGameData(testFileName, (err, readData) => {
-                    expect(readData).toBeNull();
-                    done();
-                });
-            });
-        });
+        await fm.writeGameDataAsync(testFileName, data, true);
+        await fm.removeGameDataAsync(testFileName);
+        const readData = await fm.readGameDataAsync(testFileName);
+        expect(readData).toBeNull();
     });
-
-    */
-
     
-        test('writeGameData writes to REDIS with no errors - using async', done => {
-        jest.setTimeout(10000);
-        const data = ["{ foo: \"bar\" }", "{ baz: \"qux\" }", "{ quux: \"corge\" }", "{ grault: \"garply\" }", "{ waldo: \"fred\" }", "{ plugh: \"xyzzy\" }", "{ thud: \"foo\" }"];
-        (async () => {
-            try {
-                const success = await fm.writeGameData(testFileName, data, true);
-                expect(success).toBe(true);
-                done();
-            } catch (err) {
-                expect(err).toBeNull();
-                done();
-            }
-        })();
-        });
-
-
-/*    test('readGameData reads dummy game data from REDIS', done => {
-        jest.setTimeout(10000);
-        const data = { foo: "bar" };
-        const callback = (err, result) => {
-            if (err) {
-                console.error("Error reading game data from Redis:", err);
-            } else {
-                console.log("Game data read from Redis:", result);
-                expect(result).toEqual(data);
-            }
-            done();
-        };
-        
-        fm.writeGameData(testFileName, data, true, () => {
-            console.log("game data written to redis");
-            
-            fm.readGameData(testFileName, (err, readData) => {
-                if (err) {
-                    console.error("Error reading game data from Redis:", err);
-                } else {
-                    expect(readData).toEqual(data);
-                }
-                done();
-            });
-        });
-
-    });
-*/
 });

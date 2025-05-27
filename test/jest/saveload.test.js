@@ -8,14 +8,14 @@ const filemanager = require('../../server/js/filemanager.js');
 
 const mb = new mapbuilder.MapBuilder('../../data/', 'root-locations');
 const fm = new filemanager.FileManager(true, "../../test/testdata/");
+const redisfm = new filemanager.FileManager(false);
 const gc = new gamecontroller.GameController(mb, fm);
+const redisgc = new gamecontroller.GameController(mb, redisfm);
 
 describe('SaveLoad Tests', () => {
-    test('can load file based game', done => {
-        gc.loadGame(0, "savegame-0", "brian", function(result) {
-            console.log(result);
-            done();
-        });
+    test('can load file based game', async () => {
+        const result = await gc.loadGameAsync(0, "savegame-0", "brian");
+        console.log(result);
     });
 
     test('can create saveable player', () => {
@@ -38,7 +38,7 @@ describe('SaveLoad Tests', () => {
         expect(actualResult).toBe(expectedResult);
     });
 
-    test('can save game to file', done => {
+    test('can save game to file', async () => {
         const playerAttributes = {
             "username": "player",
             "missionsCompleted": ["keyfob", "stuff", "more stuff"],
@@ -49,29 +49,26 @@ describe('SaveLoad Tests', () => {
 
         const g0 = new game.Game(playerAttributes, 0, m0, mb, null, fm);
 
-        const callbackFunction = function(result, savedGame) {
-            const expectedResult = 45;
-            const actualResult = result.indexOf("Game saved as <b>player-");
-            console.log("Expected: " + expectedResult);
-            console.log("Actual  : " + actualResult);
-            expect(actualResult).toBe(expectedResult);
-            const filename = result.substr(62, result.indexOf("</b>", 1) - 62) + ".json";
-            console.log("Filename:" + filename);
-            let fileExists = fm.fileExists(filename);
-            console.log("File " + filename + " created? " + fileExists);
-            expect(fileExists).toBe(true);
-            fm.deleteFile(filename);
-            fileExists = fm.fileExists(filename);
-            console.log("File " + filename + " deleted? " + !fileExists);
-            expect(fileExists).toBe(false);
-            done();
-        };
+        const result = await g0.saveAsync();
 
-        g0.save(callbackFunction);
+        const expectedResult = 45;
+        const actualResult = result.indexOf("Game saved as <b>player-");
+        console.log("Expected: " + expectedResult);
+        console.log("Actual  : " + actualResult);
+        expect(actualResult).toBe(expectedResult);
+        const filename = result.substr(62, result.indexOf("</b>", 1) - 62) + ".json";
+        console.log("Filename:" + filename);
+        let fileExists = fm.fileExists(filename);
+        console.log("File " + filename + " created? " + fileExists);
+        expect(fileExists).toBe(true);
+        fm.deleteFile(filename);
+        fileExists = fm.fileExists(filename);
+        console.log("File " + filename + " deleted? " + !fileExists);
+        expect(fileExists).toBe(false);
+
     });
 
-    test('can save game to redis', done => {
-        const redisfm = new filemanager.FileManager(false);
+    test('can save game to redis', async () => {
 
         const playerAttributes = {
             "username": "player",
@@ -83,8 +80,9 @@ describe('SaveLoad Tests', () => {
 
         const g0 = new game.Game(playerAttributes, 0, m0, mb, null, redisfm);
 
-        const callbackFunction = function(result, savedGame) {
-            const expectedResult = 45;
+        const result = await g0.saveAsync();
+
+        const expectedResult = 45;
             const actualResult = result.indexOf("Game saved as <b>player-");
             console.log("Expected: " + expectedResult);
             console.log("Actual  : " + actualResult);
@@ -92,20 +90,14 @@ describe('SaveLoad Tests', () => {
             const filename = result.substr(62, result.indexOf("</b>", 1) - 62);
             console.log(filename);
 
-            // nested callback!
-            redisfm.gameDataExists(filename, function(fileExists) {
-                console.log("File " + filename + " created? " + fileExists);
-                expect(fileExists).toBe(true);
-                redisfm.removeGameData(filename, function() {
-                    done();
-                });
-            });
-        };
-
-        g0.save(callbackFunction);
+            var fileExists = await redisfm.gameDataExistsAsync(filename);
+            console.log("File " + filename + " created? " + fileExists);
+            expect(fileExists).toBe(true);
+            await redisfm.removeGameDataAsync(filename);
+        });
     });
 
-    test('can save game to redis and read back', done => {
+    test('can save game to redis through game, read back and delete via filemanager', async () => {
         const redisfm = new filemanager.FileManager(false);
 
         const playerAttributes = {
@@ -118,30 +110,102 @@ describe('SaveLoad Tests', () => {
 
         const g0 = new game.Game(playerAttributes, 0, m0, mb, null, redisfm);
 
-        const callbackFunction = function(result, savedGame) {
-            console.log("Validating saved game is returned: " + savedGame.getUsername());
-            const filename = result.substr(62, 13);
-            console.log(filename);
+        const result = await g0.saveAsync();
 
-            // nested callback!
-            redisfm.gameDataExists(filename, function(fileExists) {
-                const readGameCallback = function(gameData) {
-                    if (gameData) {
-                        console.log("Test result - Game data:" + gameData);
-                    } else {
-                        console.log("Test did not retrieve data.");
-                    }
-                    redisfm.removeGameData(filename, function() {
-                        done();
-                    });
-                };
+        // retrieve filename from save result
+        const filename = result.substr(62, 13);
+        console.log(filename);
 
-                if (fileExists) {
-                    redisfm.readGameData(filename, readGameCallback);
-                }
-            });
+        // check if file exists in redis
+        var fileExists = await redisfm.gameDataExistsAsync(filename);
+        expect(fileExists).toBe(true);
+        if (fileExists) {
+
+            //read data
+            var gameData = await redisfm.readGameDataAsync(filename);
+            expect(gameData.length).toBe(156); // full length of saved and loaded game data = 156 elements
+            expect(gameData[0]).toHaveProperty("username");
+
+            //remove data
+            await redisfm.removeGameDataAsync(filename);
+            fileExists = await redisfm.gameDataExistsAsync(filename);
+            expect(fileExists).toBe(false);
+        };
+    });
+
+    test('can save game to redis via interpreter and confirm it exists via filemanager', async () => {
+        const Interpreter = require('../../server/js/interpreter.js').Interpreter;
+        const interpreter = new Interpreter(redisgc, redisfm);
+
+        const playerAttributes = {
+            "username": "player",
+            "missionsCompleted": ["keyfob", "stuff", "more stuff"],
+            "stepsTaken": 4,
+            "waitCount": 21
         };
 
-        g0.save(callbackFunction);
+        const m0 = mb.buildMap();
+        const g0 = new game.Game(playerAttributes, 0, m0, mb, null, redisfm);
+        redisgc.addPreMadeGame(g0);
+        const saveResult = await interpreter.translateAsync('/save/save/player/0', null);
+        var filename = JSON.parse(saveResult).response.saveid;
+        expect(filename).toContain('player');
+
+        var fileExists = await redisfm.gameDataExistsAsync(filename);
+        expect(fileExists).toBe(true);
+
     });
-});
+    
+test('can save game to redis via interpreter and read back via gamecontroller', async () => {
+        const Interpreter = require('../../server/js/interpreter.js').Interpreter;
+        const interpreter = new Interpreter(redisgc, redisfm);
+
+        const playerAttributes = {
+            "username": "player",
+            "missionsCompleted": ["keyfob", "stuff", "more stuff"],
+            "stepsTaken": 4,
+            "waitCount": 21
+        };
+
+        const m0 = mb.buildMap();
+        const g0 = new game.Game(playerAttributes, 0, m0, mb, null, redisfm);
+        redisgc.addPreMadeGame(g0);
+        const saveResult = await interpreter.translateAsync('/save/save/player/0', null);
+        var filename = JSON.parse(saveResult).response.saveid;
+        expect(filename).toContain('player');
+
+        var fileExists = await redisfm.gameDataExistsAsync(filename);
+        expect(fileExists).toBe(true);
+
+        const loadResult = await redisgc.loadGameAsync(0, filename, "player");
+        expect(loadResult).toBe(0);
+
+    });
+
+    test('can save game to redis and read back via interpreter', async () => {
+        const Interpreter = require('../../server/js/interpreter.js').Interpreter;
+        const interpreter = new Interpreter(redisgc, redisfm);
+
+        const playerAttributes = {
+            "username": "player",
+            "missionsCompleted": ["keyfob", "stuff", "more stuff"],
+            "stepsTaken": 4,
+            "waitCount": 21
+        };
+
+        const m0 = mb.buildMap();
+        const g0 = new game.Game(playerAttributes, 0, m0, mb, null, redisfm);
+        redisgc.addPreMadeGame(g0);
+        const saveResult = await interpreter.translateAsync('/save/save/player/0', null);
+        var filename = JSON.parse(saveResult).response.saveid;
+        expect(filename).toContain('player');
+
+        var fileExists = await redisfm.gameDataExistsAsync(filename);
+        expect(fileExists).toBe(true);
+
+        const loadResult = await interpreter.translateAsync('/load/'+filename+'/player/0', null);
+        expect(JSON.parse(loadResult).response.saveid).toBe(filename);
+        expect(JSON.parse(loadResult).response.username).toBe("player");
+        //expect(JSON.parse(loadResult).response).toEqual(["keyfob", "stuff", "more stuff"]);
+
+    });
