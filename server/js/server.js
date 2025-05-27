@@ -111,7 +111,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
     app.get(/^\/save/, async function (request, response) {
-            request.socket.setTimeout(5);
+            request.socket.setTimeout(250);
             var sanitisedRequestURL = sanitiseString(request.url);
             //var response = request.res; //get the response object from the request
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
@@ -123,7 +123,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
     app.get(/^\/load/, async function (request, response) {
-            request.socket.setTimeout(5);
+            request.socket.setTimeout(250);
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
             response.writeHead(200, {'Content-type':'text/plain'});
@@ -240,6 +240,7 @@ exports.Server = function Server(anInterpreter) {
             };
         };
 
+        //mainly used for testing  - mimics some of the work client performs on a fetch.
         self.fetchCall = async function (url) {
             const response = await fetch(url, {method: "GET"});
 

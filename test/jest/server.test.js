@@ -3,11 +3,11 @@ const stubFactory = require('../stubs/stubFactory.js');
 //const config = require('../../server/js/config.js');
 const mapbuilder = require('../../server/js/mapbuilder.js');
 const gamecontroller = require('../../server/js/gamecontroller.js');
+const game = require('../../server/js/game.js');
 const Interpreter = require('../../server/js/interpreter.js').Interpreter;
 const fileManager = require('../../server/js/filemanager.js');
 const Server = require('../../server/js/server').Server;
 const config = require('../../server/js/config');
-const path = require('path');
 const httpMocks = require('node-mocks-http');
 
 const testDataDir = '../../test/testdata/';
@@ -107,18 +107,6 @@ describe('Server', () => {
             expect(response).toEqual({"request": {"command": "save"}, "response": {"description": "invalid user: undefined"}});
         });
 
-        test('Fetch (GET) /save with *valid* user calls interpreter with callback and succeeds', async () => {
-            const request = httpMocks.createRequest({
-                method: 'GET',
-                url: config.protocol+"://"+config.hostname+":"+config.port+"/save",
-                headers: headers
-            });
-
-            var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
-            expect(response).toEqual({"request": {"command": "save"}, "response": {"description": "xxx"}});
-        });
-
         test('Fetch (GET) /load with invalid file calls interpreter with callback', async () => {
             const request = httpMocks.createRequest({
                 method: 'GET',
@@ -129,18 +117,6 @@ describe('Server', () => {
             var response = await serverInstance.fetchCall(request.url);
             console.log(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "load"}, "response": {"description": "Saved game file '' not found."}});
-        });
-
-        test('Fetch (GET) /load with *valid* file calls interpreter with callback and succeeds', async () => {
-            const request = httpMocks.createRequest({
-                method: 'GET',
-                url: config.protocol+"://"+config.hostname+":"+config.port+"/load",
-                headers: headers
-            });
-
-            var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
-            expect(response).toEqual({"request": {"command": "load"}, "response": {"description": "xxx"}});
         });
 
         test('Fetch (GET) /quit returns translated quit', async () => {
@@ -178,4 +154,69 @@ describe('Server', () => {
             console.log(JSON.stringify(response));
             expect(response.length).toBe(155);
         });
+
+        test('Fetch (GET) /save via server with *valid* user succeeds', async () =>
+        {
+            const playerAttributes = {
+                "username": "player",
+                "missionsCompleted": ["keyfob", "stuff", "more stuff"],
+                "stepsTaken": 4,
+                "waitCount": 21
+            };
+
+            const m0 = mb.buildMap();
+            const g0 = new game.Game(playerAttributes, 0, m0, mb, null, fm);
+            gc.addPreMadeGame(g0);
+
+            const request = httpMocks.createRequest({
+                method: 'GET',
+                url: config.protocol + "://" + config.hostname + ":" + config.port + "/save/save/player/0",
+                headers: headers
+            });
+
+            console.log("URL: " + request.url);
+
+            var response = await serverInstance.fetchCall(request.url);
+
+            console.log(JSON.stringify(response));
+            expect(response).toHaveProperty('request.command');
+            expect(response).toHaveProperty('response.attributes');
+            expect(response).toHaveProperty('response.saveid');
+        });
+
+        test('Fetch (GET) /load via with *valid* file succeeds', async () =>
+        {
+            const playerAttributes = {
+                "username": "player",
+                "missionsCompleted": ["keyfob", "stuff", "more stuff"],
+                "stepsTaken": 4,
+                "waitCount": 21
+            };
+
+            const m0 = mb.buildMap();
+            const g0 = new game.Game(playerAttributes, 0, m0, mb, null, fm);
+            gc.addPreMadeGame(g0);
+
+            const saveRequest = httpMocks.createRequest({
+                method: 'GET',
+                url: config.protocol + "://" + config.hostname + ":" + config.port + "/save/save/player/0",
+                headers: headers
+            });
+
+            var saveResponse = await serverInstance.fetchCall(saveRequest.url);
+
+            const request = httpMocks.createRequest({
+                method: 'GET',
+                url: config.protocol + "://" + config.hostname + ":" + config.port + "/load/"+saveResponse.response.saveid+"/player/0",
+                headers: headers
+            });
+
+            var response = await serverInstance.fetchCall(request.url);
+
+            console.log(JSON.stringify(response));
+            expect(response).toHaveProperty('request.command');
+            expect(response).toHaveProperty('response.attributes');
+            expect(response).toHaveProperty('response.saveid');
+        });
+
     });
