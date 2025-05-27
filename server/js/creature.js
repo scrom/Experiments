@@ -23,7 +23,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _genderPrefix = "It"; //default
         var _genderSuffix = "it"; //default
         var _genderPossessiveSuffix = "its'"; //default
-        var _genderDescriptivePrefix = "it's"; //default
+        var _genderDescriptivePrefix = "It's"; //default
         var _weight = 0; //default
         var _attackStrength = 0; //default
         var _type = 'creature'; //default
@@ -246,28 +246,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _genderPrefix = "She";
                 _genderSuffix = "her";
                 _genderPossessiveSuffix = "her";
-                _genderDescriptivePrefix = "she's";
+                _genderDescriptivePrefix = "She's";
             }
             else if ((_gender == "m")||(_gender == "male")) {
                 _gender = "male";
                 _genderPrefix = "He";
                 _genderSuffix = "him";
                 _genderPossessiveSuffix = "his";
-                _genderDescriptivePrefix = "he's";
+                _genderDescriptivePrefix = "He's";
             }
             else if ((_gender == "n")||(_gender == "nb")||(_gender == "nonbinary")||(_gender == "non-binary")) {
                 _gender = "nonbinary";
                 _genderPrefix = "They";
                 _genderSuffix = "them";
                 _genderPossessiveSuffix = "their";
-                _genderDescriptivePrefix = "they're";
+                _genderDescriptivePrefix = "They're";
             }
             else {
                 _gender = "unknown"
                 _genderPrefix = "It"
                 _genderSuffix = "it"
                 _genderPossessiveSuffix = "its";
-                _genderDescriptivePrefix = "it's";
+                _genderDescriptivePrefix = "It's";
             };
         };
 
@@ -983,6 +983,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getAffinityDescription = function() {
             if (self.isDead()) {return ""};
+            //@todo - improve this for they/them 
             if (_affinity >5) {return "<br>" + _genderPrefix+" really likes you."};
             if (_affinity >0) {return "<br>" + _genderPrefix+" seems to like you."};
             if (_affinity <-5) {return "<br>" + _genderPrefix+" really doesn't like you."};        
@@ -1311,7 +1312,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            if (_inventory.size(false, true) > 0) { resultString += "<br>" + _genderPrefix + "'s carrying " + _inventory.describe(null, minSize) + "."; };
+            if (_inventory.size(false, true) > 0) { resultString += "<br>" + _genderDescriptivePrefix + " carrying " + _inventory.describe(null, minSize) + "."; };
             resultString = resultString.replace("placed on top", "placed on top of "+self.getSuffix());
 
             if (minSize >= tools.minimumSizeForDistanceViewing) {
@@ -1344,7 +1345,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
                 resultString += " if you <i>ask</i> "+_genderSuffix+" nicely.<br>"; 
             };
-
+            //@todo - improve for they/them
             if (_salesInventory.size() == 1) { resultString += "<br>" + _genderPrefix + " has " + _salesInventory.describe('price')+" for sale.<br>"; }
             else if (_salesInventory.size() > 1) { resultString += "<br>" + tools.initCap(_genderDescriptivePrefix) + " offering some items for sale:<br>" + _salesInventory.describe('price'); };
             
@@ -1356,6 +1357,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             if (wantsToTalk) {
+                //@todo improve for they/them
                 if (((_affinity <0) && (playerAggression>0))|| (_affinity <-1)) {resultString +="<br>"+_genderPrefix+" appears to have something on "+_genderPossessiveSuffix+" mind but doesn't trust you enough to talk about it right now.";}
                 else { resultString +="<br>"+_genderPrefix+" wants to <i>talk</i> to you about something.";};
             };
@@ -1515,10 +1517,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.rub = function(anObject, player) {
-            if (self.isDead()) {return _genderPrefix+"'s dead. I'm not sure that's an appropriate thing to do to corpses."};
+            if (self.isDead()) {return _genderDescriptivePrefix+" dead. I'm not sure that's an appropriate thing to do to corpses."};
             if (self.getSubType() != "animal" || _affinity <0) {
                 if (_affinity >=-1) {
                     self.decreaseAffinity(1);
+                    //@todo improve for they/them
                     return _genderPrefix+" really doesn't appreciate it. I recommend you stop now.";
                 } else { 
                     self.decreaseAffinity(1);
@@ -1528,6 +1531,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //only get here if a friendly or neutral animal
             if (_affinity < 5) {
                 self.increaseAffinity(1);
+                //@todo improve for they/them
                 return _genderPrefix+" makes happy purring and snuffling noises at you.<br>"+_genderPrefix+" seems to like that.";
             };
             if (_affinity == 5) {
@@ -1540,14 +1544,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (randomIndex > Math.floor(_affinity/2)) {
                 return _genderDescriptivePrefix+" getting bored now. It's probably time to stop before you get bitten or scratched.";
             } else {
-                self.decreaseAffinity(_affinity-1);         
+                self.decreaseAffinity(_affinity-1);      
+                //@todo improve for they/them   
                 return _genderDescriptivePrefix+" growls and lashes out at you. That's the fickle nature of animals, right?";
             };
 
         };
         
         self.shake = function (verb, player) {
-            if (self.isDead()) { return _genderPrefix + "'s dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
+            if (self.isDead()) { return _genderDescriptivePrefix + " dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
             if (self.checkCustomAction(verb)) {
                 return self.getCustomActionResult(verb);
             };
@@ -1555,6 +1560,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.getSubType() != "animal") {
                 if (_affinity >= -1) {
                     self.decreaseAffinity(1);
+                    //@todo improve for they/them
                     return _genderPrefix + " really doesn't appreciate it. I recommend you stop now.";
                 } else {
                     self.decreaseAffinity(1);
@@ -1563,7 +1569,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             //only get here if an animal
             self.decreaseAffinity(_affinity - 1);
-            return "I'm pretty sure that counts as animal cruelty. "+_genderDescriptivePrefix + " growls and lashes out at you.";
+            //@todo improve for they/them
+            return "I'm pretty sure that counts as animal cruelty. "+_genderPrefix + " growls and lashes out at you.";
 
         };
 
@@ -1696,7 +1703,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.receive = function(anObject, player, playerisAsking) {
-            if (self.isDead()) {return _genderPrefix+"'s dead. Save your kindness for someone who'll appreciate it."};
+            if (self.isDead()) {return _genderDescriptivePrefix+" dead. Save your kindness for someone who'll appreciate it."};
             if (self.getSubType() == "animal") {
                 if (anObject.getType() == "food" || anObject.getType() == "creature") {
                     var nutrition = anObject.getNutrition();
@@ -1706,9 +1713,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         anObject.eat("eat", self);
                         _timeSinceEating = 0;
                         if (originalObjectWeight <= self.getWeight()) {
+                            //@todo improve for they/them
                             return tools.initCap(_genderPrefix)+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did "+anObject.getPrefix().toLowerCase()+" all go?";
                         } else if (originalObjectWeight < 5) {
                             if (anObject.chargesRemaining() >0) {_currentLocation.addObject(anObject);};
+                            //@todo improve for they/them
                             return tools.initCap(_genderPrefix)+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at " + anObject.getSuffix()+ ".";
 
                         } else {
@@ -1718,12 +1727,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 _currentLocation.addObject(anObject);
                                 leftovers = ", chews a small piece off to eat and leaves the remainder on the floor for later."
                             };
+                            //@todo improve for they/them
                             return tools.initCap(_genderPrefix)+" pulls at "+anObject.getDisplayName()+leftovers;
                         };
                     };
                 };
                                     
                 _currentLocation.addObject(anObject);
+                //@todo improve for they/them
                 return tools.initCap(_genderPrefix)+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getPrefix().toLowerCase()+" comes back later.";
             };
             if (!(self.canCarry(anObject))) {return '';};    
@@ -1749,6 +1760,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var leftovers = ""; 
                     if (anObject.chargesRemaining() != 0) {
                         _inventory.add(anObject);
+                        //@todo improve for they/them
                         leftovers = "<br>"+tools.initCap(self.getPrefix())+" holds onto the remainder for later.";
                     };  
                 
@@ -1767,6 +1779,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (!anObject.isBroken()) {
                     brokenString = "pretty tatty"; //damaged or chewed
                 };
+                //@todo improve for they/them
                 resultString +="<br>"+self.getPrefix()+" says '"+anObject.getPrefix()+" looks "+brokenString+", would you like me to fix " + anObject.getPrefix().toLowerCase() + " up for you?'";
                 self.setNextAction(false, "That's fine, feel free to <i>ask</i> me later if you change your mind."); 
                 self.setNextAction(true, "$action ask "+self.getName()+" to repair "+anObject.getName()); 
@@ -1779,7 +1792,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.buy = function (anObject, player) {
-
+            //@todo improve for they/them
             if (!(self.willTrade(player.getAggression(), anObject))) { return _genderPrefix + " doesn't want to buy " + anObject.getDisplayName() + "."; };
 
             if (!(self.canAfford(anObject.getPrice()))) { return _genderPrefix + " can't afford " + anObject.getPrefix().toLowerCase() + "."; };
@@ -1892,6 +1905,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (anObjectName == "money" || anObjectName == "cash" || anObjectName == "" || anObjectName == undefined) {
                         var cash = _inventory.getCashBalance();
                         if (cash <=0) {
+                            //@todo improve for they/them
                             resultString += _genderPrefix+" doesn't have any "+anObjectName+" to steal.";
                             return resultString;
                         };
@@ -1902,7 +1916,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         resultString += "You steal &pound;"+randomCash.toFixed(2)+" from "+self.getFirstName()+".";
                         return resultString;
                     };
-
+                    //@todo improve for they/them
                     resultString += _genderPrefix+" isn't carrying "+anObjectName+".";
                     return resultString;
                 };
@@ -1937,6 +1951,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (self.getSubType() == "friendly" && _friendlyAttackCount <3) {
                         _friendlyAttackCount ++;
                     };
+                    //@todo improve for they/them
                     resultString += self.getPrefix()+" dodges out of the way and attacks you instead. "+self.hit(player, 0.5)+"<br>You failed to gain anything but pain for your actions.";
                 } else {
                    resultString +="Not smart! You were caught."; 
@@ -1977,11 +1992,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var playerAggression = player.getAggression();
           
             var objectToGive = _inventory.getObject(anObjectName);
+            //@todo improve for they/them
             if (!(objectToGive)) {return _genderPrefix+" isn't carrying "+anObjectName+".";};
 
             var affinityModifier = objectToGive.getAffinityModifier();
             if (!(self.willShare(playerAggression, affinityModifier))) {  
                 player.setLastCreatureSpokenTo();
+                //@todo improve for they/them
                 return _genderPrefix+" doesn't want to share "+objectToGive.getDisplayName()+" with you.";
             };
  
@@ -2005,7 +2022,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _currentDelay = 0;
             
             //@todo - add a random response here.
-                
+            //@todo improve for they/them    
             return "'Sure. Here you go.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
         };
 
@@ -2013,6 +2030,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (self.isDead()) { return _genderDescriptivePrefix + " dead. Your money's no good to " + _genderPrefix.toLowerCase() + " now."; };
 
             var objectToGive = _salesInventory.getObject(anObjectName);
+            //@todo improve for they/them
             if (!(objectToGive)) { return tools.initCap(_genderPrefix) + " doesn't have any " + anObjectName + " to sell."; };
 
             if (!(self.willTrade(player.getAggression(), objectToGive))) { return _genderPrefix + " doesn't want to sell " + objectToGive.getDisplayName() + " to you."; };
@@ -2343,6 +2361,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     } else if (_friendlyAttackCount ==2) {
                         return "You missed. This is your last chance. Seriously, don't do that again any time soon.";
                     } else {
+                        //@todo improve for they/them
                         return self.getPrefix()+" takes exception to your violent conduct.<br>Fortunately for you, you missed. Don't do that again.";
                     };     
                 };
@@ -2354,7 +2373,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (self.isDead()) { return self.kill(); };
                 
                 if (self.healthPercent() <= _bleedingHealthThreshold) { _bleeding = true; };
-                
+                //@todo improve for they/them
                 var hurtString = " is hurt.";
                 if (_bleeding) {
                     if (playerIsAttacker) {
@@ -2373,6 +2392,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 
                 if (hurtString.length > 0) {
                     if (playerIsAttacker) {
+                        //@todo improve for they/them
                         hurtString = hurtString.replace(" is ", "'s ");
                         hurtString = hurtString.replace(" hurt", " injured");
                         resultString += tools.initCap(self.getPrefix()) + hurtString;
@@ -2443,6 +2463,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.heal = function(medicalArtefact, healer) {
+            //@todo improve for they/them
             if (_hitPoints >= _maxHitPoints-1) { return tools.initCap(self.getPrefix())+" doesn't need healing.";};
             if (self.isDead()) {return tools.initCap(self.getPrefix())+"'s dead, healing won't help "+_genderSuffix+" any more.";};
 
@@ -2495,6 +2516,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (healer) {
                 if (healer.getType() == "player") {
+                    //@todo improve for they/them
                     resultString += _genderPrefix+" seems much better but would benefit from a rest.";
                     self.increaseAffinity(1);
                     
@@ -2580,6 +2602,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (consumerContagion.length == 0 && consumerAntibodies.length == 0) {
                    
                     if (self.getContagion().length > 0 || self.getAntibodies().length > 0 || self.getSubType() == "animal") {
+                        //@todo improve for they/them
                         resultString = "You try biting " + self.getFirstName() + " but " + _genderPrefix.toLowerCase() + " dodges out of your way and bites you back.";
                         //bites consumer (base attack strength / 4 - not with weapon)
                         //@todo - possible bug - if consumer is killed here, death may not be properly reported.
@@ -2587,11 +2610,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         resultString += self.transmit(consumer, "bite");
                     } else {
                         if (self.getSubType() == "friendly") {
+                            //@todo improve for they/them
                             var randomReplies = ["'Hey!' " + _genderPrefix.toLowerCase()+" says.", tools.initCap(_genderPrefix) + " grimaces and pushes you away.", tools.initCap(_genderPrefix)+" says 'Stop that $player!'", "<br><i>You seriously need to keep yourself in check</i>.", tools.initCap(_genderPrefix) + " says 'Back off, freak!'", tools.initCap(_genderPrefix) + " slaps you around the face. 'Back off!'", tools.initCap(_genderPrefix) + " edges away from you nervously."];
                             var randomIndex = Math.floor(Math.random() * randomReplies.length);
                             resultString += randomReplies[randomIndex];
                         } else {
                             //"creature" but not animal
+                            //@todo improve for they/them
                             resultString = "You try biting " + self.getFirstName() + " but " + _genderPrefix.toLowerCase() + " ducks out of your way and glares at you menacingly.";
                         };
                     };
@@ -2605,6 +2630,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     
                     var biteBackString = "";
                     if (!self.isDead()) {
+                        //@todo improve for they/them
                         biteBackString = "<br>"+ _genderPrefix + " struggles free and bites you back.<br>";
                         //bites consumer (base attack strength / 4 - not with weapon)
                         //@todo - possible bug - if consumer is killed here, death may not be properly reported.
@@ -2661,27 +2687,27 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var healthPercent = self.healthPercent();
             switch (true) {
                     case (healthPercent>99):
-                        return _genderPrefix+"'s generally the picture of health.";
+                        return _genderDescriptivePrefix+" generally the picture of health.";
                         break;
                     case (healthPercent>80):
-                        return _genderPrefix+"'s not happy.";
+                        return _genderDescriptivePrefix+" not happy.";
                         break;
                     case (healthPercent>50):
-                        return _genderPrefix+"'s taken a fair beating.";
+                        return _genderDescriptivePrefix+" taken a fair beating.";
                         break;
                     case (healthPercent>25):
-                        return _genderPrefix+"'s really not in good shape.";
+                        return _genderDescriptivePrefix+" really not in good shape.";
                         break;
                     case (healthPercent>10):
-                        return _genderPrefix+"'s dying.";
+                        return _genderDescriptivePrefix+" dying.";
                         break;
                     case (healthPercent>0):
-                        return _genderPrefix+"'s almost dead.";
+                        return _genderDescriptivePrefix+" almost dead.";
                         break;
                     default:
-                        return _genderPrefix+"'s dead.";
+                        return _genderDescriptivePrefix+" dead.";
             };
-            if (_bleeding) {resultString += "<br>It looks like "+_genderPrefix+"'s bleeding. "+_genderDescriptivePrefix+" likely to die without some first aid.";};
+            if (_bleeding) {resultString += "<br>It looks like "+_genderDescriptivePrefix+" bleeding. "+_genderDescriptivePrefix+" likely to die without some first aid.";};
         };
 
         self.break = function(verb, deliberateAction) {
@@ -2689,6 +2715,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (verb == "force" || verb == "smash" || verb == "bash") {
                 return "That's not a reasonable thing to do to "+_genderSuffix+" is it?";
             };
+            //@todo improve for they/them
             return "The level of physical and emotional torment needed to '"+verb+"' someone requires sustained abuse. "+_genderPrefix+" pretends to ignore you but really isn't impressed.";          
         };
 
@@ -2706,14 +2733,15 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             _bleeding = false;
             if (_contagion.length > 0) {
-                _smell = _genderPrefix + "'s really not smelling good. A bit like a cross between rotting meat and festival toilets.";
+                _smell = _genderDescriptivePrefix + " really not smelling good. A bit like a cross between rotting meat and festival toilets.";
             } else {
+                //@todo improve for they/them
                 _smell = _genderPrefix + " smells musty and meaty - a bit like uncooked game. "+tools.initCap(_genderPossessiveSuffix)+" smell isn't too strong but I still don't recommend sniffing corpses more than you need to.";
             };
             _sound = "There's nothing quite like the silence of the dead.";
             _taste = "Slightly meaty and musty. Not so great."
             _collectable = true; 
-            _detailedDescription = _genderPrefix+"'s dead.";
+            _detailedDescription = _genderDescriptivePrefix+" dead.";
             _description = 'dead '+self.getDisplayName().replace("the ","");
             self.addSyns(["corpse","body"]);
 
@@ -2769,6 +2797,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
          };
 
         self.shove = function(verb) {
+            //@todo improve for they/them
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You prod and push at the corpse. "+_genderPrefix+" makes some squishy gurgling sounds and some vile-smelling fluid seeps onto the floor."};
             self.decreaseAffinity(1);
             return tools.initCap(_genderPrefix)+" really doesn't appreciate being pushed around.";
@@ -2784,7 +2813,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                  self.decreaseAffinity(1);
                 return "Unwise, $player.<br>You should back off a little and get on with what you're meant to be doing now.";
             };
-           
+           //@todo improve for they/them
             return _genderPrefix+" says 'I think it's best if we just stick to being friends.'";
 
         };
@@ -2796,6 +2825,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.moveOrOpen = function(verb) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at "+ _genderPossessiveSuffix+" corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             self.decreaseAffinity(1);
+            //@todo improve for they/them
             if (verb == 'push'||verb == 'pull') {return tools.initCap(_genderPrefix)+" really doesn't appreciate being pushed around."};
             //open
             return "I suggest you don't try to "+verb+" "+ _genderSuffix+" again, it's not going to end well.";
@@ -2841,7 +2871,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.find = function(objectName, playerAggression, map) {
             var willFindArtefacts = false;
-            if (self.isDead()) {return _genderPrefix+"'s dead. I don't think "+_genderSuffix+" can help you."}; 
+            if (self.isDead()) {return _genderDescriptivePrefix+" dead. I don't think "+_genderSuffix+" can help you."}; 
+            //@todo improve for they/them
             if (_affinity <0) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
             
             //creature will reply after this point...
@@ -2851,6 +2882,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (_affinity >= 2) { willFindArtefacts = true };
+            //@todo improve for they/them
             if (playerAggression>1) {return _genderPrefix+" says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'"+ returnImage};            
             if (_affinity < 1) {
                 var randomReplies = ["Sorry $player, I don't have time to help you right now.", "I'm too busy at the moment.", "I've got more important things to do right now."];
@@ -2873,6 +2905,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (direction == 'n' || direction == 's' || direction == 'e' || direction == 'w') {
                             directionName = tools.initCap(directionName);
                         };
+                        //@todo improve for they/them
                         return _genderPrefix + " says 'You'll need to start by heading <i>" + directionName + "</i> from here.'" + returnImage;
                     };
                 } else {
@@ -2883,12 +2916,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.initialReplyString = function(playerAggression) {
-            if (self.isDead()) {return _genderPrefix+"'s dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            if (self.isDead()) {return _genderDescriptivePrefix+" dead. Your prayer and song can't save "+_genderSuffix+" now."}; 
+            //@todo improve for they/them
             if (_affinity <-1) {return _genderPrefix+" doesn't want to talk to you."};
             if ((_affinity <0) &&  (playerAggression>0)) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
             if (self.getSubType() == "animal") {return "You can't seem to make each other understood.<br>Talking to animals isn't in your repertoire.";};
-
-
             
             //turn on delay
             _currentDelay = 0;
@@ -3038,6 +3070,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     //no dialogue
                     var rewardObject = _missions[i].getRewardObject();
                     if (rewardObject) {
+                        //@todo improve for they/them
                         if (rewardObject.getName() == keyword) {return tools.initCap(self.getPrefix())+" says 'Sorry $player, there's still some work left to do before you can have that.'"+returnImage};
                     };
                 };
@@ -3048,6 +3081,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (_salesInventory.check(keyword)) {
                     var saleItem = _salesInventory.getObject(keyword);
+                    //@todo improve for they/them
                     return tools.initCap(self.getPrefix())+" says 'You're in luck!' 'I have "+saleItem.getSuffix()+" for sale right here.'"+returnImage;
                 };
 
@@ -3160,7 +3194,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "goodnight":
                 case "good night":
                 case "good-night":
-                    randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "See you later"];
+                    randomReplies = ["Bye $player", "Goodbye $player", "See you round $player", "See you later", "Take care"];
                     if (self.getAffinity() > 2) {
                         randomReplies.push("Seeya");
                         randomReplies.push("Ciao");
@@ -3493,7 +3527,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 };
                             };
                         };
-
+                        //@todo improve for they/them
                         return tools.initCap(self.getPrefix()) + " says 'I'm sure " + object.getDescriptivePrefix() + " around here somewhere.'";
                     };
                     if (map.checkExists(artefactName)) {
