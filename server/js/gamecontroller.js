@@ -15,7 +15,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         var gameObjectModule = require('./game');
         var _fm = fileManager;
 
-        var readSavedGamesAsync = async function() {
+        var readSavedGamesListAsync = async function() {
             var data = await _fm.readGameDataAsync(_savedGamesDataKey);
             if (data) {
                 for (var i=0;i<data.length;i++) {
@@ -26,7 +26,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             };
         };
 
-        var writeSavedGamesAsync = async function() {
+        var writeSavedGamesListAsync = async function() {
 
             //'{"username":"'+savedGame.getUsername()+'","id":'+savedGame.getId()+', "filename":"'+savedGame.getFilename()+'"}'
             var saveDataStringArray = [];
@@ -44,7 +44,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
         };
 
         //retrieve stored data
-        readSavedGamesAsync();
+        readSavedGamesListAsync();
 
         console.log(_objectName + ' created');
 
@@ -75,7 +75,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                                     //console.log("saved.description");
                                     if (saved.description.substring(0,10) == "Game saved") {
                                         _savedGames.push({"username":savedResult.username,"id":savedResult.id, "filename":savedResult.saveid});
-                                        await writeSavedGamesAsync(); //@todo - await this
+                                        await writeSavedGamesListAsync();
                                         console.log("Timed out game saved as id:"+savedResult.id+", username:"+savedResult.username+", filename:"+savedResult.saveid);
                                     };
                                 };
@@ -87,7 +87,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             }; 
         };
         
-        self.monitor = function(pollFrequencyMinutes, gameTimeOutMinutes) {
+        self.monitor = async function(pollFrequencyMinutes, gameTimeOutMinutes) {
             //convert inputs to millis
             var pollFrequency = pollFrequencyMinutes*60000; 
             var gameTimeOut = gameTimeOutMinutes*60000; 
@@ -195,7 +195,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                     if (_savedGames[s].filename != filename) {expiredGamesToKeep.push(_savedGames[s]);};
                 };
                     _savedGames = expiredGamesToKeep;
-                    await writeSavedGamesAsync();
+                    await writeSavedGamesListAsync();
 
                     var playerAttributes = gameData[0];
                     var newMap = _mapBuilder.buildMap(gameData);
@@ -265,7 +265,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
             gamelist += ']}';
             //console.log(gamelist);
-            return gamelist; //@todo doesn't work at the moment
+            return gamelist; //@todo enhance in future to include more game details beyond name and id
         };
 
         self.userAction = function(aUsername, aGameId,anAction) {
