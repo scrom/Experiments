@@ -255,6 +255,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _genderPossessiveSuffix = "his";
                 _genderDescriptivePrefix = "he's";
             }
+            else if ((_gender == "n")||(_gender == "nb")||(_gender == "nonbinary")||(_gender == "non-binary")) {
+                _gender = "nonbinary";
+                _genderPrefix = "They";
+                _genderSuffix = "them";
+                _genderPossessiveSuffix = "their";
+                _genderDescriptivePrefix = "they're";
+            }
             else {
                 _gender = "unknown"
                 _genderPrefix = "It"
