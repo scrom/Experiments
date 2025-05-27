@@ -8,7 +8,6 @@
   "main": "server/js/main.js",
   "scripts": {
     "start": "node server/js/main.js",
-    "test-mocha": "mocha --recursive \"test/mocha/**/*.test.js\"",
     "test": "jest --collectCoverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=html --coveragePathIgnorePatterns=\"/node_modules/\""
   },
   "author": "simon.cromarty",
@@ -19,8 +18,8 @@
   "dependencies": {
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
-    "express-slow-down":"^2.1.0",
     "express-rate-limit": "^7.5.0",
+    "express-slow-down": "^2.1.0",
     "jsonfile": "^6.1.0",
     "morgan": "^1.10.0",
     "redis": "^5.0.1",
@@ -30,7 +29,7 @@
   "devDependencies": {
     "eslint": "^9.26.0",
     "jest": "^29.7.0",
-    "mocha": "^11.2.2"
+    "node-mocks-http": "^1.17.2"
   },
   "bugs": {
     "url": "https://github.com/scrom/Experiments/issues"

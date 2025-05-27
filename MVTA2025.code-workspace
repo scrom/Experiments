@@ -7,9 +7,6 @@
 	],
 	"settings": {
 		"editor.bracketPairColorization.independentColorPoolPerBracketType": true,
-		"mocha.files.glob": "test/mocha/**/*.js",
-		"mocha.runTestsOnSave": "true",
-		"mocha.showInExplorer": true,
 		"quokka.automaticRestart": true,
 		"javascript.suggest.completeFunctionCalls": true,
 		"javascript.format.insertSpaceAfterConstructor": true,
@@ -31,6 +28,5 @@
 		"workbench.colorTheme": "Visual Studio Dark",
 		"workbench.preferredDarkColorTheme": "Visual Studio Dark",
 		"workbench.sideBar.location": "right",
-		"mocha.subdirectory": "C:\\D:\\Development\\src\\Experiments\\test\\mocha"
 	}
 }

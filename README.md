@@ -63,7 +63,7 @@ Server Configuration
 
 2: Set the following server environment variables to configure the application hostname and port
 - 	HOSTNAME (e.g. mvta.herokuapp.com)
--  PORT     (e.g. 1337)
+-   PORT     (e.g. 1337)
 
 Note, if the game is running on port 80, you don't need to explicitly set port number as an environment variable.
 
