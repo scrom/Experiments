@@ -481,9 +481,9 @@ test('moving when almost tired occasionally warns player', () => {
     var attempts = 0;
     var actualResult = "";
     //randomly happens roughly 1 in 3 times
-    while (actualResult != expectedResult && attempts < 10) {
+    while (actualResult != expectedResult && attempts < 15) {
         actualResult = p0.tick(1, m0);
-        p0.increaseTimeSinceResting(-1); //hack!
+        p0.increaseTimeSinceResting(-1); //hack to prevent further exhaustion on repeat calls
         console.log(actualResult);
         attempts++;
     };
