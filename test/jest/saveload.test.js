@@ -94,6 +94,10 @@ describe('SaveLoad Tests', () => {
             console.log("File " + filename + " created? " + fileExists);
             expect(fileExists).toBe(true);
             await redisfm.removeGameDataAsync(filename);
+
+            fileExists = await redisfm.gameDataExistsAsync(filename);
+            console.log("File " + filename + " deleted? " + !fileExists);
+            expect(fileExists).toBe(false);
         });
     });
 
@@ -154,6 +158,12 @@ describe('SaveLoad Tests', () => {
         var fileExists = await redisfm.gameDataExistsAsync(filename);
         expect(fileExists).toBe(true);
 
+        //remove data
+        await redisfm.removeGameDataAsync(filename);
+        fileExists = await redisfm.gameDataExistsAsync(filename);
+        console.log("File " + filename + " deleted? " + !fileExists);
+        expect(fileExists).toBe(false);
+
     });
     
 test('can save game to redis via interpreter and read back via gamecontroller', async () => {
@@ -179,6 +189,12 @@ test('can save game to redis via interpreter and read back via gamecontroller', 
 
         const loadResult = await redisgc.loadGameAsync(0, filename, "player");
         expect(loadResult).toBe(0);
+
+        //remove data
+        await redisfm.removeGameDataAsync(filename);
+        fileExists = await redisfm.gameDataExistsAsync(filename);
+        console.log("File " + filename + " deleted? " + !fileExists);
+        expect(fileExists).toBe(false);
 
     });
 
@@ -207,5 +223,11 @@ test('can save game to redis via interpreter and read back via gamecontroller', 
         expect(JSON.parse(loadResult).response.saveid).toBe(filename);
         expect(JSON.parse(loadResult).response.username).toBe("player");
         //expect(JSON.parse(loadResult).response).toEqual(["keyfob", "stuff", "more stuff"]);
+
+        //remove data
+        await redisfm.removeGameDataAsync(filename);
+        fileExists = await redisfm.gameDataExistsAsync(filename);
+        console.log("File " + filename + " deleted? " + !fileExists);
+        expect(fileExists).toBe(false);
 
     });

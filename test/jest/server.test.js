@@ -30,12 +30,13 @@ describe('Server', () => {
     let serverInstance;
     let interpreter;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         jest.resetModules();
         interpreter = new Interpreter(gc, fm);
         serverInstance = new Server(interpreter);
         serverInstance.listen(); // Start the server
-        // Get the express app instance from closure
+        // Wait briefly to ensure server is ready
+        await new Promise(resolve => setTimeout(resolve, 50));
     });
 
     afterEach(() => {
@@ -182,9 +183,15 @@ describe('Server', () => {
             expect(response).toHaveProperty('request.command');
             expect(response).toHaveProperty('response.attributes');
             expect(response).toHaveProperty('response.saveid');
+
+            //clean up
+            await fm.removeGameDataAsync(response.response.saveid);
+            var exists = await fm.gameDataExistsAsync(response.response.saveid);
+            expect(exists).toBe(false);
+
         });
 
-        test('Fetch (GET) /load via with *valid* file succeeds', async () =>
+        test('Fetch (GET) /load via server with *valid* file succeeds', async () =>
         {
             const playerAttributes = {
                 "username": "player",
@@ -203,6 +210,8 @@ describe('Server', () => {
                 headers: headers
             });
 
+            //this test had started to consistently fail with redis ECONNRESET error on this save call when running as part of an overall test batch 
+            //when run alone it passed every time. Adding a brief pause in test setup after creating server object seems to resolve but may need investigation.
             var saveResponse = await serverInstance.fetchCall(saveRequest.url);
 
             const request = httpMocks.createRequest({
@@ -217,6 +226,11 @@ describe('Server', () => {
             expect(response).toHaveProperty('request.command');
             expect(response).toHaveProperty('response.attributes');
             expect(response).toHaveProperty('response.saveid');
+
+            //clean up
+            await fm.removeGameDataAsync(response.response.saveid);
+            var exists = await fm.gameDataExistsAsync(response.response.saveid);
+            expect(exists).toBe(false);
         });
 
     });

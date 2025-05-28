@@ -107,6 +107,8 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             const value = await client.get('redisTest');
             console.log('REDIS Test response: ' + value);
 
+            //cleanup afterward
+            await client.del('redisTest');
             // Disconnect from Redis.
             //client.quit();
             return true;
