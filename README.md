@@ -1,58 +1,66 @@
-Experiments
-===========
-*** This game was originally live and running at: http://mvta.herokuapp.com/ ***
+Minimum Viable Text Adventure" ("MVTA")**
+=======================================
+** *Now developed way beyond "minimum viable"*
+*This game was originally live and running at: http://mvta.herokuapp.com/*
 
-MVTA: March 2014 to May 2025.
+MVTA: March 2014 to Present day (2025).
 
 After a 10 year hiatus, we are back in active development - at least for a while...
 
-The game has now been updated to 2025 versions of Node and related packages, and tests migrated to Jest.
-More work is needed to resolve updated (async) Redis support along with a new approach to secure deployment.
+The game code and development setup has been updated to 2025 versions of Node, Redis, and related packages. 
+Tests have been migrated to Jest and work begins shortly on a new (secure) deployment and hosting approach.
 
 About:
 ------
-A NodeJs text adventure (and engine). A work of Interactive Fiction (IF) in Node and Javascript.
-Originally developed with the idea of being a "minimum viable text adventure" as a means of getting back into coding, 
-the beast has taken on a life of its own.
+A classic 80s style text adventure (and engine) with a few twists. 
+A work of Interactive Fiction (IF) wrtiten using Node and Javascript.
 
-The original desire was to allow one (or more) users to enter a single room in a game, 
-and enter commands which would be pushed to a "watcher" queue. 
+"MVTA" was originally developed with the idea of being a "minimum viable text adventure" as a means of getting back into coding. 
+The beast has taken on a life of its own.
+
+The original concept was to allow one (or more) users to enter a single room in a game, and enter commands which would be pushed to a "watcher" queue. 
 Another player or watcher would then pull the user commands from the queue and write responses asynchronously.
 
-The idea came from a game that ran for a number of weeks in the office where a glass wall next to the coffee machines became a for a free-form text adventure using a brain-writing / consequences style with an unwritten rule that a person may enter a command but someone else would define what the response was.
+The idea came from a game that ran for a number of weeks in the office where a glass wall next to the coffee machines became a for a free-form text adventure using a brain-writing / consequences style with an unwritten rule that any person may enter a command but someone else would define what the response was.
 
-Invariably the adventure would descend into silliness around Justin Bieber riding a flaming Aardvark or similar but the concept seemed a neat way of (re)learning development.
+Invariably the adventure would descend into curious psychedelia such as Justin Bieber riding a flaming Aardvark (or similar) but the concept seemed a neat way of (re)learning development.
 
-In the end, it's become just another text adventure engine at the moment but I still have a desire to add that real-time interaction back in (one day).
+In the end, it's become "just another text adventure engine" but I still have a desire to (one day) add that real-time interaction back in. 
+(Perhaps I'll hook it up to an LLM and write a dynamic text adventure chatbot?)
 
-Another key part of this was simply to get back into coding properly. But by deliberately creating a legacy codebase to start with in order to truly understand what most of my dev teams really face. 
+A key part of this project was simply to get back into coding properly. But by deliberately creating a legacy codebase from scratch in order to truly understand what most of my dev teams *really* face. 
 - Understanding the difference between cramming one more feature in in a spare hour vs being disciplined and writing tests first. 
 - Seeing that tipping point where complexity gets to the point where you can't just hack things in without a regression risk any more. 
-- The need to rework poor design decisions but not having the support of working tests.
+- The need to rework poor design decisions but not having the support of working tests. (hint - write more tests)
 - Having to cram in unit and integration tests to prize seams apart and facing the pain of adding coverage analysis (still to do!)
 
-*** Update: December 2014 - I finally reached that tipping point in the last month and have had to start adding large regression tests back in in order to continue working relatively safely. 
-All the simple works is done (other than adding more game data) and all most of what's left is invasive and risky. 
-This is a great place to have ended up but it does mean there's a strong chance it's getting buggier. Welcome to the world of legacy code! ***
+*In December 2014 I finally reached a tipping point and had to start adding in large functional regression tests in order to continue working in (relative) safety. 
+All the fundamental work is done (other than adding more game data) and most of what's left is invasive, risky, and complex. 
+This was a great place to have ended up. - It does mean there's a very strong chance it's carrying a fair few hidden bugs. Welcome to the world of legacy code!*
 
-I know it's not the "right" way but it's how a lot of projects end up under pressure.
+A reminder. This is not the "right" way to develop but it's still how a lot of projects and teams end up working under pressure.
 In some way therefore, the commit history on this will be a history lesson in how *not* to write good software - and then how to recover from it (or survive) later.
 
 Direction
 ---------
-As the game currently stands it's on course to becoming quite an advanced text adventure engine. 
-It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and directly understands well over 100 verbs but there's a load of work to do. 
+As the game currently stands it's becoming quite an advanced (if ugly) text adventure engine. 
+It has a dynamic aggression/affinity system that's rather novel, support for multiple NPCs and missions and understands well over 100 verbs but there's a load of work to do. 
 
 Other than *loads* of additional game mechanics, features and sample content, the other major components to work on are:
  - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently assembled form a series of json files and the set of attributes available for everything isn't documented. (Hey, that's not bad - for a while it was all in a single file!)
- - Eventually I'd like players to choose, extend and reuse maps. Right now, there's just the one.
- - a means of saving and loading game state. If the server goes down or a player state is lost and if a player closes their browser, they can't recover their game. *done, now broken (2025) needs a Redis overhaul - if the player has achieved enough to save their game*
- - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.)
- - implementing server throttling to prevent overloading (see server config, some performance profiling and testing and finding a public host. *done*
- - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done - only "real" games can be saved*
- - server-side throttling to limit resource usage. *done*
- - the game really needs a battery of tests but that's after the legacy code "peak" is reached (I'm nearly there I think).
- - finding somewhere simple that I can get this hosted for free that doesn't require mountains of manual config. *done - yay for Heroku!*
+ - enhanced and persistent logging - using modern logging and observability tools.
+ - an enhanced UI - *todo*
+ - mobile device friendly? - maybe - people are starting to get used to typing more than they were but it's pretty verbose as a game.
+ - eventually I'd like players to choose, extend and reuse maps. Right now, there's just the one.
+ - a means of saving and loading game state. If the Node server goes down, a player state is lost, or if a player closes their browser, they can't recover their game. *done* - if the player has achieved enough to save their game*
+ - persistence of Redis savegame data if redis goes down - *todo*.
+ - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.) - todo
+ - implementing server throttling to prevent overloading - *done*
+ - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done* - only "real" games can be saved* Need to implement old data cleanup actions and max storage usage. 
+ - the game really needs a battery of tests but that's after the legacy code "peak" is reached - *ongoing* (but it's come a long way).
+ - finding somewhere simple that I can get this hosted for free that doesn't require mountains of manual config. This was originally "done" using Heroku but I'm looking to try something more interesting with docker and deployments. - *todo*
+
+*If you're more curious about what work and plans are still hanging about, take a look at the "issues" against this project. There's plenty to explore!*
 
 
 Technical stuff:
@@ -62,27 +70,38 @@ Server Configuration
 1: Ensure a current version of NodeJS is installed and the relevant module dependencies are installed unsing NPM. (see module dependencies in this readme)
 
 2: Set the following server environment variables to configure the application hostname and port
-- 	HOSTNAME (e.g. mvta.herokuapp.com)
--   PORT     (e.g. 1337)
 
-Note, if the game is running on port 80, you don't need to explicitly set port number as an environment variable.
+- HOSTNAME (e.g. mvta.herokuapp.com)
+- PORT     (e.g. 1337)
+
+2a: IF running over HTTPS rather than HTTP, set an additional environment variable
+
+- PROTOCOL "https" (without the quotes)
+
+Note, if the game is running on port 80, you don't need to explicitly set PORT as an environment variable.
 
 3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data and timed-out games.
 
-If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be password authenticated).
-Once you have a store available, set the following environment variables for your Redis data store 
+If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be secure).
+Once you have a store available, set the following environment variables for your Redis data store:
+
 - REDISSERVER (the addressable hostname of your redis server)
-- REDISPWD (the auth password of your redis server **in plain text at the moment - this needs securing**)
+- REDISPWD (the auth password of your redis server **in plain text at the moment - this needs securing better**)
 - REDISPORT (the port number of your redis host)
 
 *If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
-As of October 2014, Redis support was fully functional. Sadly after upgrading in 2025 it needs fixing. (in progress)
-Note, due to a few bugs in the node_redis javascript parser you must use the c-based hiredis parser in order to load saved games successfully. (A bit more work if you're developing in a Windows environment) - I wonder if this is now fixed?!
+Note, back in 2014; due to a few bugs in the node_redis javascript parser I had to use the c-based hiredis parser and pull chunks in data streams to load saved games successfully. 
+(A bit more work when developing in a Windows environment but reliable at least) - I wonder if this is now fixed?!
 
-4: NodeJS may still have a default limit on the number of active http connections to 5.
+4: Server throttling has been introduced. Whilst sensible default settings are defined in config.js; custom settings can be applied using 2 further environment variables:
+
+- RATELIMITMINUTES  (default value is 5) //the time window used to measure the number of incooming requests (in minutes)
+- RATELIMITREQUESTS (default value is 125 )|| 125, //the maxiumum number of requests allowed from a single IP within a given time window. Slowdown happens at this threshold. Full limiting happens at 2x this.
+
+5: NodeJS may (still?) have a default limit on the number of active http connections to 5. I've not verified this is accurate.
 In order to support more connections, you'll need to set another environment variable (I think)...
+
 - NODE_ENV: production
-I've not verified this bit yet though.
 
 
 Running the server
@@ -90,15 +109,16 @@ Running the server
 MVTA has a predefined Procfile that should allow easy deployment on Heroku.
 When running directly from Visual Studio or VSCode, the launch file is defined under /.vscode/launch.json
 
-If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to 
-- 	<your drive>\<your installation location>\js\server
+If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to:
+
+- <your drive>/<your installation location>/server/js/
 
 Once at the working location, the game runs from the file "main.js". E.g.
-- 	node main.js 
 
-I generally include a "pause" at the end of the batch file so that should there be a bug that causes the game to crash you can see the diagnostic output before the window quits.
-- 	pause
+- node main.js
 
+I generally include a "pause" at the end of a batch file so that should there be a bug or issue that causes the game to crash you can see the diagnostic output before the window quits.
+- pause
 
 Client Configuration
 --------------------
@@ -108,7 +128,7 @@ The express server coded into the server.js file should automatically serve stat
 
 The client currenly runs over http (but will support https) and assumes the game is running from the "root" of the node server on the node listening port.
 
-You can enable client "console" output by setting 
+You can enable client "console" output by setting
 - var debug = true; 
 in the client main.js file
 
@@ -117,8 +137,8 @@ That's it. You're ready to go!
 
 Launching the client
 --------------------
-Use your favourite browser to navigate to the webroot and port of the node server: e.g. http://your-server:1337/ 
-Upon successful launch, the console of the client should show the client and UI successfully initiated.
+Use your favourite browser to navigate to the webroot and port of the node server: e.g. https://your-server:1337/ 
+Upon successful launch, the client should show the client and UI successfully initiated with green borders and a prompt.
 (Sometime I'll add a server communication test here so that we can see the server is accessible and running)
 
 
@@ -133,28 +153,30 @@ To this end, please stick to the same javascript object style that's in use if e
 On the server side, I'm trying to keep the main game engine away from node-specific features and code as much as posssible. 
 
 
-Platform
---------
-This game is deliberately developed on Windows and as a result, will not use any UNIX/LINUX-only Node features or packages.
-Having said that, it will likely be deployed to docker linux containers
-Whilst the game was originally developed in Visual Studio 2012 and can be developed in VS2022, it's best to work on it now using VSCode. 
+Development & deployment platforms
+-----------------------------------
+This game is deliberately developed on Windows and as a result, will avoid any UNIX/LINUX-only Node features or packages.
+Having said that, it will likely be deployed to docker Linux containers. *(in the past it was deployed to Heroku - I'm sure I've already mentioned that)*
+Whilst the game was originally developed in Visual Studio 2012 and can still be developed in VS2022, I've found it best to work on it using VSCode. 
 
 
 Tests
 -----
 For most server classes, there are corresponding test files. 
-These are found in a test framework-specific subfolder under \test\  e.g. /test/jest
+These are found in a test framework-specific subfolder under /test/  e.g. /test/jest
 The file naming convention for tests is <classname>.<subset>.test.js - This follows pretty much standard JS test framework copnventions to support discoverabiltiy whilst being clear what they are meant to be testing.
 
 The tests in here are a mix of unit and functional regression tests - sad but realistic given the era these were first written (when writing tests was manual and slow).
 The functional regression tests are pretty important as this game engine is complex - there's a lot that has to hang together to work - especially around complex missions, contagion, and character interactions.
 
-The test framework in use (as of May 2025) is now Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
+The test framework in use (as of May 2025) is Jest. (After some battling with a Visual Studio bug, I have them happily running from the VSCode test explorer)
 Jest configuration can be found in the file jest.config.js (as well as some basics in package.json).
 
 I relied heavily on Github Copilot to speed up the test migration and will do more with it to generate additional tests.
 It's incredible how much more productive creating meaningful tests is using Copilot.  
 Sure it's not always getting things right so you need to review what has been generated carefully for "dumb things" - but so much boilerplate is taken care of!
+
+There are currently only server-side tests. When client development starts up more heavily, some scaffolding and support for client testing will be needed.
 
 
 Module Dependencies
@@ -162,17 +184,20 @@ Module Dependencies
 The game was originally designed to run on Node version 0.10.33 but has now been upgraded to run on Node 22.15.0 and upward.
 
 Node Module dependencies are defined in \package.json
-As of 15th May 2025 they are...
+As of May 2025 they are...
 
 For the server:
-    "body-parser": "^2.2.0",<br>
-    "express": "^5.1.0",<br>
-    "jsonfile": "^6.1.0",<br>
-    "morgan": "^1.10.0",<br>
-    "redis": "^5.0.1",<br>
-    "require-directory": "^2.1.1"<br>
-
-Take a look at the rest of the package file for dev dependencies and other config info.
+---
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.0",
+    "express-slow-down": "^2.1.0",
+    "jsonfile": "^6.1.0",
+    "morgan": "^1.10.0",
+    "redis": "^5.0.1",
+    "require-directory": "^2.1.1"
+---
+Take a look at the rest of the package.json file for dev dependencies and other config info.
 
 ---------------------------
 End. Thanks for reading!
