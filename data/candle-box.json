@@ -13,6 +13,11 @@
     "canCollect": true,
     "isBreakable": true
   },
+  "synonyms": [
+    "candle box",
+    "candlebox",
+    "candles"
+],
   "inventory": [
     { "file": "candle" },
     { "file": "candle" },

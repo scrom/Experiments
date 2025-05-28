@@ -27,7 +27,7 @@ exports.Server = function Server(anInterpreter) {
         //slow down requests
         const speedLimiter = slowDown({
             windowMs: 5 * 60 * 1000, // 5 minutes
-            delayAfter: 50,
+            delayAfter: 125,
             delayMs: () => 2000,
             maxDelayMs: 5000,
             message: 'This game is speed limited to prevent abuse.', 
@@ -44,7 +44,7 @@ exports.Server = function Server(anInterpreter) {
         //connection rate limiting
         const limiter = rateLimit({
             windowMs: 5 * 60 * 1000, // 5 minutes
-            max: 100, // limit each IP to 100 requests per windowMs
+            max: 250, // limit each IP to 250 requests per windowMs
             message: 'This game is rate limited to prevent abuse. Too many requests, please try again later.',
             statusCode: 429,
             handler: function(req, res /*, next*/) {
