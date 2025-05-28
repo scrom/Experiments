@@ -364,6 +364,12 @@ exports.Action = function Action(player, map, fileManager) {
                             };
                         };
                         break;
+                    case 'please':
+                        description = "I like it when you beg.";
+                        break;
+                    case 'cheat':
+                        description = "Hmmm. I'm sure I heard about some cheat codes somewhere...<br><br>...Nope, I must have imagined it.<br>Looks like it's just you and your brain for now.";
+                        break;
                     case 'help':
                         _ticks = 0;
                         if (_failCount >= 3) {
@@ -893,6 +899,8 @@ exports.Action = function Action(player, map, fileManager) {
                         description = "We <i>ask</i> people things here, we don't <i>tell</i>.";
                         break;
                     case 'ask':
+                    //case 'request':
+                    //case 'beg':
                         _ticks = 1;
                         //console.log("split: "+_splitWord);
                         if (_splitWord == "is"||_splitWord == "to"|| _splitWord == "are") {
@@ -1089,16 +1097,16 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'onward':
                         _direction = "c";
                         break;
-                    case 'run': //enhance run to move faster but to burn through energy faster too.
-                    case 'walk':
+                    case 'run': //enhance run to move faster but to burn through energy faster too. //1 tick?
+                    case 'walk': //use baseticksize
                     case 'jog':
-                    case 'hike':
-                    case 'sneak': //do something smart with sneak
-                    case 'dash':
-                    case 'sprint': //enhance sprint to move faster Still but to burn through energy faster too.
-                    case 'crawl':
-                    case 'slink':
-                    case 'climb':
+                    case 'hike':  //use baseticksizex2
+                    case 'sneak': //do something smart with sneak use baseticksizex2
+                    case 'dash':  //as run
+                    case 'sprint': //enhance sprint to move faster Still but to burn through energy faster too. //0 ticks but use energy
+                    case 'crawl': //use baseticksizex2
+                    case 'slink': //use baseticksizex2
+                    case 'climb': //use baseticksizex2
                     case 'clamber':
                     case 'head':
                     case 'go':

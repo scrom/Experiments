@@ -3052,7 +3052,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (verb == "mug") {
                     self.increaseAggression(1); //we're mugging!  - even more aggressive
                     _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName()); //and even more worrying to others!
-                    if (self.getAttackStrength() >= self.getAttackStrength()) {
+                    if (self.getAttackStrength() >= giver.getAttackStrength()) {
                         playerStealth +=4; //major increase in theft chances if stronger
                     } else {
                         playerStealth +=2; //minor increase in theft chances if weaker - still better than stealing
