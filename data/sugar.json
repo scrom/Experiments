@@ -6,6 +6,7 @@
     "attributes": {
       "weight": 0.1,
       "type": "food",
+      "imageName": "sugar.jpg", 
       "requiresContainer": true,
       "isPowder": true,
       "canCollect": true,

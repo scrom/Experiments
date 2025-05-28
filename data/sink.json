@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 100,
     "carryweight": 5,
+    "imageName": "kitchensink.jpg", 
     "customAction": "wash",
     "hideDeliveryDescription": true,
     "defaultResult": "You rinse your hands in the sink."

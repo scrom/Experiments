@@ -9,6 +9,7 @@
     "carryWeight": 1,
     "attackStrength": 5,
     "type": "container",
+    "imageName": "spam.jpg", 
     "canOpen": true,
     "position": "on",
     "holdsLiquid": true,

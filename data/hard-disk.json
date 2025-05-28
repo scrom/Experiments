@@ -9,6 +9,7 @@
     "canCollect": true,
     "isBreakable": true,
     "isDamaged": true,
+    "imageName": "harddisk.jpg", 
     "price": 50,
     "componentOf": [
       "server"

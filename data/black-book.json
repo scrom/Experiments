@@ -8,6 +8,7 @@
     "weight": 2,
     "attackStrength": 5,
     "type": "book",
+    "imageName": "blackbook.jpg", 
     "canCollect": true,
     "affinityModifier": -1,
     "canDrawOn": true

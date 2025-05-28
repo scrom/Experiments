@@ -8,7 +8,8 @@
         "type": "key",
         "canCollect": true,
         "affinityModifier": 3,
-        "unlocks": "office door"
+        "unlocks": "office door",
+        "imageName": "keyfob.jpg"
     },
     "synonyms": [
         "key fob",

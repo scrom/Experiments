@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 300,
     "type": "scenery",
+    "imageName": "tree.jpg", 
     "customAction": "climb",
     "defaultResult": "You grab hold of the tree and attempt to climb it but the bark is too slippery and you fail to find any suitable handholds.",
     "combinesWith": [

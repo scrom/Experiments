@@ -7,6 +7,7 @@
     "defaultAction": "heal",
     "weight": 1,
     "type": "medical",
+    "imageName": "firstaidkit.jpg", 
     "canCollect": true,
     "isBreakable": true,
     "charges": 5,

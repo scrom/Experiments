@@ -9,7 +9,7 @@
         "type": "weapon",
         "subType": "sharp",
         "canCollect": true,
-        "imageName": "knife.jpg"
+        "imageName": "kitchenknife.jpg"
     },
     "synonyms": [
         "knife",

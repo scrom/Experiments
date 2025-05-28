@@ -9,6 +9,7 @@
     "carryWeight": 3,
     "attackStrength": 1,
     "type": "container",
+    "imageName": "rum.jpg", 
     "subType": "bottle",
     "holdsLiquid": true,
     "canCollect": true,

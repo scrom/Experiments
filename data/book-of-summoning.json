@@ -6,6 +6,7 @@
     "attributes": {
         "weight": 3,
         "type": "book",
+        "imageName": "bookofsummoning.jpg", 
         "defaultAction": "read",
         "canCollect": true,
         "isBreakable": true,

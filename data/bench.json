@@ -8,6 +8,7 @@
     "weight": 80,
     "carryWeight": 0.1,
     "type": "bed",
+    "imageName": "bench.jpg", 
     "isBreakable": true,
     "canDrawOn": true
   },

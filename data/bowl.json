@@ -9,6 +9,7 @@
     "carryWeight": 0.3,
     "attackStrength": 1,
     "type": "container",
+    "imageName": "bowl.jpg", 
     "holdsLiquid": true,
     "canCollect": true,
     "isBreakable": true,

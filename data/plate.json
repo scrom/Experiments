@@ -8,6 +8,7 @@
     "weight": 0.25,
     "carryWeight": 0.2,
     "type": "container",
+    "imageName": "dinnerplate.jpg", 
     "canCollect": true,
     "isBreakable": true,
     "affinityModifier": 0

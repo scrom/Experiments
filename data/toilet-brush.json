@@ -5,6 +5,7 @@
 "detailedDescription": "Be nice and clean up after yourself when you're done.",
 "attributes": {
     "weight": 1,
+    "imageName": "toiletbrush.jpg", 
     "canCollect": true,
     "isBreakable": true,
     "affinityModifier": -2

@@ -6,6 +6,7 @@
 "attributes": {
     "weight": 100,
     "type": "scenery",
+    "imageName": "toilet.jpg", 
     "customAction": [
     "flush",
     "pee",

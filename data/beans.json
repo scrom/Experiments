@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 5,
     "type": "food",
+    "imageName": "beans.jpg", 
     "nutrition": 1,
     "attackStrength": 5,
     "requiresContainer": true,

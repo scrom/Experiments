@@ -877,6 +877,7 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.take(_verb, _object0, _object1); 
                         break;
                     case 'dismantle':
+                    case 'disarm':
                         description = _player.dismantle(_verb, _object0);
                         break;
                     case 'mug':
@@ -1423,6 +1424,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tie':
                     case 'untie':
                     case 'undo':
+                    case 'unpick':
                     case 'tighten': //may also need to support "do up"? 
                     //case 'touch': // see #270 - either activate something (like press) - or return a texture description
                     //case 'feel': // see #270 - either activate something (like press) - or return a texture description

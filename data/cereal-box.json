@@ -8,6 +8,7 @@
         "weight": 0.2,
         "carryWeight": 3,
         "type": "container",
+        "imageName": "cerealbox.jpg", 
         "canCollect": true,
         "affinityModifier": 0,
         "canDrawOn": true

@@ -7,6 +7,7 @@
     "defaultAction": "eat",
     "weight": 3,
     "type": "food",
+    "imageName": "salad.jpg", 
     "canCollect": true,
     "requiresContainer": true,
     "requiredContainer": "plate",

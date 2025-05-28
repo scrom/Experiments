@@ -4,6 +4,8 @@
   "description": "large dining table",
   "detailedDescription": "It's a modern, rectangular dining table.",
   "attributes": {
+    "type": "scenery",
+    "imageName": "diningtable.jpg", 
     "isBreakable": false
   },
   "synonyms": [

@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 0.2,
     "type": "tool",
+    "imageName": "rag.jpg", 
     "subType": "buff",
     "canCollect": true,
     "smell": "It smells of polish and solvents."

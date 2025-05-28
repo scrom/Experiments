@@ -8,6 +8,7 @@
       "weight": 0.25,
       "carryWeight": 0.8,
       "attackStrength": 2,
+      "imageName": "drinkingglass.jpg", 
       "type": "container",
       "holdsLiquid": true,
       "canCollect": true,

@@ -3,6 +3,9 @@
   "name": "lift-second-floor",
   "displayName": "Lift",
   "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
+  "attributes": {
+      "imageName": "liftdoor-2.jpg"
+  },
   "exits": [
     {
       "object": "exit",

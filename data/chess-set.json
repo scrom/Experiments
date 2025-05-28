@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 2,
     "type": "treasure",
+    "imageName": "chessset.jpg", 
     "canCollect": true,
     "isBreakable": true,
     "price": 5,

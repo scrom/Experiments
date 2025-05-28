@@ -13,6 +13,7 @@
     "charges": 25,
     "chargeUnit": "gas",
     "chargesDescription": "Annoyingly, it's impossible to tell how much gas there is left in it.",
+    "imageName": "lighter.jpg", 
     "customAction": [
       "press",
       "light",

@@ -6,6 +6,7 @@
     "attributes": {
       "weight": 0.1,
       "type": "light",
+      "imageName": "candle.jpg", 
       "subType": "burn",
       "canCollect": true,
       "isBreakable": true,

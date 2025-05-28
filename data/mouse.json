@@ -13,6 +13,7 @@
     "traveller": true,
     "smell": "It's scurrying around too much to get close enough to smell it.",
     "sound": "Squeeeeeek!",
+    "imageName": "mouse.jpg", 
     "customAction": [
 			"get", "catch"
 		],

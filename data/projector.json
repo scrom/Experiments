@@ -5,6 +5,7 @@
   "detailedDescription": "It makes that happy, warm humming sound that only an old projector can give you.",
   "attributes": {
     "defaultAction": "turn on",
+    "imageName": "projector.jpg", 
     "weight": 6,
     "carryWeight": 0.1,
     "isBreakable": true,

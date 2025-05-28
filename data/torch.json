@@ -9,6 +9,7 @@
     "carryWeight": 1,
     "attackStrength": 5,
     "type": "light",
+    "imageName": "torch.jpg", 
     "canCollect": true,
     "isBreakable": true,
     "burnRate": 0.2,

@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 0.1,
     "carryWeight": 0.1,
+    "imageName": "cigarettepacket.jpg", 
     "position": "on",
     "type": "container",
     "canCollect": true,

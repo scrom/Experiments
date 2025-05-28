@@ -5,6 +5,10 @@
     "description": "single-use first aid kit",
     "detailedDescription": "A one-off emergency first-aid kit.",
     "attributes": {
+        "defaultAction": "heal",
+        "weight": 0.5,
+        "type": "medical",
+        "imageName": "emergencyfirstaid.jpg", 
         "charges": 1
     },
     "synonyms": [

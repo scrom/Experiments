@@ -8,6 +8,7 @@
       "weight": 3,
       "attackStrength": 6,
       "type": "animal",
+      "imageName": "cat.jpg", 
       "health": 25,
       "affinity": -1,
       "canTravel": true,

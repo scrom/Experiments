@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 0.1,
     "carryWeight": 0.5,
+    "imageName": "candlebox.jpg", 
     "hidden": "true",
     "position": "under",
     "type": "container",

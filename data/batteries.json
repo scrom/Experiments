@@ -6,6 +6,7 @@
 "attributes": {
     "weight": 1,
     "canCollect": true,
+    "imageName": "batteries.jpg", 
     "charges": 45,
     "chargeUnit": "minute",
     "chargesDescription": "There's enough for about $charges $chargeUnit of power",

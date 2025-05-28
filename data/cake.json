@@ -7,6 +7,7 @@
     "defaultAction": "eat",
     "weight": 9,
     "type": "food",
+    "imageName": "cake.jpg", 
     "position": "on",
     "charges": 12,
     "chargeUnit": "slice",
