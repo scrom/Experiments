@@ -17,21 +17,13 @@
     "delivers": {
       "object": "artefact",
       "name": "keyfob",
-      "description": "key fob",
-      "detailedDescription": "Carrying this ensures you have access to the office whenever you need.",
+      "template": "keyfob",
       "attributes": {
-        "weight": 0.1,
-        "type": "key",
         "affinityModifier": -999,
-        "canCollect": true,
-        "unlocks": "office door"
-      },
-      "synonyms": [
-        "key fob",
-        "fob",
-        "keyring",
-        "key ring"
-      ]
+         "writings": [
+             "$player"
+          ]
+      }
     },
     "score": 10,
     "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"

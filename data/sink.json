@@ -15,7 +15,8 @@
     "wash basin",
     "sink",
     "tap",
-    "hands"
+    "hands",
+    "kitchen sink"
   ],
   "delivers": [
     { "file": "water" }

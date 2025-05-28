@@ -6,10 +6,10 @@
     "attributes": {
         "weight": 0.1,
         "type": "key",
+        "imageName": "keyfob.jpg",
         "canCollect": true,
         "affinityModifier": 3,
-        "unlocks": "office door",
-        "imageName": "keyfob.jpg"
+        "unlocks": "office door"
     },
     "synonyms": [
         "key fob",
