@@ -149,12 +149,14 @@ a:link {
 {
     height:30vh;
     width:30vh;
-    
+    opacity: 0;
 }
+
 .inventoryBox
 {
     height:30vh;
     width:30vh;
+    z-index:0;
 }
 
 td {
@@ -173,3 +175,36 @@ img{
 .softBorder.historyBox.verticalScroll{}
 .softBorder.pictureBox{}
 .softBorder.inventoryBox.verticalScroll{}
+
+.fadeIn {
+    width:200px;
+    height: 200px;
+    -webkit-animation: fadein 0.25s linear forwards;
+    animation: fadein 0.25s linear forwards;
+}
+
+.fadeOut {
+    width:200px;
+    height: 200px;
+    -webkit-animation: fadeout 0.5s linear forwards;
+    animation: fadeout 0.5s linear forwards;
+}
+
+@-webkit-keyframes fadein {
+  100% { opacity: 1; }
+  0% { opacity: 0; }
+}
+
+@keyframes fadein {
+  100% { opacity: 1; }
+  0% { opacity: 0; }
+}
+@-webkit-keyframes fadeout {
+  100% { opacity: 0; }
+  0% { opacity: 1; }
+}
+
+@keyframes fadeout {
+  100% { opacity: 0; }
+  0% { opacity: 1; }
+}

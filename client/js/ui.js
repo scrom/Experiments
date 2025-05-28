@@ -166,14 +166,18 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         img.onload = function(){
             // image  has been loaded
         };    
+        self.cssFadeIn(image);
         image.addClass("softBorder");    
         image.html(img);
     };
 
     Ui.prototype.clearImage = function() {
-        _lastImageURL = ""; 
-        image.removeClass("softBorder");   
-        image.html("");
+        _lastImageURL = "";
+        self.cssFadeOut(image); 
+        setTimeout(function() {
+            image.removeClass("softBorder");   
+            image.html("");
+        },200);
     };
 
     Ui.prototype.bleed = function(bleedBool) {
@@ -239,5 +243,15 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
                 statusBar.css('background-color',originalColour);
                 body.css('color','#00DD00');
             }, 75);
+    };
+
+    Ui.prototype.cssFadeIn = function(element) {
+        element.addClass("fadeIn");
+        element.removeClass("fadeOut");
+    };
+        
+    Ui.prototype.cssFadeOut = function(element) {
+        element.addClass("fadeOut");
+        element.removeClass("fadeIn");
     };
 };
