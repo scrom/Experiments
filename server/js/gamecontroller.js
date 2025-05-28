@@ -20,9 +20,9 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             if (data) {
                 for (var i=0;i<data.length;i++) {
                     _savedGames.push(data[i]);
-                    //console.log(data[i]);
+                    //console.debug(data[i]);
                 };
-            console.log("Expired game data retrieved on startup - "+_savedGames.length+" references.");
+            console.info("Expired game data retrieved on startup - "+_savedGames.length+" references.");
             };
         };
 
@@ -39,24 +39,23 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 saveDataStringArray.push('{"username":"'+_savedGames[i].username+'", "id":'+_savedGames[i].id+',"filename":"'+_savedGames[i].filename+'"}');
             };
             await _fm.writeGameDataAsync(_savedGamesDataKey, saveDataStringArray, true); //fileName, data, overwrite
-            console.log("expired game data saved - "+_savedGames.length+" references.");
+            console.info("expired game data saved - "+_savedGames.length+" references.");
             return null;
         };
 
         //retrieve stored data
         readSavedGamesListAsync();
 
-        console.log(_objectName + ' created');
+        console.info(_objectName + ' created');
 
         //// public methods   
         self.checkForExpiredGames = async function(gameTimeOut) {
-            console.log("Checking for expired games...");
+            console.info("Checking for expired games...");
             for (var g=0;g<_games.length;g++) {
                 var now = parseInt(new Date().getTime());
                 if (typeof _games[g] == "object") {
                     //if not active for the last hour, kill the game
                     if (_games[g].getTimeStamp() < now-gameTimeOut) {
-                        console.log("Game "+_games[g].getNameAndId()+" timed out - removing from controller.");
                         
                         var savedResult = await _games[g].saveAsync();
 
@@ -65,17 +64,17 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                             if (savedResult) {
                                 try {
                                     saved = JSON.parse(savedResult);
-                                } catch (e) {console.log("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
+                                } catch (e) {console.error("Error parsing JSON for save game result: error = "+e+": "+savedResult);};
                                    
-                                //console.log("saved");  username id saveid
+                                //console.debug("saved");  username id saveid
                                 if (saved.description) {
-                                    //console.log("saved.description");
+                                    //console.debug("saved.description");
                                     if (saved.description.substring(0,10) == "Game saved") {
                                         if (saved.username && saved.id && saved.saveid) {
                                             //avoid writing nulls etc - will cause data corruption and problems with loading.
                                             _savedGames.push({"username":saved.username,"id":saved.id,"filename":saved.saveid});
                                             await writeSavedGamesListAsync();
-                                            console.log("Timed out game saved as id:"+saved.id+", username:"+saved.username+", filename:"+saved.saveid);
+                                            console.info("Timed out game saved as id:"+saved.id+", username:"+saved.username+", filename:"+saved.saveid+" removing from gameController.");
                                             
                                             //remove game from controller, store its ID and push into inactiv egames list
                                             _games[g] = g; //set just ID into game slot
@@ -84,7 +83,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                                     };
                                 };
                             };
-                            //console.log(_inactiveGames); 
+                            //console.debug(_inactiveGames); 
                           
                     }; 
                 };
@@ -103,7 +102,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             for (var i=0;i<_savedGames.length;i++) {
                 if (_savedGames[i].username == username && _savedGames[i].id == gameId) {
                     filename = _savedGames[i].filename;
-                    //console.log("saved game found");
+                    //console.debug("saved game found");
                     break;
                 };
             };
@@ -141,7 +140,7 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
             var newMap = _mapBuilder.buildMap();
             var startLocation = newMap.getStartLocation();
-            if (!(startLocation)) {console.log('Error: Cannot determine start location for map.');};
+            if (!(startLocation)) {console.error('Error: Cannot determine start location for map.');};
             var startLocationName = startLocation.getName();
             var playerAttributes = {"username":aUsername, "startLocation": startLocationName, "currentLocation": startLocationName};
 
@@ -152,9 +151,9 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             _games[newGameId] = game;
 
 
-            //console.log('new game: '+game.toString());  
+            //console.debug('new game: '+game.toString());  
             
-            console.log('game ID: '+newGameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
+            console.info('game ID: '+newGameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
 
             return newGameId;
         };
@@ -165,11 +164,11 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             if (_games.length >= sessionLimit) {return -1;}; //prevent too many active games
             var gameId = aGameObject.getId();
             if (gameId in _games) {
-                console.log("Error: Game ID already in use.");
+                console.error("Error: Game ID already in use.");
                 return -1;
             } else {
                 _games[gameId] = aGameObject;
-                console.log('game ID: '+gameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
+                console.info('game ID: '+gameId+' added to controller. Open games: '+(_games.length-_inactiveGames.length));
                 return gameId;
             };
 
@@ -184,10 +183,10 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 };
             };
             
-            console.log("requested game: filename: '"+filename+"' originalGameId: "+originalGameId+" username: '"+username+"'");   
+            console.info("requested game: filename: '"+filename+"' originalGameId: "+originalGameId+" username: '"+username+"'");   
 
             const gameData = await _fm.readGameDataAsync(filename);
-            //console.log("Game Data: "+gameData);
+            //console.debug("Game Data: "+gameData);
             var game;
             //if game file not found, return null.
             if (!(gameData)) {
@@ -203,21 +202,21 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
 
                     var playerAttributes = gameData[0];
                     var newMap = _mapBuilder.buildMap(gameData);
-                    console.log ("game file "+filename+" loaded.");
+                    console.info ("game file "+filename+" loaded.");
 
-                    console.log("originalGameId:"+originalGameId);
+                    console.debug("originalGameId:"+originalGameId);
                     //if loading from within an active game, we want to replace the existing game rather than adding another
                     if (originalGameId >= 0) {
                         game = new gameObjectModule.Game(playerAttributes,originalGameId, newMap, _mapBuilder, filename, _fm);
                         _games[originalGameId] = game;
-                        console.log('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
+                        console.info('game ID: '+originalGameId+' replaced. Open games: '+_games.length);
                         return (originalGameId);
                     } else {
                     //if (originalGameId == "" || originalGameId == null || originalGameId == undefined || originalGameId == "undefined") {
                         var newGameId = self.getNextAvailableGame(); //note we don't use the original game Id at the moment (need GUIDS)
                         game = new gameObjectModule.Game(playerAttributes,newGameId, newMap, _mapBuilder, filename, _fm);
                         _games[newGameId] = game; 
-                        console.log('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
+                        console.info('game ID: '+newGameId+' added to controller. Open games: '+_games.length);
                         return (newGameId);
                     };
                 };
@@ -230,10 +229,10 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
             if ((typeof _games[aGameId] != "object")) { return '{"username":"","id":-1,"description":"Sorry, this game is no longer active."}'; }            ;
             if (_games[aGameId].checkUser(aUsername, aGameId)) {
                 _games[aGameId] = aGameId; //remove game object and replace with just ID.
-                console.log(aGameId + ' removed from games list');
+                console.info(aGameId + ' removed from games list');
                 return '{"username":"","id":-1,"description":"Thanks for playing!<br>'+description+'"}';
             } else {
-                console.log(aGameId + ' not found');
+                console.debug(aGameId + ' not found');
             };
             return '{"username":"","id":-1,"description":"It looks like the game you\'re trying to quit isn\'t active anyway<br>' + description + '"}';
         };
@@ -264,28 +263,28 @@ exports.GameController = function GameController(mapBuilder, fileManager) {
                 if (i>0) {gamelist +=','};
                 var aGame = self.getGame(null, i).getNameAndId();
                 gamelist += aGame;
-                //console.log('game: '+i+' details: '+self.getGame(null, i).getNameAndId());//+' toString: '+self.getGame(i).toString());
+                //console.debug('game: '+i+' details: '+self.getGame(null, i).getNameAndId());//+' toString: '+self.getGame(i).toString());
             };
 
             gamelist += ']}';
-            //console.log(gamelist);
+            //console.debug(gamelist);
             return gamelist; //@todo enhance in future to include more game details beyond name and id
         };
 
         self.userAction = function(aUsername, aGameId,anAction) {
-            //console.log(_games[aGameId]);
+            //console.debug(_games[aGameId]);
             if (_games[aGameId] == undefined) {
-                console.log('invalid gameId:'+aGameId);
+                console.debug('invalid gameId:'+aGameId);
                 return self.findSavedGame(aUsername, aGameId);
             };
 
             if (!(typeof _games[aGameId] == "object")) {
-                console.log('expired game hit:'+aUsername);
+                console.info('expired game hit:'+aUsername);
                 return self.findSavedGame(aUsername, aGameId);
             };
 
             if (!(_games[aGameId].checkUser(aUsername, aGameId))) {
-                console.log('invalid user:'+aUsername);
+                console.debug('invalid user:'+aUsername);
                 return '{"username":"","id":-1,"description":"Sorry, it looks like you\'re trying to play a game that we don\'t have.<br>Please refresh this page in your browser and either <i>load</i> an old game (if you have one) or start a new one (if you don\'t)."}';
             };
 

@@ -103,8 +103,8 @@ test('playerCanDrawOnAnItem', () => {
 
     var expectedResult = "You draw a cactus on the item.";
     var actualResult = p0.writeOrDraw('draw', 'cactus', 'item').substring(0, 30);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -120,8 +120,8 @@ test('playerCanDrawInABook', () => {
 
     var expectedResult = "You draw a cactus in the book.";
     var actualResult = p0.writeOrDraw('draw', 'cactus', 'book').substring(0, 30);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -139,8 +139,8 @@ test('drawingInABookDiminishesItsValue', () => {
 
     var expectedResult = 95;
     var actualResult = book.getPrice();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -158,8 +158,8 @@ test('writingInABookDiminishesItsValue', () => {
 
     var expectedResult = 95;
     var actualResult = book.getPrice();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -175,8 +175,8 @@ test('playerCanWriteInABook', () => {
 
     var expectedResult = "You write 'cactus' in the book.";
     var actualResult = p0.writeOrDraw('write', 'cactus', 'book').substring(0, 31);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -192,8 +192,8 @@ test('playerCannotDrawOnANonDrawableItem', () => {
 
     var expectedResult = "You attempt to draw a cactus on the book but it smears and rubs off before you can finish.<br>";
     var actualResult = p0.writeOrDraw('draw', 'cactus', 'book');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('playerCannotDrawWithoutAWritingTool', () => {
@@ -205,8 +205,8 @@ test('playerCannotDrawWithoutAWritingTool', () => {
 
     var expectedResult = "You don't have anything to draw with.";
     var actualResult = p0.writeOrDraw('draw', 'cactus', 'book');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -223,8 +223,8 @@ test('playerCannotCleanAnItemWithoutACleaningImplement', () => {
 
     var expectedResult = "You can't find anything to clean the book with.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -244,8 +244,8 @@ test('playerCanCleanAnItemWithDrawingOn', () => {
 
     var expectedResult = "You clear all the previously added 'artwork' from the book.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -267,8 +267,8 @@ test('playerCanConsumeACleaningItemByCleaning', () => {
 
     var expectedResult = "You clear all the previously added 'artwork' from the book.<br>You used up all the worn cloth.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -288,8 +288,8 @@ test('playerCanCleanAnItemWithWritingOn', () => {
 
     var expectedResult = "You clear all the previously added 'artwork' from the book.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -311,8 +311,8 @@ test('playerCanCleanAnItemWithWritingAndDrawingOn', () => {
 
     var expectedResult = "You read the book.<br>It's mildly interesting but you learn nothing new.";
     var actualResult = p0.read("read", "book");
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('playerCanCleanAnItemWithLiquidOn', () => {
@@ -329,8 +329,8 @@ test('playerCanCleanAnItemWithLiquidOn', () => {
 
     var expectedResult = "You clean the mess from the book.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -348,8 +348,8 @@ test('playerCanCleanJustOneLiquidOffItem', () => {
 
     var expectedResult = "You clean the custard from the book.";
     var actualResult = p0.clean('clean','book', 'custard');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -368,8 +368,8 @@ test('cleaningJustOneLiquidOffItemLeavesRemainder', () => {
 
     var expectedResult = "Read me.<br>Someone has spilled water on it.<br>It might be worth a <i>read</i>.";
     var actualResult = p0.examine("examine", "book");
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -392,8 +392,8 @@ test('playerCanCleanAnItemWithWritingDrawingAndLiquidOn', () => {
 
     var expectedResult = "You clear all the previously added 'artwork' and mess from the book.";
     var actualResult = p0.clean('clean','book');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -412,8 +412,8 @@ test('playerCanSeeWritingAndDrawingOnABook', () => {
 
     var expectedResult = "You read 'how to read'.<br><br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
     var actualResult = p0.read("read", "book");
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -432,7 +432,7 @@ test('playerCanSeeWritingAndDrawingOnAnItem', () => {
 
     var expectedResult = "Read me.<br>Someone has drawn a cactus and some cactii on it.<br>They've also written 'cactus'.<br>";
     var actualResult = p0.examine("examine", "item");
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });

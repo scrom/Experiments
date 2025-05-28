@@ -114,8 +114,8 @@ test('canCompleteHardDiskMissionByInstallingInServer', () => {
     p0.setLocation(location);
 
     var installDisk = p0.put("install", "hard disk", "in", "server");
-    console.log("Install Disk Result: " + installDisk);
-    //console.log("Does server contain disk? " + server.check("hard disk"));
+    console.debug("Install Disk Result: " + installDisk);
+    //console.debug("Does server contain disk? " + server.check("hard disk"));
 
     expect(server.check("hard disk")).toBe(true);
 

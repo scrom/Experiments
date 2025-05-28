@@ -33,8 +33,8 @@ exports.Server = function Server(anInterpreter) {
             message: 'This game is speed limited to prevent abuse.', 
             statusCode: 429, 
             handler: function(req, res /*, next*/) {
-                console.log('Speed limit handler called');
-                //console.log(req);
+                console.warn('Speed limit handler called');
+                //console.debug(req);
                 res.status(this.statusCode).send("Speed limiting in effect. Please wait a moment before trying again.");
             }
         });
@@ -48,8 +48,8 @@ exports.Server = function Server(anInterpreter) {
             message: 'This game is rate limited to prevent abuse. Too many requests, please try again later.',
             statusCode: 429,
             handler: function(req, res /*, next*/) {
-                console.log('Rate limit handler called');
-                //console.log(req);
+                console.warn('Rate limit handler called');
+                //console.debug(req);
                 res.status(this.statusCode).send("Rate limiting in effect. Please wait a moment before trying again.");
             }
         });
@@ -98,10 +98,10 @@ exports.Server = function Server(anInterpreter) {
 
         app.get(/^\/action/, async function (request, response) {
             request.socket.setTimeout(5);
-            //console.log('Action request: '+request.url);
-            //console.log('Action request: '+request.method);
-            //console.log('Action request: '+request.headers.host);
-            //console.log('Action request: '+JSON.stringify(request.headers));
+            //console.debug('Action request: '+request.url);
+            //console.debug('Action request: '+request.method);
+            //console.debug('Action request: '+request.headers.host);
+            //console.debug('Action request: '+JSON.stringify(request.headers));
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
 
@@ -115,7 +115,7 @@ exports.Server = function Server(anInterpreter) {
             var sanitisedRequestURL = sanitiseString(request.url);
             //var response = request.res; //get the response object from the request
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
-                console.log('save result: '+result);
+                console.debug('save result: '+result);
                 response.writeHead(200, {'Content-type':'text/plain'});
                 response.write(result);
                 response.end();
@@ -126,9 +126,10 @@ exports.Server = function Server(anInterpreter) {
             request.socket.setTimeout(250);
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
-            response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(result);
-            response.end();
+                console.debug('load result: '+result);
+                response.writeHead(200, {'Content-type':'text/plain'});
+                response.write(result);
+                response.end();
         });
         
     app.get(/^\/quit/, async function (request, response) {           
@@ -198,7 +199,7 @@ exports.Server = function Server(anInterpreter) {
 
         //post handling
         app.post('/post/', async function (request, response) {
-            console.log('Post received: '+request.body.name);    
+            console.info('Post received: '+request.body.name);    
             response.writeHead(200, {'Content-type':'text/plain'});
             var requestJson = JSON.stringify(request.body);
             //past response work to post request handler
@@ -245,9 +246,9 @@ exports.Server = function Server(anInterpreter) {
             const response = await fetch(url, {method: "GET"});
 
              if(response.ok){
-                //console.log("server response: "+response);
+                //console.debug("server response: "+response);
                 const data = await response.json();
-                //console.log(data);
+                //console.debug(data);
                 return data;
             } else {
                 return {"status": response.status, "url": url, "error": "HTTP Fetch failed in "+_objectName+"."};
@@ -259,17 +260,17 @@ exports.Server = function Server(anInterpreter) {
        self.listen = function () {
             self = this;
             listener = app.listen(config.port)
-            console.log(_objectName + ' '+config.hostname+' listening on port ' + config.port);
+            console.info(_objectName + ' '+config.hostname+' listening on port ' + config.port);
         };
 
         //close
        self.close = function () {
             self = this;
             listener.close();
-            console.log(_objectName + ' '+config.hostname+' closed.');
+            console.info(_objectName + ' '+config.hostname+' closed.');
         };
 
-        console.log(_objectName + ' created')
+        console.info(_objectName + ' created')
 
     }
     catch (err) {

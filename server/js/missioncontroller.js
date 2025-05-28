@@ -4,7 +4,7 @@ module.exports.MissionController = function MissionController() {
     try {
         var self = this; //closure so we don't lose this reference in callbacks       
         var _objectName = "MissionController";
-        console.log(_objectName + ' created');
+        console.info(_objectName + ' created');
         
         ////public methods
         self.toString = function () {
@@ -143,7 +143,7 @@ module.exports.MissionController = function MissionController() {
 
         self.processMissionState = function (mission, map, player, missionOwner, newlyCompletedMissions) {
             
-            //console.log("checking mission:"+mission.getName()+" time taken:"+mission.getTimeTaken());
+            //console.debug("checking mission:"+mission.getName()+" time taken:"+mission.getTimeTaken());
             var resultString = "";
             var initialScore = player.getScore();
             var missionName = mission.getName();
@@ -186,7 +186,7 @@ module.exports.MissionController = function MissionController() {
                 missionOwner.removeMission(mission.getName());
             };
                 
-            //console.log("Completed processing mission state");
+            //console.debug("Completed processing mission state");
             var newScore = player.getScore();  
             if ((initialScore < newScore) && (newScore == map.getMaxScore())) {
                 resultString += "<br>Congratulations, you've scored " + newScore + " points - the highest possible score for this game.<br>";
@@ -226,11 +226,11 @@ module.exports.MissionController = function MissionController() {
                     
                     if (missionObjectName == "player" || ((!missionObjectName) && missionOwnerName == "player")) {
                         //initiate any player (missions or events) that we've just cleared the parent of
-                        //console.log("starting mission: " + missionToStart.getName());
+                        //console.debug("starting mission: " + missionToStart.getName());
                         missionToStart.startTimer();
                     } else if (missionObjectName == missionOwnerName && missionToStart.getType() == "event") {
                         //initiate any creature-only events that we've just cleared the parent of
-                        //console.log("starting mission: " + missionToStart.getName());
+                        //console.debug("starting mission: " + missionToStart.getName());
                         missionToStart.startTimer();
                     };
                     
@@ -277,7 +277,7 @@ module.exports.MissionController = function MissionController() {
             
             //check player mission status
             for (var i = 0; i < playerMissions.length; i++) {
-                //console.log(playerMissions[i].getName()+ playerMissions[i].isFailedOrComplete());
+                //console.debug(playerMissions[i].getName()+ playerMissions[i].isFailedOrComplete());
                 processedMissions.push(playerMissions[i].getName());
                 resultString += self.processMissionState(playerMissions[i], map, player, player, newlyCompletedMissions);
             };

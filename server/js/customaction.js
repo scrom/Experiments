@@ -4,7 +4,7 @@ var self = module.exports = {
 
     
     processAffinityModifiers: function (map, actionData) {
-        //console.log("Processing affinity modifiers from custom action");
+        //console.debug("Processing affinity modifiers from custom action");
         var affinityModifier = 1;
         if (actionData.affinityModifier) { affinityModifier = actionData.affinityModifier; };
         if (actionData.decreaseAffinityFor) {
@@ -39,7 +39,7 @@ var self = module.exports = {
         //start with message if set
         if (actionData.message) {
             if (actionData.message.length > 0) {
-                //console.log(actionData.message);
+                //console.debug(actionData.message);
                 resultString += actionData.message + "<br>";
             };
         };               
@@ -53,7 +53,7 @@ var self = module.exports = {
             for (var l = 0; l < actionData.locations.length; l++) {
                 map.addLocation(actionData.locations[l]);
                 //var locationName = actionData.locations[l].getName();
-                //console.log("Location added: "+map.getLocation(actionData.locations[l].getName()));
+                //console.debug("Location added: "+map.getLocation(actionData.locations[l].getName()));
                 if (actionData.locations[l].inventory) {
                     var newInventory = actionData.locations[l].inventory;
                     for (var i = 0; i < newInventory.length; i++) {
@@ -78,7 +78,7 @@ var self = module.exports = {
                 if (exitData.isVisible()) { hidden = false; };
                 locationToModify.addExit(exitData.getDirection(), exitData.getSourceName(), exitData.getDestinationName(), exitData.getDescription(), hidden, exitData.getRequiredAction());
                             //var exitDestination = locationToModify.getExitDestination(exitData.getDirection());
-                            //console.log("Exit added: "+exitDestination);
+                            //console.debug("Exit added: "+exitDestination);
             };
         };
         if (actionData.removeMission) {
@@ -120,7 +120,7 @@ var self = module.exports = {
         if (actionData.health) { player.updateHitPoints(actionData.health); };
         if (actionData.teleport) {
             var newLocation = map.getLocation(actionData.teleport);
-            //console.log("teleporting to:" + actionData.teleport);
+            //console.debug("teleporting to:" + actionData.teleport);
             if (newLocation) {
                 player.setLocation(newLocation);
             };

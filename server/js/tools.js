@@ -76,11 +76,11 @@ var self = module.exports= {
         
             resultString += '"' + key + '":';
             var obj = literal[key];
-            //console.log("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
+            //console.debug("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
         
             if (typeof (obj) == 'object') {
                 if (Object.prototype.toString.call(obj) === '[object Array]') {
-                    //console.log("Extracting Array...");
+                    //console.debug("Extracting Array...");
                     resultString += '[';
                     for (var j = 0; j < obj.length; j++) {
                         if (j > 0) { resultString += ","; };
@@ -108,7 +108,7 @@ var self = module.exports= {
             else { resultString += obj; };
         };
         resultString += '}';
-        //console.log(resultString);
+        //console.debug(resultString);
         return resultString;
     },
 

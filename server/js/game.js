@@ -23,7 +23,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         var locationImage = _player.getCurrentLocation().getImageName();
 
         //log game created
-        console.log(_objectName+' id: '+_id+' created for '+_player.getUsername());	
+        console.info(_objectName+' id: '+_id+' created for '+_player.getUsername());	
 
         ////public methods
         self.getUsername = function() {
@@ -53,7 +53,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
         self.saveAsync = async function() {
             self.setTimeStamp();
             var newSave = false;
-            //console.log("attempting to save game using async call");
+            //console.debug("attempting to save game using async call");
             if (!(_player.canSaveGame())) {
                 return('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+'You\'ve not achieved enough to be worth saving yet."}');
             };
@@ -83,7 +83,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             //track how many times they've saved/loaded/
             _player.incrementSaveCount();
             await _fm.writeGameDataAsync(_filename, self.fullState(), true);
-            console.log("game saved as "+_filename);
+            console.info("game saved as "+_filename);
             return ('{"username":"'+_player.getUsername()+ '","id":"'+_id+'","description":"'+"Game saved as <b>"+_filename+'</b>.<br>Please make a note of your saved game filename.<br><i>(You\'ll need it if you want to <i>load</i> or recover this game later.)</i>","attributes":'+_player.getClientAttributesString()+',"saveid":"'+_filename+'"}');
         };
 
@@ -101,7 +101,7 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             var stateData = [];
             try {
                 stateData.push(_player.toString());
-            } catch (e) {console.log("Error parsing JSON for player: error = "+e+": "+_player.toString());};
+            } catch (e) {console.error("Error parsing JSON for player: error = "+e+": "+_player.toString());};
             
             stateData = stateData.concat(_map.getLocationsAsString());
             return stateData;
@@ -114,12 +114,12 @@ module.exports.Game = function Game(playerAttributes,aGameID, aMap, mapBuilder, 
             };
             var responseJson = _playerActions.act(actionString);
             self.setTimeStamp();
-            console.log('responseJson: '+responseJson);
+            console.info('responseJson: '+responseJson); 
             return responseJson;
         };
 
         self.getId = function() {
-            //console.log("retrieving game ID:"+_id);
+            //console.debug("retrieving game ID:"+_id);
             return _id;
         };
 

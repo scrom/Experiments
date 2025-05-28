@@ -16,7 +16,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
         //source data: 
         var _data = requireDirectory(module, mapDataPath, { recurse: false });
-        //console.log(Object.keys(_data));
+        //console.debug(Object.keys(_data));
         var _rootLocationsJSON = _data[mapDataFile];
  
 
@@ -29,7 +29,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
 	    var _objectName = "MapBuilder";
 
-        console.log(_objectName + ' created');
+        console.info(_objectName + ' created');
         
         //self.addDataFromDirectory = function (directory) {
         //    var newData = _requireDirectory(module, directory, { recurse: false });
@@ -83,7 +83,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         
         //public member functions
         self.buildArtefact = function(artefactData) {
-            //console.log('Building: '+artefactData.name);
+            //console.debug('Building: '+artefactData.name);
             var usingTemplate = false;
             if (artefactData) {
                 //construct from file first if needed
@@ -134,17 +134,17 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 
                 artefact = new artefactObjectModule.Artefact(artefactData.name, artefactData.description, artefactData.detailedDescription, artefactData.attributes, linkedExits, delivers);
                 if (!artefact) {
-                    console.log("ERROR: Artefact data. Failed to create aretefact object" + artefactData + ".");
+                    console.error("Error: Artefact data. Failed to create aretefact object" + artefactData + ".");
                 };
                 if (artefact.getType() == "food") {
                     if (!artefactData.attributes) {
-                        console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no attributes.");
+                        console.warn("DATA QUALITY WARNING: food item " + artefactData.name + " has no attributes.");
                     } else {
                         if (!artefactData.attributes.smell) {
-                            console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'smell' attribute.");
+                            console.warn("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'smell' attribute.");
                         };
                         if (!artefactData.attributes.taste) {
-                            console.log("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'taste' attribute.");
+                            console.warn("DATA QUALITY WARNING: food item " + artefactData.name + " has no 'taste' attribute.");
                         };
                     };
                 };
@@ -172,7 +172,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                                 if (inventory.canCarry(childArtefact)) {
                                     inventory.add(childArtefact);
                                 } else {
-                                    console.log("ERROR: Artefact data : " + childArtefact.getName() + " will not fit in " + artefact.getName() + ".");
+                                    console.error("Error: Artefact data : " + childArtefact.getName() + " will not fit in " + artefact.getName() + ".");
                                 };
                             };
                         };
@@ -195,16 +195,16 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
 
                 //check artefact has syns
-                if (artefact.getSyns().length ==0) {console.log("Usability check: artefact '"+artefact.getName()+"' has no synonyms defined.");};
+                if (artefact.getSyns().length ==0) {console.warn("Usability check: artefact '"+artefact.getName()+"' has no synonyms defined.");};
                 return artefact;
             } catch(err) {
-	            console.log("MAP ERROR: Failed to build artefact: "+artefactData.name+": "+err.stack);
+	            console.error("MAP ERROR: Failed to build artefact: "+artefactData.name+": "+err.stack);
             };
         };
 
         self.buildCreature = function(creatureData) {
             //name, description, detailedDescription, attributes, carrying
-            //console.log('Building Creature: '+creatureData.name);
+            //console.debug('Building Creature: '+creatureData.name);
             var usingTemplate = false;
             if (creatureData) {
                 //construct from file first if needed
@@ -240,7 +240,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     if (usingTemplate) {
                         templated = " (templated)"
                     };
-                    //console.log("usability check: duplicate creature name/synonym '" + creatureData.name + "'" + templated + ".");
+                    //console.debug("usability check: duplicate creature name/synonym '" + creatureData.name + "'" + templated + ".");
                 };
                 
                 var creature;
@@ -254,14 +254,14 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 //is their name a proper noun?
                 if (tools.isProperNoun(creatureData.displayName)) {
                     if (creatureName.toLowerCase() != creatureData.displayName.toLowerCase()) {
-                        console.log("DATA QUALITY WARNING: proper noun for displayName '"+creatureData.displayName+"' doesn't match original creature name'"+creatureName+"'.");
+                        console.warn("DATA QUALITY WARNING: proper noun for displayName '"+creatureData.displayName+"' doesn't match original creature name'"+creatureName+"'.");
                     };
                     creatureName = creatureData.displayName;
                 }; //creature name is a proper noun
 
                 creature = new creatureObjectModule.Creature(creatureName, creatureData.description, creatureData.detailedDescription, creatureData.attributes, null); //we add inventory later
                 if (!creature) {
-                    console.log("ERROR: Creature data. Failed to create creature object" + creatureData + ".");
+                    console.error("Error: Creature data. Failed to create creature object" + creatureData + ".");
                 };                
                 if (creatureData.synonyms) { creature.addSyns(creatureData.synonyms); };
                 if (creatureData.dislikes) {creature.addDislikes(creatureData.dislikes);};
@@ -312,15 +312,15 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
                 _map.incrementCreatureCount();
 
-                if (creature.getSyns().length ==0) {console.log("Usability check: creature '"+creature.getName()+"' has no synonyms defined.");};
+                if (creature.getSyns().length ==0) {console.warn("Usability check: creature '"+creature.getName()+"' has no synonyms defined.");};
                 return creature;
             } catch(err) {
-	            console.log("MAP ERROR: Failed to build creature: "+creatureData.name+": "+err.stack);
+	            console.error("MAP ERROR: Failed to build creature: "+creatureData.name+": "+err.stack);
             };
         };
 
         self.unpackConditionAttributes = function(attributes) {
-            //console.log("Unpacking condition attributes: "+attributes);
+            //console.debug("Unpacking condition attributes: "+attributes);
             if (!(attributes)) {return null;};
             if (attributes.length == 0) {return null;};
             var returnObject = {};
@@ -332,7 +332,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 if (returnObject[attr] == 'true') {returnObject[attr] = true;};
                 if (returnObject[attr] == 'false') {returnObject[attr] = false;};
             };
-            //console.log("Unpacked condition attributes");
+            //console.debug("Unpacked condition attributes");
             return returnObject;
         };
         
@@ -420,7 +420,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             if (reward.file) {
                 reward = self.buildFromFile(_data[reward.file]);
             };
-            //console.log("Unpacking reward: "+reward);
+            //console.debug("Unpacking reward: "+reward);
             var returnObject = {};
             //set maximum possible game score...
             if (reward.score) {
@@ -431,7 +431,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 returnObject.delivers = null;
                 var deliveryObject = self.buildArtefact(reward.delivers);
                 returnObject.delivers = deliveryObject;
-                //console.log("Built delivery object");
+                //console.debug("Built delivery object");
                 //returnObject.delivers = self.buildArtefact(returnObject.delivers);
             };
             if (reward.locations) {
@@ -518,12 +518,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
             };
 
-            //console.log("Unpacked Reward");
+            //console.debug("Unpacked Reward");
             return returnObject;
         };
 
         self.buildMission = function(missionData) {
-            //console.log("Building mission: "+missionData.name);
+            //console.debug("Building mission: "+missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward, fail
             if (missionData.file) {
                 missionData = self.buildFromFile(_data[missionData.file]);
@@ -548,7 +548,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 } else {
                     //reward is generally mandatory - even if it's just an empty object.
                     //this section is here just to keep logs clear on what's wrong without blowing up.
-                    console.log("ERROR: No reward object found for mission: " + missionData.name);
+                    console.error("Error: No reward object found for mission: " + missionData.name);
                     rewardData = {}; 
                 };              
 
@@ -561,12 +561,12 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     //@todo - unpack/build mission parent object
                     if (missionData.attributes.missionObject) {
                         if (missionData.attributes.missionObject.toLowerCase() != missionData.attributes.missionObject) {
-                            console.log("MISSION DATA WARNING: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");
+                            console.warn("MISSION DATA WARNING: missionObject contains mixed case; may not be true objectName'"+missionData.attributes.missionObject+"'.");
                         };
                     };
                     if (missionData.attributes.destination) {
                         if (missionData.attributes.destination.toLowerCase() != missionData.attributes.destination) {
-                            console.log("MISSION DATA WARNING: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
+                            console.warn("MISSION DATA WARNING: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
                         };
                     };
                     if (missionData.attributes.type == "event") {
@@ -582,7 +582,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 var newMission = new missionObjectModule.Mission(missionData.name, missionData.displayName, missionData.description, missionData.attributes, initialAttr, conditionAttr, failAttr, rewardData, failData);
                 return newMission;
             } catch(err) {
-	            console.log("MAP ERROR: Failed to build mission: "+missionData.name+": "+err.stack);
+	            console.error("MAP ERROR: Failed to build mission: "+missionData.name+": "+err.stack);
             };
         };
 
@@ -591,7 +591,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 locationData = self.buildFromFile(_data[locationData.file]);
             };
             try {
-                if (_map.getLocation(locationData.name)) {console.log("DATA QUALITY WARNING: duplicate location name '"+locationData.name+"'.");};
+                if (_map.getLocation(locationData.name)) {console.warn("DATA QUALITY WARNING: duplicate location name '"+locationData.name+"'.");};
                 if (locationData.attributes) {
                     if (locationData.attributes.dark == "true" || locationData.attributes.dark == true) {locationData.attributes.dark = true;}
                     else {locationData.attributes.dark=false;};
@@ -601,7 +601,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 var newLocation = new locationObjectModule.Location(locationData.name,locationData.displayName,locationData.description,locationData.attributes);
                 return newLocation;
             }  catch(err) {
-	            console.log("MAP ERROR: Failed to build location: "+locationData.name+": "+err.stack);
+	            console.error("MAP ERROR: Failed to build location: "+locationData.name+": "+err.stack);
             };
         };
         
@@ -611,7 +611,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
 
         self.buildGameObjects = function(gameDataAsJSON) {
             //build from files
-            console.log("Building main data...");
+            console.info("Building main data...");
             for (var i = 0; i < gameDataAsJSON.length; i++) {
                 if (gameDataAsJSON[i].file) {
                     //overwrite game data element with named file
@@ -620,11 +620,11 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     gameDataAsJSON[i] = builtFile;                    
                 };
             };
-            console.log("Main data built.");
+            console.info("Main data built.");
             
             ///////////////
             //locations and links
-            console.log("Building locations...");
+            console.info("Building locations...");
             for (var i=0; i<gameDataAsJSON.length;i++) {
                 if (gameDataAsJSON[i].object == "location") {
                     var locationData = gameDataAsJSON[i]
@@ -644,9 +644,9 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     };
                 }; 
             };
-            console.log("Locations built.");
+            console.info("Locations built.");
             
-            console.log("Building objects, creatures and missions...");
+            console.info("Building objects, creatures and missions...");
             //once all locations are built, add objects, creatures and missions.
             for (var i=0; i<gameDataAsJSON.length;i++) {
                 if (gameDataAsJSON[i].object == "location") {
@@ -693,7 +693,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     //@todo - validate all mission objects and destinations have objects in map and warn if not
                 };                       
             };
-            console.log("Objects, creatures and missions built.");
+            console.info("Objects, creatures and missions built.");
 
             //build spawn data
             for (var i=0; i<gameDataAsJSON.length;i++) {
@@ -702,21 +702,21 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };
             };
 
-            console.log("Finished building game data.");
+            console.info("Finished building game data.");
 
         };
 
         //note, "fromDirection" should be the lowercase short version (e.g. "u" or "n")
         self.link = function(fromDirection, fromLocationName, toLocationName, fromDescription, toDescription, toIsHidden, fromIsHidden, toRequiredAction, fromRequiredAction) {
              var toDirection = tools.oppositeOf(fromDirection);
-             //console.log('from:'+fromDirection+' to:'+toDirection);
+             //console.debug('from:'+fromDirection+' to:'+toDirection);
              var fromLocation = _map.getLocation(fromLocationName);
              var toLocation = _map.getLocation(toLocationName);
              var temp = fromLocation.addExit(fromDirection,fromLocation.getName(),toLocation.getName(), toDescription, toIsHidden, toRequiredAction);
              var temp2 = toLocation.addExit(toDirection,toLocation.getName(),fromLocation.getName(), fromDescription, fromIsHidden, fromRequiredAction);
-             //console.log('locations linked');
-             //console.log ("Exit 1:"+temp.toString());
-             //console.log ("Exit 2:"+temp2.toString());
+             //console.debug('locations linked');
+             //console.debug ("Exit 1:"+temp.toString());
+             //console.debug ("Exit 2:"+temp2.toString());
              return fromLocation.getName()+' linked '+fromDirection+'/'+toDirection+' to '+toLocation.getName();
         };
 

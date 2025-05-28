@@ -192,12 +192,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var objectToRemove;
             for (var i=0; i<contents.length;i++) {
-                //console.log("i="+i);
-                //console.log("Removing "+contents[i].getName()+" from wreckage.");
+                //console.debug("i="+i);
+                //console.debug("Removing "+contents[i].getName()+" from wreckage.");
                 
                 objectToRemove = artefact.getObject(contents[i].getName());
                 if (objectToRemove.requiresContainer()) {
-                    //console.log(objectToRemove.getName()+" lost.");
+                    //console.debug(objectToRemove.getName()+" lost.");
                     lostObjectCount++;
                     if (objectToRemove.isLiquid()) {
                         _currentLocation.addLiquid(objectToRemove.getName());
@@ -208,7 +208,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else {
                         _inventory.add(objectToRemove);
                     };
-                    //console.log(objectToRemove.getName()+" saved.");
+                    //console.debug(objectToRemove.getName()+" saved.");
                 };
             };
 
@@ -933,7 +933,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        //console.log("antibodies passed to "+receiver.getType());
+                        //console.debug("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -994,14 +994,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //limit to max
             if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;};
 
-            //console.log('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.debug('player health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             return _hitPoints;
         };
 
         self.setStealth = function(newValue) {
             //used for stealing
             _stealth = newValue;
-            //console.log("Player stealth now set to:"+_stealth);
+            //console.debug("Player stealth now set to:"+_stealth);
             return _stealth;
         };
 
@@ -1014,7 +1014,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.setHunt = function(newValue) {
             //skill used for hunting
             _hunt = newValue;
-            //console.log("Player hunt now set to:"+_hunt);
+            //console.debug("Player hunt now set to:"+_hunt);
             return _hunt;
         };
 
@@ -1053,7 +1053,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==missionName) {
                     _missions.splice(index,1);
-                    //console.log(missionName+" removed from "+self.getUsername());
+                    //console.debug(missionName+" removed from "+self.getUsername());
                     break;
                 };
             };
@@ -2068,7 +2068,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 container.receive(newObject, self);
 
                 if (containerIsInLocation) {
-                    console.log(originalObjectIsInContainer);
+                    console.debug(originalObjectIsInContainer);
                     if (!(originalObjectIsInContainer)) {
                         return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
                     } else {                        
@@ -2623,7 +2623,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
                 if (objectIsInLocation) {
-                    //console.log("collecting from location");
+                    //console.debug("collecting from location");
                     //try location first
                     collectedArtefact = getObjectFromLocation(artefactName);
 
@@ -3302,7 +3302,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //part of supplied artefact name is probably an action
                         action = artefactName.substring(divider).trim();
                         artefactName = artefactName.substring(0,divider).trim();
-                        //console.log("d:"+divider+" a:"+artefactName+" act:"+action);
+                        //console.debug("d:"+divider+" a:"+artefactName+" act:"+action);
                         artefact = getObjectFromPlayerOrLocation(artefactName);
                     };
                 };
@@ -3339,7 +3339,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //we know we have a location...
             if (!(_currentLocation.isDark())) {return true;};  //location is not dark
             var lamps = _inventory.getAllObjectsOfType("light");
-            //console.log("Lamps found: "+lamps.length);
+            //console.debug("Lamps found: "+lamps.length);
             for (var i=0; i<lamps.length; i++) {
                 if (lamps[i].isPoweredOn()) {return true};
             };
@@ -4487,7 +4487,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var exitDestination = _currentLocation.getExitDestination(direction);
             var newLocation = map.getLocation(exitDestination);
             if (!(newLocation)) {
-                //console.log('location: '+exitDestination+' not found');
+                //console.debug('location: '+exitDestination+' not found');
                 return "That exit doesn't seem to go anywhere at the moment. Try again later.";                  
             };
 
@@ -4580,7 +4580,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            //console.log('GO: '+resultString);
+            //console.debug('GO: '+resultString);
             return resultString;
         };	
 
@@ -4611,7 +4611,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if ((weapons[index].getType() == 'weapon') && ((!(weapons[index].isBreakable())) || (weapons[index].getSubType() == "projectile" && (!weapons[index].isBroken())))) {
                     if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0 && weapons[index].checkComponents()) {    
                         var weaponStrength = weapons[index].getAttackStrength();
-                        //console.log('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                        //console.debug('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                         if (weaponStrength > selectedWeaponStrength) {
                             selectedWeapon = weapons[index];
                             selectedWeaponStrength = weaponStrength;
@@ -4619,8 +4619,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };    
                 };
             };
-            //if (selectedWeapon) {console.log('Selected weapon: '+selectedWeapon.getDisplayName());}
-            //else {console.log('Player is not carrying an automatically usable weapon')};
+            //if (selectedWeapon) {console.debug('Selected weapon: '+selectedWeapon.getDisplayName());}
+            //else {console.debug('Player is not carrying an automatically usable weapon')};
 
             return selectedWeapon;
         };
@@ -4640,7 +4640,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             self.reduceHitPoints(pointsToRemove);
 
-            //console.log('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            //console.debug('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
 
             _injuriesReceived ++;
             _totalDamageReceived += pointsToRemove;
@@ -5012,7 +5012,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             self.recover(duration*3);
             self.decreaseAggression(duration);
 
-            //console.log('player rested. HP remaining: '+_hitPoints);
+            //console.debug('player rested. HP remaining: '+_hitPoints);
 
             if  (!((initialKilledCount < _killedCount)|| initialHP >= _hitPoints)) {
                 //if they didn't end up worse off...
@@ -5078,7 +5078,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            //console.log('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.debug('player healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
 
             return resultString;
         };
@@ -5210,7 +5210,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         _timeSinceEating -= (artefact.getNutrition() * 8);
                     };
                 };
-                //console.log('player eats some food.');
+                //console.debug('player eats some food.');
             };
 
             return resultString;
@@ -5307,7 +5307,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     removeObjectFromPlayerOrLocation(artefactName); 
                     _consumedObjects.push(artefact);
                 };
-                //console.log('player drinks.');
+                //console.debug('player drinks.');
 
                 _timeSinceDrinking = 0;
             };
@@ -5325,7 +5325,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.kill = function(isPermanent){
-            console.log("Player killed");
+            console.info("Player killed");
             var resultString = "";
             _hitPoints = 0;
             _killedCount ++;
@@ -5462,7 +5462,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         
         self.calculateTicks = function (time, verb) {
             //trap the subset of verbs that would give confusing reults.
-            //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
+            //console.debug("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
             var ignoreList = ["rest", "sit", "zz", "sleep", "nap", "have", "zzz", "+wait"];
             if (ignoreList.indexOf(verb) > -1) {
                 return time;
@@ -5481,7 +5481,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.tick = function(time, map) {
-            //console.log("Player tick...");
+            //console.debug("Player tick...");
 
             var resultString = "";
             var damage = 0;
@@ -5495,7 +5495,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //time passing
             for (var t=0; t < time; t++) {
-                //console.log("tick...");
+                //console.debug("tick...");
                 //has player been killed?
                 var originalDeathCount = _killedCount;
 
@@ -5583,7 +5583,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     afflictionString += "<br>";
                 };
                 afflictionString += randomReplies[randomIndex]+" ";
-                //console.log("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
+                //console.debug("tsr:" + _timeSinceResting + " check:" + Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2)));
                 if (_timeSinceResting == Math.floor(_maxMovesUntilTired + (_additionalMovesUntilExhausted / 2))) {
                     afflictionString += "<br>You're struggling to keep up with those around you. ";
                 };
@@ -5950,7 +5950,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         //end public member functions
 
-	    console.log(_objectName + ' created: '+_username);
+	    console.info(_objectName + ' created: '+_username);
 
     }
     catch(err) {

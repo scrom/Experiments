@@ -28,7 +28,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _type = 'mission';
 
 	    var _objectName = "mission";
-        //console.log(_objectName + ' created: '+_name+', '+_destination);
+        //console.debug(_objectName + ' created: '+_name+', '+_destination);
 
         var processAttributes = function(missionAttributes) {
             if (!missionAttributes) {return null;}; //leave defaults preset
@@ -70,7 +70,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var validateType = function() {
             var validobjectTypes = ['mission','event'];
             if (validobjectTypes.indexOf(_type) == -1) { throw _type+" is not a valid mission type."};
-            //console.log(_name+' type validated: '+_type);
+            //console.debug(_name+' type validated: '+_type);
         };
 
         validateType();
@@ -163,13 +163,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.isStatic = function() {
-            //console.log('mission: '+_name+' static: '+_isStatic);
+            //console.debug('mission: '+_name+' static: '+_isStatic);
             return _isStatic;
         };
 
         self.startTimer = function() {
             if (!(_ticking)) {_ticking = true;};
-            //console.log("Mission timer started for "+self.getName());
+            //console.debug("Mission timer started for "+self.getName());
             return _ticking;
         };
 
@@ -187,7 +187,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var returnObject = _reward;
             _reward=null;
             _ticking = false;
-            //console.log("reward delivered from "+self.getName()+": "+returnObject);
+            //console.debug("reward delivered from "+self.getName()+": "+returnObject);
             return returnObject;
         };
 
@@ -337,7 +337,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             _reward = null;
             _fail = null;
             _ticking = false;
-            //console.log("mission "+self.getName()+" failed");
+            //console.debug("mission "+self.getName()+" failed");
             return fail;
         };
 
@@ -345,7 +345,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var returnObject = _reward;
             _reward=null;
             _ticking = false;
-            //console.log("mission "+self.getName()+" event ocurred");
+            //console.debug("mission "+self.getName()+" event ocurred");
             return returnObject;
         };
 
@@ -393,18 +393,18 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         if (_dialogue[i].keywords) {
                             //check whole input string match
                             if (_dialogue[i].keywords.indexOf(keyword) >-1) {
-                                //console.log("String Match: "+JSON.stringify(_dialogue[i]));
+                                //console.debug("String Match: "+JSON.stringify(_dialogue[i]));
                                 return _dialogue[i];
                             };
                             //check single word match
                             for (var k=0;k<keywords.length;k++) {
                                 if (_dialogue[i].keywords.indexOf(keywords[k]) >-1) {
-                                    //console.log("Word Match: "+JSON.stringify(_dialogue[i]));
+                                    //console.debug("Word Match: "+JSON.stringify(_dialogue[i]));
                                     return _dialogue[i];
                                 };
                             };
                         } else {
-                            //console.log("Trying without keywords: "+JSON.stringify(_dialogue[i]));
+                            //console.debug("Trying without keywords: "+JSON.stringify(_dialogue[i]));
                             //this dialogue has no keywords. It's a default path.
                             //preserve this in case we don't return but only in the case where this is parsing an input string
                             //as that's our second-chance response.
@@ -417,7 +417,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
             //we'll only get here if we don't have another match.
             if (defaultDialogue) {
-                //console.log("Default: "+JSON.stringify(_dialogue[i]));
+                //console.debug("Default: "+JSON.stringify(_dialogue[i]));
                 return defaultDialogue;
             };
         };
@@ -425,7 +425,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.backtrackDialogue = function() {
             if (_conversationHistory.length >0) {
                 _conversationState = _conversationHistory.pop();
-                //console.log("conversationState:"+_conversationState);
+                //console.debug("conversationState:"+_conversationState);
             } else {
                 _conversationState = 0;
             };
@@ -454,8 +454,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.getNextDialogue = function(inputSpeech, keyword) {
             var response ="";
-            //console.log("I: "+inputSpeech+" K: "+keyword)
-            //console.log("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
+            //console.debug("I: "+inputSpeech+" K: "+keyword)
+            //console.debug("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
             //if we reach the end of the array, stop there.             
             if (_conversationState < _dialogue.length) {
@@ -504,11 +504,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 var missionObjectInventory = missionObject.getInventoryObject(); 
                 
                 for (var i = 0; i < requiredContents.length; i++) {
-                    //console.log("checking for " + requiredContents[i]);
+                    //console.debug("checking for " + requiredContents[i]);
                     if (missionObjectInventory.check(requiredContents[i])) { contentsCount++; };
                 };
             };
-            //console.log("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
+            //console.debug("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
       
             if (contentsCount == requiredContentsCount) {
                 return true;
@@ -536,7 +536,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
       
             if (contentsCount == requiredAntibodiesCount) {
-                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                //console.debug("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
                 return true;
             };
 
@@ -562,7 +562,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
       
             if (contentsCount == requiredContagionCount) {
-                //console.log("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+                //console.debug("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
                 return true;
             };
 
@@ -644,7 +644,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (_destination == _missionObject) {
                     return location;
                 } else {
-                    //console.log('mission destination location reached');
+                    //console.debug('mission destination location reached');
                     return location.getObject(_missionObject, true); //ignore syns and don't search creatures
                 };
                 break;
@@ -753,7 +753,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
                 if (objectAttributes.hasOwnProperty(attr)) {
                     var keycheckName = attr;
-                    //console.log("checking "+attr+": required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
+                    //console.debug("checking "+attr+": required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
                     if (typeof(attributesToCheck[attr]) == 'object') {
                         if (Object.prototype.toString.call(attributesToCheck[attr]) === '[object Array]') { 
                             checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
@@ -773,8 +773,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                                     checkCount += self.checkAttribute(objectAttributes[attr][subAttr], attributesToCheck[attr][subAttr]);
                                 };
                             };
-                            //console.log("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
-                            //console.log("ca[attr]"+attributesToCheck[attr]+Object.keys(attributesToCheck[attr]).length);                                
+                            //console.debug("oa[attr]"+objectAttributes[attr]+Object.keys(objectAttributes[attr]).length);
+                            //console.debug("ca[attr]"+attributesToCheck[attr]+Object.keys(attributesToCheck[attr]).length);                                
                         };
                     } else {                                                                             
                         checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
@@ -793,12 +793,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //we also exit early if the mission is already failed or completed
             if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
 
-            //console.log('Checking state for mission: '+_name);
+            //console.debug('Checking state for mission: '+_name);
             var destroyedDestination = self.getDestroyedObject(player, _destination);
 
             if ((destroyedDestination) && (_destination != _missionObject)) {
                 //if destination is not the same as mission object, fail as player cannot complete if destination is lost
-                //console.log('mission destination destroyed');
+                //console.debug('mission destination destroyed');
                 return self.fail("destroyedDestination", destroyedDestination);
             };
 
@@ -850,7 +850,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
                 if (source) {
                     //fail as player cannot complete if source is lost
-                    //console.log('mission item source destroyed');
+                    //console.debug('mission item source destroyed');
                     return self.fail("destroyedSource", source);
                 };
 
@@ -882,7 +882,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 
                 if (!(missionObject)) {
                     //there's nothing else we can do for now.
-                    //console.log("mission not yet complete");
+                    //console.debug("mission not yet complete");
                     return null;
                 };
             };   
@@ -941,13 +941,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 return self.fail("failAttributes");
             };
 
-            //console.log('mission object retrieved. Checking condition attributes...');
+            //console.debug('mission object retrieved. Checking condition attributes...');
             //we don't bother to calculate this earlier as even if all success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("contains")) {
-                //console.log('checking contents...');                        
+                //console.debug('checking contents...');                        
                 if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
                     successCount++;
                 } else {
@@ -958,7 +958,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("antibodies")) {
-                //console.log('checking antibodies...');                        
+                //console.debug('checking antibodies...');                        
                 if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
                     successCount++;
                 } else {
@@ -969,7 +969,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("contagion")) {
-                //console.log('checking contagion...');                       
+                //console.debug('checking contagion...');                       
                 if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
                     successCount++;
                 } else {
@@ -980,7 +980,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //checkConversation - has conversation reached required state
             if (_conditionAttributes.hasOwnProperty("conversationState")) {
-                //console.log('checking conversationState...');                        
+                //console.debug('checking conversationState...');                        
                 if (_conversationState >= _conditionAttributes["conversationState"]) {
                     successCount++;
                 } else {
@@ -989,14 +989,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };                          
             };
             
-            //console.log('checking remaining attributes...');  
+            //console.debug('checking remaining attributes...');  
             //check the rest of the object attributes if they exist (and if we're not already successful)
             if (successCount < requiredSuccessCount) {
                 successCount += self.checkAttributes(missionObject, _conditionAttributes);
             };
 
 
-            //console.log('condition matches: '+successCount+" out of "+requiredSuccessCount);
+            //console.debug('condition matches: '+successCount+" out of "+requiredSuccessCount);
             if (successCount >= requiredSuccessCount) {
                 //if mission has dialogue, ensure that has been triggered at least once...
                 if ((self.hasDialogue() && _conversationState > 0) || (!(self.hasDialogue()))) {

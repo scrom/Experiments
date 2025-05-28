@@ -365,7 +365,7 @@ test('canRetrieveAffinity', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-5});
     var expected = "<br>It doesn't like you much.";
     var actual = c0.getAffinityDescription();
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -374,7 +374,7 @@ test('creatureIsFriendlyWhenAffinityGreaterThanPlayerAggression', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = true;
     var actual = c0.isFriendly(1);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -383,7 +383,7 @@ test('creatureIsNotFriendlyWhenPlayerIsAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = false;
     var actual = c0.isFriendly(1);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -392,7 +392,7 @@ test('creatureIsHostileLvl6WhenPlayerIsLessAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-6});
     var expected = true;
     var actual = c0.isHostile(5);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -401,7 +401,7 @@ test('creatureIsVeryHostileLvl10WhenPlayerIsLessAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-10});
     var expected = true;
     var actual = c0.isHostile(0);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -410,7 +410,7 @@ test('creatureIsNotHostileWhenPlayerIsAsAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2});
     var expected = false;
     var actual = c0.isHostile(2);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -419,7 +419,7 @@ test('creatureWillFleeWhenPlayerIsAsAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(2);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -428,7 +428,7 @@ test('creatureWillFleeIfNearlyDeadRegardlessOfHostility', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:15, maxHealth:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(0);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -440,7 +440,7 @@ test('newCreatureWith50PercentHealthIsCreatedBleeding', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:75, maxHealth:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.getCurrentAttributes().bleeding;
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -450,7 +450,7 @@ test('newCreatureWithMoreThan50PercentHealthIsNotBleeding', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:76, maxHealth:150, affinity:-2, canTravel:true});
     var expected = false;
     var actual = c0.getCurrentAttributes().bleeding;
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -459,7 +459,7 @@ test('creatureWillNotFleeWhenPlayerIsMoreAggressiveButCreatureIsNotMobile', () =
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:false});
     var expected = false;
     var actual = c0.willFlee(3);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -468,7 +468,7 @@ test('creatureWillFleeWhenPlayerIsMoreAggressive', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-2, canTravel:true});
     var expected = true;
     var actual = c0.willFlee(3);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -479,8 +479,8 @@ test('friendlyCreatureWillFindForPlayer', () => {
     var expected = "It says 'Simon Galbraith is currently at 'Poppy meeting room'.'";
     var playerAggression = 1; //1 point of aggression should be acceptable
     var actual = c0.find("simon g", playerAggression, m);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -491,8 +491,8 @@ test('friendlyCreatureWillNotFindForAggresivePlayer', () => {
     var expected = "It says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'";
     var playerAggression = 2;
     var actual = c0.find("simon g", playerAggression, m);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -503,8 +503,8 @@ test('unfriendlyCreatureWillNotFindForPlayer', () => {
     var expected = "It doesn't like your attitude and doesn't want to talk to you at the moment.";
     var playerAggression = 0;
     var actual = c0.find("simon g", playerAggression, m);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -516,8 +516,8 @@ test('neutralCreatureWillNotFindForPlayer', () => {
     var playerAggression = 0;
     var findResult = c0.find("simon g", playerAggression, m)
     var actual = findResult.substr(findResult.indexOf("<br>")+8); //exclude initial random reply
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -529,8 +529,8 @@ test('neutralCreatureWillNotFindForPlayerAndGivesRandomReply', () => {
     var playerAggression = 0;
     var findResult = c0.find("simon g", playerAggression, m)
     var actual = findResult.substr(9,findResult.indexOf("'<br>")-9); //include initial random reply only
-    console.log("expected: " + expected);
-    console.log("actual: " + actual);
+    console.debug("expected: " + expected);
+    console.debug("actual: " + actual);
     expect(expected.indexOf(actual) > -1).toBeTruthy();
 });
 
@@ -543,8 +543,8 @@ test('deadCreatureWillNotFindForPlayer', () => {
     var expected = "It's dead. I don't think it can help you.";
     var playerAggression = 0;
     var actual = c0.find("simon g", playerAggression, m);
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -564,8 +564,8 @@ test('weakUnarmedCreatureWillCollectWeapon', () => {
     l.addObject(lightWeapon);
     var expected = "<br>The creature picked up the light weapon. Watch out!";
     var actual = c0.collectBestAvailableWeapon();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -585,8 +585,8 @@ test('strongUnarmedCreatureWillNotCollectWeapon', () => {
     l.addObject(lightWeapon);
     var expected = "";
     var actual = c0.collectBestAvailableWeapon();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -613,8 +613,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOne', () => {
     l.addObject(lightWeapon);
     var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!";
     var actual = c0.collectBestAvailableWeapon();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -646,8 +646,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSam
     l.addObject(lightWeapon);
     var expected = "<br>The creature dropped its weak weapon and picked up the heavy weapon. Watch out!<br>It attacks you. ";
     var actual = c0.tick(1, m1, p0).substr(0,expected.length);
-    console.log("expected: " + expected);
-    console.log("actual: " + actual);
+    console.debug("expected: " + expected);
+    console.debug("actual: " + actual);
     expect(actual).toBe(expected);
 });
 
@@ -677,8 +677,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAr
 
     var expected = "a room<br><br>You can see a beastie, a medium weapon, a light weapon, and a weak weapon.<br>There are no visible exits.<br>";
     var actual = l.describe();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAreCorrect', () => {
@@ -707,8 +707,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAr
 
     var expected = "a small beastie<br>It seems to like you.<br>It's carrying an heavy weapon.";
     var actual = c0.getDetailedDescription();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -738,8 +738,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsA
 
     var expected = "a small beastie<br>It seems to like you.<br>It's carrying an heavy weapon.";
     var actual = c0.getDetailedDescription();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -763,8 +763,8 @@ test('armedCreatureWillIgnoreWeakerWeapons', () => {
     l.addObject(lightWeapon);
     var expected = "";
     var actual = c0.collectBestAvailableWeapon();
-    console.log("expected: "+expected);
-    console.log("actual: "+actual);
+    console.debug("expected: "+expected);
+    console.debug("actual: "+actual);
     expect(actual).toBe(expected);
 });
 
@@ -780,7 +780,7 @@ test('creatureCanHealAnotherBleedingCreature', () => {
 
     var expected = "The creature 2 uses a first aid kit to heal the creature.";
     var actual = c0.heal(medikit, c1);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -795,7 +795,7 @@ test('creaturesCanHealThemselves', () => {
 
     var expected = "The creature uses a first aid kit to heal itself.";
     var actual = c0.heal(medikit, c0);
-    console.log("actual:"+actual);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -808,8 +808,8 @@ test('creatureCanFindPathToGoal', () => {
 
     var expected = ["e","e","n","e","n","u","s","e","s","s","u","n","n","n","w","w","n","w","s","e","n"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -822,8 +822,8 @@ test('creatureCanFindAlternatePathToGoalAvoidingALocation', () => {
 
     var expected = ["e","e","n","e","n","u","s","e","s","s","u","w"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -836,8 +836,8 @@ test('ensureFindPathWorksEvenWhenStartingFromLocationWithSingleExit', () => {
 
     var expected = ["e","n","n","e","s","s","s","d","n","n","n","w","s","w","s","w","w","w","n","n","n","e","n","d","s","e","s","s","w","w","w","n","w","w"];
     var actual = c0.findPath(false, destination, m, c0.getCurrentLocation());
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toStrictEqual(expected);
 });
 // Jest conversion of nodeunit tests
@@ -854,9 +854,9 @@ test('creatureCanFindBestPathToGoal', () => {
     var expected = true;
     var actual = false;
     if (path.length <= targetLength) {actual = true};
-    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(true);
 });
 
@@ -866,7 +866,7 @@ test('creatureWillAvoidEmergencyExitsWhenSeekingDestination', () => {
     var destination = 'smoking-area';
     
     var keyfob = mb.buildArtefact({ object: "artefact", name: "keyfob", template: "keyfob" });
-    console.log(c0.receive(keyfob));
+    console.debug(c0.receive(keyfob));
     c0.go(null, m.getLocation('east-end-south-corridor-ground-floor')); 
 
     var path = c0.findBestPath(destination, m);
@@ -874,11 +874,11 @@ test('creatureWillAvoidEmergencyExitsWhenSeekingDestination', () => {
     var expected = true;
     var actual = false;
     if (path.length > targetLength) { actual = true };
-    console.log("Path: " + path);
-    console.log("Avoid path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
-    console.log("Avoiding door, path length should ="+targetLength+". Selected path length="+path.length+". Path: "+path);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("Path: " + path);
+    console.debug("Avoid path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Avoiding door, path length should ="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(true);
 });
 
@@ -891,32 +891,32 @@ test('johnCanFindPathToPlantRoom', () => {
     john.clearDestination();
     john.clearDestination();
     var destinations = john.getDestinations();
-    console.log(destinations);
+    console.debug(destinations);
     
     var path = john.findBestPath(john.getNextDestination(), m);
-    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
     var pathLength = path.length;
     john.tick(pathLength, m, p0);
-    console.log("Loc = " + john.getCurrentLocationName());
-    console.log("Dest: "+destinations);
+    console.debug("Loc = " + john.getCurrentLocationName());
+    console.debug("Dest: "+destinations);
     path = john.getPath();
-    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
     john.tick(pathLength, m, p0);
-    console.log("Loc = " + john.getCurrentLocationName());
-    console.log("Dest: " + destinations);
+    console.debug("Loc = " + john.getCurrentLocationName());
+    console.debug("Dest: " + destinations);
     path = john.getPath();
-    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
     john.tick(pathLength, m, p0);
     var expected = "plant-room";
     var actual = john.getCurrentLocationName();
-    console.log("Selected path length=" + path.length + ". Path: " + path);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     destinations = john.getDestinations();
-    console.log(destinations);
-    console.log(john.getPath());
+    console.debug(destinations);
+    console.debug(john.getPath());
     expect(actual).toBe(expected);
 });
 
@@ -928,30 +928,30 @@ test('animalCannotFindPathToPlantRoomDueToDoors', () => {
     var cat = m.getCreature("cat");
     cat.setDestination("plant room");
     var destinations = cat.getDestinations();
-    console.log("Destinations:"+destinations);
+    console.debug("Destinations:"+destinations);
     
     var path = cat.findBestPath(cat.getNextDestination(), m);
-    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
     var pathLength = path.length;
     cat.tick(pathLength, m, p0);
-    console.log("Loc = " + cat.getCurrentLocationName());
-    console.log("Dest: " + destinations);
-    console.log("Wander for 12 ticks ");
+    console.debug("Loc = " + cat.getCurrentLocationName());
+    console.debug("Dest: " + destinations);
+    console.debug("Wander for 12 ticks ");
     cat.tick(12, m, p0);
-    console.log("Loc = " + cat.getCurrentLocationName());
-    console.log("Dest: " + destinations);
+    console.debug("Loc = " + cat.getCurrentLocationName());
+    console.debug("Dest: " + destinations);
     path = cat.getPath();
-    console.log("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
     cat.tick(pathLength, m, p0);
     var expected = "plant-room";
     var actual = cat.getCurrentLocationName();
-    console.log("Selected path length=" + path.length + ". Path: " + path);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Selected path length=" + path.length + ". Path: " + path);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     destinations = cat.getDestinations();
-    console.log(destinations);
-    console.log(cat.getPath());
+    console.debug(destinations);
+    console.debug(cat.getPath());
     expect(actual).not.toBe(expected);
 });
 
@@ -967,9 +967,9 @@ test('creatureCanFindDirectPathToGoalThroughADoor', () => {
     var expected = true;
     var actual = false;
     if (path.length <= targetLength) {actual = true};
-    console.log("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("Target path length="+targetLength+". Selected path length="+path.length+". Path: "+path);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(true);
 });
 
@@ -986,9 +986,9 @@ test('creatureWithKeyCanFindDirectPathToGoalThroughALockedDoor', () => {
     var expected = true;
     var actual = false;
     if (path.length == targetLength) { actual = true };
-    console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(true);
 });
 
@@ -1004,9 +1004,9 @@ test('creatureWithoutKeyCanFindDirectPathToGoalThroughALockedDoor', () => {
     var expected = true;
     var actual = false;
     if (path.length <= targetLength) { actual = true };
-    console.log("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Target path length=" + targetLength + ". Selected path length=" + path.length + ". Path: " + path);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(true);
 });
 
@@ -1027,24 +1027,24 @@ test('creatureWithKeyWillRelockLinkedDoor', () => {
     doorIn.setAutoLock(-1);
 
     c0.go(null, landing);
-    console.log("Creature is before door");
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is before door");
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
 
     c0.tick(1, m, p0);
-    console.log("Creature is at: " + c0.getCurrentLocation().getName());
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is at: " + c0.getCurrentLocation().getName());
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
     
     c0.tick(1, m, p0);
-    console.log("Creature is at: " + c0.getCurrentLocation().getName());
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is at: " + c0.getCurrentLocation().getName());
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
   
     var expected = true;
     var actual = doorOut.isLocked() && doorIn.isLocked();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(true);
 });
 // Jest conversions of the selected nodeunit tests
@@ -1060,17 +1060,17 @@ test('unlockedTimedDoorWillRelockAfterTicks', () => {
     
     doorOut.unlock(keyfob, corridor.getName());
     
-    console.log("Door is locked? " + doorOut.isLocked());
+    console.debug("Door is locked? " + doorOut.isLocked());
     
-    console.log("Environment ticks");
+    console.debug("Environment ticks");
     corridor.tick(3, m, p0);
 
-    console.log("Door is locked? " + doorOut.isLocked());
+    console.debug("Door is locked? " + doorOut.isLocked());
     
     var expected = true;
     var actual = doorOut.isLocked();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(true);
 });
 
@@ -1086,14 +1086,14 @@ test('unlockedTimedDoorWillRelockAfterTicksAndReportCorrectMessage', () => {
     
     doorOut.unlock(keyfob, corridor.getName());
     
-    console.log("Door is locked? " + doorOut.isLocked());
+    console.debug("Door is locked? " + doorOut.isLocked());
     
-    console.log("Environment ticks");
+    console.debug("Environment ticks");
     
     var expected = "<br>The office door closes and locks shut.<br>";
     var actual = corridor.tick(3, m, p0);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1108,17 +1108,17 @@ test('unlockedTimedDoorWillStayOpenFor1Tick', () => {
     
     doorOut.unlock(keyfob, corridor.getName());
     
-    console.log("Door is locked? " + doorOut.isLocked());
+    console.debug("Door is locked? " + doorOut.isLocked());
     
-    console.log("Environment ticks");
+    console.debug("Environment ticks");
     corridor.tick(1, m, p0);
     
-    console.log("Door is locked? " + doorOut.isLocked());
+    console.debug("Door is locked? " + doorOut.isLocked());
     
     var expected = false;
     var actual = doorOut.isLocked();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1135,14 +1135,14 @@ test('creatureHealOnTickConsumesAllOfMedicalKitProperly', () => {
     alice.hurt(90);
     while (actual != expected && attempts < 6) {
         actual = alice.tick(1, m, p0);
-        console.log(actual);
+        console.debug(actual);
         alice.hurt(40);
         attempts++;
     }
     
-    console.log("Total ticks: " + attempts);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Total ticks: " + attempts);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1162,9 +1162,9 @@ test('ensureCreatureCanByPassAvoidRestrictionsWhenStuckWithSingleExit', () => {
         actual = c0.getCurrentLocation().getName();
     }
 
-    console.log("Total ticks: " + attempts);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("Total ticks: " + attempts);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1182,24 +1182,24 @@ test('creatureWithKeyWillNotRelockLinkedDoorIfAutoLock', () => {
     var doorIn = landing.getAllObjectsOfType("door")[0];
     
     c0.go(null, landing);
-    console.log("Creature is before door");
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is before door");
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
     
     c0.tick(1, m, p0);
-    console.log("Creature is at: " + c0.getCurrentLocation().getName());
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is at: " + c0.getCurrentLocation().getName());
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
     
     c0.tick(1, m, p0);
-    console.log("Creature is at: " + c0.getCurrentLocation().getName());
-    console.log("Door out is locked? " + doorOut.isLocked());
-    console.log("Door in is locked? " + doorIn.isLocked());
+    console.debug("Creature is at: " + c0.getCurrentLocation().getName());
+    console.debug("Door out is locked? " + doorOut.isLocked());
+    console.debug("Door in is locked? " + doorIn.isLocked());
     
     var expected = false;
     var actual = doorOut.isLocked() && doorIn.isLocked();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1212,8 +1212,8 @@ test('ensureSettingDestinationForMobileNonTravellerAddsReturnHome', () => {
 
     var expected = 2;
     var actual = c0.getDestinations().length;
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1227,8 +1227,8 @@ test('ensureSettingDestinationForTravellerAddsToList', () => {
 
     var expected = ["smoking-area","atrium"];
     var actual = c0.getDestinations();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -1239,8 +1239,8 @@ test('ensureSettingDestinationFromAvoidListDoesNotAddDestination', () => {
     c0.setDestination('atrium');
     var expected = ["reception","office-front"];
     var actual = c0.getDestinations();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -1249,8 +1249,8 @@ test('addingNewAvoidLocationRemovesMatchingDestinations', () => {
     c0.setAvoiding("reception");
     var expected = ["office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getDestinations();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -1259,8 +1259,8 @@ test('addingNewAvoidLocationIsCorrectlyStored', () => {
     c0.setAvoiding("atrium");
     var expected = ["reception","office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getAvoiding();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toStrictEqual(expected);
 });
 // Jest conversions of the selected nodeunit tests
@@ -1270,8 +1270,8 @@ test('cannotAddDuplicateAvoidLocations', () => {
     c0.setAvoiding("atrium");
     var expected = ["reception","office-front","northwest-corridor-ground-floor","atrium"];
     var actual = c0.getAvoiding();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toStrictEqual(expected);
 });
 
@@ -1290,8 +1290,8 @@ test('creatureRefusesToTravelToAvoidedLocation', () => {
     if (resultIndex > -1) {
         expected = actual;  
     };
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1311,8 +1311,8 @@ test('creatureWillAcceptTravelToLocation', () => {
     if (resultIndex > -1) {
         expected = actual;
     }    ;
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1326,8 +1326,8 @@ test('creatureWillNotFollowPlayerToAvoidedLocation', () => {
     
     var expected = "Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, and an office door.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1341,8 +1341,8 @@ test('highAffinityCreatureWillFollowPlayerToAvoidedLocation', () => {
     
     var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1356,8 +1356,8 @@ test('friendlyCreatureWillFollowPlayer', () => {
     
     var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1373,8 +1373,8 @@ test('receivingSmallFoodItemWhenAnimalIsHungryConsumesAllFoodRegardlessOfCharges
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He grabs the slab of sugary goodness with his teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did it all go?";
     var actual = c0.receive(food, p0);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1390,8 +1390,8 @@ test('receivingLargeFoodItemWithMultipleChargesWhenAnimalIsHungryLeavesSomeBehin
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He pulls at the slab of sugary goodness, chews a small piece off to eat and leaves the remainder on the floor for later.";
     var actual = c0.receive(food, p0);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1407,8 +1407,8 @@ test('receivingLargeFoodItemWithSingleChargesWhenAnimalIsHungryConsumesItAll', (
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He pulls at the slab of sugary goodness and devours it all noisily in front of you.";
     var actual = c0.receive(food, p0);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1423,8 +1423,8 @@ test('receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood', () => {
     c0.go(null,l); 
     var expected = "He sniffs at the slab of sugary goodness, makes a disgruntled snort and turns away.<br>You leave it on the ground in case he comes back later.";
     var actual = c0.receive(food, p0);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1440,8 +1440,8 @@ test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He eats the slab";
     var actual = c0.receive(food, p0).substr(0,16);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1458,8 +1458,8 @@ test('receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood', 
     var resultString = c0.receive(food, p0);
     var expected = "He eats some of the slab He holds onto the remainder for later.";
     var actual = resultString.substr(0,25)+resultString.substr(-38);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1474,8 +1474,8 @@ test('receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFood', () => {
     c0.go(null,l); 
     var expected = "The creature takes a slab of sugary goodness.";
     var actual = c0.receive(food, p0);
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1491,8 +1491,8 @@ test('receivingFoodWhenFriendlyCreatureIsNotHungryKeepsFoodInInventory', () => {
     c0.receive(food, p0)
     var expected = true;
     var actual = c0.check(food.getName());
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1501,8 +1501,8 @@ test('feedingBleedingCreatureDoesNotIncreaseHealthBeyond50Percent', () => {
     c0.feed(50);
     var expected = "He's really not in good shape.";
     var actual = c0.health();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 // Jest conversions of the selected nodeunit tests
@@ -1512,8 +1512,8 @@ test('feedingNearlyDeadCreatureMarginallyIncreasesHealth', () => {
     c0.feed(500);
     var expected = "He's really not in good shape.";
     var actual = c0.health();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1522,8 +1522,8 @@ test('feedingInjuredCreatureIncreaseHealth', () => {
     c0.feed(100);
     var expected = "He's generally the picture of health.";
     var actual = c0.health();
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -1542,8 +1542,8 @@ test('healthyCreatureDoesFullDamageWhenHittingOthers', () => {
 
     var expected = "You're really not in good shape. It looks like you're bleeding. You might want to get that seen to.";
     var actual = p0.health();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1569,8 +1569,8 @@ test('creatureOccasionallyMissesPlayerWhenHitting', () => {
     if (achieved >= 0) {
         success = true;
     };
-    console.log("expected: <25");
-    console.log("actual:" + actual + " success? "+success);
+    console.debug("expected: <25");
+    console.debug("actual:" + actual + " success? "+success);
     expect(success).toBeTruthy();
 });
 
@@ -1589,8 +1589,8 @@ test('bleedingCreatureDoesReducedDamageWhenHittingOthers', () => {
 
     var expected = "You've taken a fair beating.";
     var actual = p0.health();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1609,8 +1609,8 @@ test('nearlyDeadCreatureDoesDoubleDamageWhenHittingOthers', () => {
 
     var expected = "You're almost dead. It looks like you're bleeding. You might want to get that seen to.";
     var actual = p0.health();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1624,8 +1624,8 @@ test('killingCreatureLeavesBloodInLocation', () => {
 
     var expected = "some blood";
     var actual = blood.getDescription();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1639,8 +1639,8 @@ test('killingCreatureWithInventoryReportsCorrectMessage', () => {
 
     var expected = "<br>The creature is dead. Now you can steal all its stuff.";
     var actual = c0.kill();
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1655,7 +1655,7 @@ test('CreatureCanSlipOnWetFloor', () => {
     p0.setLocation(l0);
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0, canTravel: true, traveller: true, homeLocation: l0});
-    console.log(c0.go("n", l1));
+    console.debug(c0.go("n", l1));
 
     //add enough liquids to guarantee slipping...
     l0.addLiquid("blood");
@@ -1674,13 +1674,13 @@ test('CreatureCanSlipOnWetFloor', () => {
     l0.addLiquid("liquid14");
     l0.addLiquid("liquid15");
 
-    console.log(p0.examine("look"));
-    //console.log(c0.tick(15, m1, p0));
+    console.debug(p0.examine("look"));
+    //console.debug(c0.tick(15, m1, p0));
 
     var expectedResult = "<br>A beastie wanders in and slips in the mess on the floor. It's injured. ";
     var actualResult = c0.tick(5, m1, p0);
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1715,18 +1715,18 @@ test('CreatureCanSlipAndDieOnWetFloor', () => {
     //this matches player behaviour for fairness.
     var expectedResult = "<br>A beastie wanders in, slips in the mess on the floor and dies from its injuries. Now you can steal all its stuff. ";
     var actualResult = c0.tick(5, m1, p0);
-    console.log(actualResult);
+    console.debug(actualResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
         //a 0 from the random slip algorithm will still not slip so try again
-        console.log("Fail: slip did not occur - attempting try# "+attempts+"...");
+        console.debug("Fail: slip did not occur - attempting try# "+attempts+"...");
         c0.go("n", l1);
         actualResult = c0.tick(5, m1, p0);
-        console.log(actualResult);
+        console.debug(actualResult);
         attempts++;
     };
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1747,17 +1747,17 @@ test('CreatureWillEnactContagion', () => {
     var expectedResult = " The creature lurches in a spasm of pain and bites you. <br>";
     var fullResult = c0.tick(2, m1, p0);
     var actualResult = fullResult.substr(0, expectedResult.length);
-    console.log(fullResult);
+    console.debug(fullResult);
     var attempts = 1;
     while (actualResult != expectedResult && attempts < 5) {
-        console.log("Fail: expected contagion did not match - attempting try# " + attempts + "...");
+        console.debug("Fail: expected contagion did not match - attempting try# " + attempts + "...");
         fullResult = c0.tick(2, m1, p0);
         actualResult = fullResult.substr(0, expectedResult.length);
-        console.log(fullResult);
+        console.debug(fullResult);
         attempts++;
     }
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1772,8 +1772,8 @@ test('deneWontEatMissionChocolateEvenWhenHungry', () => {
 
     var expected = "Dene takes a chocolate.";
     var actual = c0.receive(chocolate, p0);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1788,8 +1788,8 @@ test('otherCreatureWillStillEatChocolate', () => {
 
     var expected = "He eats some of the chocolate";
     var actual = c0.receive(chocolate, p0).substr(0,29);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1798,8 +1798,8 @@ test('creatureDescriptionIncludesSalesInventory', () => {
     var seller = mb.buildCreature({ "file": "ice-cream-man" });
     var expected = "A random guy who occasionally has ice cream for sale.<br>He has 15 99 flake ice creams (price: &pound;3.50 each) for sale.<br><br>He wants to <i>talk</i> to you about something.$imageicecreamman.jpg/$image";
     var actual = seller.getDetailedDescription(0, m0, 0);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1816,8 +1816,8 @@ test('creatureCanSellItemToPlayer', () => {
 
     var expected = "The ice cream man sells you a 99 flake ice cream.";
     var actual = seller.sell("ice cream", p0);
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 
@@ -1838,8 +1838,8 @@ test('creatureSellingItemReducesInventory', () => {
     var newInventorySize = salesInventory.getWeight();
     var expected = 1;
     var actual = originalInventorySize - newInventorySize;
-    console.log("expected:" + expected);
-    console.log("actual:" + actual);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
     expect(actual).toBe(expected);
 });
 

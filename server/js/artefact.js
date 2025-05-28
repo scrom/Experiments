@@ -345,23 +345,23 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var validateType = function(type, subType) {
             var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle", "computer"];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
-            //console.log(_name+' type validated: '+type);
+            //console.debug(_name+' type validated: '+type);
             if (type == "door") {
                 var validDoorSubTypes = ["", "emergency"];
                 if (validDoorSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
-                //console.log(_name+' subtype validated: '+subType);
+                //console.debug(_name+' subtype validated: '+subType);
             };
 
             if (type == "weapon") {
                 var validWeaponSubTypes = ["","blunt","sharp","projectile"];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
-                //console.log(_name+' subtype validated: '+subType);
+                //console.debug(_name+' subtype validated: '+subType);
             };
 
             if (type == "tool") {
                 var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
-                //console.log(_name+' subtype validated: '+subType);
+                //console.debug(_name+' subtype validated: '+subType);
             };
             
             if (type == "container") {
@@ -535,7 +535,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.checkCustomAction = function(verb) {
-            //console.log("custom action: "+_customAction+" verb:"+verb);
+            //console.debug("custom action: "+_customAction+" verb:"+verb);
             if (_customAction == verb) { 
                 return true; 
             };
@@ -851,7 +851,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (attributes.type != undefined) {
                 try{validateType(attributes.type, attributes.subType);}
                 catch(err){
-                    console.log("Error: "+err);
+                    console.error("Error: "+err);
                     return null;//exit early
                 };
             };
@@ -1105,7 +1105,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    //console.log(aMissionName+" removed from "+self.getDisplayName());
+                    //console.debug(aMissionName+" removed from "+self.getDisplayName());
                     break;
                 };
             };
@@ -1568,7 +1568,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        //console.log("antibodies passed to "+receiver.getType());
+                        //console.debug("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -1828,7 +1828,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };   
             };    
             
-            //console.log("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());                      
+            //console.debug("combining :" + self.getName() + " with " + anObject.getName() + " to produce " + deliveryItemSource.getName());                      
 
             //consume charge
             var originalArtefactCharges = anObject.chargesRemaining();
@@ -1915,7 +1915,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.contains = function(anObjectName) {
-            //console.log("checking inventory for "+anObjectName);
+            //console.debug("checking inventory for "+anObjectName);
             return _inventory.check(anObjectName);
         };
 
@@ -2024,7 +2024,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
-            //console.log("Remaining charges for "+self.getDisplayName()+": "+_charges);
+            //console.debug("Remaining charges for "+self.getDisplayName()+": "+_charges);
             //we use -1 to mean unlimited
             return Math.round(_charges*100)/100;
         };
@@ -2056,16 +2056,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_broken || _destroyed) {return false;};
             if (_charges == 0) { return false; }; //we use -1 to mean unlimited
             if (!(self.checkComponents())) {return false;};
-            //console.log(self.getDisplayName()+" has power.");
+            //console.debug(self.getDisplayName()+" has power.");
             return true;
         };
 
         self.isPoweredOn = function() {
             if (self.hasPower() && _on) {
-                //console.log(self.getDisplayName()+" is switched on.");
+                //console.debug(self.getDisplayName()+" is switched on.");
                 return true;
             };
-            //console.log(self.getDisplayName()+" is switched off.");
+            //console.debug(self.getDisplayName()+" is switched off.");
             return false;
         };
         
@@ -2212,7 +2212,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     _charges = 0;
                 };
             };
-            //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
+            //console.debug("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
             return Math.round(_charges*100)/100; //deliberately works but does nothing if charges are -ve
         };
 
@@ -2288,7 +2288,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (someComponents) {
                 components = components.concat(someComponents);
             };
-            //console.log("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
+            //console.debug("Required components for "+self.getName()+": " + _requiredComponentCount + " Current Components: " + components.length);
             for (var i = 0; i < components.length; i++) {
                 if (components[i].isBroken()) { return false; };
                 if (components[i].isDamaged()) { return false; };
@@ -2688,7 +2688,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_opens && (_open)) {
                     if (_autoLock >= 0) {
                         _lockInMoves = _autoLock;
-                        //console.log("resetting autolock to "+ _lockInMoves)
+                        //console.debug("resetting autolock to "+ _lockInMoves)
                         //reset auto-lock timer
                     };
                     return tools.initCap(_itemDescriptivePrefix) + " already open.";
@@ -2907,7 +2907,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.canDeliver = function (anObjectName) {
             //do we deliver anything at all?
             if (!(_delivers)) {
-                //console.log(self.getName() + " doesn't deliver anything");
+                //console.debug(self.getName() + " doesn't deliver anything");
                 return false;
             };
 
@@ -2922,32 +2922,32 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (!(deliveryItem)) {
-                //console.log(self.getName() + " doesn't deliver " + anObjectName);
+                //console.debug(self.getName() + " doesn't deliver " + anObjectName);
                 return false;
             };
 
             //is the deliverer intact?
             if (self.isBroken() || self.isDestroyed()) {
-                //console.log(self.getName() + " is broken");
+                //console.debug(self.getName() + " is broken");
                 return false;
             };
 
             //do we have all the components needed to work?
             if (!(self.checkComponentsExist())) {
-                //console.log(self.getName() + " doesn't have all the required components to run");
+                //console.debug(self.getName() + " doesn't have all the required components to run");
                 return false;
             };
             
             //is everything intact and charged?
             if (!(self.checkComponents())) {
-                //console.log(self.getName() + " something's wrong with a component somewhere");
+                //console.debug(self.getName() + " something's wrong with a component somewhere");
                 return false;
             };
             
             //is the deliverer working?
             if (_switched) {
                 if (!(self.isPoweredOn())) {
-                    //console.log(self.getName() + " isn't switched on");
+                    //console.debug(self.getName() + " isn't switched on");
                     return false;
                 };
             };
@@ -2955,7 +2955,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //do we have the required components for what we're delivering?
             var deliveryComponents = _inventory.getComponents(anObjectName);
             if (!(deliveryItem.checkComponents(deliveryComponents))) {
-                //console.log(self.getName() + " doesn't have all the required components to deliver "+anObjectName);
+                //console.debug(self.getName() + " doesn't have all the required components to deliver "+anObjectName);
                 return false;
             };
 
@@ -3183,7 +3183,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return resultString + tools.initCap(self.getDisplayName()) + " now contains " + anObject.getDescription() + ".";
             //handle liquids or powders here
             } else if (anObject.isLiquid() || anObject.isPowder()) {
-                //console.log("liquid handling");
+                //console.debug("liquid handling");
                 var inventoryLiquidOrPowder = _inventory.getLiquidOrPowder();
                 if (inventoryLiquidOrPowder) {
                     if (inventoryLiquidOrPowder.getName() != anObject.getName()) {
@@ -3244,12 +3244,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 //caller must explicitly choose to use a breakable key using "pick" otherwise only auto-use non-breakable ones.
                 if (((!(keys[index].isBreakable()))||verb == "pick"||verb == "dismantle")) {
                     if (keys[index].keyTo(self)) {
-                        //console.log('Key found for: '+self.getName());
+                        //console.debug('Key found for: '+self.getName());
                         return keys[index];
                     };                   
                 };
             };
-            //console.log('Matching key not found');
+            //console.debug('Matching key not found');
             return null;
         };
 
@@ -3397,7 +3397,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         //end public member functions
 
-        //console.log(_objectName + " created: "+_name+", "+self.destinationName);
+        //console.debug(_objectName + " created: "+_name+", "+self.destinationName);
     }
     catch(err) {
 	    console.error("Unable to create Artefact object '"+name+"': "+err);

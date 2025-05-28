@@ -13,8 +13,8 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         var filePath = path.resolve(path.join(__dirname, usergamePath || "../../data/usergames/"));
         var imagePath = path.resolve(path.join(__dirname, imagePath || "../../data/images/"));
 
-        console.log("FileManager: filePath = "+filePath);
-        console.log("FileManager: imagePath = "+imagePath);
+        console.info("FileManager: filePath = "+filePath);
+        console.info("FileManager: imagePath = "+imagePath);
 
         var pwd = process.env.REDISPWD;
         var redisServer = process.env.REDISSERVER;
@@ -33,12 +33,12 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
             client.on('connect', () =>
             {
-                console.log('REDIS Connected.');
+                console.info('REDIS Connected.');
             });
 
             client.on('ready', () =>
             {
-                console.log('REDIS Ready.');
+                console.info('REDIS Ready.');
             });
 
             client.on('error', (err) =>
@@ -48,12 +48,12 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
             client.on('end', () =>
             {
-                console.log('REDIS Disconnected.');
+                console.info('REDIS Disconnected.');
             });
 
             client.on('reconnecting', () =>
             {
-                console.log('REDIS Reconnecting.');
+                console.info('REDIS Reconnecting.');
             });
 
             client.on('warning', (warning) =>
@@ -63,22 +63,22 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
             client.on('message', (message) =>
             {
-                console.log('REDIS Message: ' + message);
+                console.info('REDIS Message: ' + message);
             });
 
             client.on('subscribe', (channel, count) =>
             {
-                console.log(`Subscribed to ${channel}. This channel has ${count} subscribers.`);
+                console.info(`Subscribed to ${channel}. This channel has ${count} subscribers.`);
             });
             client.on('unsubscribe', (channel, count) =>
             {
-                console.log(`Unsubscribed from ${channel}. This channel has ${count} subscribers.`);
+                console.info(`Unsubscribed from ${channel}. This channel has ${count} subscribers.`);
             });
 
             // Connect to redis server  
             (async () => {       
                 await client.connect();
-                console.log('REDIS Connected to server: ' + redisServer + ':' + redisPort);
+                console.info('REDIS Connected to server: ' + redisServer + ':' + redisPort);
 
                 //await client.auth(pwd, (err) => {
                 //    if (err) {  
@@ -88,7 +88,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             })(); //end async
 
             useFilesForGameData = false; //confirm using redis for game data
-            console.log("REDIS available for game data.");
+            console.info("REDIS available for game data.");
         };
 
 
@@ -97,7 +97,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         ////public methods
         self.testRedisConnection = async() => {
             if (useFilesForGameData) {
-                console.log("REDIS not available for game data.");
+                console.info("REDIS not available for game data.");
                 return false;
             }
               // Set key "redisTest" to have value "Confirmed".
@@ -105,7 +105,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
             // Get the value held at key "redisTest" and log it.
             const value = await client.get('redisTest');
-            console.log('REDIS Test response: ' + value);
+            console.debug('REDIS Test response: ' + value);
 
             //cleanup afterward
             await client.del('redisTest');
@@ -117,7 +117,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         self.readFile = function(fileName) {
             var file = path.join(filePath,fileName);
             
-            console.log("reading file "+file);
+            console.info("reading file "+file);
             var data = jf.readFileSync(file); 
 
             return data;
@@ -126,7 +126,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         self.deleteFile = function(fileName) {
             var file = path.join(filePath,fileName);
             fs.unlinkSync(file);
-            console.log("file "+fileName+" deleted.");
+            console.info("file "+fileName+" deleted.");
         };
 
         self.removeGameDataAsync = async function(fileName) {
@@ -140,11 +140,11 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.readGameDataAsync = async function(fileName) {
-            console.log("readGameDataAsync Key:"+fileName); 
+            console.debug("readGameDataAsync Key:"+fileName); 
 
             var dataExists = await self.gameDataExistsAsync(fileName);
             if (dataExists) {
-                console.log("Data found for "+fileName+" retrieving game data.");
+                console.debug("Data found for "+fileName+" retrieving game data.");
 
                 if (useFilesForGameData) {
                     return self.readFile(fileName+".json");
@@ -153,7 +153,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                     var data = [];// = client.get(fileName);
 
                     var length = await client.lLen(fileName);
-                    console.log("Checking game data - saved data reported length = "+length); 
+                    console.debug("Checking game data - saved data reported length = "+length); 
                         
                     var multi = await client.multi();
                     for (var i=0;i<length;i++) {
@@ -164,26 +164,26 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
                     for (var i=0;i<replies.length;i++) {
                         var chunk = replies[i].toString(encoding); 
-                        //console.log("#"+i+": "+chunk);
+                        //console.debug("#"+i+": "+chunk);
                         try {
                             data.push(JSON.parse(chunk));
                         } catch (e) {
-                            console.log("Error parsing JSON for saved game data: error = "+e+": "+chunk.toString());
+                            console.error("Error parsing JSON for saved game data: error = "+e+": "+chunk.toString());
                         };
                     };
-                    console.log("all game data retrieved - "+data.length);
+                    console.debug("all game data retrieved - "+data.length);
                     return(data);
                 };
 
             } else {
-                console.log("Data not found for "+fileName+" at readGameDataAsync.");
+                console.warn("Data not found for "+fileName+" at readGameDataAsync.");
                 return(null);
             };    
 
         };
 
         self.writeGameDataAsync = async(fileName, data, overwrite) => {
-            console.log("writeGameData Key:"+fileName+ " using async method");
+            console.info("writeGameData Key:"+fileName);
             if (useFilesForGameData) {
                 var JSONGameData = [];
                 for (var i=0;i<data.length;i++) {
@@ -192,7 +192,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                 self.writeFile(fileName+".json", JSONGameData, overwrite);
 
             } else { 
-                console.log("Writing game data to REDIS: "+fileName+ " with overwrite = "+overwrite+ " and data length = "+data.length);
+                console.info("Writing game data to REDIS: "+fileName+ " with overwrite = "+overwrite+ " and data length = "+data.length);
                 
                 if (overwrite) {
                     //wipe any existing version of the game data for this "filename" and then use callback to save new data instead
@@ -207,7 +207,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                     var bufferSize = Buffer.byteLength(data[i]);
                     var dataBuffer = Buffer.alloc(bufferSize);
                     dataBuffer.write(data[i], encoding);
-                    //console.log("#" + i + "(write): " + data[i]);
+                    //console.debug("#" + i + "(write): " + data[i]);
                     buffers.push(dataBuffer);     
                 };
 
@@ -216,29 +216,29 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                     await multi.rPush(fileName, buffers[i]);
                 };   
                 await multi.exec();
-                //console.log("all game data written - " + data.length);
+                //console.debug("all game data written - " + data.length);
                 var dataLength = await client.lLen(fileName);
-                console.log("Original data length: " + data.length + ". Saved data reported length:" + dataLength);
+                console.info("Original data length: " + data.length + ". Saved data reported length:" + dataLength);
 
                 //var list = await client.lRange(fileName, 0, -1);
-                //console.log(list);
+                //console.debug(list);
 
                 return true;
             };
         };
 
         self.gameDataExistsAsync = async function(fileName) {
-            //console.log("gameDataExistsAsync? Key:"+fileName);
+            //console.debug("gameDataExistsAsync? Key:"+fileName);
             if (useFilesForGameData) {
-                //console.log("Using Files");
+                //console.debug("Using Files");
                 return (self.fileExists(fileName+".json"));
             } else {
                 var exists = await client.exists(fileName);
                 if (exists == 1) {
-                    //console.log("Game data exists for "+fileName);
+                    //console.debug("Game data exists for "+fileName);
                     return true;
                 };
-                //console.log("Game data not found for "+fileName);
+                //console.debug("Game data not found for "+fileName);
                 return false;
             };
         };
@@ -271,13 +271,13 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             var file = path.join(filePath,fileName);
             if (self.fileExists(fileName)) {
                 if (overwrite) {
-                    console.log("Overwriting file : "+fileName);
+                    console.info("Overwriting file : "+fileName);
                     jf.writeFileSync(file, data);
                 } else {
-                    console.log("File : "+fileName+" already exists, will not overwrite");
+                    console.info("File : "+fileName+" already exists, will not overwrite");
                 };
             } else {
-                console.log("Writing new file : "+fileName);
+                console.info("Writing new file : "+fileName);
                 jf.writeFileSync(file, data);
             };
         };

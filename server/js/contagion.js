@@ -22,7 +22,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
 
 
         var _objectName = "Contagion";
-        //console.log(_objectName + ' created: ' + _name);
+        //console.debug(_objectName + ' created: ' + _name);
 
         var processAttributes = function (contagionAttributes) {
             if (!contagionAttributes) { return null; };
@@ -225,7 +225,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
             if (_duration == 0) { return resultString; }; //contagion should no longer exist
             if (_incubationPeriod > 0) {
                 _incubationPeriod--; //reduce incubation, do nothing else yet
-                //console.log("contagion dormant for " + _incubationPeriod+" more ticks.");
+                //console.debug("contagion dormant for " + _incubationPeriod+" more ticks.");
                 return resultString;
             };
             
@@ -247,7 +247,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                     frequency = (1-parseFloat(_symptoms[i].frequency)) * 10;
                 };
 
-                //console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
+                //console.debug("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
                 //perform actions
                 if (_symptoms[i].action) {
                     switch (_symptoms[i].action) {
@@ -256,7 +256,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                                 //don't bite if too weak
                                 break;
                             };
-                            //console.log("bite symptom firing.");
+                            //console.debug("bite symptom firing.");
                             var initialVictims = [];
                             if (location) { initialVictims = location.getCreatures() };
                             var victims = [];
@@ -319,7 +319,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                             break;
                         case "hurt":
                             var rand = Math.floor(Math.random() * frequency);
-                            //console.log("health symptom firing. Rand = "+rand);
+                            //console.debug("health symptom firing. Rand = "+rand);
                             if (rand == 0) {
                                 var hurtString = carrier.hurt(hp, self);
                                 if (biteCount > 0) {
@@ -346,10 +346,10 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 //escalate
                 if (_symptoms[i].frequency) {
                     if (_symptoms[i].frequency < 1) {
-                        //console.log("original frequency " + _symptoms[i].frequency)
+                        //console.debug("original frequency " + _symptoms[i].frequency)
                         _symptoms[i].frequency = Math.round((parseFloat(_symptoms[i].escalation) + parseFloat(_symptoms[i].frequency)) * 100) / 100;
                         if (_symptoms[i].frequency > 1) { _symptoms[i].frequency = 1; };
-                        //console.log("new frequency " + _symptoms[i].frequency);
+                        //console.debug("new frequency " + _symptoms[i].frequency);
                     };
                 };
 
@@ -358,7 +358,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                 };
 
                 if (_duration > 0) { _duration-- };
-                //console.log("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
+                //console.debug("freq:" + _symptoms[i].frequency + " esc:" + escalation + " hp:" + hp);
             };
             
             resultString = self.deduplicateContagionStrings(resultString, carrier);

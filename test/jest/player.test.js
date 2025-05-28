@@ -97,8 +97,8 @@ test('can create player', () => {
     var p1 = new player.Player(playerAttribs, m0, mb);
     var expectedResult = '{"object":"player","username":"player","currentLocation":"atrium","health":100,"money":5,"carryWeight":20,"startLocation":"atrium"}';
     var actualResult = p1.toString();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -106,8 +106,8 @@ test('can get username', () => {
     //note player is actually created in "setup" - we're just validating that first step works ok.
     var expectedResult = playerName;
     var actualResult = p0.getUsername();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -116,8 +116,8 @@ test('can get and drop object', () => {
     p0.get('get', a0.getName());
     var expectedResult = "You drop the artefact of little consequence. ";
     var actualResult = p0.drop('drop', a0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -126,8 +126,8 @@ test('can get and throw object', () => {
     p0.get('get', a0.getName());
     var expectedResult = "You throw the artefact of little consequence. You do a little damage but try as you might, you can't seem to destroy it.";
     var actualResult = p0.drop('throw', a0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -137,8 +137,8 @@ test('can get and throw breakable object', () => {
     p0.get('get', breakable.getName());
     var expectedResult = "You throw " + artefactName + ". You broke it!";
     var actualResult = p0.drop('throw', breakable.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -148,8 +148,8 @@ test('can wave object', () => {
     p0.get('get', a0.getName());
     var expectedResult = "You wave the " + artefactName + ". Nothing happens.<br>Your arms get tired and you feel slightly awkward.";
     var actualResult = p0.wave('wave', a0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -157,8 +157,8 @@ test('can examine object', () => {
     p0.get('get', a0.getName());
     var expectedResult = "not much to say really";
     var actualResult = p0.examine('examine', a0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -171,8 +171,8 @@ test('can shake breakable container', () => {
     p0.get('get', box.getName());
     var expectedResult = "You shake the box. Rattle rattle rattle... ...kerchink!<br>your fingers slip briefly from box before you recover your composure. ";
     var actualResult = p0.shake('shake', box.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -187,8 +187,8 @@ test('can shake open container with liquid', () => {
     p0.get('get', mug.getName());
     var expectedResult = "You shake the coffee mug. Coffee sloshes around inside it but you manage not to spill any.";
     var actualResult = p0.shake('shake', mug.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -203,8 +203,8 @@ test('can shake closed container with liquid', () => {
     p0.get('get', flask.getName());
     var expectedResult = "You shake the flask. You hear a sloshing sound from inside it.";
     var actualResult = p0.shake('shake', flask.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -218,8 +218,8 @@ test('can shake object with custom action', () => {
     var expectedResult = "You shake the box. The box emits a strange groaning noise$result";
     var actualResult = p0.shake('shake', box.getName());
 
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -229,8 +229,8 @@ test('can shake object', () => {
     p0.get('get', a0.getName());
     var expectedResult = "You shake the artefact of little consequence. Rattle rattle rattle... ...Nothing happens.";
     var actualResult = p0.shake('shake', a0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -238,8 +238,8 @@ test('shakingCreatureMakesThemUnhappy', () => {
     p0.setLocation(l0);
     var expectedResult = "You shake the creature. He really doesn't appreciate it. I recommend you stop now.";
     var actualResult = p0.shake('shake', c0.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -247,8 +247,8 @@ test('canVerifyIsArmed', () => {
     p0.get('get', weapon.getName());
     var expectedResult = true;
     var actualResult = p0.isArmed();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -256,8 +256,8 @@ test('canGetWeapon', () => {
     p0.get('get', weapon.getName());
     var expectedResult = 'sword';
     var actualResult = p0.getWeapon().getName();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('cannot eat non-food item even when hungry', () => {
@@ -265,8 +265,8 @@ test('cannot eat non-food item even when hungry', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You just can't seem to keep it in your mouth without causing an injury.";
     var actualResult = p0.eat('eat', breakable.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -276,8 +276,8 @@ test('cannot rest when not tired', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You're not tired at the moment.";
     var actualResult = p0.rest('rest', 1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -286,8 +286,8 @@ test('cannot rest without bed', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "There's nothing to rest on here.";
     var actualResult = p0.rest('rest', 1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -297,8 +297,8 @@ test('can rest when tired', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = 'You rest for a while.<br>';
     var actualResult = p0.rest('rest', 1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -307,8 +307,8 @@ test('can rest when injured even if not tired', () => {
     p0.reduceHitPoints(10); //need to be at 90% or lower health
     var expectedResult = 'You rest for a while.<br> You feel better in many ways for taking some time out.';
     var actualResult = p0.rest('rest', 1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -319,8 +319,8 @@ test('RestPartiallyResetsTimeSinceResting', () => {
     var expectedResult = Math.floor(baselineTime / 4);
     p0.rest('rest', 1, m0);
     var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -331,8 +331,8 @@ test('SleepCompletelyResetsTimeSinceResting', () => {
     var expectedResult = 0;
     p0.rest('sleep', 1, m0);
     var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -342,17 +342,17 @@ test('movingWhenVeryTiredTakesTwiceAsLong', () => {
     var expectedResult = 255;
 
     var ticks = p0.calculateTicks(1);
-    console.log("ticks:" + ticks);
+    console.debug("ticks:" + ticks);
 
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
 
     var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -362,17 +362,17 @@ test('movingWhenExhaustedTakesThreeTimesAsLong', () => {
     var expectedResult = 265;
 
     var ticks = p0.calculateTicks(1);
-    console.log("ticks:" + ticks);
+    console.debug("ticks:" + ticks);
 
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
 
     var actualResult = p0.increaseTimeSinceResting(0); //cheat - this returns current value
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -383,8 +383,8 @@ test('movingWhenExhaustedTellsPlayer', () => {
 
     var ticks = p0.calculateTicks(1);
     var actualResult = p0.tick(ticks, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -395,8 +395,8 @@ test('cannotClimbWhenExhausted', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You try to climb but you're so exhausted that your limbs give out on you.";
     var actualResult = p0.go("climb", "down", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -408,8 +408,8 @@ test('can still climb when tired', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You climb down...";
     var actualResult = p0.go("climb", "down", m0).substr(0, 17);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -422,8 +422,8 @@ test('can normally run through a required run exit', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You run n...<br><br>Current location: Office front<br>You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     var actualResult = p0.go("run", "n", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -437,8 +437,8 @@ test('cannot run when tired', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You're too tired to make it through quickly enough.";
     var actualResult = p0.go("run", "north", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -448,8 +448,8 @@ test('cannot climb when bleeding', () => {
     p0.setLocation(m0.getLocation("roof"))
     var expectedResult = "You're too weak to make the climb. You need to get your injuries seen to first.";
     var actualResult = p0.go("climb", "down", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -458,8 +458,8 @@ test('can climb when needed', () => {
     p0.setLocation(m0.getLocation("roof"));
     var expectedResult = "You climb down...";
     var actualResult = p0.go("climb", "down", m0).substr(0,17);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -469,8 +469,8 @@ test('moving when very tired warns player', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = "You're struggling to keep up with those around you. ";
     var actualResult = p0.tick(1, m0).substr(-52);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -484,11 +484,11 @@ test('moving when almost tired occasionally warns player', () => {
     while (actualResult != expectedResult && attempts < 15) {
         actualResult = p0.tick(1, m0);
         p0.increaseTimeSinceResting(-1); //hack to prevent further exhaustion on repeat calls
-        console.log(actualResult);
+        console.debug(actualResult);
         attempts++;
     };
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -498,17 +498,17 @@ test('movingWhenExhaustedDoesDamage', () => {
     p0.increaseTimeSinceResting(250);
 
     var ticks = p0.calculateTicks(1);
-    console.log("ticks:" + ticks)
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
-    console.log(p0.tick(ticks, m0));
+    console.debug("ticks:" + ticks)
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
+    console.debug(p0.tick(ticks, m0));
 
     var expectedResult = 51;
     var actualResult = p0.getHitPoints();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -518,8 +518,8 @@ test('canEatFoodWhenHungry', () => {
     //p0.reduceHitPoints(6);
     var expectedResult = 'You eat the slab';
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -528,8 +528,8 @@ test('canEatFoodWhenHungryTestBoundaryCase', () => {
     p0.increaseTimeSinceEating(55);
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -538,8 +538,8 @@ test('cannotEatFoodWhenNotHungry', () => {
     p0.increaseTimeSinceEating(-301); //as of issue #379 player defaults to hungry soon
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat', 'cake');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -549,8 +549,8 @@ test('cannotEatFoodWhenNotHungryEvenIfInjured', () => {
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";
     var actualResult = p0.eat('eat', 'cake');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -560,8 +560,8 @@ test('canEatFoodWhenMoreHungryAndModeratelyInjured', () => {
     p0.reduceHitPoints(6); //test boundary
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -571,8 +571,8 @@ test('cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured', () => {
     p0.reduceHitPoints(5); //test boundary
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat', 'cake');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -582,8 +582,8 @@ test('cannotEatFoodWhenHealthGreaterThan95Percent', () => {
     p0.reduceHitPoints(4);
     var expectedResult = "You're not hungry at the moment.";
     var actualResult = p0.eat('eat', 'cake');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -592,8 +592,8 @@ test('cannot drink solid food', () => {
     p0.get('get', food.getName());
     var expectedResult = "It'd get stuck in your throat if you tried.";
     var actualResult = p0.drink('drink','cake');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -603,8 +603,8 @@ test('cannot drink venom', () => {
     l0.addObject(venom);
     var expectedResult = "That's a remarkably sensible idea but it won't do you much good. Zombieism is transferred through the blood stream, not the digestive system.$result";
     var actualResult = p0.drink('drink', 'venom');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -616,8 +616,8 @@ test('can drink toxic food', () => {
     p0.increaseTimeSinceDrinking(100);
     var expectedResult = "You drink the poison. That wasn't a good idea. You feel weaker. ";
     var actualResult = p0.drink('drink','poison');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -629,8 +629,8 @@ test('drinking toxic food hurts player', () => {
     p0.drink('drink','poison');
     var expectedResult = "You're really not in good shape. It looks like you're bleeding. You might want to get that seen to.";
     var actualResult = p0.health();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -642,8 +642,8 @@ test('eat liquid automatically drinks instead', () => {
     p0.increaseTimeSinceDrinking(75);   
     var expectedResult = "You drink the poison. That wasn't a good idea. You feel weaker. ";
     var actualResult = p0.eat('eat', 'poison');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -651,8 +651,8 @@ test('player is warned they are starving', () => {
     p0.increaseTimeSinceEating(300); //new player hunger starts at 500 
     var expectedResult = "<br>You're starving. ";
     var actualResult = p0.tick(1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -660,8 +660,8 @@ test('player is warned they are gasping', () => {
     p0.increaseTimeSinceDrinking(300); 
     var expectedResult = "<br>You urgently need something to drink. ";
     var actualResult = p0.tick(1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -669,8 +669,8 @@ test('player is warned they are exhausted', () => {
     p0.increaseTimeSinceResting(250); 
     var expectedResult = "<br>You're exhausted.<br>";
     var actualResult = p0.tick(1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -680,8 +680,8 @@ test('player is warned they are tired, thirsty and hungry', () => {
     p0.increaseTimeSinceResting(250); 
     var expectedResult = "<br>You're starving. <br>You urgently need something to drink. <br>You're exhausted.<br>";
     var actualResult = p0.tick(1, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('can inject a vaccine into self', () => {
@@ -694,12 +694,12 @@ test('can inject a vaccine into self', () => {
     l0.addObject(venom);
     l0.addObject(syringe);
     p0.get('get', syringe.getName());
-    console.log(p0.examine("examine", "syringe", null, m0));
-    console.log(p0.get('get', venom.getName()));
+    console.debug(p0.examine("examine", "syringe", null, m0));
+    console.debug(p0.get('get', venom.getName()));
     var expectedResult = "You inject yourself with the zombie antibodies. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
     var actualResult = p0.inject('venom', 'self');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -713,15 +713,15 @@ test('injecting a vaccine provides antibodies', () => {
     l0.addObject(venom);
     l0.addObject(syringe);
     p0.get('get', syringe.getName());
-    console.log(p0.examine("examine", "syringe", null, m0));
-    console.log(p0.get('get', venom.getName()));
-    console.log(p0.inject('venom', 'self'));
-    console.log(p0.inject('venom', 'self'));
-    console.log(p0.inject('venom', 'self')); //often fails to take on first attempt.
+    console.debug(p0.examine("examine", "syringe", null, m0));
+    console.debug(p0.get('get', venom.getName()));
+    console.debug(p0.inject('venom', 'self'));
+    console.debug(p0.inject('venom', 'self'));
+    console.debug(p0.inject('venom', 'self')); //often fails to take on first attempt.
     var expectedResult = true;
     var actualResult = p0.hasAntibodies("zombie");
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -729,8 +729,8 @@ test('hittingArtefactWhenUnarmedDamagesPlayer', () => {
     l0.addObject(a1);
     var expectedResult = "You attempt a bare-knuckle fight with the box.<br>That hurt. If you're going to do that again, you might want to hit it <i>with</i> something.<br>You feel weaker. ";
     var actualResult = p0.hit('hit',a1.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -739,8 +739,8 @@ test('hittingArtefactWhenArmedDamagesArtefact', () => {
     p0.get('get', weapon.getName());
     var expectedResult = "You broke it!";
     var actualResult = p0.hit('hit',a1.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -752,12 +752,12 @@ test('hittingLiquidContainerWhenArmedLosesLiquidContents', () => {
     var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', weapon.getName());
     var expectedResult = "You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('hit',mug.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -769,12 +769,12 @@ test('throwingLiquidContainerLosesLiquidContents', () => {
     var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     var expectedResult = "You throw the coffee mug. You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.drop('throw',mug.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -786,12 +786,12 @@ test('deliberatelyDestroyingLiquidContainerLosesLiquidContents', () => {
     var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!<br>Its contents are beyond recovery.";
     var actualResult = p0.breakOrDestroy('destroy',mug.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -803,12 +803,12 @@ test('deliberatelyBreakingLiquidContainerLosesLiquidContents', () => {
     var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You broke it!<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.breakOrDestroy('break',mug.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -820,13 +820,13 @@ test('deliberatelyBreakingBloodContainerLeavesBloodOnFloor', () => {
     var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     p0.breakOrDestroy('break',mug.getName());
     var expectedResult = "You're not carrying anything that you can collect the blood into.";
     var actualResult = p0.get('get',"blood");
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -838,12 +838,12 @@ test('throwingEverythingIsntPossible', () => {
     var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
+    console.debug(p0.examine("examine","mug"));
     p0.get('get', mug.getName());
     var expectedResult = "You'll need to throw things one at a time.";
     var actualResult = p0.dropAll('throw');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -855,13 +855,13 @@ test('UsingLiquidContainerAsWeaponTwiceLosesLiquidContents', () => {
     var mug = new artefact.Artefact('mug', 'coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
     mug.receive(coffee);
     l0.addObject(mug);
-    console.log(p0.examine("examine","mug"));
-    console.log(p0.get('get', weapon.getName()));
-    console.log(p0.hit('hit',weapon.getName(), mug.getName()));
+    console.debug(p0.examine("examine","mug"));
+    console.debug(p0.get('get', weapon.getName()));
+    console.debug(p0.hit('hit',weapon.getName(), mug.getName()));
     var expectedResult = "You repeatedly hit the mighty sword with the coffee mug.<br>It feels good in a gratuitously violent, wasteful sort of way.<br>You broke the coffee mug.<br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('hit',weapon.getName(), mug.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -874,11 +874,11 @@ test('SmashLiquidContainerLosesContents', () => {
     mug.receive(coffee);
     l0.addObject(mug);
     l0.removeObject("sword");
-    console.log(p0.examine("examine", "mug"));
+    console.debug(p0.examine("examine", "mug"));
     var expectedResult = "You repeatedly beat the coffee mug against the floor and manage to destroy it. <br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('smash', mug.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -893,8 +893,8 @@ test('ThrowingAPreviouslyBrokenObjectReturnsSensibleMessage', () => {
     l0.addObject(mug);
     var expectedResult = "You throw the coffee mug at the wall.<br>It feels good in a gratuitously violent, wasteful sort of way...<br>It wasn't exactly the most durable item around here.<br>Its contents are scattered on the floor.";
     var actualResult = p0.hit("throw", "wall", mug.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -902,8 +902,8 @@ test('hittingUnbreakableArtefactReturnsSensibleMessage', () => {
     p0.get('get', weapon.getName());
     var expectedResult = "You repeatedly hit the artefact of little consequence with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
     var actualResult = p0.hit('hit',a0.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -913,8 +913,8 @@ test('hittingContainerArtefactTwiceWhenArmedDestroysContainerAndScattersContents
     p0.hit('hit',container.getName());
     var expectedResult = "Oops. You destroyed it!<br>Its contents are scattered on the floor.";
     var actualResult = p0.hit('hit',container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -937,8 +937,8 @@ test('hittingContainerArtefactTwiceWhenArmedUsuallyDamagesContents', () => {
     } else {
         expectedResult = expectedResult2;
     };
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -946,8 +946,8 @@ test('cannot put object in closed container', () => {
     p0.get('get', food.getName());
     var expectedResult = "Sorry, it's closed.";
     var actualResult = p0.put('put','cake', "in", 'container');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -955,8 +955,8 @@ test('can put object in open container', () => {
     var expectedResult = "You put the slab of sugary goodness in the container.<br>";
     p0.open('open','container');
     var actualResult = p0.put('put','cake', "in", 'container');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -964,10 +964,10 @@ test('cant put object in broken container', () => {
     p0.get('get', food.getName());
     var expectedResult = "It's broken. You'll need to fix it first.";
     p0.open('open','container');
-    console.log(p0.breakOrDestroy('break','container'));
+    console.debug(p0.breakOrDestroy('break','container'));
     var actualResult = p0.put('put','cake', "in", 'container');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -979,13 +979,13 @@ test('cannot get liquid into container already containing liquid that doesnt com
     var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
     
     l0.addObject(soup);
-    console.log(bottle.receive(rum));
-    console.log(p0.acceptItem(bottle));
+    console.debug(bottle.receive(rum));
+    console.debug(p0.acceptItem(bottle));
 
     var expectedResult = "You attempt to add soup to the bottle but decide it won't really mix well with the rum that's already in there.";
     var actualResult = p0.get('get', soup.getName());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -997,17 +997,17 @@ test('adding 2 identical liquids results in more liquid', () => {
     var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
     
     l0.addObject(moreRum);
-    console.log(bottle.receive(rum));
-    console.log(bottle.descriptionWithCorrectPrefix());
-    console.log("before accept: " +bottle.getDetailedDescription());
-    console.log(p0.acceptItem(bottle));
-    console.log("after accept: "+bottle.getDetailedDescription());
+    console.debug(bottle.receive(rum));
+    console.debug(bottle.descriptionWithCorrectPrefix());
+    console.debug("before accept: " +bottle.getDetailedDescription());
+    console.debug(p0.acceptItem(bottle));
+    console.debug("after accept: "+bottle.getDetailedDescription());
     
     var expectedResult = "You collect the rum into your bottle.<br>You now have more rum.";
     var actualResult = p0.get('get', moreRum.getName());
-    console.log(bottle.getDetailedDescription());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug(bottle.getDetailedDescription());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1019,19 +1019,19 @@ test('adding 2 identical liquids modifies remainder attributes', () => {
     var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
     
     l0.addObject(moreRum);
-    console.log(bottle.receive(rum));
-    console.log(bottle.descriptionWithCorrectPrefix());
-    console.log("before accept: " + bottle.getDetailedDescription());
-    console.log(p0.acceptItem(bottle));
-    console.log("after accept: " + bottle.getDetailedDescription());
+    console.debug(bottle.receive(rum));
+    console.debug(bottle.descriptionWithCorrectPrefix());
+    console.debug("before accept: " + bottle.getDetailedDescription());
+    console.debug(p0.acceptItem(bottle));
+    console.debug("after accept: " + bottle.getDetailedDescription());
     p0.get('get', moreRum.getName());
     
     var combinedRum = bottle.getObject("rum");
     var expectedResult = '{"object":"artefact","name":"rum","description":"rum","detailedDescription":"rum","attributes":{"weight":2,"type":"food","requiresContainer":true,"isLiquid":true,"canCollect":true,"plural":true,"affinityModifier":2,"isEdible":true}}';
     var actualResult = combinedRum.toString();
-    console.log(bottle.getDetailedDescription());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug(bottle.getDetailedDescription());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1039,8 +1039,8 @@ test('cant put object in item with no carry weight', () => {
     p0.get('get', food.getName());
     var expectedResult = "You try and try but can't find a satisfactory way to make it fit.";
     var actualResult = p0.put('put','cake', "in", 'sword');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1056,8 +1056,8 @@ test('cant put object in item that doesnt exist', () => {
     ];
     var actualResult = p0.put('put','cake', "in", 'missing');
     var expectedResult = expectedResults.includes(actualResult);
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(expectedResult).toBe(true);
 });
 
@@ -1065,8 +1065,8 @@ test('can put object in non-container item with carry weight', () => {
     //p0.get('get', food.getName());
     var expectedResult = "You put the slab of sugary goodness in the artefact of little consequence.<br>";
     var actualResult = p0.put('put','cake', "in", 'artefact');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1075,8 +1075,8 @@ test('can put object in broken non-container item with carry weight', () => {
     p0.breakOrDestroy('break','glass');
     var expectedResult = "You put your cake in the drinking glass.<br>";
     var actualResult = p0.put('put','cake', "in", 'glass');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1086,8 +1086,8 @@ test('can remove object from open container', () => {
     p0.open('open','container');
     p0.put('put','cake', "in", 'container');
     var actualResult = p0.remove('remove','cake', 'container');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1098,8 +1098,8 @@ test('can drop object from open container', () => {
     p0.put('put','cake', "in", 'container');
     p0.get('get', 'container');
     var actualResult = p0.drop('drop','cake');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1108,8 +1108,8 @@ test('can examine container', () => {
     p0.open('open',container.getName());
     p0.put('put','cake', "in", container.getName());
     var actualResult = p0.examine('examine', container.getName());
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1119,8 +1119,8 @@ test('can look in direction and see destination', () => {
     p0.setLocation(restArea);
     var expectedResult = "West leads to 'Reception'.";
     var actualResult = p0.examine('look', 'w', null, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1130,8 +1130,8 @@ test('can get recommended direction for object if in line of sight', () => {
     p0.setLocation(restArea);
     var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
     var actualResult = p0.goObject("go", "to", "coffee machine", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1141,8 +1141,8 @@ test('can get recommended direction if in line of sight', () => {
     p0.setLocation(restArea);
     var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
     var actualResult = p0.goObject("go", "to", "kitchen", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1152,8 +1152,8 @@ test('cannot get recommended direction if not in line of sight', () => {
     p0.setLocation(restArea);
     var expectedResult = "You'll need to explore and find your way there yourself I'm afraid.";
     var actualResult = p0.goObject("go", "to", "poppy", m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1163,8 +1163,8 @@ test('can look in direction with no exit and see nothing', () => {
     p0.setLocation(restArea);
     var expectedResult = "You peer north but there's nothing else to see there.";
     var actualResult = p0.examine('look', 'n', null, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1174,8 +1174,8 @@ test('can look in direction with closed door with window and see through door', 
     p0.setLocation(restArea);
     var expectedResult = "You see a door leading south.<br>Peering through the window you see serious people in suits looking busy and important.<br>It's locked.";
     var actualResult = p0.examine('look', 's', null, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1185,8 +1185,8 @@ test('can look in direction with closed door and see door', () => {
     p0.setLocation(reception);
     var expectedResult = "You see an office door.<br>It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.<br>It's locked.";
     var actualResult = p0.examine('look', 's', null, m0);
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1210,8 +1210,8 @@ test('drinkUpDrinksMostRecentlyCollectedDrink', () => {
 
     var expectedResult = 'You drink the beer.';
     var actualResult = p0.drink('drink','up').substring(0,19);
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1228,8 +1228,8 @@ test('cannotDrinkCoffeeWhenNotThirsty', () => {
     
     var expectedResult = "You're not thirsty at the moment.";
     var actualResult = p0.drink('drink', 'coffee');
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1247,8 +1247,8 @@ test('canDrinkCoffee', () => {
 
     var expectedResult = 'You drink the coffee. ';
     var actualResult = p0.drink('drink','coffee').substring(0,22);
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1261,8 +1261,8 @@ test('cannotDrinkCrisps', () => {
 
     var expectedResult = 'It\'d get stuck in your throat if you tried.';
     var actualResult = p0.drink('drink','crisps');
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('opening a door opens related door', () => {
@@ -1274,14 +1274,14 @@ test('opening a door opens related door', () => {
     var destinationLocationName = "first-floor-cubicle";
     var door1 = m0.getDoorFor(currentLocationName, destinationLocationName);
     var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
-    console.log("Found "+linkedDoors.length+" linked doors.");
+    console.debug("Found "+linkedDoors.length+" linked doors.");
 
     p0.open("open","door");
 
     var expectedResult = true; //other door should be open
     var actualResult = linkedDoors[0].isOpen();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -1294,15 +1294,15 @@ test('opening and closing door closes related door', () => {
     var destinationLocationName = "first-floor-cubicle";
     var door1 = m0.getDoorFor(currentLocationName, destinationLocationName);
     var linkedDoors = door1.getLinkedDoors(m0, currentLocationName);
-    console.log("Found "+linkedDoors.length+" linked doors.");
+    console.debug("Found "+linkedDoors.length+" linked doors.");
 
     p0.open("open","door");
     p0.close("close","door");
 
     var expectedResult = false; //other door should be closed
     var actualResult = linkedDoors[0].isOpen();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('duplicate items are collated in player inventory description', () => {
@@ -1313,16 +1313,16 @@ test('duplicate items are collated in player inventory description', () => {
 
     var expectedResult = "You're carrying 2 boxes.<br>You have &pound;5.00 in cash.<br>";
     var actualResult = p0.describeInventory();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
 test('end game triggers correct message', () => {
     var expectedResult = "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
     var actualResult = p0.endGame();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 

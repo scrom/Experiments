@@ -13,7 +13,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         var _items = [];
         var _money = openingCashBalance;
 
-        //console.log(_objectName + ' created');
+        //console.debug(_objectName + ' created');
 
         ////public methods
         self.toString = function() {
@@ -99,7 +99,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         };
 
         self.canAfford = function (price) {
-            //console.log("Can afford? money:"+_money+" price: "+price);
+            //console.debug("Can afford? money:"+_money+" price: "+price);
             if (_money >= price) { return true; };
             return false;
         };
@@ -266,7 +266,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             };
 
             if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
-                //console.log("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
+                //console.debug("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
                 return false;
             };
 
@@ -309,7 +309,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (localInventory[index].getName() == anObjectName) {
                     var returnObject = _items[index];
                     localInventory.splice(index, 1);
-                    //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                    //console.debug(anObjectName+" removed from "+_ownerName+" inventory");
                     returnObject.show();
                     return returnObject;
                 };
@@ -351,13 +351,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 if (localInventory[index].syn(anObjectName)) {
                     var returnObject = _items[index];
                     localInventory.splice(index,1);
-                    //console.log(anObjectName+" removed from "+_ownerName+" inventory");
+                    //console.debug(anObjectName+" removed from "+_ownerName+" inventory");
                     returnObject.show();
                     return returnObject;
                 };
             };
 
-            //console.log(_ownerName+" is not carrying "+anObjectName);
+            //console.debug(_ownerName+" is not carrying "+anObjectName);
             return null;
         };
     
@@ -580,7 +580,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 //only confirm items from open, unlocked containers - this way we know the player has discovered them
                 //@bug ? @todo -@see issue#356 positioned items will only be revealed to "locked" and "open" objects - this seems odd.
                 if (_items[index].isOpen()) {
-                    //    console.log(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
+                    //console.debug(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
                     var itemInventory = _items[index].getInventoryObject();
                     var heldObject = itemInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
                     if (heldObject) {                        
@@ -607,7 +607,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.getObjectByType = function(anObjectType) {
            for(var index = _items.length-1; index >= 0; index--) {
                 if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
-                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.debug(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
            };
@@ -625,7 +625,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                         if (_items[index].chargesRemaining() == 0) { continue; };
                         if (!_items[index].checkComponents()) { continue; };
                     };
-                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.debug(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     return _items[index];
                 };
            };
@@ -648,9 +648,9 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             for(var index = 0; index < _items.length; index++) {
                 if(_items[index].isComponentOf(anObjectName)) {
                     if((_items[index].chargesRemaining() > 0 || _items[index].chargesRemaining() < 0 || includeDischargedItems) && (!(_items[index].isBroken()) && !(_items[index].isDestroyed()))) {
-                        //console.log("Component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                        //console.debug("Component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                         returnObjects.push(_items[index]);
-                    };// else {console.log("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
+                    };// else {console.debug("Discharged component for "+anObjectName+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);};                     
                 };
 
                 if(_items[index].getType() != 'creature' && (!(_items[index].isLocked()))) {
@@ -726,7 +726,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getType() == anObjectType  && (!(_items[index].isHidden()))) {
-                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.debug(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 } else {
                     //accessible children.
@@ -748,7 +748,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
             var returnObjects = [];
             for (var index = 0; index < _items.length; index++) {
                 if (_items[index].syn(aSynonym) && (!(_items[index].isHidden()))) {
-                    //console.log(aSynonym+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.debug(aSynonym+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 } else {
                     //accessible children.
@@ -791,7 +791,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
            var returnObjects = [];
            for(var index = 0; index < _items.length; index++) {
                 if(_items[index].getViewLocation()  && ((!(_items[index].isHidden())) || _items[index].getType() == "scenery")) {
-                    //console.log(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
+                    //console.debug(anObjectType+" found: "+_items[index].getName()+" in "+_ownerName+" inventory. Index: "+index);
                     returnObjects.push(_items[index]);
                 } else {
                     //accessible children.
@@ -865,7 +865,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                     //check canContain
                     //if any one is true, add it, if not fail
                     if(possibleContainers[index].canCarry(anObject)) {
-                        //console.log("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
+                        //console.debug("suitable container found: "+possibleContainers[index].getDisplayName()+" in "+_ownerName+" inventory. Index: "+index);
                         return possibleContainers[index];
                     };
                 };

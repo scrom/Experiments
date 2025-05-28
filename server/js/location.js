@@ -58,7 +58,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         var validateType = function(type, subType) {
             var validobjectTypes = ["indoor", "outdoor"];
             if (validobjectTypes.indexOf(type) == -1) { throw type+" is not a valid location type."};
-            //console.log(_name+' type validated: '+type);
+            //console.debug(_name+' type validated: '+type);
         };
 
         validateType(_type, _subType);
@@ -229,11 +229,11 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.addExit = function(anExitDirection, aSource, aDestination, aDescription, isHidden, requiredAction) {
             self = this;
-            if (self.getExit(anExitDirection)) {console.log("DATA QUALITY WARNING: duplicate exit direction '"+anExitDirection+"' from "+aSource+".");};
+            if (self.getExit(anExitDirection)) {console.warn("DATA QUALITY WARNING: duplicate exit direction '"+anExitDirection+"' from "+aSource+".");};
             var newExit = new exitObjectModule.Exit(anExitDirection, aSource, aDestination, aDescription, isHidden, requiredAction);
             _exits.push(newExit); 
             var storedExit = _exits[_exits.length-1];   
-            //console.log('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   
+            //console.debug('Exit from '+self.getName()+', '+storedExit.getDirection()+' to '+storedExit.getDestinationName()+' added.');   
             return 'Exit from '+self.getName()+', '+newExit.getDirection()+' to '+newExit.getDestinationName()+' added.';
         };
 
@@ -268,7 +268,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             for(var i = 0; i < _exits.length; i++) {
                 if (typeof _exits[i] == "object") {
                     if(_exits[i].getDirection().toLowerCase() == aDirection.toLowerCase()) {
-                        //console.log('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
+                        //console.debug('found: '+aDirection+' destination: '+_exits[i].getDestinationName());
                         return _exits[i];
                     };
                     if(_exits[i].getLongName().toLowerCase() == aDirection.toLowerCase()) {
@@ -300,7 +300,7 @@ exports.Location = function Location(name, displayName, description, attributes)
                     var linkedExits = doors[d].getLinkedExits();
                     for (var l=0;l<linkedExits.length;l++) {
                         if (linkedExits[l].getSourceName() == self.getName()) {
-                            //console.log("getDoorForExit: direction - " + direction + " : " + linkedExits[l].toString());
+                            //console.debug("getDoorForExit: direction - " + direction + " : " + linkedExits[l].toString());
                             if (linkedExits[l].getDirection() == direction) {                                
                                 //we have a matching exit with a door
                                 return doors[d];
@@ -395,7 +395,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
 
             var randomInt = Math.floor(Math.random() * (availableExits.length));
-            //console.log('Random exit selected: '+availableExits[randomInt].getDirection());
+            //console.debug('Random exit selected: '+availableExits[randomInt].getDirection());
             return availableExits[randomInt];
         };
         
@@ -479,7 +479,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.removeObject = function(anObjectName, searchCreatures) {
-            //console.log('removing '+anObjectName+' from '+self.getName());
+            //console.debug('removing '+anObjectName+' from '+self.getName());
             return _inventory.remove(anObjectName, searchCreatures);
         };
 
@@ -683,12 +683,12 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.fireEntryTrigger = function() {
-            //console.log('Firing entry trigger from '+self.getName());   
+            //console.debug('Firing entry trigger from '+self.getName());   
             return "";
         };
 
         self.fireExitTrigger = function() {
-            //console.log('Exit trigger fired from '+self.getName());
+            //console.debug('Exit trigger fired from '+self.getName());
             return "";                 
         }; 
 
@@ -704,7 +704,7 @@ exports.Location = function Location(name, displayName, description, attributes)
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    //console.log(aMissionName+" removed from "+self.getName());
+                    //console.debug(aMissionName+" removed from "+self.getName());
                     break;
                 };
             };
@@ -736,7 +736,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.isDark = function () {
-            //console.log("location is dark? "+_dark);
+            //console.debug("location is dark? "+_dark);
             if (_dark) {return true;};
             return false;
         };
@@ -776,12 +776,12 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         self.reduceLocalFriendlyCreatureAffinity = function(changeValue, excludedCreature) {
             //unless they really like the player, friendly creatures in the same location don't appreciate aggression.
-            //console.log("attempting to reduce local creature affinity by "+changeValue+" except for "+excludedCreature);
+            //console.debug("attempting to reduce local creature affinity by "+changeValue+" except for "+excludedCreature);
             var creatures = self.getCreatures();
             for (var i=0; i<creatures.length;i++) {
                 if (creatures[i].getSubType() == "friendly" && (creatures[i].getAffinity() <= 5)) {
                     if (creatures[i].getName() != excludedCreature) {
-                        //console.log("reducing affinity for "+creatures[i].getName());
+                        //console.debug("reducing affinity for "+creatures[i].getName());
                         creatures[i].decreaseAffinity(changeValue);
                     };
                 };
@@ -828,7 +828,7 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         //end public member functions
 
-        //console.log(_objectName +' created: '+self.getName());
+        //console.debug(_objectName +' created: '+self.getName());
 
     }
     catch(err) {

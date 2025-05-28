@@ -25,7 +25,7 @@ exports.Map = function Map() {
 
 	    var _objectName = "Map";
 
-        console.log(_objectName + ' created');
+        console.info(_objectName + ' created');
 
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
@@ -171,9 +171,9 @@ exports.Map = function Map() {
         };
 
         self.removeLocation = function(removeLocationData){
-            //console.log("removing location: "+locationName);
+            //console.debug("removing location: "+locationName);
             if (!removeLocationData) {
-                console.log("Map.removeLocation: no location data received for removal");   
+                console.debug("Map.removeLocation: no location data received for removal");   
                 return true;
             };
             var locationName = removeLocationData.name;
@@ -188,7 +188,7 @@ exports.Map = function Map() {
                 //we have a corrupted location map, find manually instead.
                 for (var i=0; i<_locations.length;i++) {
                     if (_locations[i].getName() == locationName) {
-                        //console.log("location removed");
+                        //console.debug("location removed");
                         locationToRemove = _locations[i];
                         //I considered rather than removing the location entirely, leave it in but remove entrances to it
                         //decided to remove it but evacuate creatures first.
@@ -197,7 +197,7 @@ exports.Map = function Map() {
                         if (locName == locationToRemove.getName()) {
                             _locationIndexMap.splice(i,1); 
                         } else {
-                            console.log("Map.removeLocation: location index map corrupted, working manually for now but performance will be impacted");   
+                            console.warn("Map.removeLocation: location index map corrupted, working manually for now but performance will be impacted");   
                         };
                         break;
                     };
@@ -232,7 +232,7 @@ exports.Map = function Map() {
                 //remove exits linking to this location
                 for (var l=0; l<_locations.length;l++) {
                     _locations[l].removeExit(locationName);
-                    //console.log("exit removed from "+_locations[l].getName());
+                    //console.debug("exit removed from "+_locations[l].getName());
                 };
 
                 //remove *all* stored creature destinations referencing this location so they don't get stuck!
@@ -355,13 +355,13 @@ exports.Map = function Map() {
                 if (modification.name) {
                     //only set name to value if set in modification (otherwise could be undefined)
                     objectName = modification.name;
-                    //console.log("modify object: "+ objectName);
+                    //console.debug("modify object: "+ objectName);
                 };                       
                 newAttribs = modification.attributes;
 
                 if (modification.inventory) {
                     for (var i = 0; i < modification.inventory.length; i++) {
-                        //console.log("adding " + modification.inventory[i].getName() + " to queue for " + objectName);
+                        //console.debug("adding " + modification.inventory[i].getName() + " to queue for " + objectName);
                         inventory.push(modification.inventory[i]);
                     };
                 };
@@ -382,9 +382,9 @@ exports.Map = function Map() {
                     //add items to inventory
                     var objectInventory = objectToModify.getInventoryObject();
                     for (var v = 0; v < inventory.length; v++) {
-                        //console.log("adding " + modification.inventory[v].getName() + " to " + objectName);
+                        //console.debug("adding " + modification.inventory[v].getName() + " to " + objectName);
                         objectInventory.forceAdd(inventory[v]);
-                        //console.log("Object added? " + objectInventory.check(inventory[v].getName()));
+                        //console.debug("Object added? " + objectInventory.check(inventory[v].getName()));
                     };
                 };
             };
@@ -435,7 +435,7 @@ exports.Map = function Map() {
             for (var i=0; i<_locations.length;i++) {
                 try {
                 locationsAsJSON.push(JSON.parse(_locations[i].toString()));
-                } catch (e) {console.log("Error parsing JSON for location: error = "+e+": "+_locations[i].toString());};
+                } catch (e) {console.error("Error parsing JSON for location: error = "+e+": "+_locations[i].toString());};
             };
             locationsAsJSON.sort(tools.sortByProperty("name"));
             return locationsAsJSON;
@@ -462,9 +462,9 @@ exports.Map = function Map() {
             //we don't have name exposed any more...
             for(var index = 0; index < _locations.length; index++) {
                 if(_locations[index].getName() == aName) {
-                    //console.log('location found: '+aName+' index: '+index);
+                    //console.debug('location found: '+aName+' index: '+index);
                     //the index map is damaged if we got this far.
-                    console.log("Map.getLocation: location index map corrupted, working manually for now but performance will be impacted");   
+                    console.warn("Map.getLocation: location index map corrupted, working manually for now but performance will be impacted");   
                     return _locations[index];
                 };
             };
@@ -473,12 +473,12 @@ exports.Map = function Map() {
             if (useDisplayName) {
                 for (var index = 0; index < _locations.length; index++) {
                     if (_locations[index].getDisplayName().toLowerCase() == aName) {
-                        //console.log('location found using displayName: '+aName+' index: '+index);
+                        //console.debug('location found using displayName: '+aName+' index: '+index);
                         return _locations[index];
                     };
                 };
             };
-            //console.log('location not found: '+aName);
+            //console.debug('location not found: '+aName);
         };
 
         self.getStartLocation = function() {
@@ -489,12 +489,12 @@ exports.Map = function Map() {
             var exit;
             for(var index = 0; index < _locations.length; index++) {
                 if(_locations[index].getName() == aSource) {
-                    //console.log('exit source location found: '+aSource+' index: '+index);
+                    //console.debug('exit source location found: '+aSource+' index: '+index);
                     exit = _locations[index].getExit(aDirection);
                     if (exit.getDestinationName() == aDestination) {return exit;}; 
                 };
            };
-           //console.log('exit not found from '+aSource+', '+aDirection+' to '+aDestination);
+           //console.debug('exit not found from '+aSource+', '+aDirection+' to '+aDestination);
         };
 
         self.getDoorFor = function(aSource, aDestination) {
@@ -592,7 +592,7 @@ exports.Map = function Map() {
             if (!(visitedLocations)) { visitedLocations = [currentLocation.getName()]; }
             else { visitedLocations.push(currentLocation.getName()) };
                 
-            //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
+            //console.debug("finding path from "+currentLocation.getName()+" to "+destinationName);
                 
             if (currentLocation.getName() == destinationName) {
                 //pathfinder destination found;
@@ -801,7 +801,7 @@ exports.Map = function Map() {
             if (deathTollData.friendly > 0) { deathTollReport += "Friendly death toll: " + deathTollData.friendly + "<br>"; }            ;
             if (deathTollData.hostile > 0) { deathTollReport += "Hostile death toll: " + deathTollData.hostile + "<br>"; }            ;
             
-            //console.log(deathTollReport);
+            //console.debug(deathTollReport);
             return deathTollReport;
         };
 
@@ -814,8 +814,8 @@ exports.Map = function Map() {
             var deathTollData = self.gatherContagionDeathTollStats(creatures);
            
 
-            //console.log(contagionData);
-            //console.log(antibodyData);
+            //console.debug(contagionData);
+            //console.debug(antibodyData);
 
             var contagionReport = "";
 
@@ -829,7 +829,7 @@ exports.Map = function Map() {
             if (deathTollData.friendly >0) {contagionReport+="Friendly death toll: "+deathTollData.friendly+"<br>";};
             if (deathTollData.hostile >0) {contagionReport+="Hostile death toll: "+deathTollData.hostile+"<br>";};
 
-            //console.log(contagionReport);
+            //console.debug(contagionReport);
             return contagionReport;
         //{"contagion":contagionData, "antibodies":antibodyData, "total":creatures.length}
 

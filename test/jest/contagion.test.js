@@ -168,8 +168,8 @@ describe('Contagion', () => {
 
         const expectedResult = '{"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"incubationPeriod":2,"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.1}]}}';
         const actualResult = c.clone().toString();
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);   
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);   
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -190,8 +190,8 @@ describe('Contagion', () => {
 
         const expectedResult = {"object":"Contagion","name":"zombie","displayName":"zombieism","attributes":{"incubationPeriod":2,"communicability":0.5,"symptoms":[{"action":"hurt","health":5,"frequency":0.3,"escalation":0.1}]}};
         const actualResult = JSON.parse(c.clone().toString());
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult.name).toBe(expectedResult.name);
         expect(actualResult.attributes).not.toBe(expectedResult.attributes);
         expect(actualResult).not.toBe(expectedResult);

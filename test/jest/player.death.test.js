@@ -96,8 +96,8 @@ test('canBeKilledAndDropInventory', () => {
     p0.kill();
     const expectedResult = 'cake';
     const actualResult = l0.getObject(food.getName()).getName();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -109,16 +109,16 @@ test('killPlayerMoreThan5TimesReturnsExpectedStringResult', () => {
     p0.kill();
     p0.kill();
     const actualResult = p0.kill();
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
 test('killPlayerReturnsExpectedStringResult', () => {
     const expectedResult = "<br><br>You're dead. You really should try to stay out of trouble and look after yourself better.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     const actualResult = p0.kill();
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -133,8 +133,8 @@ test('creatureRetaliationCanKillPlayer', () => {
         actual = p0.hit('hit', c0.getName());
         attempts++;
     }
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
@@ -149,16 +149,16 @@ test('creatureAttackCanKillPlayer', () => {
         //sometimes creature misses - a second attempt should be enough. (score would be -50 if player was killed.
         actual = c2.fightOrFlight(null, p0);
     }
-    console.log("expected:"+expected);
-    console.log("actual:"+actual);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
     expect(actual).toBe(expected);
 });
 
 test('hitAndKillPlayerReturnsExpectedStringResult', () => {
     const expectedResult = "<br><br>You're dead. You really should try to stay out of trouble and look after yourself better.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     const actualResult = p0.hurt(101);
-    console.log("Expected: "+expectedResult);
-    console.log("Actual  : "+actualResult);
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 test('playerDeathFromStarvationReturnsExpectedStringResult', () => {
@@ -166,9 +166,9 @@ test('playerDeathFromStarvationReturnsExpectedStringResult', () => {
     p0.tick(17, m0);
     const expectedResult = "<br><br>You're dead. You really do need to keep your energy up if you're going to survive in this environment.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     const actualResult = p0.tick(1, m0);
-    console.log(p0.health());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug(p0.health());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -177,9 +177,9 @@ test('playerDeathFromDehydrationReturnsExpectedStringResult', () => {
     p0.tick(17, m0);
     const expectedResult = "<br><br>You're dead. You really do need to keep your fluid levels up if you're going to survive in this environment.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     const actualResult = p0.tick(1, m0);
-    console.log(p0.health());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug(p0.health());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -188,8 +188,8 @@ test('playerDeathFromContagionReturnsExpectedStringResult', () => {
     p0.setContagion(con);
     const expectedResult = "<br><br>You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the death contagion or something equally nasty.<br>Fortunately, we currently have a special on reincarnation.<br>This time we've charged you 50 points and you'll need to find your way back to where you were to pick up all your stuff!<br>Good luck.<br><br>Current location: Home<br>a home location<br><br>You can see a creature, Mr Evil, an artefact of little consequence, a mighty sword, a drinking glass, a slab of sugary goodness, and a container.<br>There is a single exit to the South.<br>";
     const actualResult = p0.tick(36, m0); // oddly, this triggers bleeding to death - not directly contagion - but good enough.
-    console.log(p0.health());
-    console.log("Expected: " + expectedResult);
-    console.log("Actual  : " + actualResult);
+    console.debug(p0.health());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });

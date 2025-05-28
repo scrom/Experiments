@@ -28,7 +28,7 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
         var _description = aDescription;
 
 	    var _objectName = "exit";
-        //console.log(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
+        //console.debug(_objectName + ' created: '+_name+', '+_destinationName+' visible? '+(!(_hidden)));
 
         ////public methods
         self.toString = function() {

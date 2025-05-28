@@ -66,7 +66,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response._gameLimit).toBe(100);
 
         });
@@ -79,7 +79,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "list"}, "response": {"games": []}});
 
         });
@@ -92,7 +92,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "action"}, "response": {"description": "invalid user: undefined"}});
         });
 
@@ -104,7 +104,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "save"}, "response": {"description": "invalid user: undefined"}});
         });
 
@@ -116,7 +116,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "load"}, "response": {"description": "Saved game file '' not found."}});
         });
 
@@ -128,7 +128,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toEqual({"request": {"command": "quit"}, "response": {"description": "invalid user: undefined"}});
         });
 
@@ -140,7 +140,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response.status).toEqual(404);
         });
 
@@ -152,7 +152,7 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response.length).toBe(155);
         });
 
@@ -175,11 +175,11 @@ describe('Server', () => {
                 headers: headers
             });
 
-            console.log("URL: " + request.url);
+            console.debug("URL: " + request.url);
 
             var response = await serverInstance.fetchCall(request.url);
 
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toHaveProperty('request.command');
             expect(response).toHaveProperty('response.attributes');
             expect(response).toHaveProperty('response.saveid');
@@ -222,7 +222,7 @@ describe('Server', () => {
 
             var response = await serverInstance.fetchCall(request.url);
 
-            console.log(JSON.stringify(response));
+            console.debug(JSON.stringify(response));
             expect(response).toHaveProperty('request.command');
             expect(response).toHaveProperty('response.attributes');
             expect(response).toHaveProperty('response.saveid');

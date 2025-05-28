@@ -15,7 +15,7 @@ const redisgc = new gamecontroller.GameController(mb, redisfm);
 describe('SaveLoad Tests', () => {
     test('can load file based game', async () => {
         const result = await gc.loadGameAsync(0, "savegame-0", "brian");
-        console.log(result);
+        console.debug(result);
     });
 
     test('can create saveable player', () => {
@@ -33,8 +33,8 @@ describe('SaveLoad Tests', () => {
 
         const expectedResult = true;
         const actualResult = p0.canSaveGame();
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -53,17 +53,17 @@ describe('SaveLoad Tests', () => {
 
         const expectedResult = 45;
         const actualResult = result.indexOf("Game saved as <b>player-");
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
         const filename = result.substr(62, result.indexOf("</b>", 1) - 62) + ".json";
-        console.log("Filename:" + filename);
+        console.debug("Filename:" + filename);
         let fileExists = fm.fileExists(filename);
-        console.log("File " + filename + " created? " + fileExists);
+        console.debug("File " + filename + " created? " + fileExists);
         expect(fileExists).toBe(true);
         fm.deleteFile(filename);
         fileExists = fm.fileExists(filename);
-        console.log("File " + filename + " deleted? " + !fileExists);
+        console.debug("File " + filename + " deleted? " + !fileExists);
         expect(fileExists).toBe(false);
 
     });
@@ -84,19 +84,19 @@ describe('SaveLoad Tests', () => {
 
         const expectedResult = 45;
             const actualResult = result.indexOf("Game saved as <b>player-");
-            console.log("Expected: " + expectedResult);
-            console.log("Actual  : " + actualResult);
+            console.debug("Expected: " + expectedResult);
+            console.debug("Actual  : " + actualResult);
             expect(actualResult).toBe(expectedResult);
             const filename = result.substr(62, result.indexOf("</b>", 1) - 62);
-            console.log(filename);
+            console.debug(filename);
 
             var fileExists = await redisfm.gameDataExistsAsync(filename);
-            console.log("File " + filename + " created? " + fileExists);
+            console.debug("File " + filename + " created? " + fileExists);
             expect(fileExists).toBe(true);
             await redisfm.removeGameDataAsync(filename);
 
             fileExists = await redisfm.gameDataExistsAsync(filename);
-            console.log("File " + filename + " deleted? " + !fileExists);
+            console.debug("File " + filename + " deleted? " + !fileExists);
             expect(fileExists).toBe(false);
         });
     });
@@ -118,7 +118,7 @@ describe('SaveLoad Tests', () => {
 
         // retrieve filename from save result
         const filename = result.substr(62, 13);
-        console.log(filename);
+        console.debug(filename);
 
         // check if file exists in redis
         var fileExists = await redisfm.gameDataExistsAsync(filename);
@@ -161,7 +161,7 @@ describe('SaveLoad Tests', () => {
         //remove data
         await redisfm.removeGameDataAsync(filename);
         fileExists = await redisfm.gameDataExistsAsync(filename);
-        console.log("File " + filename + " deleted? " + !fileExists);
+        console.debug("File " + filename + " deleted? " + !fileExists);
         expect(fileExists).toBe(false);
 
     });
@@ -193,7 +193,7 @@ test('can save game to redis via interpreter and read back via gamecontroller', 
         //remove data
         await redisfm.removeGameDataAsync(filename);
         fileExists = await redisfm.gameDataExistsAsync(filename);
-        console.log("File " + filename + " deleted? " + !fileExists);
+        console.debug("File " + filename + " deleted? " + !fileExists);
         expect(fileExists).toBe(false);
 
     });
@@ -227,7 +227,7 @@ test('can save game to redis via interpreter and read back via gamecontroller', 
         //remove data
         await redisfm.removeGameDataAsync(filename);
         fileExists = await redisfm.gameDataExistsAsync(filename);
-        console.log("File " + filename + " deleted? " + !fileExists);
+        console.debug("File " + filename + " deleted? " + !fileExists);
         expect(fileExists).toBe(false);
 
     });

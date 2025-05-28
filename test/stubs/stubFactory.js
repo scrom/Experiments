@@ -11,7 +11,7 @@ exports.StubFactory = function StubFactory(){
     self.generateMethods = function(object, stub) {
         var methods = Object.getOwnPropertyNames(object);
         for (var i=0; i<methods.length;i++) {
-            //console.log(methods[i]);
+            //console.debug(methods[i]);
             //if (typeof i == 'function') {
             stub[methods[i]] = new Function('args', 'var returnString="function: '+methods[i]+', "; for (i=0; i<arguments.length;i++) {returnString +="args["+i+"]:"; if (arguments[i] instanceof Object) {returnString += "<"+arguments[i].constructor.name+">, ";} else {returnString += arguments[i]+", ";};}; return returnString.substring(0, returnString.length-2)');
             //};

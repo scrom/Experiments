@@ -98,8 +98,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expectedResult = "Someone has spilled blood and custard on it.";
         const actualResult = p0.examine("examine", "floor");
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -126,8 +126,8 @@ describe('Player Blood Liquid Interaction', () => {
         let expectedResult = "<br>As you enter, you slip on the mess on the floor and injure yourself.<br>You feel weaker. ";
         const alternateResult = " is a single exit to the South.<br><br>You might want to mind out, the floor's slippery here;";
         const actualResult = p0.go("n", "n", m1).substr(-93);
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         if (actualResult === alternateResult) {
             expectedResult = alternateResult;
         }
@@ -143,8 +143,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expectedResult = "Someone has spilled blood and custard on it.";
         const actualResult = p0.examine("examine", "floor");
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -160,13 +160,13 @@ describe('Player Blood Liquid Interaction', () => {
         const inv = p0.getInventoryObject();
         inv.add(cleaner);
 
-        console.log(l0.describe());
-        console.log(p0.examine("examine", "floor"));
+        console.debug(l0.describe());
+        console.debug(p0.examine("examine", "floor"));
 
         const expectedResult = "You clean the gory mess from the floor.";
         const actualResult = p0.clean('clean', 'floor');
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -184,8 +184,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expectedResult = "";
         const actualResult = l0.describeBlood();
-        console.log("Expected: " + expectedResult);
-        console.log("Actual  : " + actualResult);
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -198,8 +198,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expected = "You collect the blood into your bottle.<br>";
         const actual = p0.get("collect", "blood");
-        console.log("expected:" + expected);
-        console.log("actual:" + actual);
+        console.debug("expected:" + expected);
+        console.debug("actual:" + actual);
         expect(actual).toBe(expected);
     });
 
@@ -213,8 +213,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expected = "Hmm. You're a bit sick aren't you.<br>You pour blood on the floor.";
         const actual = p0.put("pour", "blood", "on", "floor");
-        console.log("expected:" + expected);
-        console.log("actual:" + actual);
+        console.debug("expected:" + expected);
+        console.debug("actual:" + actual);
         expect(actual).toBe(expected);
     });
 
@@ -229,8 +229,8 @@ describe('Player Blood Liquid Interaction', () => {
         p0.put("pour", "blood", "onto", "floor");
         const expected = "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
         const actual = l0.describeBlood();
-        console.log("expected:" + expected);
-        console.log("actual:" + actual);
+        console.debug("expected:" + expected);
+        console.debug("actual:" + actual);
         expect(actual).toBe(expected);
     });
 
@@ -245,8 +245,8 @@ describe('Player Blood Liquid Interaction', () => {
         p0.empty("empty", "bottle");
         const expected = "<br>There's a lot of blood around here. It looks like someone or something's been injured very recently.";
         const actual = l0.describeBlood();
-        console.log("expected:" + expected);
-        console.log("actual:" + actual);
+        console.debug("expected:" + expected);
+        console.debug("actual:" + actual);
         expect(actual).toBe(expected);
     });
 
@@ -261,8 +261,8 @@ describe('Player Blood Liquid Interaction', () => {
 
         const expected = "You empty the bottle.<br>Its contents are beyond recovery.";
         const actual = p0.empty("empty", "bottle");
-        console.log("expected:" + expected);
-        console.log("actual:" + actual);
+        console.debug("expected:" + expected);
+        console.debug("actual:" + actual);
         expect(actual).toBe(expected);
     });
 });

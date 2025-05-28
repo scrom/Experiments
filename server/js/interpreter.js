@@ -9,7 +9,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         var _gameController = aGameController;
         var _fm = fileManager;
 
-        console.log(_objectName+' created');
+        console.info(_objectName+' created');
 
         //private functions
 
@@ -94,7 +94,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
         };
 
         var assembleResponse = function(requestJson, responseJSON){
-            //console.log('{"request":'+requestJson+',"response":'+responseJSON+'}')
+            //console.debug('{"request":'+requestJson+',"response":'+responseJSON+'}')
             return '{"request":'+requestJson+',"response":'+responseJSON+'}';
         };
 
@@ -105,7 +105,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
 
         //public member functions
         self.translateAsync = async function(aRequestUrl, config) {
-            //console.log('translateAsync called: '+aRequestUrl);
+            //console.debug('translateAsync called: '+aRequestUrl);
             //note - only passing config in here until controlling game object is accessible
             var command = extractCommand(aRequestUrl);
             var commandJson = '{"command":"'+command+'"}';
@@ -137,7 +137,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                 break;
 
                             case 'image':
-                                //console.log("image request:"+actionString);
+                                //console.debug("image request:"+actionString);
                                 //@todo - improve async handling for images
                                 if (_fm.imageExists(actionString))
                                 {
@@ -153,7 +153,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
 
                            case 'save':
                                 //resolve(_gameController.saveGame(username, gameId));
-                                console.log("saving game");             
+                                console.info("saving game");             
                                 if (!(validateUser(username))) {
                                     return(assembleResponse(commandJson,'{"description":"invalid user: '+username+'"}'));
                                 };
@@ -161,10 +161,10 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                 var aGame = _gameController.getGame(username, gameId);
                                 if (aGame == "" || aGame == null || aGame == undefined || aGame == "undefined" || (!(aGame))) {
                                     return(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));
-                                    console.log("game for "+username+", "+gameId+" not found in controller");
+                                    console.debug("game for "+username+", "+gameId+" not found in controller");
                                 } else {
-                                    console.log("game found in controller");
-                                    console.log("game: "+aGame);
+                                    console.debug("game found in controller");
+                                    console.debug("game: "+aGame);
                                 };
                                 try {
                                     var saved = await aGame.saveAsync();
@@ -172,7 +172,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
 
                                 } catch (err) {
                                     return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));
-                                    console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+                                    console.error('Error: data: "'+actionString+'". Error message/stack: '+err.stack);
                                 };
                                 
                                 break;
@@ -184,7 +184,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                     try {
                                         var newGameId = await _gameController.loadGameAsync(originalGameID, actionString, username); 
 
-                                        console.log("New game id: "+newGameId);
+                                        console.info("New game id: "+newGameId);
                                         //did we successfully load?...
                                         var response;
                                         var savedUsername = _gameController.getUsernameForGameID(newGameId);
@@ -200,13 +200,13 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
 
                                     } catch (err) {
                                         return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to load saved game \''+actionString+'\'.<br>The stored game data is either corrupted or incompatible with this release of MVTA."}'));  
-	                                    console.log('ERROR! data: "'+actionString+'". Error message/stack: '+err.stack);
+	                                    console.error('Error: data: "'+actionString+'". Error message/stack: '+err.stack);
                                     };
                                 
                                 break;
 
                             case 'quit':
-                                console.log("user '" + username + "' requested quit game");
+                                console.info("user '" + username + "' requested quit game");
                                 if (!(validateUser(username))) { return assembleResponse(commandJson, '{"description":"invalid user: ' + username + '"}'); }
                                 return assembleResponse(commandJson, _gameController.removeGame(username, gameId));
                                 break;

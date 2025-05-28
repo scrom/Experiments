@@ -98,14 +98,14 @@ exports.Action = function Action(player, map, fileManager) {
             for (var i=0; i<=splitWordArray.length; i++) {
                 var objectPair = aString.split(' '+splitWordArray[i]+' '); //note we must pad each side with spaces to avoid substring oddities
                 if (objectPair != aString) { //split successful
-                    //console.log('split using "'+splitWordArray[i]+'".');
+                    //console.debug('split using "'+splitWordArray[i]+'".');
                     _splitWord = splitWordArray[i];                  
                     return objectPair; //exit the loop early
                 }; //end if
 
                 //support case where first word of string is a "split" word
                 if (aString.indexOf(splitWordArray[i]+' ') == 0) {
-                    //console.log('first word is split');
+                    //console.debug('first word is split');
                     _splitWord = splitWordArray[i];
                     return ["",aString.substr(splitWordArray[i].length).trim()];
                 };
@@ -113,14 +113,14 @@ exports.Action = function Action(player, map, fileManager) {
                 //support case where last word of string is a "split" word
                 var endSplit = ' '+splitWordArray[i];
                 if (aString.indexOf(endSplit, aString.length - endSplit.length) !== -1) {
-                    //console.log('last word is split');
+                    //console.debug('last word is split');
                     _splitWord = splitWordArray[i];
                     return [aString.substr(0,aString.indexOf(' '+splitWordArray[i])).trim(),""];
                 };
 
             };
             //no match, return what we started with
-            //console.log('no split');
+            //console.debug('no split');
             _splitWord = "";
             return [aString,'']; //we add in a dummy second element for now
         };
@@ -851,7 +851,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         if ((_splitWord == "out" && (!_object0) && _object1.indexOf("of ") >-1) ||(_object0 == "out" && (!_object1))) {
                             _direction = 'out';
-                            //console.log( _object0.indexOf("of "))
+                            //console.debug( _object0.indexOf("of "))
                             //note, if person types "get out of x"
                             break;
                         };
@@ -903,7 +903,7 @@ exports.Action = function Action(player, map, fileManager) {
                     //case 'request':
                     //case 'beg':
                         _ticks = 1;
-                        //console.log("split: "+_splitWord);
+                        //console.debug("split: "+_splitWord);
                         if (_splitWord == "is"||_splitWord == "to"|| _splitWord == "are") {
                             //check for "ask x to find y" or "ask x where y is" or "ask x where is y";
                             if (_actionString.indexOf(" find ") >-1) {
@@ -928,7 +928,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 _object1 = _object1.replace(" the ", " ");
                                 _object1 = _object1.replace(" some ", " ");
                                 _object1 = _object1.trim();
-                                //console.log("O0: "+_object0+"O1:"+_object1);
+                                //console.debug("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("find", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
@@ -940,7 +940,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 _object1 = _object1.replace(" some ", " ");
                                 _object1 = _object1.trim();
                                 _object1 = _object1.trim();
-                                //console.log("O0: "+_object0+"O1:"+_object1);
+                                //console.debug("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("repair", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
@@ -953,7 +953,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 _object1 = " "+_object1+" ";
                                 _object1 = _object1.replace(" to ", "");
                                 _object1 = _object1.trim();
-                                //console.log("O0: "+_object0+"O1:"+_object1);
+                                //console.debug("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("go", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
@@ -967,7 +967,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 _object1 = " "+_object1+" ";
                                 _object1 = _object1.replace(" to ", "");
                                 _object1 = _object1.trim();
-                                //console.log("O0: "+_object0+"O1:"+_object1);
+                                //console.debug("O0: "+_object0+"O1:"+_object1);
                                 description = _player.ask("wait", _object0.trim(), _object1.trim(), _map);
                                 break;
                             };
@@ -1440,14 +1440,14 @@ exports.Action = function Action(player, map, fileManager) {
                         };
 
                         if (description) {_ticks = _baseTickSize*1;};
-                        //console.log("Custom result:"+description);
-                        //console.log('verb: '+_verb+' default response');
+                        //console.debug("Custom result:"+description);
+                        //console.debug('verb: '+_verb+' default response');
                         //allow fall-through
                 };
             }
             catch(err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
-	            console.log('ERROR! userAction: "'+_actionString+'". Error message/stack: '+err.stack);
+	            console.error('Error: userAction: "'+_actionString+'". Error message/stack: '+err.stack);
             };	
 
             if (description) {
@@ -1520,7 +1520,7 @@ exports.Action = function Action(player, map, fileManager) {
                 return "";
             } catch (err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
-                console.log('ERROR! During Player Navigation: "' + _actionString + '". Error message/stack: ' + err.stack);
+                console.error('Error: During Player Navigation: "' + _actionString + '". Error message/stack: ' + err.stack);
             };	
         };
 
@@ -1584,7 +1584,7 @@ exports.Action = function Action(player, map, fileManager) {
                     if (!_object0) {
                         item = _player.getCurrentLocation();
                     };
-                    if (_object0 == "player" || _object0 == "self") {
+                    if (_object0 == "player" || _object0 == "self" || _object0 == "me") {
                         item = _player;
                     };
                     if (!(item)) {
@@ -1675,7 +1675,7 @@ exports.Action = function Action(player, map, fileManager) {
                 };
             } catch (err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
-                console.log('ERROR! During Player Cheat Action: "' + _actionString + '". Error message/stack: ' + err.stack);
+                console.error('Error: During Player Cheat Action: "' + _actionString + '". Error message/stack: ' + err.stack);
             };	
         };
 
@@ -1696,7 +1696,7 @@ exports.Action = function Action(player, map, fileManager) {
 
                 _ticks = 0;
                 _failCount ++;
-                //console.log("fail count: "+_failCount);
+                //console.debug("fail count: "+_failCount);
                 if (_failCount >3) {
                     _verb = "help";
                     return self.performPlayerAction();
@@ -1710,7 +1710,7 @@ exports.Action = function Action(player, map, fileManager) {
                 return randomReplies[randomIndex];
             } catch (err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
-                console.log('ERROR! During PlayerNotUnderstood: "' + _actionString + '". Error message/stack: ' + err.stack);
+                console.error('Error: During PlayerNotUnderstood: "' + _actionString + '". Error message/stack: ' + err.stack);
             };	
 
         };
@@ -1829,7 +1829,7 @@ exports.Action = function Action(player, map, fileManager) {
             
             } catch (err) {
                 description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
-                console.log('ERROR! During game tick. (Useraction: "' + _actionString + '"). Error message/stack: ' + err.stack);
+                console.error('Error: During game tick. (Useraction: "' + _actionString + '"). Error message/stack: ' + err.stack);
             };	
 
             //replace any player substitution variables
@@ -1848,14 +1848,14 @@ exports.Action = function Action(player, map, fileManager) {
                 if (imageIndex>-1) {
                     var endIndex = description.indexOf("/$image"),
                     imageName = description.substring(imageIndex+6, endIndex);
-                    //console.log("imageName:"+imageName);
+                    //console.debug("imageName:"+imageName);
                 };
                 if (imageName) {
                     //description = description.substring(0,imageIndex)+description.substring(endIndex+7);
                     description = description.replace("$image","");
                     description = description.replace(imageName,"");
                     description = description.replace("/$image","");
-                    //console.log("description:"+description);
+                    //console.debug("description:"+description);
                 };  
             };   
             
@@ -1879,7 +1879,7 @@ exports.Action = function Action(player, map, fileManager) {
                     if (location.getImageName) {
                         imageName = location.getImageName();
                     };
-                } catch (err) {console.log(err.stack);};
+                } catch (err) {console.error(err.stack);};
             };
 
 
@@ -1897,7 +1897,7 @@ exports.Action = function Action(player, map, fileManager) {
         //end public member functions
 
         //finish construction
-        //console.log(objectName + ' created');
+        console.info(objectName + ' created');
     }
     catch(err) {
 	    console.error('Unable to create Action object: '+err);

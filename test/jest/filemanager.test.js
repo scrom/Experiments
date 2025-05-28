@@ -15,8 +15,8 @@ const testImageName = 'testimage.jpg';
 const testFilePath = path.join(__dirname, testDataDir, testFileName); // Full path to test file
 const testImagePath = path.join(__dirname, testImageDir, testImageName); // Full path to test image
 
-console.log("Test file path: " + testFilePath);
-console.log("Test image path: " + testImagePath);
+console.debug("Test file path: " + testFilePath);
+console.debug("Test image path: " + testImagePath);
 
 describe('FileManager', () => {
     afterEach(() => {

@@ -234,7 +234,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var validateType = function(type) {
             var validobjectTypes = ["creature", "friendly", "animal"];
             if (validobjectTypes.indexOf(type) == -1) { throw _type+" is not a valid creature type."};
-            //console.log(_name+' type validated: '+type);
+            //console.debug(_name+' type validated: '+type);
         };
 
         validateType(_type);
@@ -328,32 +328,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        //console.log('carrying: '+carrying);
+        //console.debug('carrying: '+carrying);
         if (carrying) {
-            //console.log('building creature inventory... ');
+            //console.debug('building creature inventory... ');
             //load inventory
             if (carrying instanceof Array) {
                 for (var i=0; i < carrying.length; i++){
-                    //console.log('adding: '+carrying[i]);
+                    //console.debug('adding: '+carrying[i]);
                     _inventory.add(carrying[i]);
                 };
             } else { //just one object
-                //console.log('adding: '+carrying[i]);
+                //console.debug('adding: '+carrying[i]);
                 _inventory.add(carrying);
             };
         };
 
-        //console.log('sells: ' + sells);
+        //console.debug('sells: ' + sells);
         if (sells) {
-            //console.log('building creature inventory... ');
+            //console.debug('building creature inventory... ');
             //load inventory
             if (sells instanceof Array) {
                 for (var i = 0; i < sells.length; i++) {
-                    //console.log('adding: ' + sells[i]);
+                    //console.debug('adding: ' + sells[i]);
                     _salesInventory.add(sells[i]);
                 };
             } else { //just one object
-                //console.log('adding: ' + sells[i]);
+                //console.debug('adding: ' + sells[i]);
                 _salesInventory.add(sells);
             };
         };
@@ -605,7 +605,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return false;
                 };
             };
-            //console.log("custom action: "+_customAction+" verb:"+verb);
+            //console.debug("custom action: "+_customAction+" verb:"+verb);
             if (_customAction == verb) {
                 return true;
             };
@@ -926,7 +926,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             for(var index = 0; index < _missions.length; index++) {
                 if (_missions[index].getName()==aMissionName) {
                     _missions.splice(index,1);
-                    //console.log(aMissionName+" removed from "+self.getDisplayName());
+                    //console.debug(aMissionName+" removed from "+self.getDisplayName());
                     break;
                 };
             };
@@ -934,7 +934,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.getMissions = function(includeChildren) {
             var missions = [];
-            //console.log("creature missions for: " + self.getName());
+            //console.debug("creature missions for: " + self.getName());
             for (var i = 0; i < _missions.length; i++) {
                 if ((!(_missions[i].hasParent()))||includeChildren == true) {
                     missions.push(_missions[i]);
@@ -965,7 +965,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 if (isPermanent) {_baseAffinity +=changeBy;};
 
-                //console.log("affinity for "+self.getName()+" is now "+_affinity);
+                //console.debug("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
 
@@ -973,7 +973,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(self.isDead())) {
                 _affinity-=changeBy;
                 if (isPermanent) {_baseAffinity -=changeBy;};
-                //console.log("affinity for "+self.getName()+" is now "+_affinity);
+                //console.debug("affinity for "+self.getName()+" is now "+_affinity);
             };
         };
 
@@ -1040,7 +1040,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     var randomInt = Math.floor(Math.random() * 4); 
                     if (randomInt > 0) { //75% chance of success
                         receiver.setAntibody(_antibodies[a])
-                        //console.log("antibodies passed to "+receiver.getType());
+                        //console.debug("antibodies passed to "+receiver.getType());
                     };
                 };
             };
@@ -1122,7 +1122,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.isDead = function() {
             if (_hitPoints <= 0) {return true;};
-            //console.log("hp = "+_hitPoints);
+            //console.debug("hp = "+_hitPoints);
             return false;
         };
 
@@ -1132,7 +1132,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     _edible = true;
                 };               
             }; //in case not already set.
-            //console.log("edible = "+_edible);
+            //console.debug("edible = "+_edible);
             return _edible;
         };
 
@@ -1867,7 +1867,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
             var randomInt = Math.floor(Math.random() * (successDivider/playerStealth)); 
-            //console.log('Stealing from creature. Successresult (0 is good)='+randomInt);
+            //console.debug('Stealing from creature. Successresult (0 is good)='+randomInt);
 
             if (randomInt == 0) { //success
                 //they didn't notice but reduce affinity slightly (like relinquish)
@@ -2097,7 +2097,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.contains = function (anObjectName) {
-            //console.log("checking inventory for "+anObjectName);
+            //console.debug("checking inventory for "+anObjectName);
             return _inventory.check(anObjectName);
         };
 
@@ -2135,17 +2135,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.fightOrFlight = function(map,player) {
             var playerAggression = player.getAggression();
 
-            //console.log("Creature FightOrFlight: aggression="+playerAggression+" affinity= "+_affinity);
+            //console.debug("Creature FightOrFlight: aggression="+playerAggression+" affinity= "+_affinity);
             //for each frightened creature, try to flee (choose first available exit if more than 1 available).
             //otherwise they try to flee but can't get past you
             if(self.willFlee(playerAggression)) {
-                //console.log("Flee!");
+                //console.debug("Flee!");
                 return self.flee(map, playerAggression, player.getCurrentLocation());
             };
 
             //for each hostile creature, attack the player
             if(self.isHostile(playerAggression)) {
-                //console.log("Fight!");
+                //console.debug("Fight!");
                 return "<br>"+tools.initCap(self.getFirstName())+" attacks you. " + self.hit(player, 1);
             };
 
@@ -2214,7 +2214,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
                 _avoiding.pop(); //stop avoiding player location
             };
-            //console.log('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
+            //console.debug('Creature flees. Fear = '+fearLevel+'. End location = '+ _currentLocation.getName());
 
             //clear delay if fleeing
             _currentDelay = -1;
@@ -2242,7 +2242,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.setHomeLocation = function(location) {
             _homeLocation = location;
-            //console.log("start location set for "+self.getName());
+            //console.debug("start location set for "+self.getName());
         };
 
         self.go = function(direction, aLocation) {
@@ -2346,7 +2346,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //if player is attacking a friendly...
             if (self.getSubType() == "friendly") {
                 if (playerIsAttacker) {
-                    //console.log("player attacks friendly");        
+                    //console.debug("player attacks friendly");        
                     _friendlyAttackCount ++;
                     
                     if (_friendlyAttackCount >2) {
@@ -2401,7 +2401,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                 };
 
-                //console.log('Creature hurt, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+                //console.debug('Creature hurt, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
             } else {
                 if (!(attacker)) {
                    resultString += "There's no sign of any physical harm done.";  
@@ -2421,7 +2421,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _hitPoints += pointsToAdd;
                 if (_hitPoints >_maxHitPoints) {_hitPoints = _maxHitPoints;}
 
-                //console.log('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+                //console.debug('Creature health recovered, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
             };
         };
         
@@ -2525,7 +2525,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };
             };
 
-            //console.log('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
+            //console.debug('creature healed, +'+pointsToAdd+' HP. HP remaining: '+_hitPoints);
 
             return resultString;
         };
@@ -2539,7 +2539,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             self.recover(pointsToAdd);
             _timeSinceEating = 0;
-            //console.log('Creature eats some food.');
+            //console.debug('Creature eats some food.');
         };
 
         self.inject = function (player) {
@@ -2585,7 +2585,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             }; 
 
             var resultString = "";
-            //console.log(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
+            //console.debug(_name+' edible:'+self.isEdible()+' chewed:'+_chewed);
             if (!(self.isEdible())){
                 if (self.isDead()) {
                     resultString += "You sink your teeth into "+_genderSuffix+" but gag at the thought of eating corpses. "
@@ -2683,7 +2683,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
          }; 
 
         self.health = function() {
-            //console.log('creature health: '+_hitPoints);
+            //console.debug('creature health: '+_hitPoints);
             var healthPercent = self.healthPercent();
             switch (true) {
                     case (healthPercent>99):
@@ -2792,7 +2792,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 _missions = missionsToKeep;
             };
 
-            //console.log('Creature "'+self.getDisplayName()+'" killed');
+            //console.debug('Creature "'+self.getDisplayName()+'" killed');
             return resultString;
          };
 
@@ -3299,7 +3299,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 switch (firstWord) {
                     case "":
                         if (keyword) { break; }; //we're here through a mission keyword        
-                        console.log("*** Unhandled player speech (point 1) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");
+                        console.warn("*** Unhandled player speech (point 1) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");
                         break;
                     case "no":
                     case "well":
@@ -3468,7 +3468,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             artefactName = artefactName.trim();
                             return player.give("offer", artefactName, self.getName());
                         };
-                        console.log("*** Unhandled player speech (point 2) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");                        
+                        console.warn("*** Unhandled player speech (point 2) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");                        
                         return tools.initCap(self.getFirstName())+" says 'Interesting. You've said something I don't know how to deal with at the moment.'<br>'I'm sure Simon will fix that soon though.'";
                         break;
                 };
@@ -3534,7 +3534,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
                     };
                 };
-                console.log("*** Unhandled player speech (point 3) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");     
+                console.warn("*** Unhandled player speech (point 3) - first Word:'" + firstWord + "', remainder:'" + remainderString + "', original:'" + originalSpeech + "'");     
                 randomReplies = ["Sorry $player, that doesn't mean much to me at the moment.", "I'm not sure I can help you. Can you try rephrasing that for me - just in case?", "Sorry $player. I'm not quite sure what you're saying.", "I don't think I can help you at the moment. Have you tried typing <i>help</i>?", "Is there something specific you need?", "I'm not sure I can help you there."];
                 randomIndex = Math.floor(Math.random() * randomReplies.length);
                 response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+"'";
@@ -3554,7 +3554,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.isCollectable = function() {
-            //console.log("collectable = "+_collectable);
+            //console.debug("collectable = "+_collectable);
             return _collectable;
         };
 
@@ -3583,7 +3583,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.canTravel = function() {
-            //console.log("canTravel = "+_canTravel);
+            //console.debug("canTravel = "+_canTravel);
             return _canTravel;
         };
 
@@ -3596,7 +3596,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //creature won't use a breakable weapon - will only auto-use non-breakable ones.
                 if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
                     var weaponStrength = weapons[index].getAttackStrength();
-                    //console.log('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
+                    //console.debug('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
                     if (weaponStrength > selectedWeaponStrength) {
                         selectedWeapon = weapons[index];
                         selectedWeaponStrength = weaponStrength;
@@ -3688,17 +3688,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (_waitDelay > 0) {
                     //deliberate wait takes precedence over others - this may have been requested or from returning home
                     delay = _waitDelay;
-                        //console.log(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
+                        //console.debug(self.getDisplayName()+": wait delay. Time remaining:"+eval(delay-_currentDelay));
                 } else if (_clearedDestinations.length == 0) {
                     //loop delay takes precedence over destination delay
                     delay = _loopDelay;
-                        //console.log(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
+                        //console.debug(self.getDisplayName()+": loop delay. Time remaining:"+eval(delay-_currentDelay));
                 } else if (_clearedDestinations.length > 0) {
                     if (_currentLocation.getName() == _clearedDestinations[0]) {
                         //most recently cleared destination is unshifted to start of clearedDestination array so...
                         //creature is still in destination location
                         delay = _destinationDelay;
-                        //console.log(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
+                        //console.debug(self.getDisplayName()+": destination delay. Time remaining:"+eval(delay-_currentDelay));
                     } else {
                         //likely a leftover from player delay. Reset it.
                         delay = _currentDelay;           
@@ -3751,7 +3751,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                 };
 
-                //    console.log("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
+                //console.debug("<--- " + self.getName() + " has no exits from " + _currentLocation.getName());
                 //no exit this time
                 return null;
             };
@@ -3762,7 +3762,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return null;
             };
             
-            //console.log("getting random exit");
+            //console.debug("getting random exit");
             //don't double-back, don't use "avoid" locations, emergency exits, don't climb, run or crawl.
             var useExitActions = false;
             var exit = _currentLocation.getRandomExit(useDoors, _avoiding, _inventory, _lastDirection, false, useExitActions);
@@ -3821,7 +3821,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                             return "<br>" + self.getFirstName() + " locks " + returnDoor.getDisplayName() + ".<br>";
                         };
                     } else {
-                        //console.log(self.getName()+" closed the door behind them.");
+                        //console.debug(self.getName()+" closed the door behind them.");
                         return returnDoor.close("close", _currentLocation.getName());
                     };
                         
@@ -3871,7 +3871,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
 
                     //can't make it this time.
-                    console.log("<--- "+self.getName()+" Possibly stuck - selected exit was a locked door.");
+                    console.info("<--- "+self.getName()+" Possibly stuck - selected exit was a locked door.");
                     return null;
                 };
 
@@ -3954,7 +3954,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 //start with a clear resultString
                 resultString = "";
                 
-                //console.log("Creature tick: "+self.getName()+"...");
+                //console.debug("Creature tick: "+self.getName()+"...");
                 resultString += _inventory.tick(self);
                 
                 resultString += closePreviouslyOpenedDoors(map);
@@ -4003,7 +4003,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         //is creature in "current" destination?
                         if (_destinations[_destinations.length - 1] == _currentLocation.getName()) {
                             //creature has reached destination
-                            //console.log(self.getDisplayName()+" reached destination.");
+                            //console.debug(self.getDisplayName()+" reached destination.");
                             self.clearPath();
                             self.clearDestination();
                             _destinationBlockedCount = 0;
@@ -4028,7 +4028,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                     self.clearPath(); //we'll try again next time.
                                 } else {
                                     exit = _currentLocation.getExit(direction);
-                                    //console.log(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
+                                    //console.debug(self.getDisplayName()+" is following path to destination. Steps remaining: "+_path.length);
                                 };
                             } else {
                                 //could not find path this time around.
@@ -4337,7 +4337,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             } else {
                 //nothing visible to player.
                 return "";
-                //console.log(resultString);
+                //console.debug(resultString);
             };
         };
 
@@ -4478,7 +4478,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     _charges = 0;
                 };
             };
-            //console.log("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
+            //console.debug("Consumed "+self.getDisplayName()+" charges remaining: "+_charges);
 
             return Math.round(_charges*100)/100; //deliberately works but does nothing if charges are -ve
         };
@@ -4550,7 +4550,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.setDestination = function(destinationName, pushToFrontOfList) {
             if (_avoiding.indexOf(destinationName) > -1) {return null};
-            //console.log(self.getDisplayName()+" new destination set "+destinationName);
+            //console.debug(self.getDisplayName()+" new destination set "+destinationName);
             //add new destination to *front* of array as we pop destinations from the end.
 
             if (pushToFrontOfList) {
@@ -4588,7 +4588,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.clearDestination = function() {
-            //console.log(self.getDisplayName()+" destination cleared");
+            //console.debug(self.getDisplayName()+" destination cleared");
             var clearedDestination = _destinations.pop();
             //do we have existing cleared destinations?
             var duplicate = false;
@@ -4637,7 +4637,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.setPath = function(path) {
-            //console.log(self.getDisplayName()+" path set to "+path+"(will reach "+_destination+" in "+path.length+" moves)");
+            //console.debug(self.getDisplayName()+" path set to "+path+"(will reach "+_destination+" in "+path.length+" moves)");
             _path = path;
         };
         
@@ -4646,7 +4646,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.clearPath = function() {
-            //console.log(self.getDisplayName()+" path cleared.");
+            //console.debug(self.getDisplayName()+" path cleared.");
             _path = [];
         };
 
@@ -4686,7 +4686,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (!(visitedLocations)) {visitedLocations = [currentLocation.getName()];}
             else {visitedLocations.push(currentLocation.getName())};
 
-            //console.log("finding path from "+currentLocation.getName()+" to "+destinationName);
+            //console.debug("finding path from "+currentLocation.getName()+" to "+destinationName);
 
             if (currentLocation.getName() == destinationName) {
                 //pathfinder destination found;
@@ -4728,7 +4728,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         //// end instance methods       
-	    //console.log(_objectName + ' created: '+_name);
+	    //console.debug(_objectName + ' created: '+_name);
     }
     catch(err) {
 	    console.error('Unable to create Creature object: '+err);

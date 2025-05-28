@@ -112,9 +112,12 @@ describe("Player Powered Items", () => {
         const torch = mb.buildArtefact({ "file": "torch" });
         p0.acceptItem(torch);
         torch.consumeComponents(100);
-        const expectedResult = "It contains some torch batteries.<br>It's not working." + "|***|" + "They're pretty chunky but fairly old-looking.<br>They're all used up.";
-        const actualResult = p0.examine("check", "torch", null, m0) + "|***|" + p0.examine("check", "batteries", null, m0);
-        expect(actualResult).toBe(expectedResult);
+        
+        let expectedResult = "It contains some torch batteries.<br>It's not working.$imagetorch.jpg/$image";
+        expect(p0.examine("check", "torch", null, m0)).toBe(expectedResult);
+
+        expectedResult = "They're pretty chunky but fairly old-looking.<br>They're all used up.$imagebatteries.jpg/$image";
+        expect(p0.examine("check", "batteries", null, m0)).toBe(expectedResult);
     });
 
     test("player receives message when turning on a powered item that is already on", () => {
