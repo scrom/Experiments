@@ -9,6 +9,7 @@
     "carryWeight": 7,
     "attackStrength": 2,
     "type": "container",
+    "imageName": "parcel.jpg",
     "canCollect": true,
     "isBreakable": true,
     "isDamaged": true,

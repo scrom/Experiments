@@ -7,6 +7,7 @@
         "defaultAction": "open",
         "weight": 200,
         "type": "door",
+        "imageName": "gate.jpg",
         "canOpen": true,
         "lockable": true,
         "locked": true,

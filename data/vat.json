@@ -9,6 +9,7 @@
     "carryWeight": 3,
     "attackStrength": 1,
     "type": "container",
+    "imageName": "vat.jpg",
     "holdsLiquid": true,
     "customAction": [
       "get"

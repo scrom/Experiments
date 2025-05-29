@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 2.5,
     "type": "food",
+    "imageName": "shreddies.jpg",
     "plural": true,
     "canCollect": true,
     "requiresContainer": true,

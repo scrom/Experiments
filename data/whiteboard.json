@@ -5,6 +5,7 @@
 "detailedDescription": "As whiteboards go it's pretty average really.",
 "attributes": {
     "weight": 30,
+    "imageName": "whiteboard.jpg",
     "canDrawOn": true
 },
 "synonyms": [

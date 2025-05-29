@@ -5,6 +5,7 @@
   "detailedDescription": "Blinky blink blink, whirrrr, hum, blink.<br>It's just your typical network hardware. It's cool that you can get to it though.",
   "attributes": {
     "type": "scenery",
+    "imageName": "network-switch.jpg",
     "customAction": [
       "get",
       "play"

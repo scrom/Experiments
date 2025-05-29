@@ -5,6 +5,7 @@
   "detailedDescription": "It looks like something was injured here. It's worth collecting some, chances are it might save lives.",
   "attributes": {
     "weight": 0.5,
+    "imageName": "venom.jpg",
     "requiresContainer": true,
     "requiredContainer": "syringe",
     "isLiquid": true,

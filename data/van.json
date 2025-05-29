@@ -10,6 +10,7 @@
         "burnRate": 0.1,
         "switched": true,
         "type": "vehicle",
+        "imageName": "van.jpg",
         "subType": "van",
         "canDrawOn": true,
         "requiredComponentCount": 1,

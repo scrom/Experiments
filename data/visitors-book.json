@@ -1,0 +1,21 @@
+{
+    "object": "artefact",
+    "name": "visitors book",
+    "description": "visitor's book",
+    "detailedDescription": "It looks like you're the first newcomer today.",
+    "attributes": {
+        "weight": 1,
+        "position": "on",
+        "imageName": "visitorsbook.jpg",
+        "customAction": [
+            "get"
+        ],
+        "defaultResult": "It needs to stay down here on reception.",
+        "canDrawOn": true
+    },
+    "synonyms": [
+        "book",
+        "visitor book",
+        "in"
+    ]
+}

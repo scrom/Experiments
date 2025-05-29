@@ -8,6 +8,7 @@
     "weight": 2,
     "carryWeight": 1,
     "type": "container",
+    "imageName": "marmite-jar.jpg",
     "holdsLiquid": true,
     "canCollect": true,
     "canDrawOn": true,

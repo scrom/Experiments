@@ -6,6 +6,7 @@
     "attributes": {
         "weight": 400,
         "carryWeight": 120,
+        "imageName": "skip.jpg",
         "customAction": "climb",
         "defaultResult": "You clamber around in the skip.<br>After putting your hand in something slimy and nearly impaling yourself on a broken chair you decide to climb back out.",
         "canDrawOn": true

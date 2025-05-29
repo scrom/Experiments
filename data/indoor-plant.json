@@ -6,6 +6,7 @@
 "attributes": {
     "weight": 3,
     "type": "scenery",
+    "imageName": "plant.jpg",
     "subType": "plant",
     "position": "on",
     "combinesWith": [

@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 0.4,
     "type": "tool",
+    "imageName": "whetstone.jpg",
     "subType": "sharpen",
     "canCollect": true,
     "isBreakable": true,

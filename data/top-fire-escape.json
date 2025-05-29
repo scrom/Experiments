@@ -4,7 +4,8 @@
     "displayName": "Fire escape",
     "description": "You're at the top of the rear fire escape. From here you have a short <i>climb up</i> to the roof.<br>It's a long way down!",
     "attributes": {
-      "type": "outdoor"
+      "type": "outdoor",
+      "imageName": "fire-escape-top.jpg"
     },
     "exits": [
       {
