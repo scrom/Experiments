@@ -5,7 +5,7 @@
   "detailedDescription": "It's still sterile.",
   "attributes": {
     "type": "container",
-    "subtype": "bottle",
+    "subType": "bottle",
     "imageName": "syringe.jpg", 
     "holdsLiquid": true,
     "carryWeight": 0.5,
