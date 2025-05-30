@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "chatterbox",
+  "displayName": "talk to 15 people",
+  "attributes": {
+    "parent": "keyfob",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "creaturesToSpeakTo": 15
+  },
+  "reward": {
+    "score": 25,
+    "message": "<br>You're quite a chatterbox. We like people who talk and collaborate."
+  }
+}

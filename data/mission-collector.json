@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "collector",
+  "displayName": "collect and carry more than &pound;100 worth of valuables",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "inventoryValue": ">100"
+  },
+  "reward": {
+    "score": 35,
+    "message": "<br>You've collected quite a lot of valuable stuff there!<br>Have you considered <i>sell</i>ing any of it?"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "lovedbyall",
+  "displayName": "make yourself popular with nearly everyone",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "popularity": ">95"
+  },
+  "reward": {
+    "score": 100,
+    "message": "<br>Wow. You're winning in the popularity stakes!"
+  }
+}

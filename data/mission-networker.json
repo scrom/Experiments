@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "networker",
+  "displayName": "talk to every character possible",
+  "attributes": {
+    "parent": "chatterbox",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "creaturesToSpeakTo": 0
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>Wow, you spoke to <i>everyone</i>. That's quite a network you're building up."
+  }
+}

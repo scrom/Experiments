@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "psycho",
+  "displayName": "build aggression up to 25",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "maxAggression": 25
+  },
+  "reward": {
+    "score": -25,
+    "message": "<br>Whoa, you're out of control. You need to seriously work on your anger management."
+  }
+}

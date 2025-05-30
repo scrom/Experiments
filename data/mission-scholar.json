@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "scholar",
+  "displayName": "read all the things",
+  "attributes": {
+    "parent": "bookworm",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "booksToRead": 0
+  },
+  "reward": {
+    "score": 25,
+    "message": "<br>You read 'all the things'!"
+  }
+}

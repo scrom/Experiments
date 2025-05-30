@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "bff",
+  "displayName": "gain affinity from one character up to level 12",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "maxAffinity": 12
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>You're making a real effort here. Looks like you've almost got a best friend forever!"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "doctor",
+  "displayName": "heal more than 8 times",
+  "attributes": {
+    "parent": "first-aider",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "healCount": 9
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>You've really 'got it' with the healing activities.<br>(Although where that level of repeated injury in an office environment came from is somewhat worrying.)"
+  }
+}

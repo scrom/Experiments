@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "author",
+  "displayName": "write lots of notes",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "writingCount": ">10"
+  },
+  "reward": {
+    "score": 10,
+    "message": "<br>You seem to be writing quite a few notes.<br>Anyone would think you're destined for management."
+  }
+}

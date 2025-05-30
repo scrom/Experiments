@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "pickpocket",
+  "displayName": "steal more than &pound;50 worth of valuables",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "stolenCash": ">50"
+  },
+  "reward": {
+    "score": -150,
+    "message": "<br>Yeah...<br>...about all that money you've made.<br>That level of dishonesty will get you fired pretty much immediately."
+  }
+}

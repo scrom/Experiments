@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "spendthrift",
+  "displayName": "spend more than &pound;100",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "cashSpent": ">100"
+  },
+  "reward": {
+    "score": 5,
+    "message": "<br>Hey big spender!<br>We generally have a spending wisely policy here but you can expense up to &pound;100 on anything reasonable.<br>You <i>are</i> spending wisely, aren't you?"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "adventurer",
+  "displayName": "find 100 locations",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "locationsFound": 100
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>Hey, that's some impressive adventuring!<br>You've found 100 locations."
+  }
+}

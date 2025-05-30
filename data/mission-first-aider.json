@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "first-aider",
+  "displayName": "heal 5 times",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "healCount": 5
+  },
+  "reward": {
+    "score": 25,
+    "message": "<br>We could do with someone like you on the first-aid team. You've got quite the healing skills."
+  }
+}

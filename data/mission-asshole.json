@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "asshole",
+  "displayName": "really upset a lot of people",
+  "attributes": {
+    "parent": "thinice",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "popularity": "<-24"
+  },
+  "reward": {
+    "score": -100,
+    "message": "<br>You need to sort yourself out, people here think you're becoming quite the piece of work.<br>We have a 'no assholes' rule here you know."
+  }
+}

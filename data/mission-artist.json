@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "artist",
+  "displayName": "draw lots of pictures",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "drawingCount": ">5"
+  },
+  "reward": {
+    "score": 5,
+    "message": "<br>You think you're quite the artist, don't you."
+  }
+}

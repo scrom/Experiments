@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "thinice",
+  "displayName": "upset a few people",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "popularity": "<-5"
+  },
+  "reward": {
+    "score": 5,
+    "message": "<br>Although it's not clear exactly what you've done so far, some of your actions aren't making you popular.<br>Admittedly you can't make an omelette without breaking some eggs but you're treading a fine line here.<br><br>We'll give you the benefit of the doubt for now and assume you're ruffling feathers for the 'greater good' but consider this a reminder to consider the consequences of your actions."
+  }
+}

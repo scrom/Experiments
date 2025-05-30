@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "moneymaker",
+  "displayName": "gain more than &pound;100",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "cashGained": ">100"
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>You've made quite a bit of money there, great job!<br>We hope you didn't come about it through foul means though."
+  }
+}

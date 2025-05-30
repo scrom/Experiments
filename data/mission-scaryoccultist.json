@@ -1,0 +1,21 @@
+{
+  "object": "mission",
+  "name": "scaryoccultist",
+  "displayName": "draw a pentagram on a floor and add blood to it",
+  "attributes": {
+    "missionObject": "floor"
+  },
+  "conditionAttributes": {
+    "drawings": [
+      "pentagram"
+    ],
+    "wetted": [
+      "blood"
+    ]
+  },
+  "reward": {
+    "score": 5,
+    "aggression": 5,
+    "message": "<br>I'm really not comfortable with your behaviour (and nor is anyone else around here).<br>Blood and pentagrams are a bit of a worrying mix for an office environment."
+  }
+}

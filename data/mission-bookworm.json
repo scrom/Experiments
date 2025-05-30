@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "bookworm",
+  "displayName": "read nearly all the things",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "booksToRead": 5
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>I like your attitude to learning, keep it up<br>Only three more items left to read!"
+  }
+}

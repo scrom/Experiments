@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "thief",
+  "displayName": "steal 5 objects",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "stolenObjectsCount": 5
+  },
+  "reward": {
+    "score": -35,
+    "message": "<br>Stealing may be one way of achieving your goals but it really doesn't fit in with our values."
+  }
+}

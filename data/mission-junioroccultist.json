@@ -1,0 +1,18 @@
+{
+  "object": "mission",
+  "name": "junioroccultist",
+  "displayName": "draw a pentagram on a floor",
+  "attributes": {
+    "missionObject": "floor"
+  },
+  "conditionAttributes": {
+    "drawings": [
+      "pentagram"
+    ]
+  },
+  "reward": {
+    "score": 5,
+    "aggression": 3,
+    "message": "<br>Hmm. It seems we have a budding occultist here.<br>You might be getting ahead of yourself a bit. Don't be surprised if people are little edgy around you for a while."
+  }
+}

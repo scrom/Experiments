@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "explorer",
+  "displayName": "find every location",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "locationsToFind": 0
+  },
+  "reward": {
+    "score": 100,
+    "message": "<br>You're quite the explorer!<br>Congratulations, you've found every location."
+  }
+}

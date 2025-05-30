@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "liability",
+  "displayName": "destroy 15 items",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "destroyedObjectsCount": 15
+  },
+  "reward": {
+    "score": -15,
+    "message": "<br>You seem to be a bit of a liability. Time to stop trashing the place maybe?"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "hunter",
+  "displayName": "successfully hunt 15 times",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "huntCount": 10
+  },
+  "reward": {
+    "score": 50,
+    "hunt": 1,
+    "message": "<br>You're getting pretty slick at this hunting thing. If you're trying to track others down you can probably speed things up by <i>follow</i>ing them from now on."
+  }
+}

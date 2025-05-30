@@ -1,0 +1,15 @@
+{
+  "object": "mission",
+  "name": "boring",
+  "displayName": "wait 25 times",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "waitCount": 25
+  },
+  "reward": {
+    "score": 5,
+    "message": "<br>Wow, you're boring! You've spent a total of 25 turns doing absolutely nothing.<br>It looks like you need some encouragement to get moving."
+  }
+}

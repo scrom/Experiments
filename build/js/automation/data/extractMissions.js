@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
+//Script to extract mission objects nested in files into standalone files
+
 const dataDir = path.join(__dirname, '../../../../data');
 console.log(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
