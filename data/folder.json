@@ -1,0 +1,27 @@
+{
+  "object": "artefact",
+  "name": "folder",
+  "description": "document folder",
+  "detailedDescription": "Leafing through the contents, it appears to be folder of notes on working effectively with others.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 1,
+    "type": "book",
+    "canCollect": true,
+    "affinityModifier": 0,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "notes",
+    "people folder",
+    "document",
+    "document folder",
+    "working effectively with others",
+    "book"
+  ],
+  "missions": [
+    {
+      "file": "mission-workingwithothers"
+    }
+  ]
+}

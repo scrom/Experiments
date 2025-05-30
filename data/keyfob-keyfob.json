@@ -1,0 +1,11 @@
+{
+  "object": "artefact",
+  "name": "keyfob",
+  "template": "keyfob",
+  "attributes": {
+    "affinityModifier": -999,
+    "writings": [
+      "$player"
+    ]
+  }
+}

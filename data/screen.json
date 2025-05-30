@@ -1,0 +1,14 @@
+{
+  "object": "artefact",
+  "name": "screen",
+  "template": "flat-screen",
+  "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br><br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
+  "attributes": {
+    "imageName": "screen.jpg"
+  },
+  "missions": [
+    {
+      "file": "mission-destroyscreen"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "object": "artefact",
+  "name": "hardware",
+  "description": "hardware",
+  "detailedDescription": "Most of this stuff looks old, broken or redundant.",
+  "attributes": {
+    "type": "scenery",
+    "isBroken": true,
+    "defaultResult": "There's little or nothing here of any use to you at the moment."
+  },
+  "synonyms": [
+    "cables",
+    "cable",
+    "tools",
+    "hardware",
+    "wire",
+    "wires",
+    "spare",
+    "spares",
+    "spare hardware",
+    "spare pieces",
+    "spare pieces of hardware",
+    "spare pieces hardware"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "object": "artefact",
+  "name": "autonomy",
+  "description": "autonomy",
+  "detailedDescription": "You see little people in suits scurrying back and forth.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "find",
+      "where is",
+      "where"
+    ],
+    "defaultResult": "It's the big office building over the road."
+  },
+  "synonyms": [
+    "ant",
+    "farm",
+    "ant farm",
+    "autonomy ant farm",
+    "road",
+    "office",
+    "office building",
+    "big office building",
+    "big office"
+  ],
+  "inventory": [
+    {
+      "file": "people"
+    }
+  ]
+}

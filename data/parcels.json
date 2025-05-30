@@ -1,0 +1,26 @@
+{
+  "object": "artefact",
+  "name": "parcels",
+  "description": "parcels of assorted sizes",
+  "detailedDescription": "Big, small, round, heavy, light. Parcels galore but none of them are yours.",
+  "attributes": {
+    "weight": 25,
+    "canCollect": true,
+    "isBreakable": true,
+    "plural": true,
+    "customAction": [
+      "get",
+      "open"
+    ],
+    "defaultResult": "These ones aren't yours!"
+  },
+  "synonyms": [
+    "parcel",
+    "amazon parcel",
+    "amazon parcels",
+    "christmas parcel",
+    "christmas parcels",
+    "christmas",
+    "amazon"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "photo",
+  "description": "photo",
+  "detailedDescription": "The photos are all full of people smiling and enjoying themselves.<br>Even from the short time you've been here, you now recognise a few of the faces here.",
+  "attributes": {
+    "defaultAction": "read",
+    "type": "junk",
+    "canCollect": false,
+    "hidden": true,
+    "canDrawOn": true,
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "These are part of Redgate's 'Memory wall'. They're here to look at and enjoy, not to mess with."
+  },
+  "synonyms": [
+    "photo",
+    "photograph",
+    "faces"
+  ]
+}

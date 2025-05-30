@@ -1,0 +1,17 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "curved wall",
+  "detailedDescription": "It's a concave curve. Possibly so that people walking past the outside don't walk into a corner. (We're speculating here)",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "walls",
+    "curved walls",
+    "curved wall",
+    "curved"
+  ]
+}

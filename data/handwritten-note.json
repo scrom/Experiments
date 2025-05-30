@@ -1,0 +1,25 @@
+{
+  "object": "artefact",
+  "name": "handwritten note",
+  "description": "handwritten note",
+  "detailedDescription": "It's barely legible and spotted with blood.",
+  "attributes": {
+    "defaultAction": "read",
+    "type": "book",
+    "weight": 0.1,
+    "affinityModifier": 3,
+    "canCollect": true
+  },
+  "synonyms": [
+    "note",
+    "letter",
+    "letter from jordan",
+    "aileen letter",
+    "aileens letter"
+  ],
+  "missions": [
+    {
+      "file": "mission-readnotefromjordan"
+    }
+  ]
+}

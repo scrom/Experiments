@@ -1,0 +1,24 @@
+{
+  "object": "artefact",
+  "name": "architecture",
+  "description": "faint marks",
+  "detailedDescription": "It's pretty hard to see the details but it looks like the architecture for a basic ecommerce system with microservices and an event queue. ",
+  "attributes": {
+    "weight": 0,
+    "plural": true,
+    "type": "scenery"
+  },
+  "synonyms": [
+    "marks",
+    "faint marks",
+    "architecture diagram",
+    "diagram",
+    "ecommerce",
+    "ecommerce system",
+    "microservice",
+    "service",
+    "event",
+    "event queue",
+    "queue"
+  ]
+}

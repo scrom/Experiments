@@ -1,0 +1,31 @@
+{
+  "object": "artefact",
+  "name": "waste gate",
+  "description": "large gate",
+  "detailedDescription": "You've always been curious about what interesting things get thrown in here.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "hasLinkedDoor": true
+  },
+  "linkedexits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "waste-area",
+      "destination": "rubbish-bins",
+      "hidden": true
+    }
+  ],
+  "synonyms": [
+    "waste",
+    "gate",
+    "large gate",
+    "door"
+  ]
+}

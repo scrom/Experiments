@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "shelves",
+  "description": "set of suspended shelves",
+  "detailedDescription": "They're plain cheap melamine shelves screwed to the wall.",
+  "attributes": {
+    "type": "scenery",
+    "extendedInventoryDescription": "Thumbing through the piles of uncollected letters and parcels, you find $inventory.",
+    "carryWeight": 3,
+    "plural": true
+  },
+  "synonyms": [
+    "shelf",
+    "melamine",
+    "melamine shelf",
+    "melamine shelves",
+    "parcel shelf",
+    "parcel shelves"
+  ]
+}

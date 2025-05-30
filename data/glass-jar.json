@@ -1,0 +1,28 @@
+{
+  "object": "artefact",
+  "name": "glass jar",
+  "description": "jar",
+  "detailedDescription": "It's a pretty standard storage jar.",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 2,
+    "carryWeight": 1.1,
+    "attackStrength": 2,
+    "type": "container",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "isBreakable": true,
+    "canDrawOn": true,
+    "affinityModifier": 0
+  },
+  "synonyms": [
+    "jar",
+    "sugar jar",
+    "storage jar"
+  ],
+  "inventory": [
+    {
+      "file": "sugar"
+    }
+  ]
+}

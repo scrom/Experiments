@@ -1,0 +1,18 @@
+{
+  "object": "artefact",
+  "name": "gate key",
+  "description": "gate key",
+  "detailedDescription": "This looks like the key to the waste area gate.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": 2,
+    "unlocks": "waste gate"
+  },
+  "synonyms": [
+    "waste key",
+    "key"
+  ]
+}

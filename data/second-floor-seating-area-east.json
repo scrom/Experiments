@@ -1,109 +1,92 @@
-  {
-    "object": "location",
-    "name": "second-floor-seating-area-east",
-    "displayName": "Rest area",
-    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-seating-area-east",
-        "destination": "kitchen-second-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "second-floor-seating-area-east",
-        "destination": "second-floor-seating-area-west"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "second-floor-seating-area-east",
-        "destination": "is-area"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "second-floor-seating-area-east",
-        "destination": "second-floor-fire-escape",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "wall",
-        "description": "wall full of post-it notes",
-        "detailedDescription": "I see it! I can see the duplicate...<br>Oh... No, it's not.",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true
+{
+  "object": "location",
+  "name": "second-floor-seating-area-east",
+  "displayName": "Rest area",
+  "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "second-floor-seating-area-east",
+      "destination": "kitchen-second-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "second-floor-seating-area-east",
+      "destination": "second-floor-seating-area-west"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "second-floor-seating-area-east",
+      "destination": "is-area"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "second-floor-seating-area-east",
+      "destination": "second-floor-fire-escape",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "file": "wall-second-floor-seating-area-east"
+    },
+    {
+      "object": "artefact",
+      "template": "fire-exit",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "South",
+          "direction": "s",
+          "source": "second-floor-seating-area-east",
+          "destination": "second-floor-fire-escape",
+          "hidden": true
         },
-        "synonyms": [
-          "mural",
-          "post-its",
-          "post it notes",
-          "notes",
-          "postits",
-          "postit notes",
-          "walls"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "fire-exit",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "second-floor-seating-area-east",
-            "destination": "second-floor-fire-escape",
-            "hidden": true
-          },
-          {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "second-floor-fire-escape",
-            "destination": "second-floor-seating-area-east",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "chairs",
-        "description": "comfy armchairs",
-        "detailedDescription": "They're small but comfortable armchairs.",
-        "synonyms": [
-          "chair",
-          "comfy chair",
-          "comfy armchair",
-          "comfortable chair",
-          "small armchair",
-          "small chair"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "table",
-        "description": "small coffee table",
-        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
-        "synonyms": [
-          "coffee table",
-          "small table",
-          "small coffee table",
-          "wooden coffee table",
-          "small wooden coffee table",
-          "small wooden  table"
-        ]
-      }
-    ]
-  }
+        {
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "second-floor-fire-escape",
+          "destination": "second-floor-seating-area-east",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "chairs",
+      "description": "comfy armchairs",
+      "detailedDescription": "They're small but comfortable armchairs.",
+      "synonyms": [
+        "chair",
+        "comfy chair",
+        "comfy armchair",
+        "comfortable chair",
+        "small armchair",
+        "small chair"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "description": "small coffee table",
+      "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+      "synonyms": [
+        "coffee table",
+        "small table",
+        "small coffee table",
+        "wooden coffee table",
+        "small wooden coffee table",
+        "small wooden  table"
+      ]
+    }
+  ]
+}

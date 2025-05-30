@@ -28,28 +28,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "backlog",
-      "description": "scattering of analysis documentation but nothing interesting",
-      "detailedDescription": "You pick through the few pieces of paperwork you can see lying around but there's nothing that particularly interests you.",
-      "attributes": {
-        "type": "scenery",
-        "plural": true,
-        "customAction": [
-          "get"
-        ],
-        "defaultResult": "I think Brandon, Ben and Zoe need those, sorry."
-      },
-      "synonyms": [
-        "paperwork",
-        "analysis",
-        "documentation",
-        "cloud",
-        "requests",
-        "business",
-        "business requests",
-        "request backlog"
-      ]
+      "file": "backlog"
     }
   ]
 }

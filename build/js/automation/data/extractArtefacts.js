@@ -20,8 +20,8 @@ function isJsonEqual(a, b) {
 
 // Helper to generate a unique filename if needed
 function getUniqueFilename(baseName, artefactObj, parentName) {
-  let candidate = baseName + '.json';
-  let candidatePath = path.join(dataDir, candidate);
+  let candidate = baseName ;
+  let candidatePath = path.join(dataDir, candidate+'.json');
 
   if (!fs.existsSync(candidatePath)) {
     return candidate;
@@ -41,8 +41,8 @@ function getUniqueFilename(baseName, artefactObj, parentName) {
   // If not identical, append parentName if provided
   if (parentName) {
     const parentBase = parentName.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
-    candidate = `${baseName}-${parentBase}.json`;
-    candidatePath = path.join(dataDir, candidate);
+    candidate = `${baseName}-${parentBase}`;
+    candidatePath = path.join(dataDir, candidate+'.json');
     if (!fs.existsSync(candidatePath)) {
       return candidate;
     }
@@ -58,8 +58,8 @@ function getUniqueFilename(baseName, artefactObj, parentName) {
   // Fallback: add numeric suffix if parentName also collides
   let suffix = 1;
   let candidateBase = baseName + (parentName ? '-' + parentName.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() : '');
-  candidate = `${candidateBase}-${suffix}.json`;
-  candidatePath = path.join(dataDir, candidate);
+  candidate = `${candidateBase}-${suffix}`;
+  candidatePath = path.join(dataDir, candidate+'.json');
   while (fs.existsSync(candidatePath)) {
     try {
       const existing = JSON.parse(fs.readFileSync(candidatePath, 'utf8'));
@@ -68,8 +68,8 @@ function getUniqueFilename(baseName, artefactObj, parentName) {
       }
     } catch (e) {}
     suffix++;
-    candidate = `${candidateBase}-${suffix}.json`;
-    candidatePath = path.join(dataDir, candidate);
+    candidate = `${candidateBase}-${suffix}`;
+    candidatePath = path.join(dataDir, candidate+'.json');
   }
   return candidate;
 }
@@ -81,7 +81,7 @@ function processArray(arr, parentName) {
     if (item && typeof item === 'object' && item.object === 'artefact' && item.name) {
       const artefactFilenameBase = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
       const artefactFilename = getUniqueFilename(artefactFilenameBase, item, parentName);
-      const artefactPath = path.join(dataDir, artefactFilename);
+      const artefactPath = path.join(dataDir, artefactFilename+'.json');
       if (!fs.existsSync(artefactPath)) {
         fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
         console.log(`Created artefact: ${artefactFilename}`);
@@ -106,7 +106,7 @@ function processObject(obj, parentName) {
       if (obj[key].object === 'artefact' && obj[key].name) {
         const artefactFilenameBase = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
         const artefactFilename = getUniqueFilename(artefactFilenameBase, obj[key], obj.name || parentName);
-        const artefactPath = path.join(dataDir, artefactFilename);
+        const artefactPath = path.join(dataDir, artefactFilename+'.json');
         if (!fs.existsSync(artefactPath)) {
           fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
           console.log(`Created artefact: ${artefactFilename}`);

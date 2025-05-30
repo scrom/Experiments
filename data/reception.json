@@ -29,66 +29,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "reception desk",
-      "description": "big red desk",
-      "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
-      "attributes": {
-        "weight": 280,
-        "imageName": "reception-desk.jpg",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "big desk",
-        "reception",
-        "desk",
-        "red desk",
-        "big red desk"
-      ],
-      "inventory": [
-        {
-          "object": "artefact",
-          "name": "missing visitors book",
-          "description": "missing visitors book",
-          "detailedDescription": "Try talking to Violet first.",
-          "attributes": {
-            "type": "scenery",
-            "subType": "intangible",
-            "customAction": [
-              "get",
-              "find",
-              "where is",
-              "where"
-            ],
-            "defaultResult": "Violet has the visitors book. Try having a chat with her."
-          },
-          "synonyms": [
-            "visitors book",
-            "visitor book",
-            "in"
-          ]
-        },
-        {
-          "object": "artefact",
-          "name": "biro",
-          "description": "blue biro",
-          "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
-          "attributes": {
-            "weight": 0.1,
-            "type": "writing",
-            "position": "on",
-            "customAction": [
-              "get"
-            ],
-            "defaultResult": "It's attached to the desk."
-          },
-          "synonyms": [
-            "pen",
-            "blue pen",
-            "blue biro"
-          ]
-        }
-      ]
+      "file": "reception-desk"
     },
     {
       "file": "violet-wilmott"

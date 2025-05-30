@@ -1,0 +1,37 @@
+{
+  "object": "artefact",
+  "name": "steel gate",
+  "description": "steel gate",
+  "detailedDescription": "This has the potential to be a useful short-cut.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "autoLock": 2,
+    "canOpen": true
+  },
+  "linkedexits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "smoking-area",
+      "destination": "ground-floor-fire-escape",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "ground-floor-fire-escape",
+      "destination": "smoking-area",
+      "hidden": true
+    }
+  ],
+  "synonyms": [
+    "door",
+    "gate",
+    "steel door",
+    "steel"
+  ]
+}

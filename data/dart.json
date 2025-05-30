@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "dart",
+  "description": "nerf darts",
+  "detailedDescription": "Ping, squeee, ouch, grrr.",
+  "attributes": {
+    "weight": 0.5,
+    "canCollect": true,
+    "charges": 10,
+    "chargeUnit": "round",
+    "chargesDescription": "There's $charges $chargeUnit left",
+    "plural": true,
+    "affinityModifier": 0,
+    "componentOf": [
+      "nerf gun"
+    ]
+  },
+  "synonyms": [
+    "nerf darts",
+    "darts"
+  ]
+}

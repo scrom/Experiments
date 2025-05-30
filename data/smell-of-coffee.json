@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "smell of coffee",
+  "description": "coffee",
+  "detailedDescription": "You'll need to head to the kitchen.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get",
+      "find",
+      "where is",
+      "where"
+    ],
+    "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
+    "smell": "Yup, smells like coffee here.<br>Good coffee at that."
+  },
+  "synonyms": [
+    "latte",
+    "coffee"
+  ]
+}

@@ -1,60 +1,32 @@
-  {
-    "object": "location",
-    "name": "roof",
-    "displayName": "Roof",
-    "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
-    "attributes": {
-        "type": "outdoor"
+{
+  "object": "location",
+  "name": "roof",
+  "displayName": "Roof",
+  "description": "You're on the roof. With a bit of investment this would make a great roof terrace and bar.<br>However at the moment it's simply an open space with no safety rail - probably best you don't spend too long up here!",
+  "attributes": {
+    "type": "outdoor"
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "down",
+      "direction": "d",
+      "source": "roof",
+      "destination": "top-fire-escape",
+      "requiredAction": "climb"
     },
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "down",
-            "direction": "d",
-            "source": "roof",
-            "destination": "top-fire-escape",
-            "requiredAction": "climb"
-        },
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "roof",
-            "destination": "plant-room",
-            "hidden": true
-        }
-    ],
-    "inventory": [ 
-        {
-            "object": "artefact",
-            "name": "plant room door",
-            "description": "steel door",
-            "detailedDescription": "Nobody ever seems to come up here. I wonder what's in there.",
-            "attributes": {
-                "defaultAction": "open",
-                "weight": 200,
-                "type": "door",
-                "canOpen": true,
-                "lockable": true,
-                "locked": true,
-                "hasLinkedDoor":  true
-            },
-            "linkedexits": [
-                {
-                    "object": "exit",
-                    "longname": "East",
-                    "direction": "e",
-                    "source": "roof",
-                    "destination": "plant-room",
-                    "hidden": true
-                }
-            ],
-            "synonyms": [
-                "plant door",
-                "steel door",
-                "plant",
-                "door"
-            ]
-        }
-    ]
-  }
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "roof",
+      "destination": "plant-room",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "file": "plant-room-door-roof"
+    }
+  ]
+}

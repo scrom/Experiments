@@ -1,0 +1,40 @@
+{
+  "object": "artefact",
+  "name": "server",
+  "description": "rack-mounted blade server",
+  "detailedDescription": "The servers look like they're connected to a console nearby.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 0.1,
+    "carryWeight": 0.75,
+    "type": "container",
+    "breakable": true,
+    "broken": true,
+    "canCollect": false
+  },
+  "synonyms": [
+    "rack",
+    "racks",
+    "server rack",
+    "server racks",
+    "blade",
+    "blade server",
+    "servers",
+    "computer",
+    "computers",
+    "bay",
+    "hard drive bay",
+    "rack",
+    "rack mounted",
+    "rack mounted blade",
+    "rack mounted blade server",
+    "rack-mounted",
+    "rack-mounted blade",
+    "rack-mounted blade server"
+  ],
+  "missions": [
+    {
+      "file": "mission-installdisk"
+    }
+  ]
+}

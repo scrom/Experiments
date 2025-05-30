@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "breakfast",
+  "description": "food",
+  "detailedDescription": "You'll need to head to the serving area for breakfast.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get",
+      "find",
+      "where is",
+      "where"
+    ],
+    "defaultResult": "The food serving area is just East of here. Go help yourself but don't go overboard, everyone needs to be able to eat.",
+    "smell": "There's a warm comforting smell coming from the serving area to the East."
+  },
+  "synonyms": [
+    "food"
+  ]
+}

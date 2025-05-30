@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "water cooler",
+  "description": "water cooler",
+  "detailedDescription": "A supply of fresh, filtered and cooled drinking water.",
+  "attributes": {
+    "defaultAction": "get water from cooler",
+    "weight": 100,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "watercooler",
+    "cooler"
+  ],
+  "delivers": [
+    {
+      "file": "water"
+    }
+  ]
+}

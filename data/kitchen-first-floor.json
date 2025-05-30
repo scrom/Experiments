@@ -1,4 +1,4 @@
- {
+{
   "object": "location",
   "name": "kitchen-first-floor",
   "displayName": "First floor kitchen",
@@ -13,36 +13,35 @@
     }
   ],
   "inventory": [
-    { "file": "fridge" },
-    { "file": "bowl" },
-    { "file": "bowl" },
-    { "file": "glass" },
-    { "file": "glass" },
-    { "file": "sink" },
+    {
+      "file": "fridge"
+    },
+    {
+      "file": "bowl"
+    },
+    {
+      "file": "bowl"
+    },
+    {
+      "file": "glass"
+    },
+    {
+      "file": "glass"
+    },
+    {
+      "file": "sink"
+    },
     {
       "object": "artefact",
       "template": "cereal-box",
       "inventory": [
-        {"file": "shreddies"}
+        {
+          "file": "shreddies"
+        }
       ]
     },
     {
-      "object": "artefact",
-      "name": "tissue",
-      "description": "roll of tissue",
-      "detailedDescription": "It's cheap and blue but pretty good for mopping up spills and cleaning whiteboards.",
-      "attributes": {
-        "weight": 1.5,
-        "type": "tool",
-        "subType": "clean",
-        "canCollect": true
-      },
-      "synonyms": [
-        "roll",
-        "tissue roll",
-        "roll of tissue",
-        "roll tissue"
-      ]
+      "file": "tissue"
     },
     {
       "object": "artefact",

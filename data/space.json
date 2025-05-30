@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "space",
+  "description": "space",
+  "detailedDescription": "You'll need to head to the downstairs kitchen if you want coffee now.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "The coffee machine is in the <i>ground floor</i> kitchen now."
+  },
+  "synonyms": [
+    "latte",
+    "coffee",
+    "machine",
+    "coffee machine",
+    "coffee machine space"
+  ]
+}

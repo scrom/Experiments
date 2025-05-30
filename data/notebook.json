@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "notebook",
+  "description": "black and red notebook",
+  "detailedDescription": "An A4 'Black and Red' brand notebook.<br> These are really useful for keeping track of tasks.<br>In case you accidentally leave it somewhere, I strongly suggest you <i>write</i> your name in it though.",
+  "attributes": {
+    "weight": 0.5,
+    "type": "book",
+    "canCollect": true,
+    "price": 3,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "book",
+    "notebook",
+    "note book",
+    "note",
+    "black and red",
+    "blackandred"
+  ]
+}

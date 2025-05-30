@@ -1,0 +1,24 @@
+{
+  "object": "artefact",
+  "name": "console",
+  "description": "old-fashioned VDU console",
+  "detailedDescription": "It's pretty old and tatty. There's no sign of life in it at the moment.",
+  "attributes": {
+    "weight": 25,
+    "type": "computer",
+    "breakable": true,
+    "canCollect": false
+  },
+  "synonyms": [
+    "vdu",
+    "screen",
+    "old screen",
+    "old console",
+    "old vdu console",
+    "old vdu",
+    "old fashioned vdu console",
+    "old fashioned vdu",
+    "old-fashioned vdu console",
+    "old-fashioned vdu"
+  ]
+}

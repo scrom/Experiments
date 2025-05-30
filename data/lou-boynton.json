@@ -26,22 +26,7 @@
       "file": "keyfob"
     },
     {
-      "object": "artefact",
-      "name": "axe",
-      "description": "fire axe",
-      "detailedDescription": "I have no idea why a PA would carry such a dangerous weapon but I wouldn't mess with anyone carrying this.",
-      "attributes": {
-        "weight": 6,
-        "attackStrength": 30,
-        "type": "weapon",
-        "subType": "blunt",
-        "canCollect": true,
-        "imageName": "axe.jpg"
-      },
-      "synonyms": [
-        "axe",
-        "fireaxe"
-      ]
+      "file": "axe"
     }
   ],
   "synonyms": [

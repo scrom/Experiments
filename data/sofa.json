@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "sofa",
+  "description": "comfy-looking sofa",
+  "detailedDescription": "It's large, comfy, and somewhat squishy. The perfect place to relax or <i>nap</i>",
+  "attributes": {
+    "defaultAction": "rest",
+    "weight": 300,
+    "type": "bed",
+    "imageName": "camelids.jpg",
+    "isBreakable": false
+  },
+  "synonyms": [
+    "comfy sofa",
+    "comfy looking sofa",
+    "comfy-looking sofa",
+    "comfort",
+    "comfortable",
+    "comfortable sofa",
+    "comfortable seat",
+    "comfortable seating"
+  ]
+}

@@ -52,25 +52,7 @@
   },
   "reward": {
     "delivers": {
-      "object": "artefact",
-      "name": "bulb",
-      "description": "projector bulb",
-      "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
-      "attributes": {
-        "weight": 0.1,
-        "attackStrength": 5,
-        "canCollect": true,
-        "isBreakable": true,
-        "affinityModifier": 0,
-        "componentOf": [
-          "projector"
-        ]
-      },
-      "synonyms": [
-        "lightbulb",
-        "light bulb",
-        "projector bulb"
-      ]
+      "file": "bulb"
     },
     "repairSkill": "projector",
     "message": "Angelina hands you a projector bulb."

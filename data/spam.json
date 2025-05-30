@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "spam",
+  "description": "spam",
+  "detailedDescription": "Processed meat. How bad can it be? Right?",
+  "attributes": {
+    "weight": 1,
+    "type": "food",
+    "canCollect": true,
+    "charges": 3,
+    "chargeUnit": "portion",
+    "chargesDescription": "There's about $charges $chargeUnit left",
+    "isEdible": true,
+    "plural": true,
+    "nutrition": -15,
+    "smell": "It reminds you of something.<br>You wonder to yourself if cats like Spam.",
+    "taste": "It tastes a lot like it <i>smell</i>s."
+  },
+  "synonyms": [
+    "meat",
+    "processed meat"
+  ]
+}

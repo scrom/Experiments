@@ -1,54 +1,27 @@
 {
-    "object": "location",
-    "name": "customer-delight-south-east",
-    "displayName": "Customer Delight",
-    "description": "You're in the South-Eastern corner of the Customer Delight development area.<br>This is the part of the large area occupied be the SQL Source Control development team.<br>One of the walls has been painted for use as a whiteboard.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "customer-delight-south-east",
-        "destination": "customer-delight-south"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "customer-delight-south-east",
-        "destination": "customer-delight-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "wall",
-        "description": "large white-painted wall",
-        "detailedDescription": "Whiteboard paint seems like a great idea until you to try to use it for sticky notes or want to clean it. This one's seen its day I think.",
-        "attributes": {
-          "weight": 300,
-          "type": "scenery",
-          "canDrawOn": true,
-          "writings": [
-            "<s>Sprint 7 - ship the alpha</s>",
-            "<s>Sprint 8 - ship the beta</s>",
-            "Sprint 9 - shippit",
-            "dammit, clean me!"
-          ]
-        },
-        "synonyms": [
-          "board",
-          "white board",
-          "white wall",
-          "painted wall",
-          "white-painted wall",
-          "white painted wall",
-          "white",
-          "paint",
-          "walls",
-          "white board",
-          "whitebaord"
-        ]
-      }
-    ]
-  }
+  "object": "location",
+  "name": "customer-delight-south-east",
+  "displayName": "Customer Delight",
+  "description": "You're in the South-Eastern corner of the Customer Delight development area.<br>This is the part of the large area occupied be the SQL Source Control development team.<br>One of the walls has been painted for use as a whiteboard.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "customer-delight-south-east",
+      "destination": "customer-delight-south"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "customer-delight-south-east",
+      "destination": "customer-delight-east"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "wall-customer-delight-south-east"
+    }
+  ]
+}

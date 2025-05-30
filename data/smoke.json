@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "smoke",
+  "description": "smoke",
+  "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "smell": "It's going to linger in your nose and memories for quite some time."
+  },
+  "synonyms": [
+    "ash",
+    "wreckage",
+    "burning",
+    "hint of ash",
+    "debris",
+    "bodies"
+  ]
+}

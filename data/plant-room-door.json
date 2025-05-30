@@ -1,0 +1,31 @@
+{
+  "object": "artefact",
+  "name": "plant room door",
+  "description": "steel door",
+  "detailedDescription": "It leads back out onto the roof.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 200,
+    "type": "door",
+    "canOpen": true,
+    "lockable": true,
+    "locked": true,
+    "hasLinkedDoor": true
+  },
+  "linkedexits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "plant-room",
+      "destination": "roof",
+      "hidden": true
+    }
+  ],
+  "synonyms": [
+    "plant door",
+    "steel door",
+    "plant",
+    "door"
+  ]
+}

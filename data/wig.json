@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "wig",
+  "description": "blonde wig",
+  "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
+  "attributes": {
+    "weight": 1,
+    "canCollect": true,
+    "affinityModifier": 2,
+    "customAction": [
+      "wear"
+    ],
+    "defaultResult": "Nope, that's really not a good look for you. (Or anyone for that matter)"
+  },
+  "synonyms": [
+    "blonde",
+    "blonde wig",
+    "hair",
+    "blonde hair"
+  ]
+}

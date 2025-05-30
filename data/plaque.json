@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "plaque",
+  "description": "a shiny gold plaque.",
+  "detailedDescription": "Somebody has some strange ideas here.<br>It's worth a read for the sheer oddness of the writing in a modern software company.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 0,
+    "type": "scenery",
+    "customAction": [
+      "read"
+    ],
+    "defaultResult": "It says 'Whosoever contributeth most to our billion-dollar revenue is rightwise born to pull out this sword of this stone and table.'",
+    "imageName": "plaque.jpg"
+  },
+  "synonyms": [
+    "shiny plaque",
+    "shiny gold plaque",
+    "gold plaque",
+    "brass plaque"
+  ]
+}

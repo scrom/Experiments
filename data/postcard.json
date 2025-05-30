@@ -1,0 +1,24 @@
+{
+  "object": "artefact",
+  "name": "postcard",
+  "description": "thankyou postcard",
+  "detailedDescription": "Someone's written a message on this one.",
+  "attributes": {
+    "defaultAction": "read",
+    "type": "book",
+    "canCollect": true,
+    "hidden": true,
+    "affinityModifier": 3,
+    "canDrawOn": true,
+    "defaultResult": "It says thanks for being great! (isn't that nice). There are loads of others with similar thank-yous on them.<br>I reckon you could <i>give</i> this to someone to let them know they're appreciated."
+  },
+  "synonyms": [
+    "card",
+    "post-card",
+    "post card",
+    "thankyou postcard",
+    "thankyou card",
+    "thank-you card",
+    "thank you card"
+  ]
+}

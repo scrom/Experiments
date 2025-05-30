@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "petrol",
+  "description": "fuel",
+  "detailedDescription": "It looks like there's only a few pounds worth left.",
+  "attributes": {
+    "weight": 10,
+    "isLiquid": true,
+    "charges": 2,
+    "plural": true,
+    "hidden": true,
+    "chargeUnit": "gallon",
+    "chargesDescription": "There's about $charges $chargeUnit in the tank",
+    "affinityModifier": 0,
+    "componentOf": [
+      "van"
+    ]
+  },
+  "synonyms": [
+    "fuel"
+  ]
+}

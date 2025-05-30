@@ -1,0 +1,29 @@
+{
+  "object": "artefact",
+  "name": "strings",
+  "description": "guitar strings",
+  "detailedDescription": "They're tatty but functional nylon/wound spanish guitar strings.",
+  "attributes": {
+    "type": "scenery",
+    "weight": 0,
+    "canCollect": false,
+    "isBreakable": true,
+    "plural": true,
+    "affinityModifier": 0,
+    "componentOf": [
+      "guitar"
+    ],
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "They look pretty worn out. They'll be no use as a garotte or tourniquet. Their only function is for making plinky sounds on a guitar so it's best to leave them alone."
+  },
+  "synonyms": [
+    "guitar strings",
+    "nylon strings",
+    "nylon wound strings",
+    "nylon-wound strings",
+    "nylon guitar strings",
+    "spanish guitar strings"
+  ]
+}

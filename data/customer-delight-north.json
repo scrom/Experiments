@@ -1,89 +1,41 @@
 {
-    "object": "location",
-    "name": "customer-delight-north",
-    "displayName": "Customer Delight",
-    "description": "You're in a thoroughfare in the Northern part of the Customer Delight area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "customer-delight-north",
-        "destination": "customer-delight-central"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "customer-delight-north",
-        "destination": "first-floor-back-stairs-west"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "customer-delight-north",
-        "destination": "first-floor-cubby-hole"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "customer-delight-north",
-        "destination": "support-west"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "printer",
-        "description": "a3 colour printer",
-        "detailedDescription": "It prints and copies things (in colour!).",
-        "attributes": {
-          "weight": 151,
-          "carryWeight": 25,
-          "isBreakable": true,
-          "canOpen": true,
-          "requiredComponentCount": 1,
-          "customAction": [
-            "print",
-            "copy"
-          ],
-          "defaultResult": "You don't really have a use for any printouts or copies at the moment.<br>Let's not waste paper. You never know when you'll need some.",
-          "imageName": "printer.jpg",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "colour printer",
-          "a3 printer",
-          "copier",
-          "colour copier"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "paper",
-            "description": "a3 paper",
-            "detailedDescription": "Ahhh, the dream of the paperless office.<br>Maybe one day.",
-            "attributes": {
-              "weight": 5,
-              "attackStrength": 1,
-              "canCollect": true,
-              "charges": 50,
-              "chargeUnit": "sheet",
-              "chargesDescription": "There's about $charges $chargeUnit here.",
-              "plural": true,
-              "affinityModifier": 0,
-              "componentOf": [
-                "printer"
-              ]
-            },
-            "synonyms": [
-              "a3 paper",
-              "sheet"
-            ]
-          }
-        ]
-      }
-    ]
-  }
+  "object": "location",
+  "name": "customer-delight-north",
+  "displayName": "Customer Delight",
+  "description": "You're in a thoroughfare in the Northern part of the Customer Delight area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "customer-delight-north",
+      "destination": "customer-delight-central"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "customer-delight-north",
+      "destination": "first-floor-back-stairs-west"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "customer-delight-north",
+      "destination": "first-floor-cubby-hole"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "customer-delight-north",
+      "destination": "support-west"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "printer"
+    }
+  ]
+}

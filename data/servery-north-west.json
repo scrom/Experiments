@@ -1,125 +1,63 @@
-  {
-    "object": "location",
-    "name": "servery-north-west",
-    "displayName": "Servery",
-    "description": "You're standing at the North-West corner of the servery. The walls here are decorated with postcards and photos.<br>This is the main thoroughfare for staff heading to and from the servery at lunchtimes.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-north-west",
-        "destination": "stairs-first-floor",
-        "hidden": true
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "servery-north-west",
-        "destination": "servery-south-west"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "servery-north-west",
-        "destination": "customer-delight-east"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "servery-north-west",
-        "destination": "kitchen-first-floor"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "office-door",
-        "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "servery-north-west",
-            "destination": "stairs-first-floor",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "wall",
-        "description": "wall full of post cards and photos",
-        "detailedDescription": "You poke through the postcards interspersed with the photos. They generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.<br><br>You're tempted to take one of these to <i>give</i> to someone.",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "canDrawOn": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "Taking just the one postcard was enough."
-        },
-        "synonyms": [
-          "cards",
-          "photo",
-          "photos",
-          "postcards",
-          "postcard",
-          "post cards",
-          "card wall",
-          "walls"
-        ]
-      },
-          {
-        "object": "artefact",
-        "name": "photo",
-        "description": "photo",
-        "detailedDescription": "The photos are all full of people smiling and enjoying themselves.<br>Even from the short time you've been here, you now recognise a few of the faces here.",
-        "attributes": {
-          "defaultAction": "read",
-          "type": "junk",
-          "canCollect": false,
-          "hidden": true,
-          "canDrawOn": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "These are part of Redgate's 'Memory wall'. They're here to look at and enjoy, not to mess with."
-        },
-        "synonyms": [
-          "photo",
-          "photograph",
-          "faces"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "postcard",
-        "description": "thankyou postcard",
-        "detailedDescription": "Someone's written a message on this one.",
-        "attributes": {
-          "defaultAction": "read",
-          "type": "book",
-          "canCollect": true,
-          "hidden": true,
-          "affinityModifier": 3,
-          "canDrawOn": true,
-          "defaultResult": "It says thanks for being great! (isn't that nice). There are loads of others with similar thank-yous on them.<br>I reckon you could <i>give</i> this to someone to let them know they're appreciated."
-        },
-        "synonyms": [
-          "card",
-          "post-card",
-          "post card",
-          "thankyou postcard",
-          "thankyou card",
-          "thank-you card",
-          "thank you card"
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "servery-north-west",
+  "displayName": "Servery",
+  "description": "You're standing at the North-West corner of the servery. The walls here are decorated with postcards and photos.<br>This is the main thoroughfare for staff heading to and from the servery at lunchtimes.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "servery-north-west",
+      "destination": "stairs-first-floor",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "servery-north-west",
+      "destination": "servery-south-west"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "servery-north-west",
+      "destination": "customer-delight-east"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "servery-north-west",
+      "destination": "kitchen-first-floor"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "office-door",
+      "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "servery-north-west",
+          "destination": "stairs-first-floor",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "file": "wall-servery-north-west"
+    },
+    {
+      "file": "photo"
+    },
+    {
+      "file": "postcard"
+    }
+  ]
+}

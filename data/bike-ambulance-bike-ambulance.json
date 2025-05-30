@@ -1,0 +1,14 @@
+{
+  "object": "artefact",
+  "name": "bike ambulance",
+  "description": "bike ambulance",
+  "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
+  "attributes": {
+    "weight": 3500,
+    "type": "scenery",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "ambulance"
+  ]
+}

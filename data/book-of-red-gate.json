@@ -1,0 +1,28 @@
+{
+  "object": "artefact",
+  "name": "book of red gate",
+  "description": "'The Book of Red Gate'",
+  "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 1,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "book",
+    "red book",
+    "red gate book",
+    "book red gate",
+    "book of redgate",
+    "book redgate",
+    "borg"
+  ],
+  "missions": [
+    {
+      "file": "mission-borgassimilation"
+    }
+  ]
+}

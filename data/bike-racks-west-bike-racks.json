@@ -1,0 +1,26 @@
+{
+  "object": "artefact",
+  "name": "bike racks",
+  "description": "bike racks",
+  "detailedDescription": "There's dozens of bikes here but most of them are locked.",
+  "attributes": {
+    "extendedInventoryDescription": "After extensively picking through the crowded racks, you find $inventory.",
+    "weight": 45,
+    "carryWeight": 18,
+    "isBreakable": true,
+    "plural": true
+  },
+  "synonyms": [
+    "rack",
+    "racks",
+    "cycle rack",
+    "cycle racks",
+    "bike rack",
+    "bikes"
+  ],
+  "inventory": [
+    {
+      "file": "old-bike"
+    }
+  ]
+}

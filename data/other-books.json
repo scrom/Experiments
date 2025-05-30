@@ -1,0 +1,28 @@
+{
+  "object": "artefact",
+  "name": "other books",
+  "description": "not really interesting.",
+  "detailedDescription": "They're not really of interest to you.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 0,
+    "type": "scenery",
+    "customAction": [
+      "get",
+      "read"
+    ],
+    "defaultResult": "It's not really relevant to you at the moment."
+  },
+  "synonyms": [
+    "c",
+    "c#",
+    "c book",
+    "c# book",
+    "travel",
+    "travel book",
+    "sql",
+    "sql book",
+    "sql server book",
+    "sql server"
+  ]
+}

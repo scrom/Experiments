@@ -1,0 +1,27 @@
+{
+  "object": "artefact",
+  "name": "cheap rum",
+  "description": "rum",
+  "detailedDescription": "It's pretty ropey. Best used for cooking and not much else.<br>I'm sure most people wouldn't notice though.",
+  "attributes": {
+    "defaultAction": "drink",
+    "weight": 1,
+    "type": "food",
+    "requiresContainer": true,
+    "isLiquid": true,
+    "requiredContainer": "rum bottle",
+    "canCollect": true,
+    "charges": 15,
+    "chargeUnit": "shot",
+    "chargesDescription": "There's enough here for about $charges $chargeUnit",
+    "plural": true,
+    "isEdible": true,
+    "nutrition": -3,
+    "smell": "It smells like a mixture of farmyards and paint stripper. Maybe that's why this stuff's sometimes called agricultural rum.",
+    "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
+  },
+  "synonyms": [
+    "rum",
+    "agricultural rum"
+  ]
+}

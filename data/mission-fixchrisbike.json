@@ -93,21 +93,7 @@
   },
   "reward": {
     "delivers": {
-      "object": "artefact",
-      "name": "bike key",
-      "description": "bike key",
-      "detailedDescription": "You'll need this to shift Chris' bike.",
-      "attributes": {
-        "type": "key",
-        "canCollect": true,
-        "affinityModifier": 0,
-        "unlocks": "bike"
-      },
-      "synonyms": [
-        "key",
-        "cycle key",
-        "bicycle key"
-      ]
+      "file": "bike-key"
     },
     "message": "Chris hands you a bike key."
   },

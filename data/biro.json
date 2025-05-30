@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "biro",
+  "description": "black biro",
+  "detailedDescription": "Not quite a sharpie but useful for taking notes.",
+  "attributes": {
+    "weight": 0.1,
+    "type": "writing",
+    "canCollect": true,
+    "charges": 250,
+    "chargeUnit": "use",
+    "chargesDescription": "It's good for about $charges more $chargeUnit",
+    "price": 0.5
+  },
+  "synonyms": [
+    "pen",
+    "bic"
+  ]
+}

@@ -1,83 +1,23 @@
 {
-    "object": "location",
-    "name": "opportunities-cubbyhole",
-    "displayName": "Opportunities cubbyhole",
-    "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "opportunities-cubbyhole",
-        "destination": "opportunities-north"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "nerf gun",
-        "description": "nerf gun",
-        "detailedDescription": "An unlucky shot with this could take someone's eye out.",
-        "attributes": {
-          "weight": 2,
-          "carryWeight": 0.5,
-          "attackStrength": 5,
-          "type": "weapon",
-          "subType": "projectile",
-          "canCollect": true,
-          "isBreakable": true,
-          "affinityModifier": 2,
-          "requiredComponentCount": 1
-        },
-        "synonyms": [
-          "nerf",
-          "gun"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "dart",
-            "description": "nerf darts",
-            "detailedDescription": "Ping, squeee, ouch, grrr.",
-            "attributes": {
-              "weight": 0.5,
-              "canCollect": true,
-              "charges": 10,
-              "chargeUnit": "round",
-              "chargesDescription": "There's $charges $chargeUnit left",
-              "plural": true,
-              "affinityModifier": 0,
-              "componentOf": [
-                "nerf gun"
-              ]
-            },
-            "synonyms": [
-              "nerf darts",
-              "darts"
-            ]
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "drums",
-        "description": "drum kit",
-        "detailedDescription": "An electronic drum kit, cool!",
-        "attributes": {
-          "weight": 18,
-          "type": "treasure",
-          "canCollect": true,
-          "isBreakable": true,
-          "price": 15,
-          "customAction": "play",
-          "defaultResult": "You bash the drums for a while. Your sense of rhythm feels a bit off today."
-        },
-        "synonyms": [
-          "drum",
-          "drum kit",
-          "drumkit",
-          "kit"
-        ]
-      }
-    ]
-  }
+  "object": "location",
+  "name": "opportunities-cubbyhole",
+  "displayName": "Opportunities cubbyhole",
+  "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "opportunities-cubbyhole",
+      "destination": "opportunities-north"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "nerf-gun"
+    },
+    {
+      "file": "drums"
+    }
+  ]
+}

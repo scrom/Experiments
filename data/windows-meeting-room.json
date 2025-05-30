@@ -1,89 +1,75 @@
-  {
-    "object": "location",
-    "name": "windows-meeting-room",
-    "displayName": "Windows meeting room",
-    "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "windows-meeting-room",
-            "destination": "sales-break-out"
-        }
-    ],
-    "inventory": [
-              {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "You peer out of the window and look down to the office entrance.",
-        "attributes": {
-          "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows",
-          "outside"
-        ]
+{
+  "object": "location",
+  "name": "windows-meeting-room",
+  "displayName": "Windows meeting room",
+  "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "windows-meeting-room",
+      "destination": "sales-break-out"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "You peer out of the window and look down to the office entrance.",
+      "attributes": {
+        "viewDestination": "office-front"
       },
-        {
-            "object": "artefact",
-            "name": "wall",
-            "description": "curved wall",
-            "detailedDescription": "It's a concave curve. Possibly so that people walking past the outside don't walk into a corner. (We're speculating here)",
-            "attributes": {
-                "weight": 280,
-                "type": "scenery",
-                "canDrawOn": true
-            },
-            "synonyms": [
-                "walls",
-                "curved walls",
-                "curved wall",
-                "curved"
-            ]
-        },
-        {
-            "object": "artefact",
-            "template": "whiteboard",
-            "description": "small whiteboard",
-            "synonyms": [
-                "board",
-                "white board",
-                "small white board",
-                "small whiteboard",
-                "whitebaord"
-            ]
-        },
-        {
-            "object": "artefact",
-            "template": "whiteboard-pen",
-            "detailedDescription": "It's a green pen.",
-            "synonyms": [
-                "green pen"
-            ]
-        },
-        {
-          "object": "artefact",
-          "template": "table",
-          "detailedDescription": "It's a plain white melamine meeting room table.",
-          "synonyms": [
-            "plain table",
-            "meeting room table",
-            "plain white table",
-            "white table",
-            "plain white melamine meeting room table",
-            "white melamine table"
-          ]
-        },
-        {
-            "object": "artefact",
-            "template": "chairs",
-            "description": "group of office chairs",
-            "detailedDescription": "Yup, they're chairs.",
-            "attributes": {
-                "defaultResult": "Sorry, they belong in here."
-            }
-        }
-    ]
-  }
+      "synonyms": [
+        "glass",
+        "windows",
+        "outside"
+      ]
+    },
+    {
+      "file": "wall-windows-meeting-room"
+    },
+    {
+      "object": "artefact",
+      "template": "whiteboard",
+      "description": "small whiteboard",
+      "synonyms": [
+        "board",
+        "white board",
+        "small white board",
+        "small whiteboard",
+        "whitebaord"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "whiteboard-pen",
+      "detailedDescription": "It's a green pen.",
+      "synonyms": [
+        "green pen"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "detailedDescription": "It's a plain white melamine meeting room table.",
+      "synonyms": [
+        "plain table",
+        "meeting room table",
+        "plain white table",
+        "white table",
+        "plain white melamine meeting room table",
+        "white melamine table"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "chairs",
+      "description": "group of office chairs",
+      "detailedDescription": "Yup, they're chairs.",
+      "attributes": {
+        "defaultResult": "Sorry, they belong in here."
+      }
+    }
+  ]
+}

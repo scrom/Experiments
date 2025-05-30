@@ -1,0 +1,13 @@
+{
+  "object": "artefact",
+  "name": "door",
+  "description": "lift doors",
+  "detailedDescription": "They're just plain metal lift doors.",
+  "attributes": {
+    "type": "scenery",
+    "plural": true
+  },
+  "synonyms": [
+    "lift door"
+  ]
+}

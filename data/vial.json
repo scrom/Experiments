@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "vial",
+  "description": "glass vial",
+  "detailedDescription": "A small glass vial. The type used to carry medical samples.",
+  "attributes": {
+    "extendedInventoryDescription": "There's $inventory in it.",
+    "weight": 1,
+    "carryWeight": 3,
+    "type": "container",
+    "subType": "bottle",
+    "holdsLiquid": true,
+    "canCollect": true,
+    "isBreakable": true
+  },
+  "synonyms": [
+    "bottle",
+    "small glass vial",
+    "glass",
+    "medical sample"
+  ]
+}

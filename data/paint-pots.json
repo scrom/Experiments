@@ -1,44 +1,26 @@
-  {
-    "object": "location",
-    "name": "paint-pots",
-    "displayName": "Paint Pots meeting room",
-    "description": "You're in the Paint Pots meeting room. The lack of visible light adds to the sense of foreboding.<br>You feel like this is a room specially reserved for difficult HR conversations. You'd be wrong of course!",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "paint-pots",
-        "destination": "people-team-north"
-      }
-    ],
-    "inventory": [
-      { "file": "chairs" },
-      { "file": "table" },
-      {
-        "object": "artefact",
-        "name": "folder",
-        "description": "document folder",
-        "detailedDescription": "Leafing through the contents, it appears to be folder of notes on working effectively with others.",
-        "attributes": {
-          "defaultAction": "read",
-          "weight": 1,
-          "type": "book",
-          "canCollect": true,
-          "affinityModifier": 0,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "notes",
-          "people folder",
-          "document",
-          "document folder",
-          "working effectively with others",
-          "book"
-        ],
-        "missions": [
-          { "file": "mission-workingwithothers" }
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "paint-pots",
+  "displayName": "Paint Pots meeting room",
+  "description": "You're in the Paint Pots meeting room. The lack of visible light adds to the sense of foreboding.<br>You feel like this is a room specially reserved for difficult HR conversations. You'd be wrong of course!",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "paint-pots",
+      "destination": "people-team-north"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "chairs"
+    },
+    {
+      "file": "table"
+    },
+    {
+      "file": "folder"
+    }
+  ]
+}

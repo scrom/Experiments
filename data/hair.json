@@ -1,0 +1,18 @@
+{
+  "object": "artefact",
+  "name": "hair",
+  "description": "hair clippings",
+  "detailedDescription": "Fine hair trimmings of assorted colours and thickness.<br>None look long enough to do anything useful with.",
+  "attributes": {
+    "plural": true,
+    "hidden": true,
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "They're too fine and embedded into the carpet to collect."
+  },
+  "synonyms": [
+    "hair clippings",
+    "clippings"
+  ]
+}

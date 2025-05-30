@@ -1,0 +1,28 @@
+{
+  "object": "artefact",
+  "name": "sales book",
+  "description": "'The Smell of Sell'",
+  "detailedDescription": "It's a book on how to sell.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 3,
+    "attackStrength": 5,
+    "type": "book",
+    "canCollect": true,
+    "canDrawOn": true,
+    "defaultResult": "...Most people are wired to please. As a sales person, you must work as a predator, how can you exploit that human circuitry in order to maximise cash...<br>...as you first engage with your victim look for signals of weakness. Where are their concerns and worries that you can play upon?...<br><br>Hmm. This is fundamentally at odds with the way we work. It's pretty disturbing that anyone would write this stuff."
+  },
+  "synonyms": [
+    "book",
+    "selling book",
+    "sell book",
+    "smell sell",
+    "sell smell",
+    "smell of sell",
+    "the smell of sell",
+    "smell",
+    "sell",
+    "sales",
+    "sales book"
+  ]
+}

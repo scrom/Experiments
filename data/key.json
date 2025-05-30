@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "key",
+  "description": "coffee machine key",
+  "detailedDescription": "It unlocks coffee machines.",
+  "attributes": {
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": 0,
+    "unlocks": "coffee machine"
+  },
+  "synonyms": [
+    "vending key",
+    "machine key",
+    "vending machine key",
+    "coffee machine key",
+    "coffee key"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "object": "artefact",
+  "name": "cupboard",
+  "description": "stationery cupboard",
+  "detailedDescription": "Can haz all ur Scrum supplies.",
+  "attributes": {
+    "extendedInventoryDescription": "Amongst the mountains of redundant folders, staplers and pen holders you find $inventory that might be useful to you.",
+    "weight": 180,
+    "carryWeight": 50,
+    "type": "container",
+    "canOpen": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "stationary",
+    "stationery",
+    "stationary cupboard",
+    "stationery cupboard",
+    "cupbaord"
+  ],
+  "inventory": [
+    {
+      "file": "post-it-pad"
+    },
+    {
+      "file": "notebook"
+    },
+    {
+      "file": "biro"
+    },
+    {
+      "file": "sharpie"
+    },
+    {
+      "object": "artefact",
+      "template": "batteries"
+    }
+  ]
+}

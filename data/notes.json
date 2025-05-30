@@ -1,0 +1,29 @@
+{
+  "object": "artefact",
+  "name": "notes",
+  "description": "post-its",
+  "detailedDescription": "You skim the dozens of post-its on the walls. Most contain phrases that are meaningless to you such as 'user journey', 'top of funnel analysis' etc.",
+  "attributes": {
+    "extendedInventoryDescription": "Amongst the jargon you find $inventory that you have a particular affinity for.",
+    "type": "scenery",
+    "plural": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "stickies",
+    "sticky notes",
+    "post its",
+    "postits",
+    "post it notes",
+    "post-it notes",
+    "postit notes",
+    "post-its",
+    "wall",
+    "walls"
+  ],
+  "inventory": [
+    {
+      "file": "post-it"
+    }
+  ]
+}

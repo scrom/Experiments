@@ -21,20 +21,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "wall",
-      "description": "glass wall",
-      "detailedDescription": "The Monitor team use this as their Scrum/Kanban board.<br>Right now it looks like things are going pretty well.",
-      "attributes": {
-        "weight": 280,
-        "type": "scenery",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "glass",
-        "glass wall",
-        "walls"
-      ]
+      "file": "wall-customer-delight-south-west"
     },
     {
       "file": "joshua-warner"

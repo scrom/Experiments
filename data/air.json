@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "air",
+  "description": "smell of smart people and coffee",
+  "detailedDescription": "As I said - smart people and coffee.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "The place is full of 'em. Go explore!",
+    "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
+  },
+  "synonyms": [
+    "smart",
+    "smart people",
+    "people",
+    "graduates"
+  ]
+}

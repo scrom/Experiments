@@ -1,0 +1,18 @@
+{
+  "object": "artefact",
+  "name": "hammock",
+  "description": "comfy-looking hammock",
+  "detailedDescription": "It's a bit of a pig to climb into but well-worth the effort for a rest.",
+  "attributes": {
+    "defaultAction": "rest",
+    "weight": 80,
+    "type": "bed",
+    "isBreakable": true
+  },
+  "synonyms": [
+    "bed",
+    "comfy hammock",
+    "comfy-looking hammock",
+    "comfy looking hammock"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "missing visitors book",
+  "description": "missing visitors book",
+  "detailedDescription": "Try talking to Violet first.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get",
+      "find",
+      "where is",
+      "where"
+    ],
+    "defaultResult": "Violet has the visitors book. Try having a chat with her."
+  },
+  "synonyms": [
+    "visitors book",
+    "visitor book",
+    "in"
+  ]
+}

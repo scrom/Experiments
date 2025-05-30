@@ -1,0 +1,24 @@
+{
+  "object": "artefact",
+  "name": "bike racks",
+  "description": "bike racks",
+  "detailedDescription": "There's dozens of bikes here. Are you looking for any in particular?",
+  "attributes": {
+    "weight": 45,
+    "carryWeight": 15,
+    "isBreakable": true,
+    "plural": true
+  },
+  "synonyms": [
+    "rack",
+    "racks",
+    "cycle rack",
+    "cycle racks",
+    "bike rack"
+  ],
+  "inventory": [
+    {
+      "file": "bike"
+    }
+  ]
+}

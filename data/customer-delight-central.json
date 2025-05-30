@@ -35,27 +35,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "wall",
-      "description": "glass wall full of LED lights",
-      "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
-      "attributes": {
-        "weight": 280,
-        "type": "scenery",
-        "plural": true,
-        "switched": true,
-        "isOn": true,
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "led lights",
-        "led",
-        "leds",
-        "glass",
-        "glass wall",
-        "walls",
-        "lights"
-      ]
+      "file": "wall-customer-delight-central"
     },
     {
       "file": "curved-sofa"

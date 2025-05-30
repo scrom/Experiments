@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "corner table",
+  "template": "table",
+  "description": "little corner table",
+  "detailedDescription": "It's a pretty little wooden table in the corner of the room. It's here for aesthetics rather than function.",
+  "attributes": {
+    "type": "junk",
+    "canCollect": "false",
+    "isBreakable": false
+  },
+  "synonyms": [
+    "corner",
+    "small table",
+    "little table",
+    "little corner table"
+  ],
+  "inventory": [
+    {
+      "file": "hookah"
+    }
+  ]
+}

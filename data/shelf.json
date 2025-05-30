@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "shelf",
+  "description": "wall-mounted shelf",
+  "detailedDescription": "It's white and functional.",
+  "attributes": {
+    "type": "scenery",
+    "isBreakable": false,
+    "imageName": "camelids.jpg"
+  },
+  "synonyms": [
+    "small shelf",
+    "wall shelf"
+  ],
+  "inventory": [
+    {
+      "file": "fez"
+    }
+  ]
+}

@@ -15,15 +15,7 @@
   },
   "reward": {
     "delivers": {
-      "object": "artefact",
-      "name": "keyfob",
-      "template": "keyfob",
-      "attributes": {
-        "affinityModifier": -999,
-        "writings": [
-          "$player"
-        ]
-      }
+      "file": "keyfob-keyfob"
     },
     "score": 10,
     "message": "<br>Violet Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"

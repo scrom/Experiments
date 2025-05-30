@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "led",
+  "description": "led lights",
+  "detailedDescription": "They're a kind of baleful blueish white.<br>Some years ago the original lights were stolen. (What a thing to steal from an office!)<br>These are low-energy replacements but they remind you of the lights used in the toilets of seedier pubs and clubs to prevent unsavoury activities.",
+  "attributes": {
+    "type": "scenery"
+  },
+  "synonyms": [
+    "light",
+    "lights",
+    "leds",
+    "led lights",
+    "lighting",
+    "led lighting",
+    "white",
+    "blue",
+    "blueish",
+    "dark led",
+    "dark led lights"
+  ]
+}

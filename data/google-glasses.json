@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "google glasses",
+  "description": "pair of Google glasses",
+  "detailedDescription": "These are pretty hard to get hold of!<br>Wearing these makes you an instant hipster.",
+  "attributes": {
+    "weight": 0.5,
+    "type": "treasure",
+    "canCollect": true,
+    "isBreakable": true,
+    "plural": true,
+    "price": 30,
+    "customAction": "wear",
+    "defaultResult": "Nah, they don't really suit you.<br>You take them off again and blink a few times to recover your near-field vision."
+  },
+  "synonyms": [
+    "glasses",
+    "glass",
+    "google glass",
+    "pair of google glasses"
+  ]
+}

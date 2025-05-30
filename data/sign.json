@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "sign",
+  "description": "out of order sign",
+  "detailedDescription": "It says 'Temporarily out of order'.",
+  "attributes": {
+    "weight": 0,
+    "position": "on",
+    "type": "scenery",
+    "canDrawOn": true,
+    "customAction": [
+      "read"
+    ],
+    "defaultResult": "It says: 'Due to a series of blockages and poor plumbing, this cubicle is currently out of order'."
+  },
+  "synonyms": [
+    "tatty sign"
+  ]
+}

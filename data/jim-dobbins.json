@@ -14,49 +14,10 @@
       "file": "keyfob"
     },
     {
-      "object": "artefact",
-      "name": "wig",
-      "description": "blonde wig",
-      "detailedDescription": "A disturbing remnant from the sales team beating their records and making their management team wear fancy dress.",
-      "attributes": {
-        "weight": 1,
-        "canCollect": true,
-        "affinityModifier": 2,
-        "customAction": [
-          "wear"
-        ],
-        "defaultResult": "Nope, that's really not a good look for you. (Or anyone for that matter)"
-      },
-      "synonyms": [
-        "blonde",
-        "blonde wig",
-        "hair",
-        "blonde hair"
-      ]
+      "file": "wig"
     },
     {
-      "object": "artefact",
-      "name": "maracas",
-      "description": "pair of maracas",
-      "detailedDescription": "A reminder of one of our great days out and of Chris Warrington's musical talents.",
-      "attributes": {
-        "weight": 1,
-        "canCollect": true,
-        "isBreakable": true,
-        "plural": true,
-        "affinityModifier": 2,
-        "price": 5,
-        "customAction": [
-          "play",
-          "shake"
-        ],
-        "defaultResult": "They're <i>really</i> annoying. Please don't do that again.",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "pair of maracas",
-        "a pair of maracas"
-      ]
+      "file": "maracas"
     }
   ],
   "synonyms": [

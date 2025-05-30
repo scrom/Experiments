@@ -27,29 +27,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "vaccine",
-      "description": "zombie antibodies",
-      "detailedDescription": "There's only enough for you here. You'll need to figure out another way to save everyone else as well.",
-      "attributes": {
-        "type": "cure",
-        "weight": 0.5,
-        "requiresContainer": true,
-        "requiredContainer": "syringe",
-        "isLiquid": true,
-        "canCollect": true,
-        "charges": 2,
-        "chargeUnit": "dose",
-        "plural": true,
-        "affinityModifier": 0,
-        "antibodies": [
-          "zombie"
-        ]
-      },
-      "synonyms": [
-        "antibodies",
-        "zombie vaccine"
-      ]
+      "file": "vaccine"
     }
   ]
 }

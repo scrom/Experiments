@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "wall full of post-it notes",
+  "detailedDescription": "I see it! I can see the duplicate...<br>Oh... No, it's not.",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "mural",
+    "post-its",
+    "post it notes",
+    "notes",
+    "postits",
+    "postit notes",
+    "walls"
+  ]
+}

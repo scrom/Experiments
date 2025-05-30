@@ -1,74 +1,41 @@
-  {
-    "object": "location",
-    "name": "kitchen-second-floor",
-    "displayName": "Second floor kitchen",
-    "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "kitchen-second-floor",
-        "destination": "second-floor-seating-area-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "space",
-        "description": "space",
-        "detailedDescription": "You'll need to head to the downstairs kitchen if you want coffee now.",
-        "attributes": {
-          "type": "scenery",
-          "subType": "intangible",
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "The coffee machine is in the <i>ground floor</i> kitchen now."
-        },
-        "synonyms": [
-          "latte",
-          "coffee",
-          "machine",
-          "coffee machine",
-          "coffee machine space"
+{
+  "object": "location",
+  "name": "kitchen-second-floor",
+  "displayName": "Second floor kitchen",
+  "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "kitchen-second-floor",
+      "destination": "second-floor-seating-area-east"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "space"
+    },
+    {
+      "object": "artefact",
+      "template": "whiteboard",
+      "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
+      "attributes": {
+        "type": "scenery",
+        "writings": [
+          "Who scrubbed off my cactus?",
+          "That wasn't a cactus!",
+          "meh",
+          "Richard Mitchell"
         ]
-      },
-      {
-        "object": "artefact",
-        "template": "whiteboard",
-        "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
-        "attributes": {
-          "type": "scenery",
-          "writings": [
-            "Who scrubbed off my cactus?",
-            "That wasn't a cactus!",
-            "meh",
-            "Richard Mitchell"
-          ]
-        }
-      },
-      {
-        "object": "artefact",
-        "name": "cloth",
-        "description": "dishcloth",
-        "detailedDescription": "It's slightly damp but should clean things up.",
-        "attributes": {
-          "weight": 0.5,
-          "type": "tool",
-          "subType": "clean",
-          "canCollect": true,
-          "smell": "It has that nasty smell of damp, old food and detergent."
-        },
-        "synonyms": [
-          "cloth",
-          "dish cloth",
-          "cleaning cloth"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "first-aid-kit"
       }
-    ]
-  }
+    },
+    {
+      "file": "cloth"
+    },
+    {
+      "object": "artefact",
+      "template": "first-aid-kit"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "gate key",
+  "description": "steel key",
+  "detailedDescription": "It's a heavy, industrial-looking key.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": 2,
+    "unlocks": "steel gate"
+  },
+  "synonyms": [
+    "steel gate key",
+    "steel key",
+    "heavy key",
+    "key"
+  ]
+}

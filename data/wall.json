@@ -1,0 +1,14 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "walls",
+  "detailedDescription": "Sparse, clinical and white.",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "walls"
+  ]
+}

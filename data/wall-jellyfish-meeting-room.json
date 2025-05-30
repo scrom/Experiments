@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "walls",
+  "detailedDescription": "They're pale-blue and wipe-clean to act as a useful 'whiteboard' space.",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "walls",
+    "blue",
+    "pale blue",
+    "pale blue wall",
+    "blue wall",
+    "wipe clean wall",
+    "wipe clean blue wall",
+    "space",
+    "whiteboard",
+    "whitebaord"
+  ]
+}

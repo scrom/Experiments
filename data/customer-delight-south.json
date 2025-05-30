@@ -28,10 +28,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "build screen",
-      "template": "flat-screen",
-      "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
+      "file": "build-screen"
     },
     {
       "file": "chris-warrington"

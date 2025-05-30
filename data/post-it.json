@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "post-it",
+  "description": "single post-it note",
+  "detailedDescription": "A note you found stuck to the wall.<br>You find it highly amusing. Someone else might appreciate the humour of it too.",
+  "attributes": {
+    "type": "junk",
+    "canCollect": true,
+    "affinityModifier": 2,
+    "imageName": "sticky-finger.jpg",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "sticky",
+    "sticky note",
+    "post it",
+    "postit",
+    "post it note",
+    "post-it note",
+    "postit note",
+    "note"
+  ]
+}

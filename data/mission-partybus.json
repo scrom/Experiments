@@ -22,23 +22,7 @@
       "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
       "inventory": [
         {
-          "object": "artefact",
-          "name": "smoke",
-          "description": "smoke",
-          "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-          "attributes": {
-            "type": "scenery",
-            "subType": "intangible",
-            "smell": "It's going to linger in your nose and memories for quite some time."
-          },
-          "synonyms": [
-            "ash",
-            "wreckage",
-            "burning",
-            "hint of ash",
-            "debris",
-            "bodies"
-          ]
+          "file": "smoke"
         }
       ]
     },
@@ -60,23 +44,7 @@
       "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
       "inventory": [
         {
-          "object": "artefact",
-          "name": "smoke",
-          "description": "smoke",
-          "detailedDescription": "You can't see much although a hint of ash floats by in the breeze.",
-          "attributes": {
-            "type": "scenery",
-            "subType": "intangible",
-            "smell": "It's going to linger in your nose and memories for quite some time."
-          },
-          "synonyms": [
-            "ash",
-            "wreckage",
-            "burning",
-            "hint of ash",
-            "debris",
-            "bodies"
-          ]
+          "file": "smoke"
         }
       ]
     },

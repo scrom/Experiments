@@ -1,0 +1,6 @@
+{
+  "object": "artefact",
+  "name": "build screen",
+  "template": "flat-screen",
+  "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
+}

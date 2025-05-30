@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "clicks",
+  "description": "hum of busy marketers",
+  "detailedDescription": "Even when there's nobody here the clicks keep coming.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "plural": true,
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "If you <i>listen</i>, you might just get it.",
+    "sound": "Clickety click, click, kerching!"
+  },
+  "synonyms": [
+    "click",
+    "cash"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "object": "artefact",
+  "name": "cloth",
+  "description": "dishcloth",
+  "detailedDescription": "It's slightly damp but should clean things up.",
+  "attributes": {
+    "weight": 0.5,
+    "type": "tool",
+    "subType": "clean",
+    "canCollect": true,
+    "smell": "It has that nasty smell of damp, old food and detergent."
+  },
+  "synonyms": [
+    "cloth",
+    "dish cloth",
+    "cleaning cloth"
+  ]
+}

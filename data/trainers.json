@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "trainers",
+  "description": "pair of trainers",
+  "detailedDescription": "These look pretty large. You're probably looking for a relatively tall owner for these.",
+  "attributes": {
+    "weight": 2,
+    "canCollect": true,
+    "isBreakable": true,
+    "plural": true,
+    "price": 20,
+    "customAction": "wear",
+    "defaultResult": "They're <i>far</i> too big for you. Probably best to track down their rightful owner and reunite them."
+  },
+  "synonyms": [
+    "pair of trainers",
+    "adams trainers"
+  ]
+}

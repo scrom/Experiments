@@ -27,31 +27,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "tears",
-      "description": "tear stains",
-      "detailedDescription": "<br>They're the residue of tears of frustration - probably from years of dealing with email marketing campaigns.<br>Nobody should have to work with email marketing for that long and be expected to stay entirely sane.",
-      "attributes": {
-        "type": "scenery",
-        "subType": "intangible",
-        "plural": true,
-        "position": "on",
-        "customAction": [
-          "get"
-        ],
-        "defaultResult": "Trust me, you <i>don't</i> want them.",
-        "smell": "You vaguely sense a tang of salt and blood around them.",
-        "sound": "Wow, that's disturbing. It takes quite a spiritual imprint to leave the <i>sound</i> of tears."
-      },
-      "synonyms": [
-        "frustration",
-        "stains",
-        "tearstains",
-        "tear stains",
-        "dans tears",
-        "daniel's tears",
-        "daniel tears"
-      ]
+      "file": "tears"
     },
     {
       "file": "tin-of-spam"

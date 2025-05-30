@@ -1,0 +1,31 @@
+{
+  "object": "artefact",
+  "name": "printer",
+  "description": "a3 colour printer",
+  "detailedDescription": "It prints and copies things (in colour!).",
+  "attributes": {
+    "weight": 151,
+    "carryWeight": 25,
+    "isBreakable": true,
+    "canOpen": true,
+    "requiredComponentCount": 1,
+    "customAction": [
+      "print",
+      "copy"
+    ],
+    "defaultResult": "You don't really have a use for any printouts or copies at the moment.<br>Let's not waste paper. You never know when you'll need some.",
+    "imageName": "printer.jpg",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "colour printer",
+    "a3 printer",
+    "copier",
+    "colour copier"
+  ],
+  "inventory": [
+    {
+      "file": "paper"
+    }
+  ]
+}

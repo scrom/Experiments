@@ -1,0 +1,37 @@
+{
+  "object": "artefact",
+  "name": "bookshelf",
+  "description": "set of bookshelves",
+  "detailedDescription": "These bookshelves contain all the old, unwanted and duplicate books. They're 'free to a good home'.",
+  "attributes": {
+    "extendedInventoryDescription": "Amongst the dozens of out of date SQL Server and HTML guides you find $inventory.",
+    "weight": 80,
+    "carryWeight": 8,
+    "type": "container",
+    "plural": true,
+    "isBreakable": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "library",
+    "bookcase",
+    "bookcases",
+    "bookshelves",
+    "book case",
+    "book cases",
+    "book shelf",
+    "book shelves",
+    "case",
+    "shelf",
+    "cases",
+    "shelves"
+  ],
+  "inventory": [
+    {
+      "file": "unwanted-books"
+    },
+    {
+      "file": "coffee-machine-manual"
+    }
+  ]
+}

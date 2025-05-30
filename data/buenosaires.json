@@ -14,18 +14,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "wall",
-      "description": "walls",
-      "detailedDescription": "Sparse, clinical and white.",
-      "attributes": {
-        "weight": 280,
-        "type": "scenery",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "walls"
-      ]
+      "file": "wall"
     },
     {
       "object": "artefact",
@@ -42,55 +31,10 @@
       ],
       "inventory": [
         {
-          "object": "artefact",
-          "name": "code",
-          "description": "faint writing",
-          "detailedDescription": "It looks like someone has tried to write out the pseudocode for a string reversal algorithm.<br>Personally you don't see the value in that kind of old-fashioned algorithm solving question. Surely the answer is just 'string.reverse'.<br>When you came for a job here you did a pair programming exercise trying to fix a real product bug instead.",
-          "attributes": {
-            "weight": 0,
-            "plural": true,
-            "type": "scenery"
-          },
-          "synonyms": [
-            "faint writing",
-            "writing",
-            "coding",
-            "disused coding exercise",
-            "long-disused coding exercise",
-            "long disused coding exercise",
-            "coding exercise",
-            "code exercise",
-            "exercise",
-            "pseudocode",
-            "string",
-            "string reverse",
-            "string reversal",
-            "algorithm"
-          ]
+          "file": "code"
         },
         {
-          "object": "artefact",
-          "name": "architecture",
-          "description": "faint marks",
-          "detailedDescription": "It's pretty hard to see the details but it looks like the architecture for a basic ecommerce system with microservices and an event queue. ",
-          "attributes": {
-            "weight": 0,
-            "plural": true,
-            "type": "scenery"
-          },
-          "synonyms": [
-            "marks",
-            "faint marks",
-            "architecture diagram",
-            "diagram",
-            "ecommerce",
-            "ecommerce system",
-            "microservice",
-            "service",
-            "event",
-            "event queue",
-            "queue"
-          ]
+          "file": "architecture"
         }
       ]
     },
@@ -109,11 +53,13 @@
         "blue pen"
       ]
     },
-    {"file": "table"},
+    {
+      "file": "table"
+    },
     {
       "object": "artefact",
       "template": "chairs",
       "description": "pair of office chairs"
     }
   ]
-  }
+}

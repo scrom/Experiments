@@ -1,0 +1,31 @@
+{
+  "object": "artefact",
+  "name": "exit button",
+  "description": "exit button",
+  "detailedDescription": "If you push the exit, you should be able to get out again.",
+  "attributes": {
+    "defaultAction": "press",
+    "weight": 200,
+    "type": "tool",
+    "canOpen": true
+  },
+  "linkedexits": [
+    {
+      "object": "exit",
+      "longname": "out",
+      "direction": "o",
+      "source": "lift-ground-floor",
+      "destination": "atrium",
+      "hidden": true
+    }
+  ],
+  "synonyms": [
+    "lift",
+    "lift call",
+    "lift button",
+    "lift call button",
+    "door",
+    "exit",
+    "button"
+  ]
+}

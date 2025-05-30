@@ -1,0 +1,26 @@
+{
+  "object": "artefact",
+  "name": "nerf gun",
+  "description": "nerf gun",
+  "detailedDescription": "An unlucky shot with this could take someone's eye out.",
+  "attributes": {
+    "weight": 2,
+    "carryWeight": 0.5,
+    "attackStrength": 5,
+    "type": "weapon",
+    "subType": "projectile",
+    "canCollect": true,
+    "isBreakable": true,
+    "affinityModifier": 2,
+    "requiredComponentCount": 1
+  },
+  "synonyms": [
+    "nerf",
+    "gun"
+  ],
+  "inventory": [
+    {
+      "file": "dart"
+    }
+  ]
+}

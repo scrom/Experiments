@@ -1,0 +1,25 @@
+{
+  "object": "artefact",
+  "name": "snack machine",
+  "description": "snack vending machine",
+  "detailedDescription": "An almost endless supply of snacks and treats!",
+  "attributes": {
+    "weight": 151,
+    "carryWeight": 25,
+    "isBreakable": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "machine",
+    "vending",
+    "vending machine"
+  ],
+  "delivers": [
+    {
+      "file": "chocolate"
+    },
+    {
+      "file": "crisps"
+    }
+  ]
+}

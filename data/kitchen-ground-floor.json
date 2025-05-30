@@ -13,44 +13,37 @@
     }
   ],
   "inventory": [
-    { "file": "sink" },
-    { "file": "fridge" },
     {
-      "object": "artefact",
-      "name": "glass jar",
-      "description": "jar",
-      "detailedDescription": "It's a pretty standard storage jar.",
-      "attributes": {
-        "extendedInventoryDescription": "There's $inventory in it.",
-        "weight": 2,
-        "carryWeight": 1.1,
-        "attackStrength": 2,
-        "type": "container",
-        "holdsLiquid": true,
-        "canCollect": true,
-        "isBreakable": true,
-        "canDrawOn": true,
-        "affinityModifier": 0
-      },
-      "synonyms": [
-        "jar",
-        "sugar jar",
-        "storage jar"
-      ],
-      "inventory": [
-        { "file": "sugar" }
-      ]
+      "file": "sink"
     },
-    { "file": "cup" },
-    { "file": "cup" },
-    { "file": "cup" },
-    { "file": "glass" },
-    { "file": "glass" },
+    {
+      "file": "fridge"
+    },
+    {
+      "file": "glass-jar"
+    },
+    {
+      "file": "cup"
+    },
+    {
+      "file": "cup"
+    },
+    {
+      "file": "cup"
+    },
+    {
+      "file": "glass"
+    },
+    {
+      "file": "glass"
+    },
     {
       "object": "artefact",
       "template": "cereal-box",
       "inventory": [
-        {"file": "coco-pops"}
+        {
+          "file": "coco-pops"
+        }
       ]
     },
     {
@@ -61,9 +54,13 @@
         "cereal bowl"
       ]
     },
-    { "file": "coffee-machine" }
+    {
+      "file": "coffee-machine"
+    }
   ],
-    "missions": [ 
-        {"file": "event-planecrash"}
-    ]
-  }
+  "missions": [
+    {
+      "file": "event-planecrash"
+    }
+  ]
+}

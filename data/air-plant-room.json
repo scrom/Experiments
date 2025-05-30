@@ -1,0 +1,30 @@
+{
+  "object": "artefact",
+  "name": "air",
+  "description": "smell of oil, cogs, generators, and boilers",
+  "detailedDescription": "It's kind of what you'd expect for a plant room.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "smell": "It's a sharp, oily, metallic smell. Like being in a garage or workshop.",
+    "sound": "You hear a mix of occasional clanking, a low level generator hum, and the odd burst of a boiler firing up.",
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "It's all fixed in place."
+  },
+  "synonyms": [
+    "tang",
+    "metallic tang",
+    "hum",
+    "cogs",
+    "machinery",
+    "generator",
+    "generators",
+    "boiler",
+    "boilers",
+    "clanking",
+    "oil",
+    "engine"
+  ]
+}

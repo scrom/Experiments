@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "sharpie",
+  "description": "sharpie permanent marker",
+  "detailedDescription": "Invaluable tool of the agilist.",
+  "attributes": {
+    "weight": 0.1,
+    "type": "writing",
+    "canCollect": true,
+    "charges": 50,
+    "chargeUnit": "use",
+    "chargesDescription": "It's good for about $charges more $chargeUnit",
+    "price": 2
+  },
+  "synonyms": [
+    "pen",
+    "marker",
+    "permanent marker",
+    "sharpie permanent marker"
+  ]
+}

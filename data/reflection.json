@@ -1,0 +1,12 @@
+{
+  "object": "artefact",
+  "name": "reflection",
+  "description": "reflection",
+  "detailedDescription": "You stare deeply into your reflection and shudder to yourself.<br>You're just imagining things.",
+  "attributes": {
+    "type": "scenery"
+  },
+  "synonyms": [
+    "shimmer"
+  ]
+}

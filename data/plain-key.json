@@ -1,0 +1,16 @@
+{
+  "object": "artefact",
+  "name": "plain key",
+  "description": "plain key",
+  "detailedDescription": "Just a plain key.",
+  "attributes": {
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": 0,
+    "unlocks": "nothing"
+  },
+  "synonyms": [
+    "key"
+  ]
+}

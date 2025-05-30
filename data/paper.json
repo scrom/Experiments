@@ -1,0 +1,23 @@
+{
+  "object": "artefact",
+  "name": "paper",
+  "description": "a3 paper",
+  "detailedDescription": "Ahhh, the dream of the paperless office.<br>Maybe one day.",
+  "attributes": {
+    "weight": 5,
+    "attackStrength": 1,
+    "canCollect": true,
+    "charges": 50,
+    "chargeUnit": "sheet",
+    "chargesDescription": "There's about $charges $chargeUnit here.",
+    "plural": true,
+    "affinityModifier": 0,
+    "componentOf": [
+      "printer"
+    ]
+  },
+  "synonyms": [
+    "a3 paper",
+    "sheet"
+  ]
+}

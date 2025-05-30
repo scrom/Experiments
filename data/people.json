@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "people",
+  "description": "little people",
+  "detailedDescription": "I think you made the right choice coming here.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get",
+      "find",
+      "where is",
+      "where"
+    ],
+    "defaultResult": "You can't reach them from here."
+  },
+  "synonyms": [
+    "little people",
+    "suits",
+    "little people in suits"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "led",
+  "description": "led lights",
+  "detailedDescription": "They're a kind of baleful blueish white.",
+  "attributes": {
+    "type": "scenery"
+  },
+  "synonyms": [
+    "light",
+    "lights",
+    "leds",
+    "led lights",
+    "lighting",
+    "led lighting",
+    "white",
+    "blue",
+    "blueish",
+    "dark led",
+    "dark led lights"
+  ]
+}

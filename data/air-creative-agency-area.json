@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "air",
+  "description": "tang of creativity",
+  "detailedDescription": "There's something uplifting about it.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
+    "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
+    "sound": "Clickety click, click, kerching!"
+  },
+  "synonyms": [
+    "toner",
+    "creativitiy",
+    "tang"
+  ]
+}

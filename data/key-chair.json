@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "key",
+  "description": "door key",
+  "detailedDescription": "It doesn't look familiar.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": -1,
+    "hidden": true,
+    "unlocks": "lawyer door"
+  },
+  "synonyms": [
+    "lawyer key",
+    "door key"
+  ]
+}

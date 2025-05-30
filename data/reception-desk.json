@@ -1,0 +1,26 @@
+{
+  "object": "artefact",
+  "name": "reception desk",
+  "description": "big red desk",
+  "detailedDescription": "It's big, it's red, it emits a bright friendly feeling to all newcomers to the building.",
+  "attributes": {
+    "weight": 280,
+    "imageName": "reception-desk.jpg",
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "big desk",
+    "reception",
+    "desk",
+    "red desk",
+    "big red desk"
+  ],
+  "inventory": [
+    {
+      "file": "missing-visitors-book"
+    },
+    {
+      "file": "biro-reception-desk"
+    }
+  ]
+}

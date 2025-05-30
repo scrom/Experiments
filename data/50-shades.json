@@ -1,0 +1,22 @@
+{
+  "object": "artefact",
+  "name": "50 shades",
+  "description": "'50 Shades of Customer'",
+  "detailedDescription": "'50 Shades of Customer'.<br>Wow. That's a really bad pun for a business book.",
+  "attributes": {
+    "defaultAction": "read",
+    "weight": 1,
+    "attackStrength": 2,
+    "type": "book",
+    "canCollect": true,
+    "defaultResult": "'As he took my hand my heart quickened and I realised this was a man who meant business.'<br>'His double-fist-pump hand shake meant only one thing...'<br>'SENIOR EXECUTIVE!'<br><br>As a working professional, you provide a service to everyone you interact with. The class of service you provide in these interactions is largely your choice but for optimum results you must determine a person's unmet need and establish if you are able (and willing) to help them fulfil it.<br>...furthermore, understand their role, their sphere of influence and the value of your relationship to them.<br>How can you both achieve mutual success? Not from a purely cynical or financial perspective but from a longer term holistic business relationship.<br>Don't let anyone fool you. Just because it's business doesn't mean it's not personal...<br><br>It continues switching between bad storytelling and business explanation and goes on to explain why not all customers are created equal.<br><br>I think it's meant to help you work with difficult customers and business relationships.<br>Although the writing style is awful, there's almost certainly some useful nuggets hiding in there for someone in a front-line, customer-facing role.",
+    "canDrawOn": true,
+    "smell": "Hmmm. You're <i>sure</i> that smell's familiar but you can't quite place it."
+  },
+  "synonyms": [
+    "book",
+    "care book",
+    "customer book",
+    "50 shades of customer"
+  ]
+}

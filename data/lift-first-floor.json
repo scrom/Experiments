@@ -4,7 +4,7 @@
   "displayName": "Lift",
   "description": "A metallic voice says 'First floor; Doors opening'.<br>You're in a lift on the first floor.<br>The cool blue-white of the LED lighting gives you a somewhat sickened pallor in the full mirror.<br>You try not to keep staring at yourself",
   "attributes": {
-      "imageName": "liftdoor-1.jpg"
+    "imageName": "liftdoor-1.jpg"
   },
   "exits": [
     {
@@ -30,41 +30,14 @@
     }
   ],
   "inventory": [
-    { "file": "alarm-button" },
     {
-      "object": "artefact",
-      "name": "led",
-      "description": "led lights",
-      "detailedDescription": "They're a kind of baleful blueish white.",
-      "attributes": {
-        "type": "scenery"
-      },
-      "synonyms": [
-        "light",
-        "lights",
-        "leds",
-        "led lights",
-        "lighting",
-        "led lighting",
-        "white",
-        "blue",
-        "blueish",
-        "dark led",
-        "dark led lights"
-      ]
+      "file": "alarm-button"
     },
     {
-      "object": "artefact",
-      "name": "door",
-      "description": "lift doors",
-      "detailedDescription": "They're just plain metal lift doors.",
-      "attributes": {
-        "type": "scenery",
-        "plural": true
-      },
-      "synonyms": [
-        "lift door"
-      ]
+      "file": "led"
+    },
+    {
+      "file": "door"
     },
     {
       "object": "artefact",
@@ -77,4 +50,4 @@
       ]
     }
   ]
-  }
+}

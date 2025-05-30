@@ -13,37 +13,26 @@
     }
   ],
   "inventory": [
-          {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "Yep. That's where the facilities team sits.",
-            "attributes": {
-              "viewDestination": "facilities-area"
-            },
-          "synonyms": [
-            "glass",
-            "outside",
-            "wall",
-            "glass wall",
-            "facilities team area"
-          ],
-          "inventory": [
-            {
-              "object": "artefact",
-              "name": "facilities",
-              "description": "facilities team",
-              "detailedDescription": "You press your face to the glass and squint.<br>Is there anyone there?",
-              "attributes": {
-                  "type": "scenery",
-                  "subType": "intangible"
-              },
-              "synonyms": [
-                  "team",
-                  "facilities team"
-              ]
-            }
-          ]
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "Yep. That's where the facilities team sits.",
+      "attributes": {
+        "viewDestination": "facilities-area"
       },
+      "synonyms": [
+        "glass",
+        "outside",
+        "wall",
+        "glass wall",
+        "facilities team area"
+      ],
+      "inventory": [
+        {
+          "file": "facilities"
+        }
+      ]
+    },
     {
       "object": "artefact",
       "template": "chairs",
@@ -63,4 +52,4 @@
       ]
     }
   ]
-  }
+}

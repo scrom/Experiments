@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "table",
+  "description": "glass table",
+  "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
+  "attributes": {
+    "weight": 51,
+    "isBreakable": true,
+    "imageName": "librarytable.jpg"
+  },
+  "synonyms": [
+    "glass",
+    "glass table"
+  ],
+  "inventory": [
+    {
+      "file": "plaque"
+    }
+  ]
+}

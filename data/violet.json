@@ -1,0 +1,25 @@
+{
+  "object": "artefact",
+  "name": "Violet",
+  "description": "violet",
+  "detailedDescription": "She's usually at reception.",
+  "attributes": {
+    "type": "scenery",
+    "subType": "intangible",
+    "customAction": [
+      "get",
+      "check",
+      "find",
+      "where is",
+      "wheres",
+      "where",
+      "go"
+    ],
+    "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
+  },
+  "synonyms": [
+    "reception",
+    "violet",
+    "voilet"
+  ]
+}

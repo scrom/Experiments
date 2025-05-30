@@ -1,0 +1,19 @@
+{
+  "object": "artefact",
+  "name": "sword",
+  "description": "ornamental sword",
+  "detailedDescription": "It's flimsy and fake-looking but kind of fun.",
+  "attributes": {
+    "weight": 4,
+    "attackStrength": 20,
+    "type": "weapon",
+    "subType": "sharp",
+    "canCollect": true,
+    "imageName": "sword.jpg"
+  },
+  "synonyms": [
+    "ornamental",
+    "ornamental sword",
+    "fake sword"
+  ]
+}

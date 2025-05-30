@@ -1,0 +1,17 @@
+{
+  "object": "artefact",
+  "name": "walls",
+  "description": "wall full of assorted project and team status information",
+  "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "plural": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "wall",
+    "graphs",
+    "stats"
+  ]
+}

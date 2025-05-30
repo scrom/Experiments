@@ -1,79 +1,23 @@
 {
-    "object": "location",
-    "name": "machine-room-east",
-    "displayName": "Machine room",
-    "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "machine-room-east",
-            "destination": "machine-room-west"
-        }
-    ],
-    "inventory": [
-        {
-            "object": "artefact",
-            "name": "server",
-            "description": "rack-mounted blade server",
-            "detailedDescription": "The servers look like they're connected to a console nearby.",
-            "attributes": {
-                "defaultAction": "open",
-                "weight": 0.1,
-                "carryWeight": 0.75,
-                "type": "container",
-                "breakable": true,
-                "broken":  true,
-                "canCollect": false
-            },
-            "synonyms": [
-                "rack",
-                "racks",
-                "server rack",
-                "server racks",
-                "blade",
-                "blade server",
-                "servers",
-                "computer",
-                "computers",
-                "bay",
-                "hard drive bay",
-                "rack",
-                "rack mounted",
-                "rack mounted blade",
-                "rack mounted blade server",
-                "rack-mounted",
-                "rack-mounted blade",
-                "rack-mounted blade server"
-            ],
-            "missions": [
-                {"file": "mission-installdisk"}
-            ]
-        },
-        {
-            "object": "artefact",
-            "name": "console",
-            "description": "old-fashioned VDU console",
-            "detailedDescription": "It's pretty old and tatty. There's no sign of life in it at the moment.",
-            "attributes": {
-                "weight": 25,
-                "type": "computer",
-                "breakable": true,
-                "canCollect": false
-            },
-            "synonyms": [
-                "vdu",
-                "screen",
-                "old screen",
-                "old console",
-                "old vdu console",
-                "old vdu",
-                "old fashioned vdu console",
-                "old fashioned vdu",
-                "old-fashioned vdu console",
-                "old-fashioned vdu"
-            ]
-        }
-    ]
-  }
+  "object": "location",
+  "name": "machine-room-east",
+  "displayName": "Machine room",
+  "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "machine-room-east",
+      "destination": "machine-room-west"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "server"
+    },
+    {
+      "file": "console"
+    }
+  ]
+}

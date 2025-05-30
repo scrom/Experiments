@@ -1,0 +1,25 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "wall full of post cards and photos",
+  "detailedDescription": "You poke through the postcards interspersed with the photos. They generally have variations of 'thanks', 'you're wonderful' and similar meaningful platitudes.<br><br>You're tempted to take one of these to <i>give</i> to someone.",
+  "attributes": {
+    "weight": 280,
+    "type": "scenery",
+    "canDrawOn": true,
+    "customAction": [
+      "get"
+    ],
+    "defaultResult": "Taking just the one postcard was enough."
+  },
+  "synonyms": [
+    "cards",
+    "photo",
+    "photos",
+    "postcards",
+    "postcard",
+    "post cards",
+    "card wall",
+    "walls"
+  ]
+}

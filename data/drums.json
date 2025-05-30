@@ -1,0 +1,21 @@
+{
+  "object": "artefact",
+  "name": "drums",
+  "description": "drum kit",
+  "detailedDescription": "An electronic drum kit, cool!",
+  "attributes": {
+    "weight": 18,
+    "type": "treasure",
+    "canCollect": true,
+    "isBreakable": true,
+    "price": 15,
+    "customAction": "play",
+    "defaultResult": "You bash the drums for a while. Your sense of rhythm feels a bit off today."
+  },
+  "synonyms": [
+    "drum",
+    "drum kit",
+    "drumkit",
+    "kit"
+  ]
+}

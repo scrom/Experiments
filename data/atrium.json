@@ -46,117 +46,19 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "Violet",
-      "description": "violet",
-      "detailedDescription": "She's usually at reception.",
-      "attributes": {
-        "type": "scenery",
-        "subType": "intangible",
-        "customAction": [
-          "get",
-          "check",
-          "find",
-          "where is",
-          "wheres",
-          "where",
-          "go"
-        ],
-        "defaultResult": "You'll need to learn to fend for yourself eventually.<br>Try heading <i>East</i> from here."
-      },
-      "synonyms": [
-        "reception",
-        "violet",
-        "voilet"
-      ]
+      "file": "violet"
     },
     {
-      "object": "artefact",
-      "name": "smell of coffee",
-      "description": "coffee",
-      "detailedDescription": "You'll need to head to the kitchen.",
-      "attributes": {
-        "type": "scenery",
-        "subType": "intangible",
-        "customAction": [
-          "get",
-          "find",
-          "where is",
-          "where"
-        ],
-        "defaultResult": "The coffee machine is in the kitchen.<br>Off you go!",
-        "smell": "Yup, smells like coffee here.<br>Good coffee at that."
-      },
-      "synonyms": [
-        "latte",
-        "coffee"
-      ]
+      "file": "smell-of-coffee"
     },
     {
-      "object": "artefact",
-      "name": "air",
-      "description": "smell of smart people and coffee",
-      "detailedDescription": "As I said - smart people and coffee.",
-      "attributes": {
-        "type": "scenery",
-        "subType": "intangible",
-        "customAction": [
-          "get"
-        ],
-        "defaultResult": "The place is full of 'em. Go explore!",
-        "smell": "You detect the slightly warm, damp, youthful smell of Cambridge graduates."
-      },
-      "synonyms": [
-        "smart",
-        "smart people",
-        "people",
-        "graduates"
-      ]
+      "file": "air"
     },
     {
-      "object": "artefact",
-      "name": "button",
-      "description": "lift call button",
-      "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
-      "attributes": {
-        "defaultAction": "press",
-        "weight": 200,
-        "type": "tool",
-        "canOpen": true,
-        "customAction": "call",
-        "defaultResult": "$action press"
-      },
-      "linkedexits": [
-        {
-          "object": "exit",
-          "longname": "in",
-          "direction": "i",
-          "source": "atrium",
-          "destination": "lift-ground-floor",
-          "hidden": true
-        }
-      ],
-      "synonyms": [
-        "lift",
-        "lift call",
-        "lift button",
-        "lift call button",
-        "door"
-      ]
+      "file": "button"
     },
     {
-      "object": "artefact",
-      "name": "screen",
-      "template": "flat-screen",
-      "detailedDescription": "It's cycling through news, traffic reports and the names of visitors for the day.<br>Apparently the A14 is broken again.<br><br>Ooh! It has your name up there too - 'Welcome $player'.<br>At least <i>someone</i> is expecting you.",
-      "attributes": {
-        "imageName": "screen.jpg"
-      },
-      "missions": [
-        {
-          "file": "mission-destroyscreen"
-        }
-      ]
+      "file": "screen"
     }
   ],
   "missions": [

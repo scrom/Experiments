@@ -1,87 +1,34 @@
 {
-    "object": "location",
-    "name": "ground-floor-fire-escape",
-    "displayName": "Fire escape",
-    "description": "You're at the bottom of the rear fire escape staircase.<br>All around you are large gas and water pipes leading in and out of the building.<br>This area is occasionally used for storing tools.",
-    "attributes": {
-      "type": "outdoor"
+  "object": "location",
+  "name": "ground-floor-fire-escape",
+  "displayName": "Fire escape",
+  "description": "You're at the bottom of the rear fire escape staircase.<br>All around you are large gas and water pipes leading in and out of the building.<br>This area is occasionally used for storing tools.",
+  "attributes": {
+    "type": "outdoor"
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "up",
+      "direction": "u",
+      "source": "ground-floor-fire-escape",
+      "destination": "first-floor-fire-escape"
     },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "ground-floor-fire-escape",
-        "destination": "first-floor-fire-escape"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-fire-escape",
-        "destination": "smoking-area",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "pipe",
-        "description": "big pipes",
-        "detailedDescription": "They're painted bright yellow and blue.<br>They look pretty much indestructible (which I'm sure you'll agree is a good thing).",
-        "attributes": {
-          "weight": 180,
-          "type": "scenery",
-          "plural": true,
-          "imageName": "pipe.jpg",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "gas",
-          "water",
-          "gas pipe",
-          "water pipe",
-          "gas pipes",
-          "water pipes",
-          "pipes"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "steel gate",
-        "description": "steel gate",
-        "detailedDescription": "This has the potential to be a useful short-cut.",
-        "attributes": {
-          "defaultAction": "open",
-          "weight": 200,
-          "type": "door",
-          "autoLock": 2,
-          "canOpen": true
-        },
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "smoking-area",
-            "destination": "ground-floor-fire-escape",
-            "hidden": true
-          },
-          {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "ground-floor-fire-escape",
-            "destination": "smoking-area",
-            "hidden": true
-          }
-        ],
-        "synonyms": [
-          "door",
-          "gate",
-          "steel door",
-          "steel"
-        ]
-      }
-    ]
-  }
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "ground-floor-fire-escape",
+      "destination": "smoking-area",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "file": "pipe"
+    },
+    {
+      "file": "steel-gate"
+    }
+  ]
+}

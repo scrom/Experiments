@@ -29,34 +29,7 @@
       }
     },
     {
-      "object": "artefact",
-      "name": "tomato plants",
-      "description": "tomato plants",
-      "detailedDescription": "They're <b>huge!</b> But they're also rather dry and starting to wilt.",
-      "attributes": {
-        "weight": 40,
-        "canCollect": true,
-        "isBreakable": true,
-        "combinesDescription": "They really need <i>water</i>",
-        "plural": true,
-        "hideDeliveryDescription": true,
-        "combinesWith": [
-          "water"
-        ]
-      },
-      "synonyms": [
-        "tomato plant",
-        "plant",
-        "plants",
-        "tomato",
-        "tomatoes"
-      ],
-      "delivers": [
-        {
-          "object": "artefact",
-          "template": "healthy-tomato-plants"
-        }
-      ]
+      "file": "tomato-plants"
     },
     {
       "file": "francesca-vaughn"

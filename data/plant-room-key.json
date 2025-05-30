@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "plant room key",
+  "description": "heavy industrial-looking key",
+  "detailedDescription": "It's a heavy, industrial-looking key.",
+  "attributes": {
+    "defaultAction": "open",
+    "weight": 0.1,
+    "type": "key",
+    "canCollect": true,
+    "affinityModifier": 2,
+    "unlocks": "plant room door"
+  },
+  "synonyms": [
+    "plant key",
+    "heavy key",
+    "industrial key",
+    "key"
+  ]
+}

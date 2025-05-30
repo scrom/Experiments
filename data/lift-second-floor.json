@@ -4,7 +4,7 @@
   "displayName": "Lift",
   "description": "Ding. Second floor.<br>Same lift, same mirror, same eerie lighting. Or is it?",
   "attributes": {
-      "imageName": "liftdoor-2.jpg"
+    "imageName": "liftdoor-2.jpg"
   },
   "exits": [
     {
@@ -23,41 +23,14 @@
     }
   ],
   "inventory": [
-    { "file": "alarm-button" },
     {
-      "object": "artefact",
-      "name": "led",
-      "description": "led lights",
-      "detailedDescription": "They're a kind of baleful blueish white.<br>Some years ago the original lights were stolen. (What a thing to steal from an office!)<br>These are low-energy replacements but they remind you of the lights used in the toilets of seedier pubs and clubs to prevent unsavoury activities.",
-      "attributes": {
-        "type": "scenery"
-      },
-      "synonyms": [
-        "light",
-        "lights",
-        "leds",
-        "led lights",
-        "lighting",
-        "led lighting",
-        "white",
-        "blue",
-        "blueish",
-        "dark led",
-        "dark led lights"
-      ]
+      "file": "alarm-button"
     },
     {
-      "object": "artefact",
-      "name": "door",
-      "description": "lift doors",
-      "detailedDescription": "They're just plain metal lift doors.",
-      "attributes": {
-        "type": "scenery",
-        "plural": true
-      },
-      "synonyms": [
-        "lift door"
-      ]
+      "file": "led-lift-second-floor"
+    },
+    {
+      "file": "door"
     },
     {
       "object": "artefact",
@@ -70,18 +43,9 @@
       ],
       "inventory": [
         {
-          "object": "artefact",
-          "name": "reflection",
-          "description": "reflection",
-          "detailedDescription": "You stare deeply into your reflection and shudder to yourself.<br>You're just imagining things.",
-          "attributes": {
-            "type": "scenery"
-          },
-          "synonyms": [
-            "shimmer"
-          ]
+          "file": "reflection"
         }
       ]
     }
   ]
-  }
+}

@@ -1,82 +1,34 @@
-  {
-    "object": "location",
-    "name": "second-floor-landing-central",
-    "displayName": "Second floor landing",
-    "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "second-floor-landing-central",
-            "destination": "second-floor-landing-west"
-        },
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "second-floor-landing-central",
-            "destination": "second-floor-landing-east"
-        },
-        {
-            "object": "exit",
-            "longname": "in",
-            "direction": "i",
-            "source": "second-floor-landing-central",
-            "destination": "lift-second-floor"
-        }
-    ],
-    "inventory": [
-        {
-            "object": "artefact",
-            "name": "autonomy",
-            "description": "autonomy",
-            "detailedDescription": "You see little people in suits scurrying back and forth.",
-            "attributes": {
-                "type": "scenery",
-                "subType": "intangible",
-                "customAction": [
-                    "find",
-                    "where is",
-                    "where"
-                ],
-                "defaultResult": "It's the big office building over the road."
-            },
-            "synonyms": [
-                "ant",
-                "farm",
-                "ant farm",
-                "autonomy ant farm",
-                "road",
-                "office",
-                "office building",
-                "big office building",
-                "big office"
-            ],
-            "inventory": [
-                {
-                    "object": "artefact",
-                    "name": "people",
-                    "description": "little people",
-                    "detailedDescription": "I think you made the right choice coming here.",
-                    "attributes": {
-                        "type": "scenery",
-                        "subType": "intangible",
-                        "customAction": [
-                            "get",
-                            "find",
-                            "where is",
-                            "where"
-                        ],
-                        "defaultResult": "You can't reach them from here."
-                    },
-                    "synonyms": [
-                        "little people",
-                        "suits",
-                        "little people in suits"
-                    ]
-                }
-            ]
-        }
-    ]
-  }
+{
+  "object": "location",
+  "name": "second-floor-landing-central",
+  "displayName": "Second floor landing",
+  "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "second-floor-landing-central",
+      "destination": "second-floor-landing-west"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "second-floor-landing-central",
+      "destination": "second-floor-landing-east"
+    },
+    {
+      "object": "exit",
+      "longname": "in",
+      "direction": "i",
+      "source": "second-floor-landing-central",
+      "destination": "lift-second-floor"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "autonomy"
+    }
+  ]
+}

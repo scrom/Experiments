@@ -1,49 +1,34 @@
-  {
-    "object": "location",
-    "name": "people-team-water-cooler",
-    "displayName": "Water cooler",
-    "description": "You're stood by a water cooler on the west wing of the second floor. A corridor leads North and East. There are team areas to the South and meeting rooms to the West.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "people-team-water-cooler",
-        "destination": "second-floor-west-corridor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "people-team-water-cooler",
-        "destination": "creative-agency-area"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "people-team-water-cooler",
-        "destination": "second-floor-north-west-corridor-south"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "water cooler",
-        "description": "water cooler",
-        "detailedDescription": "A supply of fresh, filtered and cooled drinking water.",
-        "attributes": {
-          "defaultAction": "get water from cooler",
-          "weight": 100,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "watercooler",
-          "cooler"
-        ],
-        "delivers": [
-          {"file": "water"}
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "people-team-water-cooler",
+  "displayName": "Water cooler",
+  "description": "You're stood by a water cooler on the west wing of the second floor. A corridor leads North and East. There are team areas to the South and meeting rooms to the West.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "people-team-water-cooler",
+      "destination": "second-floor-west-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "people-team-water-cooler",
+      "destination": "creative-agency-area"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "people-team-water-cooler",
+      "destination": "second-floor-north-west-corridor-south"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "water-cooler"
+    }
+  ]
+}

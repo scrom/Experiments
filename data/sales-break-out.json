@@ -1,50 +1,40 @@
-  {
-    "object": "location",
-    "name": "sales-break-out",
-    "displayName": "Sales area",
-    "description": "You're stood in a small break out area. The area is dominated by a large sofa and TV.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "sales-break-out",
-        "destination": "sales-north"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "sales-break-out",
-        "destination": "windows-meeting-room"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "sales-break-out",
-        "destination": "sales-seating"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "tv",
-        "template": "flat-screen",
-        "description": "giant TV screen",
-        "detailedDescription": "It's a huge 60 inch screen used solely for relaxing and gaming.",
-        "attributes": {
-          "type": "junk",
-          "isBreakable": false
-        },
-        "synonyms": [
-          "television",
-          "giant tv",
-          "giant screen",
-          "giant tv screen"
-        ]
-      },
-      { "file": "curved-sofa" },
-      {"file": "xbox"}
-    ]
-  }
+{
+  "object": "location",
+  "name": "sales-break-out",
+  "displayName": "Sales area",
+  "description": "You're stood in a small break out area. The area is dominated by a large sofa and TV.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "sales-break-out",
+      "destination": "sales-north"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "sales-break-out",
+      "destination": "windows-meeting-room"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "sales-break-out",
+      "destination": "sales-seating"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "tv-sales-break-out"
+    },
+    {
+      "file": "curved-sofa"
+    },
+    {
+      "file": "xbox"
+    }
+  ]
+}

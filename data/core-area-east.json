@@ -21,31 +21,10 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "walls",
-      "description": "wall full of assorted project and team status information",
-      "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
-      "attributes": {
-        "weight": 280,
-        "type": "scenery",
-        "plural": true,
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "wall",
-        "graphs",
-        "stats"
-      ]
+      "file": "walls"
     },
     {
-      "object": "artefact",
-      "name": "monitor",
-      "template": "flat-screen",
-      "detailedDescription": "They're all cycling through web site statistics and error logs.",
-      "attributes": {
-        "type": "scenery",
-        "isBreakable": false
-      }
+      "file": "monitor"
     },
     {
       "file": "zoe-sharpe"

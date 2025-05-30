@@ -34,22 +34,11 @@
     }
   ],
   "inventory": [
-      {"file": "curved-sofa"},
     {
-      "object": "artefact",
-      "name": "wall",
-      "description": "glass wall",
-      "detailedDescription": "One one side this is used by the SQL Release team for planning and tracking work. On the other it's a working space for figuring 'stuff' out. (Stuff is important!)",
-      "attributes": {
-        "weight": 280,
-        "type": "scenery",
-        "canDrawOn": true
-      },
-      "synonyms": [
-        "glass",
-        "glass wall",
-        "walls"
-      ]
+      "file": "curved-sofa"
+    },
+    {
+      "file": "wall-opportunities-central"
     }
   ]
-  }
+}

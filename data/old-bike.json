@@ -1,0 +1,27 @@
+{
+  "object": "artefact",
+  "name": "old bike",
+  "description": "tatty old bike",
+  "detailedDescription": "It's yours. Yay :D",
+  "attributes": {
+    "defaultAction": "ride",
+    "weight": 18,
+    "type": "vehicle",
+    "subType": "bike",
+    "canCollect": true,
+    "isBreakable": true,
+    "isDamaged": true,
+    "lockable": true,
+    "price": 8,
+    "customAction": [
+      "cycle"
+    ],
+    "defaultResult": "$action ride"
+  },
+  "synonyms": [
+    "bicycle",
+    "cycle",
+    "bike",
+    "my bike"
+  ]
+}

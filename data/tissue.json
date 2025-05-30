@@ -1,0 +1,18 @@
+{
+  "object": "artefact",
+  "name": "tissue",
+  "description": "roll of tissue",
+  "detailedDescription": "It's cheap and blue but pretty good for mopping up spills and cleaning whiteboards.",
+  "attributes": {
+    "weight": 1.5,
+    "type": "tool",
+    "subType": "clean",
+    "canCollect": true
+  },
+  "synonyms": [
+    "roll",
+    "tissue roll",
+    "roll of tissue",
+    "roll tissue"
+  ]
+}

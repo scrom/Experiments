@@ -1,0 +1,17 @@
+{
+  "object": "artefact",
+  "name": "tv",
+  "template": "flat-screen",
+  "description": "giant TV screen",
+  "detailedDescription": "It's a 40 inch screen used solely for gaming.",
+  "attributes": {
+    "type": "junk",
+    "isBreakable": false
+  },
+  "synonyms": [
+    "television",
+    "giant tv",
+    "giant screen",
+    "giant tv screen"
+  ]
+}

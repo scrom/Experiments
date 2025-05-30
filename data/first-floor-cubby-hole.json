@@ -1,70 +1,29 @@
 {
-    "object": "location",
-    "name": "first-floor-cubby-hole",
-    "displayName": "Function heads & support cubby hole",
-    "description": "You're in the First floor cubby hole.<br>The area is lined with whiteboards and there are assorted chairs and bean bags scattered around.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "first-floor-cubby-hole",
-        "destination": "customer-delight-north"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "rum-bottle",
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "cheap rum",
-            "description": "rum",
-            "detailedDescription": "It's pretty ropey. Best used for cooking and not much else.<br>I'm sure most people wouldn't notice though.",
-            "attributes": {
-              "defaultAction": "drink",
-              "weight": 1,
-              "type": "food",
-              "requiresContainer": true,
-              "isLiquid": true,
-              "requiredContainer": "rum bottle",
-              "canCollect": true,
-              "charges": 15,
-              "chargeUnit": "shot",
-              "chargesDescription": "There's enough here for about $charges $chargeUnit",
-              "plural": true,
-              "isEdible": true,
-              "nutrition": -3,
-              "smell": "It smells like a mixture of farmyards and paint stripper. Maybe that's why this stuff's sometimes called agricultural rum.",
-              "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
-            },
-            "synonyms": [
-              "rum",
-              "agricultural rum"
-            ]
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "beanbag",
-        "description": "giant bean bag",
-        "detailedDescription": "Very comfy. Not so easy to get out of once you're in place though",
-        "attributes": {
-          "defaultAction": "rest",
-          "weight": 30,
-          "type": "bed",
-          "canCollect": true,
-          "isBreakable": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "bean bag",
-          "bean",
-          "bag",
-          "giant bean bag"
-        ]
-      }
-    ]
-  }
+  "object": "location",
+  "name": "first-floor-cubby-hole",
+  "displayName": "Function heads & support cubby hole",
+  "description": "You're in the First floor cubby hole.<br>The area is lined with whiteboards and there are assorted chairs and bean bags scattered around.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "first-floor-cubby-hole",
+      "destination": "customer-delight-north"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "rum-bottle",
+      "inventory": [
+        {
+          "file": "cheap-rum"
+        }
+      ]
+    },
+    {
+      "file": "beanbag"
+    }
+  ]
+}

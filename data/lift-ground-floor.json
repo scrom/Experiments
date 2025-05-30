@@ -4,7 +4,7 @@
   "displayName": "Lift",
   "description": "The lift doors automatically close behind you. You're in the ground floor lift. It's quite dark in here and every now and again a disembodied voice chants something about electrical faults.<br>You contemplate pressing the alarm button but it'll only route to a call centre somewhere.",
   "attributes": {
-      "imageName": "liftdoor.jpg"
+    "imageName": "liftdoor.jpg"
   },
   "exits": [
     {
@@ -24,59 +24,14 @@
     }
   ],
   "inventory": [
-    { "file": "alarm-button" },
     {
-      "object": "artefact",
-      "name": "exit button",
-      "description": "exit button",
-      "detailedDescription": "If you push the exit, you should be able to get out again.",
-      "attributes": {
-        "defaultAction": "press",
-        "weight": 200,
-        "type": "tool",
-        "canOpen": true
-      },
-      "linkedexits": [
-        {
-          "object": "exit",
-          "longname": "out",
-          "direction": "o",
-          "source": "lift-ground-floor",
-          "destination": "atrium",
-          "hidden": true
-        }
-      ],
-      "synonyms": [
-        "lift",
-        "lift call",
-        "lift button",
-        "lift call button",
-        "door",
-        "exit",
-        "button"
-      ]
+      "file": "alarm-button"
     },
     {
-      "object": "artefact",
-      "name": "led",
-      "description": "led lights",
-      "detailedDescription": "They're blueish white low-energy replacement bulbs.",
-      "attributes": {
-        "type": "scenery"
-      },
-      "synonyms": [
-        "light",
-        "lights",
-        "leds",
-        "led lights",
-        "lighting",
-        "led lighting",
-        "white",
-        "blue",
-        "blueish",
-        "dark led",
-        "dark led lights"
-      ]
+      "file": "exit-button"
+    },
+    {
+      "file": "led-lift-ground-floor"
     },
     {
       "object": "artefact",
@@ -89,4 +44,4 @@
       ]
     }
   ]
-  }
+}

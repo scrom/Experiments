@@ -20,39 +20,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "wreckage",
-      "description": "plane wreckage",
-      "detailedDescription": "A tangle of twisted, smouldering metal, plastic, broken glass and bodies.",
-      "attributes": {
-        "type": "junk",
-        "plural": true,
-        "weight": 1500,
-        "carryWeight": 95,
-        "smell": "The whole area smells like a combination of burned plastic and barbecued hair."
-      },
-      "synonyms": [
-        "plastic",
-        "burning",
-        "burning plastic",
-        "debris",
-        "plane",
-        "bodies",
-        "air",
-        "broken glass",
-        "smouldering metal",
-        "glass",
-        "metal",
-        "smoke"
-      ],
-      "inventory": [
-        {
-          "file": "venom"
-        },
-        {
-          "file": "crash-corpse"
-        }
-      ]
+      "file": "wreckage"
     },
     {
       "file": "daniel-connolly"

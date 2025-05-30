@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "beanbag",
+  "description": "giant bean bag",
+  "detailedDescription": "Very comfy. Not so easy to get out of once you're in place though",
+  "attributes": {
+    "defaultAction": "rest",
+    "weight": 30,
+    "type": "bed",
+    "canCollect": true,
+    "isBreakable": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "bean bag",
+    "bean",
+    "bag",
+    "giant bean bag"
+  ]
+}

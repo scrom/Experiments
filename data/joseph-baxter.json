@@ -26,44 +26,10 @@
       "file": "keyfob"
     },
     {
-      "object": "artefact",
-      "name": "plant room key",
-      "description": "heavy industrial-looking key",
-      "detailedDescription": "It's a heavy, industrial-looking key.",
-      "attributes": {
-        "defaultAction": "open",
-        "weight": 0.1,
-        "type": "key",
-        "canCollect": true,
-        "affinityModifier": 2,
-        "unlocks": "plant room door"
-      },
-      "synonyms": [
-        "plant key",
-        "heavy key",
-        "industrial key",
-        "key"
-      ]
+      "file": "plant-room-key"
     },
     {
-      "object": "artefact",
-      "name": "gate key",
-      "description": "steel key",
-      "detailedDescription": "It's a heavy, industrial-looking key.",
-      "attributes": {
-        "defaultAction": "open",
-        "weight": 0.1,
-        "type": "key",
-        "canCollect": true,
-        "affinityModifier": 2,
-        "unlocks": "steel gate"
-      },
-      "synonyms": [
-        "steel gate key",
-        "steel key",
-        "heavy key",
-        "key"
-      ]
+      "file": "gate-key"
     }
   ],
   "synonyms": [

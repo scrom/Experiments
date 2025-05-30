@@ -1,87 +1,40 @@
-  {
-    "object": "location",
-    "name": "west-bike-racks",
-    "displayName": "Bike racks (West)",
-    "description": "You're at the South-West corner of the the office building.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "west-bike-racks",
-        "destination": "smoking-area"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "west-bike-racks",
-        "destination": "west-car-park"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "west-bike-racks",
-        "destination": "bike-ambulance"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "bike racks",
-        "description": "bike racks",
-        "detailedDescription": "There's dozens of bikes here but most of them are locked.",
-        "attributes": {
-          "extendedInventoryDescription": "After extensively picking through the crowded racks, you find $inventory.",
-          "weight": 45,
-          "carryWeight": 18,
-          "isBreakable": true,
-          "plural": true
-        },
-        "synonyms": [
-          "rack",
-          "racks",
-          "cycle rack",
-          "cycle racks",
-          "bike rack",
-          "bikes"
-        ],
-        "inventory": [
-          {
-            "object": "artefact",
-            "name": "old bike",
-            "description": "tatty old bike",
-            "detailedDescription": "It's yours. Yay :D",
-            "attributes": {
-              "defaultAction": "ride",
-              "weight": 18,
-              "type": "vehicle",
-              "subType": "bike",
-              "canCollect": true,
-              "isBreakable": true,
-              "isDamaged": true,
-              "lockable": true,
-              "price": 8,
-              "customAction": [
-                "cycle"
-              ],
-              "defaultResult": "$action ride"
-            },
-            "synonyms": [
-              "bicycle",
-              "cycle",
-              "bike",
-              "my bike"
-            ]
-          }
-        ]
-      }
+{
+  "object": "location",
+  "name": "west-bike-racks",
+  "displayName": "Bike racks (West)",
+  "description": "You're at the South-West corner of the the office building.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike"
     ]
-  }
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "west-bike-racks",
+      "destination": "smoking-area"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "west-bike-racks",
+      "destination": "west-car-park"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "west-bike-racks",
+      "destination": "bike-ambulance"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "bike-racks-west-bike-racks"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "large white-painted wall",
+  "detailedDescription": "Whiteboard paint seems like a great idea until you to try to use it for sticky notes or want to clean it. This one's seen its day I think.",
+  "attributes": {
+    "weight": 300,
+    "type": "scenery",
+    "canDrawOn": true,
+    "writings": [
+      "<s>Sprint 7 - ship the alpha</s>",
+      "<s>Sprint 8 - ship the beta</s>",
+      "Sprint 9 - shippit",
+      "dammit, clean me!"
+    ]
+  },
+  "synonyms": [
+    "board",
+    "white board",
+    "white wall",
+    "painted wall",
+    "white-painted wall",
+    "white painted wall",
+    "white",
+    "paint",
+    "walls",
+    "white board",
+    "whitebaord"
+  ]
+}

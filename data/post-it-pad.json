@@ -1,0 +1,27 @@
+{
+  "object": "artefact",
+  "name": "post-it pad",
+  "description": "pack of post-its",
+  "detailedDescription": "A pack of multicoloured post-it notes.",
+  "attributes": {
+    "weight": 0.5,
+    "canCollect": true,
+    "price": 2,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "pack",
+    "stickies",
+    "sticky notes",
+    "post its",
+    "post-its",
+    "postits",
+    "post it notes",
+    "post-it notes",
+    "postit notes",
+    "notes",
+    "pack of post-its",
+    "pack of post its",
+    "pack of postits"
+  ]
+}

@@ -28,32 +28,7 @@
   ],
   "inventory": [
     {
-      "object": "artefact",
-      "name": "bag",
-      "description": "giant bag",
-      "detailedDescription": "The label says 'Finest Software Development Coffee Beans'",
-      "attributes": {
-        "defaultAction": "open",
-        "weight": 2,
-        "carryWeight": 5,
-        "attackStrength": 2,
-        "type": "container",
-        "canCollect": true,
-        "affinityModifier": 0,
-        "canOpen": true,
-        "smell": "You can almost taste the coffee beans."
-      },
-      "synonyms": [
-        "bean bag",
-        "bag of beans",
-        "giant bag",
-        "big bag"
-      ],
-      "inventory": [
-        {
-          "file": "beans"
-        }
-      ]
+      "file": "bag"
     }
   ]
 }
