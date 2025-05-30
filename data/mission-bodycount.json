@@ -1,4 +1,4 @@
-﻿{
+{
   "object": "mission",
   "name": "bodycount",
   "displayName": "game reaches 15 friendly deaths",
