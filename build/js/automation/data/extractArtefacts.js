@@ -29,8 +29,8 @@ files.forEach(file => {
       let item = arr[i];
       if (item && typeof item === 'object' && item.object === 'artefact' && item.name) {
         // Write artefact to its own file
-        const artefactFilename = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() + '.json';
-        const artefactPath = path.join(dataDir, artefactFilename);
+        const artefactFilename = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+        const artefactPath = path.join(dataDir, artefactFilename + '.json');
         fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
         // Replace with file reference
         arr[i] = { file: artefactFilename };
@@ -50,8 +50,8 @@ files.forEach(file => {
         processArray(obj[key], key);
       } else if (obj[key] && typeof obj[key] === 'object') {
         if (obj[key].object === 'artefact' && obj[key].name) {
-          const artefactFilename = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() + '.json';
-          const artefactPath = path.join(dataDir, artefactFilename);
+          const artefactFilename = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+          const artefactPath = path.join(dataDir, artefactFilename + '.json');
           fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
           obj[key] = { file: artefactFilename };
           changed = true;

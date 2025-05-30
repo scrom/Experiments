@@ -28,12 +28,19 @@ files.forEach(file => {
     for (let i = 0; i < arr.length; i++) {
       let item = arr[i];
       if (item && typeof item === 'object' && item.object === 'mission' && item.name) {
-        // Write artefact to its own file
-        const artefactFilename = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() + '.json';
-        const artefactPath = path.join(dataDir, artefactFilename);
-        fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
+        // Write mission to its own file
+        let fileprefix = ""
+        if (item.attributes.type == 'event') {
+          fileprefix = 'event-';
+        } else {
+          fileprefix = 'mission-';
+        };
+
+        const missionFilename = fileprefix+item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+        const missionPath = path.join(dataDir, missionFilename + '.json');
+        fs.writeFileSync(missionPath, JSON.stringify(item, null, 2), 'utf8');
         // Replace with file reference
-        arr[i] = { file: artefactFilename };
+        arr[i] = { file: missionFilename };
         changed = true;
       } else if (Array.isArray(item)) {
         processArray(item, parentKey);
@@ -49,11 +56,17 @@ files.forEach(file => {
       if (Array.isArray(obj[key])) {
         processArray(obj[key], key);
       } else if (obj[key] && typeof obj[key] === 'object') {
-        if (obj[key].object === 'artefact' && obj[key].name) {
-          const artefactFilename = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() + '.json';
-          const artefactPath = path.join(dataDir, artefactFilename);
-          fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
-          obj[key] = { file: artefactFilename };
+        if (obj[key].object === 'mission' && obj[key].name) {
+          let fileprefix = ""
+          if (obj[key].attributes.type == 'event') {
+            fileprefix = 'event-';
+          } else {
+            fileprefix = 'mission-';
+          };
+          const missionFilename = fileprefix+obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+          const missionPath = path.join(dataDir, missionFilename + '.json');
+          fs.writeFileSync(missionPath, JSON.stringify(obj[key], null, 2), 'utf8');
+          obj[key] = { file: missionFilename };
           changed = true;
         } else {
           processObject(obj[key]);
