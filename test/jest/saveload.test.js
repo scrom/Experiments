@@ -117,7 +117,8 @@ describe('SaveLoad Tests', () => {
         const result = await g0.saveAsync();
 
         // retrieve filename from save result
-        const filename = result.substr(62, 13);
+        const filenameLength = result.substr(62, 20).indexOf("<");
+        const filename = result.substr(62, filenameLength); //usually 13 but sometimes 12 - this approach will handle changes to numbering in future.
         console.debug(filename);
 
         // check if file exists in redis
