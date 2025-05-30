@@ -56,7 +56,13 @@ const allowed = [
     "weight"
 ];
 
-const dataDir = path.join(__dirname, '../../../data');
+const dataDir = path.join(__dirname, '../../../../data');
+console.log(`Processing files in: ${dataDir}`);
+if (!fs.existsSync(dataDir)) {  
+    console.error(`Directory does not exist: ${dataDir}`);
+    process.exit(1);
+};
+
 fs.readdirSync(dataDir).forEach(file => {
   if (file.endsWith('.json')) {
     const filePath = path.join(dataDir, file);

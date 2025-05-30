@@ -1,7 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataDir = path.join(__dirname, '../../../data');
+const dataDir = path.join(__dirname, '../../../../data');
+console.log(`Processing files in: ${dataDir}`);
+if (!fs.existsSync(dataDir)) {  
+    console.error(`Directory does not exist: ${dataDir}`);
+    process.exit(1);
+};
+
 const attributeSet = new Set();
 
 //takes in an argument for object type (output all args for clarity)

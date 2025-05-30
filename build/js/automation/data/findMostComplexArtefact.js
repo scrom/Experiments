@@ -1,8 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
-const dataDir = path.join(__dirname, '../../../data');
-console.log("directory: "+dataDir);
+const dataDir = path.join(__dirname, '../../../../data');
+console.log(`Processing files in: ${dataDir}`);
+if (!fs.existsSync(dataDir)) {  
+    console.error(`Directory does not exist: ${dataDir}`);
+    process.exit(1);
+};
+
 let mostComplex = null;
 let maxProps = 0;
 
