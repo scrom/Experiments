@@ -533,6 +533,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getImageName = function() {
             return _imageName;
         };
+        
+        self.setImageName = function(imageName) {
+            _imageName = imageName;
+        };
 
         self.checkCustomAction = function(verb) {
             //console.debug("custom action: "+_customAction+" verb:"+verb);

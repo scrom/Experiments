@@ -160,8 +160,11 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.getImageName = function() {
-            //return _imageName; //if we want to show location images, restore this line and remove "return null".
-            return null;
+            return _imageName;
+        };
+
+        self.setImageName = function(imageName) {
+            _imageName = imageName;
         };
 
         self.setDescription = function(description) {

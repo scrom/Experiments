@@ -470,6 +470,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _imageName;
         };
         
+        self.setImageName = function(imageName) {
+            _imageName = imageName;
+        };
+        
         self.play = function (verb, player, artefact) {
             var playerAggression = player.getAggression()
             if (playerAggression > 0) {
