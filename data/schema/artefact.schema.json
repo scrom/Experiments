@@ -1,5 +1,6 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "artefact.schema",  
+  "$comment": "All numbers used in this schema can be positive or negative and use fractions - e.g. a negative number for nutition will increase hunger rather than decrease it etc",
   "title": "Artefact",
   "type": "object",
   "required": ["object", "name", "description", "attributes"],
@@ -22,12 +23,17 @@
       "items": { "type": "string" }
     },
     "attributes": {
-      "type": "object",
+      "$comment": "Any attributes not included in properties that require some default value will have defaults set on construction of object. This makes all attributes optional. I may however make weight mandatory for everything that is not subtype intangible (for example)",
       "properties": {
         "weight": { "type": "number" },
         "carryWeight": { "type": "number" },
-        "type": { "type": "string" },
-        "subType": { "type": "string" },
+        "type": { 
+            "type": "string",
+            "enum": ["bed","book","container","door","food","junk","key","light","medical","scenery","tool","treasure","vehicle","weapon","writing"] 
+        },
+        "subType": { "type": "string", 
+            "enum": ["blunt","bottle","buff","burn","emergency","fire","intangible","plant","sharp","sharpen","van"] 
+        },
         "imageName": { "type": "string" },
         "extendedInventoryDescription": { "type": "string" },
         "price": { "type": "number" },
@@ -66,7 +72,10 @@
         "sound": { "type": "string" },
         "smell": { "type": "string" },
         "taste": { "type": "string" },
-        "position": { "type": "string" },
+        "position": { 
+            "type": "string",
+            "enum": ["on","under","behind"]
+        },
         "unlocks": { "type": "string" },
         "hasLinkedDoor": { "type": "boolean" },
         "combinesWith": {

@@ -1,0 +1,17 @@
+{
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+    "id": "resource:/schema/exits.array.schema#",  
+    "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object", "longname", "direction", "source", "destination"],
+        "properties": {
+          "object": { "type": "string", "enum": ["exit"] },
+          "longname": { "type": "string" },
+          "direction": { "type": "string" },
+          "source": { "type": "string" },
+          "destination": { "type": "string" },
+          "hidden": { "type": "boolean" }
+        }
+      }
+    }
