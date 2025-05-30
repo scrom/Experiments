@@ -1,9 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-//Script to extract mission objects nested in files into standalone files
-//not fully recursive so run it a few times to pick up all nested items.
-//handles duplicae filenames very crudely.
+//Script to extract artefact objects nested in files into standalone files
+//If a duplicate artefact name is found, append the parent object's name to the filename instead of a numeric suffix.
 
 const dataDir = path.join(__dirname, '../../../../data');
 console.log(`Processing files in: ${dataDir}`);
@@ -13,6 +12,113 @@ if (!fs.existsSync(dataDir)) {
 };
 
 const files = fs.readdirSync(dataDir);
+
+// Helper to compare JSON objects (ignoring whitespace)
+function isJsonEqual(a, b) {
+  return JSON.stringify(a) === JSON.stringify(b);
+}
+
+// Helper to generate a unique filename if needed
+function getUniqueFilename(baseName, artefactObj, parentName) {
+  let candidate = baseName + '.json';
+  let candidatePath = path.join(dataDir, candidate);
+
+  if (!fs.existsSync(candidatePath)) {
+    return candidate;
+  }
+
+  // Compare contents
+  try {
+    const existing = JSON.parse(fs.readFileSync(candidatePath, 'utf8'));
+    if (isJsonEqual(existing, artefactObj)) {
+      // Identical, reuse filename
+      return candidate;
+    }
+  } catch (e) {
+    // If file is invalid, skip to next
+  }
+
+  // If not identical, append parentName if provided
+  if (parentName) {
+    const parentBase = parentName.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+    candidate = `${baseName}-${parentBase}.json`;
+    candidatePath = path.join(dataDir, candidate);
+    if (!fs.existsSync(candidatePath)) {
+      return candidate;
+    }
+    // If still exists, check if identical
+    try {
+      const existing = JSON.parse(fs.readFileSync(candidatePath, 'utf8'));
+      if (isJsonEqual(existing, artefactObj)) {
+        return candidate;
+      }
+    } catch (e) {}
+  }
+
+  // Fallback: add numeric suffix if parentName also collides
+  let suffix = 1;
+  let candidateBase = baseName + (parentName ? '-' + parentName.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase() : '');
+  candidate = `${candidateBase}-${suffix}.json`;
+  candidatePath = path.join(dataDir, candidate);
+  while (fs.existsSync(candidatePath)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(candidatePath, 'utf8'));
+      if (isJsonEqual(existing, artefactObj)) {
+        return candidate;
+      }
+    } catch (e) {}
+    suffix++;
+    candidate = `${candidateBase}-${suffix}.json`;
+    candidatePath = path.join(dataDir, candidate);
+  }
+  return candidate;
+}
+
+// Helper to process arrays recursively
+function processArray(arr, parentName) {
+  for (let i = 0; i < arr.length; i++) {
+    let item = arr[i];
+    if (item && typeof item === 'object' && item.object === 'artefact' && item.name) {
+      const artefactFilenameBase = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+      const artefactFilename = getUniqueFilename(artefactFilenameBase, item, parentName);
+      const artefactPath = path.join(dataDir, artefactFilename);
+      if (!fs.existsSync(artefactPath)) {
+        fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
+        console.log(`Created artefact: ${artefactFilename}`);
+      }
+      // Replace with file reference
+      arr[i] = { file: artefactFilename };
+      changed = true;
+    } else if (Array.isArray(item)) {
+      processArray(item, parentName);
+    } else if (item && typeof item === 'object') {
+      processObject(item, parentName);
+    }
+  }
+}
+
+// Helper to process objects recursively
+function processObject(obj, parentName) {
+  for (const key in obj) {
+    if (Array.isArray(obj[key])) {
+      processArray(obj[key], obj.name || parentName);
+    } else if (obj[key] && typeof obj[key] === 'object') {
+      if (obj[key].object === 'artefact' && obj[key].name) {
+        const artefactFilenameBase = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
+        const artefactFilename = getUniqueFilename(artefactFilenameBase, obj[key], obj.name || parentName);
+        const artefactPath = path.join(dataDir, artefactFilename);
+        if (!fs.existsSync(artefactPath)) {
+          fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
+          console.log(`Created artefact: ${artefactFilename}`);
+        }
+        obj[key] = { file: artefactFilename };
+        changed = true;
+      } else {
+        processObject(obj[key], obj.name || parentName);
+      }
+    }
+  }
+}
 
 files.forEach(file => {
   if (!file.endsWith('.json')) return;
@@ -25,83 +131,8 @@ files.forEach(file => {
     return;
   }
 
-  let changed = false;
-
-  // Helper to compare JSON objects (ignoring whitespace)
-  function isJsonEqual(a, b) {
-    return JSON.stringify(a) === JSON.stringify(b);
-  }
-
-  // Helper to generate a unique filename if needed
-  function getUniqueFilename(baseName, artefactObj) {
-    let candidate = baseName + '.json';
-    let candidatePath = path.join(dataDir, candidate);
-    let suffix = 1;
-    while (fs.existsSync(candidatePath)) {
-      // Compare contents
-      try {
-        const existing = JSON.parse(fs.readFileSync(candidatePath, 'utf8'));
-        if (isJsonEqual(existing, artefactObj)) {
-          // Identical, reuse filename
-          return candidate;
-        }
-      } catch (e) {
-        // If file is invalid, skip to next suffix
-      }
-      candidate = `${baseName}-${suffix}.json`;
-      candidatePath = path.join(dataDir, candidate);
-      suffix++;
-    }
-    return candidate;
-  }
-
-  // Helper to process arrays recursively
-  function processArray(arr, parentKey) {
-    for (let i = 0; i < arr.length; i++) {
-      let item = arr[i];
-      if (item && typeof item === 'object' && item.object === 'artefact' && item.name) {
-        const artefactFilenameBase = item.name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
-        const artefactFilename = getUniqueFilename(artefactFilenameBase, item);
-        const artefactPath = path.join(dataDir, artefactFilename);
-        if (!fs.existsSync(artefactPath)) {
-          fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
-          console.log(`Created artefact: ${artefactFilename}`);
-        }
-        // Replace with file reference (without .json extension)
-        arr[i] = { file: artefactFilename };
-        changed = true;
-      } else if (Array.isArray(item)) {
-        processArray(item, parentKey);
-      } else if (item && typeof item === 'object') {
-        processObject(item);
-      }
-    }
-  }
-
-  // Helper to process objects recursively
-  function processObject(obj) {
-    for (const key in obj) {
-      if (Array.isArray(obj[key])) {
-        processArray(obj[key], key);
-      } else if (obj[key] && typeof obj[key] === 'object') {
-        if (obj[key].object === 'artefact' && obj[key].name) {
-          const artefactFilenameBase = obj[key].name.replace(/[^a-z0-9_\-]/gi, '-').toLowerCase();
-          const artefactFilename = getUniqueFilename(artefactFilenameBase, obj[key]);
-          const artefactPath = path.join(dataDir, artefactFilename);
-          if (!fs.existsSync(artefactPath)) {
-            fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
-            console.log(`Created artefact: ${artefactFilename}`);
-          }
-          obj[key] = { file: artefactFilename };
-          changed = true;
-        } else {
-          processObject(obj[key]);
-        }
-      }
-    }
-  }
-
-  processObject(json);
+  changed = false;
+  processObject(json, path.basename(file, '.json'));
 
   if (changed) {
     fs.writeFileSync(filePath, JSON.stringify(json, null, 2), 'utf8');
