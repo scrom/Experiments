@@ -57,7 +57,7 @@ const allowed = [
 ];
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -71,7 +71,7 @@ fs.readdirSync(dataDir).forEach(file => {
       const keys = Object.keys(json.attributes);
       const extras = keys.filter(k => !allowed.includes(k));
       if (extras.length) {
-        console.log(`${file}: Extra attributes: ${extras.join(', ')}`);
+        console.info(`${file}: Extra attributes: ${extras.join(', ')}`);
       }
     }
   }

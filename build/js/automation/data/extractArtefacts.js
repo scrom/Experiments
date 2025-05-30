@@ -5,7 +5,7 @@ const path = require('path');
 //If a duplicate artefact name is found, append the parent object's name to the filename instead of a numeric suffix.
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -84,7 +84,7 @@ function processArray(arr, parentName) {
       const artefactPath = path.join(dataDir, artefactFilename+'.json');
       if (!fs.existsSync(artefactPath)) {
         fs.writeFileSync(artefactPath, JSON.stringify(item, null, 2), 'utf8');
-        console.log(`Created artefact: ${artefactFilename}`);
+        console.info(`Created artefact: ${artefactFilename}`);
       }
       // Replace with file reference
       arr[i] = { file: artefactFilename };
@@ -109,7 +109,7 @@ function processObject(obj, parentName) {
         const artefactPath = path.join(dataDir, artefactFilename+'.json');
         if (!fs.existsSync(artefactPath)) {
           fs.writeFileSync(artefactPath, JSON.stringify(obj[key], null, 2), 'utf8');
-          console.log(`Created artefact: ${artefactFilename}`);
+          console.info(`Created artefact: ${artefactFilename}`);
         }
         obj[key] = { file: artefactFilename };
         changed = true;
@@ -136,6 +136,6 @@ files.forEach(file => {
 
   if (changed) {
     fs.writeFileSync(filePath, JSON.stringify(json, null, 2), 'utf8');
-    console.log(`Updated: ${file}`);
+    console.info(`Updated: ${file}`);
   }
 });

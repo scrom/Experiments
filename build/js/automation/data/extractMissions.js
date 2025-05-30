@@ -4,7 +4,7 @@ const path = require('path');
 //Script to extract mission objects nested in files into standalone files
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -81,6 +81,6 @@ files.forEach(file => {
 
   if (changed) {
     fs.writeFileSync(filePath, JSON.stringify(json, null, 2), 'utf8');
-    console.log(`Updated: ${file}`);
+    console.info(`Updated: ${file}`);
   }
 });

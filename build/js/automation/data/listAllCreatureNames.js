@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -18,7 +18,7 @@ fs.readdirSync(dataDir).forEach(file => {
       //const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
       const json = require(filePath);
       if (json.object === 'creature') {
-        console.log("File: "+file+" ::name: "+json.name+", ::displayName: "+json.displayName+", ::imageName: "+json.attributes.imageName+", ::description: "+json.description);
+        console.info("File: "+file+" ::name: "+json.name+", ::displayName: "+json.displayName+", ::imageName: "+json.attributes.imageName+", ::description: "+json.description);
         attributeForenameSet.add(json.name.split(" ")[0]);
         attributeSurnameSet.add(json.name.slice(json.name.indexOf(' ') + 1));
       }
@@ -29,7 +29,7 @@ fs.readdirSync(dataDir).forEach(file => {
 });
 
 const forenameArray = Array.from(attributeForenameSet).sort();
-console.log('"forenames: ["'+forenameArray+']');
+console.info('"forenames: ["'+forenameArray+']');
 
 const surnameArray = Array.from(attributeSurnameSet).sort();
-console.log('"surnames: ["'+surnameArray+']');
+console.info('"surnames: ["'+surnameArray+']');

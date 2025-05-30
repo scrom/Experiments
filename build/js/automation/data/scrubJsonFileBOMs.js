@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -16,9 +16,9 @@ fs.readdirSync(dataDir).forEach(file => {
     if (content.charAt(0) === BOM) {
       content = content.slice(1);
       fs.writeFileSync(filePath, content, 'utf8');
-      console.log(`Removed BOM from: ${file}`);
+      console.info(`Removed BOM from: ${file}`);
     } else {
-      console.log(`No BOM in: ${file}`);
+      console.info(`No BOM in: ${file}`);
     }
   }
 });

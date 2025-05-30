@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -13,7 +13,7 @@ const attributeSet = new Set();
 //takes in an argument for object type (output all args for clarity)
 const arguments = process.argv.slice(2);
 arguments.forEach((value, index) => {
-  console.log(index, value);
+  console.info(index, value);
 });
 
 
@@ -24,7 +24,7 @@ fs.readdirSync(dataDir).forEach(file => {
       //const json = JSON.parse(fs.readFileSync(filePath, 'utf8'));
       const json = require(filePath);
       if (json.object === arguments[0] && json.attributes) {
-        console.log("JSON File: "+file);
+        console.info("JSON File: "+file);
         Object.keys(json.attributes).forEach(attr => attributeSet.add(attr));
       }
     } catch (e) {
@@ -34,4 +34,4 @@ fs.readdirSync(dataDir).forEach(file => {
 });
 
 const attributeArray = Array.from(attributeSet).sort();
-console.log(attributeArray);
+console.info(attributeArray);

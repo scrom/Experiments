@@ -82,8 +82,8 @@ fs.glob(pattern, { nodir: true }, (err, files) => {
 
       if (contentMatches.size > 0) {
         fs.writeFileSync(file, replacedContent, 'utf8');
-        console.log(`📝 Updated content in ${file}`);
-        console.log(`   → Replaced in content: ${Array.from(contentMatches).join(', ')}`);
+        console.info(`📝 Updated content in ${file}`);
+        console.info(`   → Replaced in content: ${Array.from(contentMatches).join(', ')}`);
       }
 
       // Replace words in filename
@@ -97,7 +97,7 @@ fs.glob(pattern, { nodir: true }, (err, files) => {
 
         // Rename the file
         fs.renameSync(file, newPath);
-        console.log(`📂 Renamed file:\n   From: ${basename}\n   To:   ${newBasename}`);
+        console.info(`📂 Renamed file:\n   From: ${basename}\n   To:   ${newBasename}`);
       }
 
     } catch (err) {

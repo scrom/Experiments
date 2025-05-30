@@ -12,10 +12,10 @@ const schemaFile = require(schemaFilePath);
 const validate = ajv.getSchema(schema+".schema")
               || ajv.compile(schemaFile);
 
-console.log("Validating files against schema: "+schemaFilePath);
+console.info("Validating files against schema: "+schemaFilePath);
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -37,7 +37,7 @@ fs.readdirSync(dataDir).forEach(file => {
         const isDataValid = validate(file);
 
         if (isDataValid) {
-        console.log(file+ ":is valid.");
+        console.info(file+ ":is valid.");
         } else {
         console.error((file+ ":is invalid."), validate.errors);
         };

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -11,7 +11,7 @@ if (!fs.existsSync(dataDir)) {
 fs.readdirSync(dataDir).forEach(file => {
     if (file.endsWith('.json')) {
         const filePath = path.join(dataDir, file);
-        console.log(`Processing file: ${filePath}`);
+        console.info(`Processing file: ${filePath}`);
         const json = require(filePath);
 
         if (json.object === 'location' && typeof json.description === 'string' && !json.shortDescription) {
@@ -27,7 +27,7 @@ fs.readdirSync(dataDir).forEach(file => {
                     }
                 }
                 fs.writeFileSync(filePath, JSON.stringify(newJson, null, 2), 'utf8');
-                console.log(`Updated: ${file}`);
+                console.info(`Updated: ${file}`);
             }
         }
     }

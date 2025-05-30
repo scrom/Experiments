@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const dataDir = path.join(__dirname, '../../../../data');
-console.log(`Processing files in: ${dataDir}`);
+console.info(`Processing files in: ${dataDir}`);
 if (!fs.existsSync(dataDir)) {  
     console.error(`Directory does not exist: ${dataDir}`);
     process.exit(1);
@@ -29,9 +29,9 @@ fs.readdirSync(dataDir).forEach(file => {
 });
 
 if (mostComplex) {
-  console.log(`Most complex artefact: ${mostComplex.file}`);
-  console.log(`Total keys (root + attributes): ${mostComplex.total}`);
-  console.log(JSON.stringify(mostComplex.json, null, 2));
+  console.info(`Most complex artefact: ${mostComplex.file}`);
+  console.info(`Total keys (root + attributes): ${mostComplex.total}`);
+  console.info(JSON.stringify(mostComplex.json, null, 2));
 } else {
-  console.log('No artefact objects found.');
+  console.info('No artefact objects found.');
 }
