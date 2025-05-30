@@ -1,0 +1,77 @@
+{
+  "object": "mission",
+  "name": "findbrandonsguardian",
+  "displayName": "find The Gaurdian for Brandon",
+  "description": "Brandon wants to do the crossword.",
+  "attributes": {
+    "parent": "latte",
+    "missionObject": "guardian newspaper",
+    "destination": "brandon hamilton",
+    "static": true,
+    "dialogue": [
+      "'Hi $player.'<br>'I seem to have mislaid my copy of The Guardian.'<br>'I've not done my daily cryptic crossword and feel like I'm getting withdrawal symptoms.'<br>'If you see one around can you bring me a copy?'",
+      {
+        "state": 1,
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Thanks $player. I think It's probably somewhere on the second floor.'",
+        "nextState": 3
+      },
+      {
+        "state": 1,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Well, when you feel like being helpful, let me know.'",
+        "nextState": 2
+      },
+      {
+        "state": 1,
+        "response": "'Keep an eye out for it if you can.'",
+        "nextState": 3
+      },
+      {
+        "state": 2,
+        "response": "'Hey $player. Any sign of that newspaper?'",
+        "nextState": 4
+      },
+      {
+        "state": 3,
+        "response": "'Have you found my newspaper yet?'",
+        "nextState": 4
+      },
+      {
+        "state": 4,
+        "requestedObject": "guardian newspaper",
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Excellent!'"
+      },
+      {
+        "state": 4,
+        "response": "'I won't ask again but I'd appreciate it if you can help.'"
+      }
+    ]
+  },
+  "conditionAttributes": {
+    "isDestroyed": false
+  },
+  "reward": {
+    "score": 25,
+    "affinityModifier": 2,
+    "increaseAffinityFor": "brandon hamilton",
+    "removeObject": "guardian newspaper",
+    "message": "Brandon says 'Thanks $player.'<br>'I was starting to get the shakes.'<br>'I can <i>work</i> happily now."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "object": "creature",
+  "name": "russell",
+  "displayName": "Russell",
+  "description": "Russell the bike ambulance guy",
+  "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
+  "attributes": {
+    "template": "creature-male-l4",
+    "canTravel": false,
+    "traveller": false,
+    "repairSkills": [
+      "bike"
+    ]
+  },
+  "synonyms": [
+    "bike guy",
+    "russ",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "mission-collectchrisbike"
+    }
+  ]
+}

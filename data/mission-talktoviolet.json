@@ -1,0 +1,28 @@
+{
+  "object": "mission",
+  "name": "talktoviolet",
+  "displayName": "greet violet",
+  "description": "Violet needs you to sign in.",
+  "attributes": {
+    "missionObject": "violet wilmott",
+    "static": true,
+    "dialogue": [
+      "'Good morning. You must be $player.'<br>'Welcome aboard!'"
+    ]
+  },
+  "conditionAttributes": {
+    "alive": true
+  },
+  "reward": {
+    "message": "Violet places a large visitors book on the desk.<br>'If you can just <i>sign in</i> here for the day we can sort you out with access to the remainder of the building.'",
+    "modifyObject": {
+      "name": "reception desk",
+      "inventory": [
+        {
+          "file": "visitors-book"
+        }
+      ]
+    },
+    "removeObject": "missing visitors book"
+  }
+}

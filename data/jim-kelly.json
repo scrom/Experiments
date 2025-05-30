@@ -1,0 +1,24 @@
+{
+  "object": "creature",
+  "name": "jim kelly",
+  "displayName": "Jim Kelly",
+  "description": "Jim Kelly",
+  "detailedDescription": "He sells SQL Monitor like a mo'fo' and loves pirate stories.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "imageName": "jimkelly.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "jim",
+    "jim k",
+    "jk",
+    "kelly",
+    "jim",
+    "him"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "object": "creature",
+  "name": "francesca vaughn",
+  "displayName": "Francesca Vaughn",
+  "description": "Francesca Vaughn",
+  "detailedDescription": "Roaming UX redhead.",
+  "attributes": {
+    "template": "creature-female-l3",
+    "imageName": "francescavaughn.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "fran",
+    "francesca",
+    "fv",
+    "her"
+  ],
+  "missions": [
+    {
+      "file": "mission-waterfransplants"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "object": "creature",
+  "name": "joshua warner",
+  "displayName": "Joshua Warner",
+  "description": "Joshua Warner",
+  "detailedDescription": "Self-confessed Eeyore. Kick-ass tester and PM.",
+  "attributes": {
+    "template": "creature-male-l2",
+    "affinity": -1,
+    "imageName": "joshuawarner.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "joshua",
+    "josh",
+    "joshua w",
+    "josh w",
+    "jw",
+    "warner",
+    "him"
+  ]
+}

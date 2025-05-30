@@ -1,38 +1,40 @@
 {
-    "object": "location",
-    "name": "bike-ambulance",
-    "displayName": "Bike ambulance",
-    "description": "You're in the west car park by the bike ambulance.<br>Rick that works here is your man to fix broken bikes when they need some loving.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike"
+  "object": "location",
+  "name": "bike-ambulance",
+  "displayName": "Bike ambulance",
+  "description": "You're in the west car park by the bike ambulance.<br>Russell that works here is your man to fix broken bikes when they need some loving.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike"
+    ]
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "bike-ambulance",
+      "destination": "west-bike-racks"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "bike ambulance",
+      "description": "bike ambulance",
+      "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
+      "attributes": {
+        "weight": 3500,
+        "type": "scenery",
+        "canDrawOn": true
+      },
+      "synonyms": [
+        "ambulance"
       ]
     },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "bike-ambulance",
-        "destination": "west-bike-racks"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "bike ambulance",
-        "description": "bike ambulance",
-        "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
-        "attributes": {
-          "weight": 3500,
-          "type": "scenery",
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "ambulance"
-        ]
-      },
-      {"file": "rick"}
-    ]
-  }
+    {
+      "file": "russell"
+    }
+  ]
+}

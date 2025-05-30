@@ -16,61 +16,61 @@ describe('Location', () => {
         const keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
         const fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
         const parcel = new artefact.Artefact('parcel', 'a parcel', "A Parcel with key attributes - odd.", keyAttributes);
-        const keyFob = new mission.Mission('keyFob', null,"Vic has a key fob for you.",{"missionObject": "Vic","static": true,"dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."]},null,{isBroken: false}, null,{score: 10, delivers: fob, message: "Have 10 points."});
+        const keyFob = new mission.Mission('keyFob', null,"Violet has a key fob for you.",{"missionObject": "Violet","static": true,"dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."]},null,{isBroken: false}, null,{score: 10, delivers: fob, message: "Have 10 points."});
 
         const reception = new location.Location('reception','reception','a reception area',false);
 
-        const receptionist = new creature.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
-        receptionist.addSyns(['receptionist','vic','heidi','her']);
+        const receptionist = new creature.Creature('Violet', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
+        receptionist.addSyns(['receptionist','violet','heidi','her']);
         receptionist.go(null, reception);
 
         receptionist.addMission(keyFob);
 
-        const bookMission = new mission.Mission('vicsBook', null,"Vic has a parcel for you but she'd like something to read first.",{"missionObject": "small book","destination": "Vic","static": true},null,{isDestroyed: false,isBroken: false},null, {score: 50, delivers: parcel, message: "Congratulations. Vic likes the book! Have 50 points."});
+        const bookMission = new mission.Mission('violetsBook', null,"Violet has a parcel for you but she'd like something to read first.",{"missionObject": "small book","destination": "Violet","static": true},null,{isDestroyed: false,isBroken: false},null, {score: 50, delivers: parcel, message: "Congratulations. Violet likes the book! Have 50 points."});
         receptionist.addMission(bookMission);
 
-        const expectedResult = '{"object":"location","name":"reception","displayName":"Reception","description":"a reception area","exits":[],"inventory":[{"object":"creature","name":"vic","displayName":"Vic","description":"Vic the receptionist","detailedDescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215},"synonyms":["receptionist","vic","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","attributes":{"missionObject":"Vic", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}, {"object":"mission","name":"vicsbook","description":"Vic has a parcel for you but she\'d like something to read first.","attributes":{"missionObject":"small book", "destination":"Vic", "static":true},"conditionAttributes":{"isDestroyed":false, "isBroken":false},"reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailedDescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Congratulations. Vic likes the book! Have 50 points."}}]}]}';
+        const expectedResult = '{"object":"location","name":"reception","displayName":"Reception","description":"a reception area","exits":[],"inventory":[{"object":"creature","name":"violet","displayName":"Violet","description":"Violet the receptionist","detailedDescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215},"synonyms":["receptionist","violet","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Violet has a key fob for you.","attributes":{"missionObject":"Violet", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}, {"object":"mission","name":"violetsbook","description":"Violet has a parcel for you but she\'d like something to read first.","attributes":{"missionObject":"small book", "destination":"Violet", "static":true},"conditionAttributes":{"isDestroyed":false, "isBroken":false},"reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailedDescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Congratulations. Violet likes the book! Have 50 points."}}]}]}';
         const actualResult = reception.toString();
         expect(actualResult).toBe(expectedResult);
     });
 
     test('can get named creature in location', () => {
         const reception = new location.Location('reception','a reception area',false);
-        const receptionist = new creature.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
-        receptionist.addSyns(['receptionist','vic','heidi','her']);
+        const receptionist = new creature.Creature('Violet', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+        receptionist.addSyns(['receptionist','violet','heidi','her']);
         receptionist.go(null, reception); 
-        const expectedResult = 'vic';
-        const actualResult = reception.getObject("Vic").getName();
+        const expectedResult = 'violet';
+        const actualResult = reception.getObject("Violet").getName();
         expect(actualResult).toBe(expectedResult);
     });
 
     test('can get named creature with spaces in location', () => {
         const reception = new location.Location('reception','a reception area',false);
-        const receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
-        receptionist.addSyns(['receptionist','vic','heidi','her']);
+        const receptionist = new creature.Creature('Violet Reception', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+        receptionist.addSyns(['receptionist','violet','heidi','her']);
         receptionist.go(null, reception); 
-        const expectedResult = 'vic reception';
-        const actualResult = reception.getObject("Vic Reception").getName();
+        const expectedResult = 'violet reception';
+        const actualResult = reception.getObject("Violet Reception").getName();
         expect(actualResult).toBe(expectedResult);
     });
 
     test('can get capitalised named creature with spaces in location', () => {
         const reception = new location.Location('reception','a reception area',false);
-        const receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
-        receptionist.addSyns(['receptionist','vic','heidi','her']);
+        const receptionist = new creature.Creature('Violet Reception', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+        receptionist.addSyns(['receptionist','violet','heidi','her']);
         receptionist.go(null, reception); 
-        const expectedResult = 'vic reception';
-        const actualResult = reception.getObject("vic reception").getName();
+        const expectedResult = 'violet reception';
+        const actualResult = reception.getObject("violet reception").getName();
         expect(actualResult).toBe(expectedResult);
     });
 
     test('can check capitalised named creature with spaces is in location', () => {
         const reception = new location.Location('reception','a reception area',false);
-        const receptionist = new creature.Creature('Vic Reception', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
-        receptionist.addSyns(['receptionist','vic','heidi','her']);
+        const receptionist = new creature.Creature('Violet Reception', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, canTravel:false}, null);
+        receptionist.addSyns(['receptionist','violet','heidi','her']);
         receptionist.go(null, reception); 
         const expectedResult = true;
-        const actualResult = reception.objectExists("vic reception");
+        const actualResult = reception.objectExists("violet reception");
         expect(actualResult).toBe(expectedResult);
     });
 

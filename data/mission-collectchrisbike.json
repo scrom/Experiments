@@ -2,11 +2,11 @@
   "object": "mission",
   "name": "collectchrisbike",
   "displayName": "collect Chris' bike",
-  "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Rick.",
+  "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Russell.",
   "attributes": {
     "parent": "fixchrisbike",
     "missionObject": "bike",
-    "destination": "rick",
+    "destination": "russell",
     "static": true
   },
   "conditionAttributes": {
@@ -15,8 +15,8 @@
   "reward": {
     "score": 50,
     "affinityModifier": 2,
-    "increaseAffinityFor": "chris moore",
+    "increaseAffinityFor": "chris maddox",
     "removeObject": "bike",
-    "message": "You hand Chris' bike over to Rick.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it."
+    "message": "You hand Chris' bike over to Russell.<br>'Cheers' he says.<br>'I'll stash this away for now and let Chris know when it's done.'<br>Nice one! Helping people out feels good, doesn't it."
   }
 }

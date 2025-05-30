@@ -83,13 +83,13 @@ test('creatureToStringReturnsValidJSON', () => {
     var keyAttributes = {weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: ""};
     var fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
     var parcel = new artefact.Artefact('parcel', 'a parcel', "A Parcel with key attributes - odd.", keyAttributes);
-    var keyFob = new mission.Mission('keyFob', null,"Vic has a key fob for you.",{"missionObject": "Vic","static": true,"dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."]},null,{isBroken: false}, null,{score: 10, delivers: fob, message: "Have 10 points."});
-    var receptionist = new creature.Creature('Vic', 'Vic the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
-    receptionist.addSyns(['receptionist','vic','heidi','her']);
+    var keyFob = new mission.Mission('keyFob', null,"Violet has a key fob for you.",{"missionObject": "Violet","static": true,"dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."]},null,{isBroken: false}, null,{score: 10, delivers: fob, message: "Have 10 points."});
+    var receptionist = new creature.Creature('Violet', 'Violet the receptionist', "Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.", {weight:100, attackStrength:25, gender:'female', type:'friendly', carryWeight:15, health:215, affinity:0, canTravel:false}, null);
+    receptionist.addSyns(['receptionist','violet','heidi','her']);
     receptionist.addMission(keyFob);
-    var bookMission = new mission.Mission('vicsBook', null,"Vic has a parcel for you but she'd like something to read first.",{"missionObject": "small book","destination": "Vic","static": true},null,{isDestroyed: false,isBroken: false}, null,{score: 50, delivers: parcel, message: "Congratulations. Vic likes the book! Have 50 points."});
+    var bookMission = new mission.Mission('violetsBook', null,"Violet has a parcel for you but she'd like something to read first.",{"missionObject": "small book","destination": "Violet","static": true},null,{isDestroyed: false,isBroken: false}, null,{score: 50, delivers: parcel, message: "Congratulations. Violet likes the book! Have 50 points."});
     receptionist.addMission(bookMission);
-    var expectedResult = '{"object":"creature","name":"vic","displayName":"Vic","description":"Vic the receptionist","detailedDescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215},"synonyms":["receptionist","vic","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","attributes":{"missionObject":"Vic", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}, {"object":"mission","name":"vicsbook","description":"Vic has a parcel for you but she\'d like something to read first.","attributes":{"missionObject":"small book", "destination":"Vic", "static":true},"conditionAttributes":{"isDestroyed":false, "isBroken":false},"reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailedDescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Congratulations. Vic likes the book! Have 50 points."}}]}';
+    var expectedResult = '{"object":"creature","name":"violet","displayName":"Violet","description":"Violet the receptionist","detailedDescription":"Well, receptionist is an understatement to be honest.<br> She looks out for everyone here. Be nice to her.","attributes":{"weight":100,"attackStrength":25,"gender":"female","type":"friendly","carryWeight":15,"health":215},"synonyms":["receptionist","violet","heidi","her"],"missions":[{"object":"mission","name":"keyfob","description":"Violet has a key fob for you.","attributes":{"missionObject":"Violet", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}, {"object":"mission","name":"violetsbook","description":"Violet has a parcel for you but she\'d like something to read first.","attributes":{"missionObject":"small book", "destination":"Violet", "static":true},"conditionAttributes":{"isDestroyed":false, "isBroken":false},"reward":{"score":50, "delivers":{"object":"artefact","name":"parcel","description":"a parcel","detailedDescription":"A Parcel with key attributes - odd.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Congratulations. Violet likes the book! Have 50 points."}}]}';
     var actualResult = receptionist.toString();
     expect(actualResult).toBe(expectedResult);
 });
@@ -476,9 +476,9 @@ test('friendlyCreatureWillFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
-    var expected = "It says 'Simon Galbraith is currently at 'Poppy meeting room'.'";
+    var expected = "It says 'Stephen Goodwin is currently at 'Poppy meeting room'.'";
     var playerAggression = 1; //1 point of aggression should be acceptable
-    var actual = c0.find("simon g", playerAggression, m);
+    var actual = c0.find("stephen g", playerAggression, m);
     console.debug("expected: "+expected);
     console.debug("actual: "+actual);
     expect(actual).toBe(expected);
@@ -490,7 +490,7 @@ test('friendlyCreatureWillNotFindForAggresivePlayer', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
     var expected = "It says 'I'm a bit busy at the moment, can you come back in a while?'<br>'It looks like you could do with walking off some of your tension anyway.'";
     var playerAggression = 2;
-    var actual = c0.find("simon g", playerAggression, m);
+    var actual = c0.find("stephen g", playerAggression, m);
     console.debug("expected: "+expected);
     console.debug("actual: "+actual);
     expect(actual).toBe(expected);
@@ -502,7 +502,7 @@ test('unfriendlyCreatureWillNotFindForPlayer', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:-1});
     var expected = "It doesn't like your attitude and doesn't want to talk to you at the moment.";
     var playerAggression = 0;
-    var actual = c0.find("simon g", playerAggression, m);
+    var actual = c0.find("stephen g", playerAggression, m);
     console.debug("expected: "+expected);
     console.debug("actual: "+actual);
     expect(actual).toBe(expected);
@@ -514,7 +514,7 @@ test('neutralCreatureWillNotFindForPlayer', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:0});
     var expected = "When was the last time you did something for it?<br>It pays to be nice to others.<br>";
     var playerAggression = 0;
-    var findResult = c0.find("simon g", playerAggression, m)
+    var findResult = c0.find("stephen g", playerAggression, m)
     var actual = findResult.substr(findResult.indexOf("<br>")+8); //exclude initial random reply
     console.debug("expected: "+expected);
     console.debug("actual: "+actual);
@@ -527,7 +527,7 @@ test('neutralCreatureWillNotFindForPlayerAndGivesRandomReply', () => {
     var c0 = new creature.Creature(creatureName, 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, affinity: 0 });
     var expected = ["Sorry $player, I don't have time to help you right now.", "I'm too busy at the moment.", "I've got more important things to do right now."];
     var playerAggression = 0;
-    var findResult = c0.find("simon g", playerAggression, m)
+    var findResult = c0.find("stephen g", playerAggression, m)
     var actual = findResult.substr(9,findResult.indexOf("'<br>")-9); //include initial random reply only
     console.debug("expected: " + expected);
     console.debug("actual: " + actual);
@@ -542,7 +542,7 @@ test('deadCreatureWillNotFindForPlayer', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:0, affinity:0});
     var expected = "It's dead. I don't think it can help you.";
     var playerAggression = 0;
-    var actual = c0.find("simon g", playerAggression, m);
+    var actual = c0.find("stephen g", playerAggression, m);
     console.debug("expected: "+expected);
     console.debug("actual: "+actual);
     expect(actual).toBe(expected);
@@ -887,36 +887,36 @@ test('johnCanFindPathToPlantRoom', () => {
     var p0 = new player.Player({ username: "player" }, m);
     var peacock = m.getLocation("peacock");
     p0.setLocation(peacock, true); //move player out of the way
-    var john = m.getCreature("John Bowles");
-    john.clearDestination();
-    john.clearDestination();
-    var destinations = john.getDestinations();
+    var joseph = m.getCreature("Joseph Baxter");
+    joseph.clearDestination();
+    joseph.clearDestination();
+    var destinations = joseph.getDestinations();
     console.debug(destinations);
     
-    var path = john.findBestPath(john.getNextDestination(), m);
+    var path = joseph.findBestPath(joseph.getNextDestination(), m);
     console.debug("Selected path length=" + path.length + ". Path: " + path);
     var pathLength = path.length;
-    john.tick(pathLength, m, p0);
-    console.debug("Loc = " + john.getCurrentLocationName());
+    joseph.tick(pathLength, m, p0);
+    console.debug("Loc = " + joseph.getCurrentLocationName());
     console.debug("Dest: "+destinations);
-    path = john.getPath();
+    path = joseph.getPath();
     console.debug("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
-    john.tick(pathLength, m, p0);
-    console.debug("Loc = " + john.getCurrentLocationName());
+    joseph.tick(pathLength, m, p0);
+    console.debug("Loc = " + joseph.getCurrentLocationName());
     console.debug("Dest: " + destinations);
-    path = john.getPath();
+    path = joseph.getPath();
     console.debug("Selected path length=" + path.length + ". Path: " + path);
     pathLength = path.length;
-    john.tick(pathLength, m, p0);
+    joseph.tick(pathLength, m, p0);
     var expected = "plant-room";
-    var actual = john.getCurrentLocationName();
+    var actual = joseph.getCurrentLocationName();
     console.debug("Selected path length=" + path.length + ". Path: " + path);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
-    destinations = john.getDestinations();
+    destinations = joseph.getDestinations();
     console.debug(destinations);
-    console.debug(john.getPath());
+    console.debug(joseph.getPath());
     expect(actual).toBe(expected);
 });
 
@@ -1126,17 +1126,17 @@ test('creatureHealOnTickConsumesAllOfMedicalKitProperly', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({ username: "player" }, m);
     p0.setLocation(m.getLocation('customer-delight-south-west'));
-    var alice = m.getCreature("alice easey");
-    alice.wait(null, 10);
+    var aileen = m.getCreature("aileen emerson");
+    aileen.wait(null, 10);
     
-    var expected = '<br>Alice Easey uses up the last of her first aid kit to heal herself.';
+    var expected = '<br>Aileen Emerson uses up the last of her first aid kit to heal herself.';
     var actual = "";
     var attempts = 0;
-    alice.hurt(90);
+    aileen.hurt(90);
     while (actual != expected && attempts < 6) {
-        actual = alice.tick(1, m, p0);
+        actual = aileen.tick(1, m, p0);
         console.debug(actual);
-        alice.hurt(40);
+        aileen.hurt(40);
         attempts++;
     }
     
@@ -1324,7 +1324,7 @@ test('creatureWillNotFollowPlayerToAvoidedLocation', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 7, canTravel: true, avoiding: ["reception"] });
     c0.go("", atrium);
     
-    var expected = "Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, and an office door.<br>There are exits to the East and West.<br>";
+    var expected = "Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Violet the receptionist, and an office door.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
@@ -1339,7 +1339,7 @@ test('highAffinityCreatureWillFollowPlayerToAvoidedLocation', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 8, canTravel: true, avoiding: ["reception"] });
     c0.go("", atrium);
     
-    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
+    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Violet the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
@@ -1354,7 +1354,7 @@ test('friendlyCreatureWillFollowPlayer', () => {
     var c0 = new creature.Creature('creature', 'beastie', 'a big beastie with teeth', { weight: 120, attackStrength: 50, gender: 'unknown', type: 'creature', carryWeight: 50, health: 150, maxHealth: 150, affinity: 15, canTravel: true});
     c0.go("", atrium);
     
-    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Vic the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
+    var expected = "The creature follows you.<br>Current location: Reception<br>You're standing by the big red reception desk in the Red Gate office atrium.<br><br>You can see a big red desk, Violet the receptionist, an office door, and a beastie.<br>There are exits to the East and West.<br>";
     var actual = p0.go("", "e", m);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
@@ -1761,16 +1761,16 @@ test('CreatureWillEnactContagion', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('deneWontEatMissionChocolateEvenWhenHungry', () => {
+test('derekWontEatMissionChocolateEvenWhenHungry', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
-    var c0 = m.getCreature("dene boulton");
+    var c0 = m.getCreature("derek benson");
     c0.go(null, m.getLocation('machine-room-east'));
     c0.tick(6, m, p0); //ensure he's hungry
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
 
-    var expected = "Dene takes a chocolate.";
+    var expected = "Derek takes a chocolate.";
     var actual = c0.receive(chocolate, p0);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
@@ -1780,7 +1780,7 @@ test('deneWontEatMissionChocolateEvenWhenHungry', () => {
 test('otherCreatureWillStillEatChocolate', () => {
     var m = mb.buildMap();
     var p0 = new player.Player({username:"player"}, m);
-    var c0 = m.getCreature("mark wightman");
+    var c0 = m.getCreature("michael weston");
     c0.go(null, m.getLocation('machine-room-east'));
     c0.tick(6, m, p0); //ensure he's hungry
     var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};

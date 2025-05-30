@@ -1,0 +1,28 @@
+{
+  "object": "creature",
+  "name": "aaron prescott",
+  "displayName": "Aaron Prescott",
+  "description": "Aaron Prescott",
+  "detailedDescription": "Master of user experience and a somewhat problematic addiction to stationery.",
+  "attributes": {
+    "template": "creature-male-l4",
+    "imageName": "aaronprescott.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "aaron",
+    "aaron p",
+    "ap",
+    "prescott",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "mission-findadamstrainers"
+    }
+  ]
+}

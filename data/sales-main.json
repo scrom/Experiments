@@ -1,35 +1,43 @@
-  {
-    "object": "location",
-    "name": "sales-main",
-    "displayName": "Sales area",
-    "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "sales-main",
-        "destination": "servery-back-corridor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "sales-main",
-        "destination": "sales-south"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "sales-main",
-        "destination": "sales-north"
-      }
-    ],
-    "inventory": [
-      {"file": "alex-freeman"},
-      {"file": "james-king"},
-      {"file": "justin-heron"},
-      {"file": "cassi-roper"}
-    ]
-  }
+{
+  "object": "location",
+  "name": "sales-main",
+  "displayName": "Sales area",
+  "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "sales-main",
+      "destination": "servery-back-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "sales-main",
+      "destination": "sales-south"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "sales-main",
+      "destination": "sales-north"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "andrew-fitzgerald"
+    },
+    {
+      "file": "jim-kelly"
+    },
+    {
+      "file": "jared-holloway"
+    },
+    {
+      "file": "clarissa-rothwell"
+    }
+  ]
+}

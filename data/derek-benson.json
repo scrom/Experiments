@@ -1,0 +1,28 @@
+{
+  "object": "creature",
+  "name": "derek benson",
+  "displayName": "Derek Benson",
+  "description": "Derek Benson",
+  "detailedDescription": "CORE team tester and specialist in the art of looking grumpy and happy at the same time.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "imageName": "derekbenson.jpg"
+  },
+  "synonyms": [
+    "derek",
+    "del",
+    "benson",
+    "db",
+    "him"
+  ],
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "missions": [
+    {
+      "file": "mission-chocolateforderek"
+    }
+  ]
+}

@@ -18,14 +18,14 @@ beforeEach(() => {
 
 test('can use stub', () => {
     const stub = sf.generateStubClass(p);
-    const expectedResult = 'function: getUsername, args[0]:simon, args[1]:param 2, args[2]:another param';
-    const actualResult = stub.getUsername("simon", "param 2", "another param");
+    const expectedResult = 'function: getUsername, args[0]:stephen, args[1]:param 2, args[2]:another param';
+    const actualResult = stub.getUsername("stephen", "param 2", "another param");
     expect(actualResult).toBe(expectedResult);
 });
 
 test('stub action', () => {
-    const expectedResult = '{"verb":"ask","object0":"vic","object1":"simon g","description":"function: ask, args[0]:find, args[1]:vic, args[2]:simon g, args[3]:<Object>function: updateMissions, args[0]:function: calculateTicks, args[0]:1, args[1]:ask, args[1]:<Object>function: tick, args[0]:1, args[1]:<Object>","attributes":function: getClientAttributesString}';
-    const actualResult = a.act("ask vic to find simon g");
+    const expectedResult = '{"verb":"ask","object0":"violet","object1":"stephen g","description":"function: ask, args[0]:find, args[1]:violet, args[2]:stephen g, args[3]:<Object>function: updateMissions, args[0]:function: calculateTicks, args[0]:1, args[1]:ask, args[1]:<Object>function: tick, args[0]:1, args[1]:<Object>","attributes":function: getClientAttributesString}';
+    const actualResult = a.act("ask violet to find stephen g");
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -40,11 +40,11 @@ test('simple help action', () => {
 });
 
 test('ask X to find Y action', () => {
-    const actionString = "ask vic to find simon g";
+    const actionString = "ask violet to find stephen g";
     a.setActionString(actionString); 
     a.convertActionToElements(actionString);
 
-    const expectedResult = 'function: ask, args[0]:find, args[1]:vic, args[2]:simon g, args[3]:<Object>';
+    const expectedResult = 'function: ask, args[0]:find, args[1]:violet, args[2]:stephen g, args[3]:<Object>';
     const actualResult = a.performPlayerAction();
     expect(actualResult).toBe(expectedResult);
 });

@@ -4,7 +4,7 @@
   "displayName": "get a keyfob",
   "description": "(You need to <i>sign in</i> to get a keyfob for the office.)",
   "attributes": {
-    "parent": "talktovic",
+    "parent": "talktoviolet",
     "missionObject": "visitors book",
     "static": true
   },
@@ -20,12 +20,12 @@
       "template": "keyfob",
       "attributes": {
         "affinityModifier": -999,
-         "writings": [
-             "$player"
-          ]
+        "writings": [
+          "$player"
+        ]
       }
     },
     "score": 10,
-    "message": "<br>Vic Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
+    "message": "<br>Violet Says 'Here's your key fob.'<br>'You'll need it to get in and out of some parts of the office.'"
   }
 }

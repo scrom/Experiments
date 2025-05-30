@@ -1,0 +1,44 @@
+{
+  "object": "creature",
+  "name": "stephen goodwin",
+  "displayName": "Stephen Goodwin",
+  "description": "Stephen the CEO",
+  "detailedDescription": "He runs the show.",
+  "attributes": {
+    "template": "creature-male-l5",
+    "attackStrength": 35,
+    "health": 500,
+    "avoiding": [
+      "bus"
+    ],
+    "dislikes": [
+      "jordan marshall"
+    ],
+    "imageName": "stephengoodwin.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    },
+    {
+      "file": "sketchbook"
+    }
+  ],
+  "synonyms": [
+    "boss",
+    "ceo",
+    "stephen g",
+    "stephen",
+    "steven",
+    "steve",
+    "steven g",
+    "steve g",
+    "goodwin",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "mission-retrievedisk"
+    }
+  ]
+}

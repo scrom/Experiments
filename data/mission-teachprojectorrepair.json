@@ -1,11 +1,11 @@
 {
   "object": "mission",
   "name": "teachprojectorrepair",
-  "displayName": "learn projector repair from Amanda",
-  "description": "Amanda knows how to fix stuff.",
+  "displayName": "learn projector repair from Angelina",
+  "description": "Angelina knows how to fix stuff.",
   "attributes": {
     "parent": "keyfob",
-    "missionObject": "amanda mansfield",
+    "missionObject": "angelina morrison",
     "static": true,
     "dialogue": [
       "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
@@ -73,11 +73,11 @@
       ]
     },
     "repairSkill": "projector",
-    "message": "Amanda hands you a projector bulb."
+    "message": "Angelina hands you a projector bulb."
   },
   "fail": {
     "message": "I bet you're always the first to make a fuss if things don't work when <i>you</i> need them.",
     "affinityModifier": 1,
-    "decreaseAffinityFor": "amanda mansfield"
+    "decreaseAffinityFor": "angelina morrison"
   }
 }

@@ -1,0 +1,26 @@
+{
+  "object": "creature",
+  "name": "zoe sharpe",
+  "displayName": "Zoe Sharpe",
+  "description": "Zoe Sharpe",
+  "detailedDescription": "Our one and only business analyst. She mostly works with the Core team but is also our most experienced first-aider.<br>She's a qualified forensic scientist but we appreciate the fact she work to help the living.",
+  "attributes": {
+    "template": "creature-female-l3",
+    "imageName": "zoesharpe.jpg"
+  },
+  "inventory": [
+    {
+      "file": "medical-bag"
+    },
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "zoe",
+    "sharpe",
+    "sharpie",
+    "zs",
+    "her"
+  ]
+}

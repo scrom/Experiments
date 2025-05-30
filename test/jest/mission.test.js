@@ -33,74 +33,74 @@ afterEach(done => {
 test('rewardToStringReturnsValidJSON', () => {
     const keyAttributes = { weight: 0.1, carryWeight: 0, attackStrength: 0, type: "key", canCollect: true, canOpen: false, isEdible: false, isBreakable: false, unlocks: "" };
     const fob = new artefact.Artefact('keyfob', 'a key fob', "Carrying this ensures you have access to the office whenever you need.", keyAttributes);
-    const keyFob = new mission.Mission('keyFob', null, "Vic has a key fob for you.", { "missionObject": "Vic", "static": true, "dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."] }, null, { isBroken: false }, null, { score: 10, delivers: fob, message: "Have 10 points." });
+    const keyFob = new mission.Mission('keyFob', null, "Violet has a key fob for you.", { "missionObject": "Violet", "static": true, "dialogue": ["Good morning $player.<br>Welcome aboard! Here's your key fob, you'll need this to get in and out of some parts of the office."] }, null, { isBroken: false }, null, { score: 10, delivers: fob, message: "Have 10 points." });
 
-    const expectedResult = '{"object":"mission","name":"keyfob","description":"Vic has a key fob for you.","attributes":{"missionObject":"Vic", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}';
+    const expectedResult = '{"object":"mission","name":"keyfob","description":"Violet has a key fob for you.","attributes":{"missionObject":"Violet", "static":true, "dialogue":["Good morning $player.<br>Welcome aboard! Here\'s your key fob, you\'ll need this to get in and out of some parts of the office."]},"conditionAttributes":{"isBroken":false},"reward":{"score":10, "delivers":{"object":"artefact","name":"keyfob","description":"a key fob","detailedDescription":"Carrying this ensures you have access to the office whenever you need.","attributes":{"weight":0.1,"type":"key","canCollect":true}}, "message":"Have 10 points."}}';
     const actualResult = keyFob.toString();
     expect(actualResult).toBe(expectedResult);
 });
 
 test('rewardPositivelyModifiesCreatureAffinity', () => {
-    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "simon galbraith", "decreaseAffinityFor": "james moore", "message": "Congratulations. You killed the spy! Have 50 points." };
-    const simon = m0.getCreature('simon galbraith');
+    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "jim maddox", "message": "Congratulations. You killed the spy! Have 50 points." };
+    const stephen = m0.getCreature('stephen goodwin');
 
     customAction.processAffinityModifiers(m0, reward);
     const expectedResult = '<br>He seems to like you.';
-    const actualResult = simon.getAffinityDescription();
+    const actualResult = stephen.getAffinityDescription();
     expect(actualResult).toBe(expectedResult);
 });
 
 test('rewardModifyLocationCreaturesAltersCreatureHealth', () => {
     const reward = { "modifyLocationCreatures": { "name": "poppy", "health": -350 } };
-    const simon = m0.getCreature('simon galbraith');
+    const stephen = m0.getCreature('stephen goodwin');
 
     const m = new mission.Mission('mission');
     m.processReward(m0, reward, p0);
     const expectedResult = "He's really not in good shape.";
-    const actualResult = simon.health();
+    const actualResult = stephen.health();
     expect(actualResult).toBe(expectedResult);
 });
 
 test('rewardModifyLocationCreaturesAltersCreatureHealthByPercent', () => {
     const reward = { "modifyLocationCreatures": { "name": "poppy", "health": -0.9 } };
-    const simon = m0.getCreature('simon galbraith');
+    const stephen = m0.getCreature('stephen goodwin');
 
     const m = new mission.Mission('mission');
     m.processReward(m0, reward, p0);
     const expectedResult = "He's almost dead.";
-    const actualResult = simon.health();
+    const actualResult = stephen.health();
     expect(actualResult).toBe(expectedResult);
 });
 
 test('rewardModifyLocationCreaturesGivesMultipleRepairSkills', () => {
     const reward = { "modifyLocationCreatures": { "name": "poppy", "repairSkills": ["strategy", "management", "faux-pas"] } };
-    const simon = m0.getCreature('simon galbraith');
+    const stephen = m0.getCreature('stephen goodwin');
 
     const m = new mission.Mission('mission');
     m.processReward(m0, reward, p0);
     const expectedResult = ["strategy", "management", "faux-pas"];
-    const actualResult = simon.getSkills();
+    const actualResult = stephen.getSkills();
     expect(actualResult).toStrictEqual(expectedResult);
 });
 
 test('rewardModifyLocationCreaturesModifiesCash', () => {
     const reward = { "modifyLocationCreatures": { "name": "poppy", "money": -50 } };
-    const simon = m0.getCreature('simon galbraith');
+    const stephen = m0.getCreature('stephen goodwin');
 
     const m = new mission.Mission('mission');
     m.processReward(m0, reward, p0);
     const expectedResult = false;
-    const actualResult = simon.canAfford(31); //should only have 30 left after removing 50
+    const actualResult = stephen.canAfford(31); //should only have 30 left after removing 50
     expect(actualResult).toBe(expectedResult);
 });
 
 test('rewardNegativelyModifiesCreatureAffinity', () => {
-    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "simon galbraith", "decreaseAffinityFor": "james moore", "message": "Congratulations. You killed the spy! Have 50 points." };
-    const james = m0.getCreature('james moore');
+    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "jim maddox", "message": "Congratulations. You killed the spy! Have 50 points." };
+    const jim = m0.getCreature('jim maddox');
 
     customAction.processAffinityModifiers(m0, reward);
     const expectedResult = "<br>He really doesn't like you.";
-    const actualResult = james.getAffinityDescription();
+    const actualResult = jim.getAffinityDescription();
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -139,7 +139,7 @@ test('testMissionDialogue', () => {
                 "yup",
                 "y"
             ],
-            "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+            "response": "'Great! I'd like you to get hold of Stephen Goodwin's sketchbook and bring it to me (<i>steal</i> or <i>mug</i> him if it's easier), I'll make it worth your while.'",
             "nextState": 3
         },
         {
@@ -203,7 +203,7 @@ test('testMissionDialogue', () => {
     let attributes, initialAttributes, conditionAttributes, failAttributes, reward;
     attributes = {
         "missionObject": "sketchbook",
-        "destination": "jordan miller",
+        "destination": "jordan marshall",
         "static": true,
         "dialogue": dialogue
     }
@@ -211,13 +211,13 @@ test('testMissionDialogue', () => {
     failAttributes = { "isDestroyed": true, "conversationState": 99 };
     conditionAttributes = { "isDestroyed": false };
     reward = {
-        "affinityModifier": 2, "decreaseAffinityFor": "simon galbraith", "increaseAffinityFor": "jordan miller",
+        "affinityModifier": 2, "decreaseAffinityFor": "stephen goodwin", "increaseAffinityFor": "jordan marshall",
         "removeObject": "sketchbook",
         "money": 50,
         "message": "Jordan says 'Nice work!'"
     };
 
-    const mish = new mission.Mission("stealsketchbook", "steal Simon's sketch book", "steal Simon's sketch book", attributes, initialAttributes, conditionAttributes, failAttributes, reward);
+    const mish = new mission.Mission("stealsketchbook", "steal Stephen's sketch book", "steal Stephen's sketch book", attributes, initialAttributes, conditionAttributes, failAttributes, reward);
     mish.startTimer();
 
     mish.getNextDialogue("");
@@ -245,7 +245,7 @@ test('completingAnEventCanCreateANewLocationAndCreature', () => {
     const location = m0.getLocation("crash-site");
     const locationName = location.getName();
 
-    const expectedResult = "Name: jordan miller | Location: crash-site";
+    const expectedResult = "Name: jordan marshall | Location: crash-site";
     const actualResult = "Name: " + name + " | Location: " + locationName;
     expect(actualResult).toBe(expectedResult);
 });
@@ -369,7 +369,7 @@ test('canGainStealthAttributeFromReadBookMission', () => {
 });
 
 test('canCompletePartyBusMission', () => {
-    const missionOwner = m0.getCreature('mark wightman');
+    const missionOwner = m0.getCreature('michael weston');
     const atrium = m0.getLocation("atrium");
     let missions = missionOwner.getMissions(true);
     missions = missions.concat(atrium.getMissions(true));
@@ -407,7 +407,7 @@ test('canCompletePartyBusMission', () => {
 });
 
 test('canFailPartyBusMission', () => {
-    const missionOwner = m0.getCreature('mark wightman');
+    const missionOwner = m0.getCreature('michael weston');
     const atrium = m0.getLocation("atrium");
     let missions = missionOwner.getMissions(true);
     missions = missions.concat(atrium.getMissions(true));
@@ -449,7 +449,7 @@ test('canFailPartyBusMission', () => {
 });
 
 test('completingPartyBusMissionTeleportsPlayer', () => {
-    const missionOwner = m0.getCreature('mark wightman');
+    const missionOwner = m0.getCreature('michael weston');
     const atrium = m0.getLocation("atrium");
     let missions = missionOwner.getMissions(true);
     missions = missions.concat(atrium.getMissions(true));
@@ -488,7 +488,7 @@ test('completingPartyBusMissionTeleportsPlayer', () => {
 });
 
 test('completingPartyBusMissionInjuresNPCs', () => {
-    const missionOwner = m0.getCreature('mark wightman');
+    const missionOwner = m0.getCreature('michael weston');
     const atrium = m0.getLocation("atrium");
     let missions = missionOwner.getMissions(true);
     missions = missions.concat(atrium.getMissions(true));
@@ -536,7 +536,7 @@ test('completingPartyBusMissionInjuresNPCs', () => {
 });
 
 test('failingPartyBusMissionKillsNPCs', () => {
-    const missionOwner = m0.getCreature('mark wightman');
+    const missionOwner = m0.getCreature('michael weston');
     const atrium = m0.getLocation("atrium");
     let missions = missionOwner.getMissions(true);
     missions = missions.concat(atrium.getMissions(true));
@@ -670,15 +670,15 @@ test('canGetBulbFromAmandaTalkingMission', () => {
         }
     }
 
-    const amanda = m0.getCreature('amanda');
+    const angelina = m0.getCreature('angelina');
     const location = m0.getLocation("is-area");
     p0.setLocation(location);
 
-    p0.say("talk", null, "amanda");
-    p0.say("talk", "ok", "amanda");
+    p0.say("talk", null, "angelina");
+    p0.say("talk", "ok", "angelina");
     const resultString = m0.updateMissions(1, p0);
 
-    const expectedResult = "<br>Amanda hands you a projector bulb.<br>";
+    const expectedResult = "<br>Angelina hands you a projector bulb.<br>";
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });
@@ -691,12 +691,12 @@ test('canRepairProjectorWithBulbAndSkills', () => {
         }
     }
 
-    const amanda = m0.getCreature('amanda');
+    const angelina = m0.getCreature('angelina');
     let location = m0.getLocation("is-area");
     p0.setLocation(location);
 
-    p0.say("talk", null, "amanda");
-    p0.say("talk", "ok", "amanda");
+    p0.say("talk", null, "angelina");
+    p0.say("talk", "ok", "angelina");
     m0.updateMissions(1, p0);
 
     location = m0.getLocation("poppy");
@@ -716,15 +716,15 @@ test('bulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsFull', () => {
         }
     }
 
-    const amanda = m0.getCreature('amanda');
+    const angelina = m0.getCreature('angelina');
     const location = m0.getLocation("is-area");
     p0.setLocation(location);
 
     const inv = p0.getInventoryObject();
     inv.setCarryWeight(0);
 
-    p0.say("talk", null, "amanda");
-    p0.say("talk", "ok", "amanda");
+    p0.say("talk", null, "angelina");
+    p0.say("talk", "ok", "angelina");
     m0.updateMissions(1, p0);
 
     const loc = p0.getCurrentLocation();
@@ -743,18 +743,18 @@ test('playerIsToldThatBulbFromAmandaTalkingMissionIsLeftInLocationIfInventoryIsF
         }
     }
 
-    const amanda = m0.getCreature('amanda');
+    const angelina = m0.getCreature('angelina');
     const location = m0.getLocation("is-area");
     p0.setLocation(location);
 
     const inv = p0.getInventoryObject();
     inv.setCarryWeight(0);
 
-    p0.say("talk", null, "amanda");
-    p0.say("talk", "ok", "amanda");
+    p0.say("talk", null, "angelina");
+    p0.say("talk", "ok", "angelina");
     const resultString = m0.updateMissions(1, p0);
 
-    const expectedResult = "<br>Amanda hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
+    const expectedResult = "<br>Angelina hands you a projector bulb.<br>Unfortunately it's too heavy for you to carry right now.<br>You leave it here to collect when you're ready.";
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });
@@ -763,10 +763,10 @@ test('clearingSingleParentForMissionWith2AndParentsOnlyClearsSingleParent', () =
     const mc = new missionController.MissionController();
 
     const childMission = m0.getNamedMission("lunchtime");
-    const parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    const parentMission1 = m0.getNamedMission("tomatoesformelanie");
     const parentMission2 = m0.getNamedMission("startoflunch");
 
-    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
+    mc.initiateNewChildMissions(childMission, ["tomatoesformelanie"], p0, p0.getCurrentLocation(), "melanie sheldon");
 
     m0.updateMissions(1, p0);
 
@@ -781,11 +781,11 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
     const mc = new missionController.MissionController();
 
     const childMission = m0.getNamedMission("lunchtime");
-    const parentMission1 = m0.getNamedMission("tomatoesformargaret");
+    const parentMission1 = m0.getNamedMission("tomatoesformelanie");
     const parentMission2 = m0.getNamedMission("startoflunch");
 
-    mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
-    mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+    mc.initiateNewChildMissions(childMission, ["tomatoesformelanie"], p0, p0.getCurrentLocation(), "melanie sheldon");
+    mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "melanie sheldon");
 
     m0.updateMissions(1, p0);
 
@@ -829,13 +829,13 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         const mc = new missionController.MissionController();
 
         const childMission = m0.getNamedMission("lunchtime");
-        const parentMission1 = m0.getNamedMission("tomatoesformargaret");
+        const parentMission1 = m0.getNamedMission("tomatoesformelanie");
         const parentMission2 = m0.getNamedMission("startoflunch");
 
         p0.addMission(childMission);
 
-        mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
-        mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+        mc.initiateNewChildMissions(childMission, ["tomatoesformelanie"], p0, p0.getCurrentLocation(), "melanie sheldon");
+        mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "melanie sheldon");
 
         m0.updateMissions(1, p0);
         m0.updateMissions(2, p0);
@@ -857,13 +857,13 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         const mc = new missionController.MissionController();
 
         const childMission = m0.getNamedMission("lunchtime");
-        const parentMission1 = m0.getNamedMission("tomatoesformargaret");
+        const parentMission1 = m0.getNamedMission("tomatoesformelanie");
         const parentMission2 = m0.getNamedMission("startoflunch");
 
         p0.addMission(childMission);
 
-        mc.initiateNewChildMissions(childMission, ["tomatoesformargaret"], p0, p0.getCurrentLocation(), "margaret sexton");
-        mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "margaret sexton");
+        mc.initiateNewChildMissions(childMission, ["tomatoesformelanie"], p0, p0.getCurrentLocation(), "melanie sheldon");
+        mc.initiateNewChildMissions(childMission, ["startoflunch"], p0, p0.getCurrentLocation(), "melanie sheldon");
 
         m0.updateMissions(1, p0);
         const resultString = m0.updateMissions(2, p0);
@@ -928,7 +928,7 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         expect(actualResult).toBe(expectedResult);
     });
 
-    test('clearingPlayerReachesCrashSiteEventActivatesSupportFromAliceMission', () => {
+    test('clearingPlayerReachesCrashSiteEventActivatesSupportFromAileenMission', () => {
         const mc = new missionController.MissionController();
 
         const kitchen = m0.getLocation("kitchen-ground-floor");
@@ -941,8 +941,8 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         mc.updateMissions(2, p0, m0);
         mc.updateMissions(2, p0, m0);
 
-        const alice = m0.getCreature("alice easey");
-        const book = alice.getObject("survival book");
+        const aileen = m0.getCreature("aileen emerson");
+        const book = aileen.getObject("survival book");
         const playerInventory = p0.getInventoryObject();
         playerInventory.add(book);
 
@@ -957,10 +957,10 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         mc.updateMissions(4, p0, m0);
         mc.updateMissions(1, p0, m0);
 
-        const supportfromalice = m0.getNamedMission("supportfromalice");
+        const supportfromaileen = m0.getNamedMission("supportfromaileen");
 
-        const expectedResult = "Is Alice hunting player? true";
-        const actualResult = "Is Alice hunting player? " + alice.isHuntingPlayer();
+        const expectedResult = "Is Aileen hunting player? true";
+        const actualResult = "Is Aileen hunting player? " + aileen.isHuntingPlayer();
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -977,8 +977,8 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         mc.updateMissions(2, p0, m0);
         mc.updateMissions(2, p0, m0);
 
-        const alice = m0.getCreature("alice easey");
-        const book = alice.getObject("survival book");
+        const aileen = m0.getCreature("aileen emerson");
+        const book = aileen.getObject("survival book");
         const playerInventory = p0.getInventoryObject();
         playerInventory.add(book);
 

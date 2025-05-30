@@ -1,0 +1,33 @@
+{
+  "object": "creature",
+  "name": "melanie sheldon",
+  "displayName": "Melanie Sheldon",
+  "description": "Melanie Sheldon",
+  "detailedDescription": "A true ray of sunshine every lunchtime. Serving you food on a daily basis.<br>Seriously - she's lovely and looks out for all of us.",
+  "attributes": {
+    "weight": 90,
+    "money": 10,
+    "attackStrength": 13,
+    "gender": "female",
+    "type": "friendly",
+    "carryWeight": 8,
+    "health": 100,
+    "canTravel": true,
+    "imageName": "melaniesheldon.jpg"
+  },
+  "synonyms": [
+    "melanie",
+    "madge",
+    "ms",
+    "sheldon",
+    "melanie s"
+  ],
+  "missions": [
+    {
+      "file": "mission-lunchtime"
+    },
+    {
+      "file": "mission-tomatoesformelanie"
+    }
+  ]
+}

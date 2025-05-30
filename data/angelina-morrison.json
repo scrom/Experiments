@@ -1,0 +1,35 @@
+{
+  "object": "creature",
+  "name": "angelina morrison",
+  "displayName": "Angelina Morrison",
+  "description": "Angelina from IS",
+  "detailedDescription": "It's well-worth helping her out, you never know when you'll need her support.",
+  "attributes": {
+    "template": "creature-female-l2",
+    "imageName": "angelinamorrison.jpg",
+    "repairSkills": [
+      "projector",
+      "hard disk",
+      "server"
+    ]
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "angelina",
+    "gina",
+    "morrison",
+    "her"
+  ],
+  "dislikes": [
+    "jim maddox"
+  ],
+  "missions": [
+    {
+      "file": "mission-teachprojectorrepair"
+    }
+  ]
+}

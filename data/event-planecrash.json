@@ -1,35 +1,39 @@
 {
-        "object": "mission",
-        "name": "planecrash",
-        "displayName": "there's been a plane crash",
-        "attributes": {
-          "type": "event",
-          "parent": "latte",
-          "missionObject": "player"
-        },
-        "conditionAttributes": {
-          "time": 82,
-          "missionsCompletedCount": ">9"
-        },
-        "reward": {
-            "locations": [
-                { "file": "crash-site" }
-            ],
-            "modifyObject": {
-                "name": "simon galbraith",
-                "attributes": {
-                    "antibodies": ["zombie"]
-                }
-              },
-          "exits": [
-            {
-              "object": "exit",
-              "longname": "North",
-              "direction": "n",
-              "source": "west-car-park",
-              "destination": "crash-site"
-            }
-          ],
-          "message": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!<br>Now's probably a good time to <i>save</i> your game again if you haven't done so recently."
-        }
+  "object": "mission",
+  "name": "planecrash",
+  "displayName": "there's been a plane crash",
+  "attributes": {
+    "type": "event",
+    "parent": "latte",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "time": 82,
+    "missionsCompletedCount": ">9"
+  },
+  "reward": {
+    "locations": [
+      {
+        "file": "crash-site"
+      }
+    ],
+    "modifyObject": {
+      "name": "stephen goodwin",
+      "attributes": {
+        "antibodies": [
+          "zombie"
+        ]
+      }
+    },
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "North",
+        "direction": "n",
+        "source": "west-car-park",
+        "destination": "crash-site"
+      }
+    ],
+    "message": "You hear a low droning noise followed by a loud explosion somewhere to the North-West.<br>Something bad has happened outside!<br>Now's probably a good time to <i>save</i> your game again if you haven't done so recently."
+  }
 }

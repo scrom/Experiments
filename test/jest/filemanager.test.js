@@ -119,8 +119,8 @@ describe('FileManager', () => {
 
     test('readGameData reads real game data file', async() => {
         const readData = await fm.readGameDataAsync('savegame-0');
-        expect(readData[0].username).toEqual("brian"); // confirm user data object is returned
-        expect(readData[5].name).toEqual("camelids-a"); // check a location on the map exists
-        expect(readData.length).toEqual(137); // check we got the full file back based on number of objects expected
+        expect(readData[0].username).toEqual("simon"); // confirm user data object is returned
+        expect(readData[5].name).toEqual("camelids"); // check a location on the map exists
+        expect(readData.length).toEqual(156); // check we got the full file back based on number of objects expected
     });
 });

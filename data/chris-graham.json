@@ -1,0 +1,23 @@
+{
+  "object": "creature",
+  "name": "chris graham",
+  "displayName": "Chris Graham",
+  "description": "Chris Graham",
+  "detailedDescription": "Chris is our resident head of Test.<br>He's becoming pretty famous in the testing world and has even had people ask for his autograph.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "imageName": "chrisgraham.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "chris",
+    "chris g",
+    "cg",
+    "graham",
+    "him"
+  ]
+}

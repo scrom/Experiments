@@ -1,15 +1,15 @@
 {
-    "object": "mission",
-    "name": "awaitvanarrival",
-    "displayName": "steal some valuables",
-    "attributes": {
-        "type": "event",
-        "parent": "stealsketchbook"
-    },
-    "conditionAttributes": {
-        "time": "35"
-    },
-    "reward": {
-        "message": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
-    }
+  "object": "mission",
+  "name": "awaitvanarrival",
+  "displayName": "steal some valuables",
+  "attributes": {
+    "type": "event",
+    "parent": "stealsketchbook"
+  },
+  "conditionAttributes": {
+    "time": "35"
+  },
+  "reward": {
+    "message": "You've probably kept out of the way long enough to go and chat to Jordan again without suspicion if you feel like taking on another 'job'."
+  }
 }

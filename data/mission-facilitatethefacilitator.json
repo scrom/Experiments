@@ -6,7 +6,7 @@
   "attributes": {
     "parent": "saveredgate",
     "missionObject": "post-it pad",
-    "destination": "chris smith",
+    "destination": "chris sanders",
     "static": true,
     "dialogue": [
       "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
@@ -16,7 +16,7 @@
           "yes",
           "ok",
           "yup",
-          "y",          
+          "y",
           "sure"
         ],
         "response": "'Great! I'll be somewhere around the office. Come and find me when you've got them.'",
@@ -77,7 +77,7 @@
     "isDamaged": false
   },
   "reward": {
-    "increaseAffinityFor": "chris smith",
+    "increaseAffinityFor": "chris sanders",
     "missionObject": "post-it pad",
     "score": 25,
     "message": "Chris says 'Brilliant. Thanks for the help.'<br>Congratulations. You facilitated the facilitator!"

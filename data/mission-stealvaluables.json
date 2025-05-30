@@ -1,32 +1,36 @@
 {
-    "object": "mission",
-    "name": "stealvaluables",
-    "displayName": "steal some valuables",
-    "description": "Steal &pound;100 worth of valuables from the company.",
-    "attributes": {
+  "object": "mission",
+  "name": "stealvaluables",
+  "displayName": "steal some valuables",
+  "description": "Steal &pound;100 worth of valuables from the company.",
+  "attributes": {
     "parent": "vanarrival",
     "missionObject": "van"
-    },
-    "conditionAttributes": {
+  },
+  "conditionAttributes": {
     "inventoryValue": ">100"
-    },
-    "reward": {
+  },
+  "reward": {
     "modifyLocation": {
-        "name": "east-car-park-corner",
-        "description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
-        "inventory": [
-        {"file": "tyre-tracks"},
-        {"file": "mouse"}                           
-        ]
+      "name": "east-car-park-corner",
+      "description": "You're standing in the corner of the East car park. On the ground are the tyre tracks of a large vehicle that appears to have left in a hurry. Given the noise it made as it left, I'd disappear from here quickly if I were you.",
+      "inventory": [
+        {
+          "file": "tyre-tracks"
+        },
+        {
+          "file": "mouse"
+        }
+      ]
     },
     "affinityModifier": 1,
     "decreaseAffinityFor": "everyone",
-    "increaseAffinityFor": "jordan miller",
+    "increaseAffinityFor": "jordan marshall",
     "removeObject": "van",
     "removeLocation": {
-        "name": "east-car-park-corner"
+      "name": "east-car-park-corner"
     },
     "money": 200,
     "message": "As you load up the van with the last of the valuables you notice a thick manilla envelope. On the front it just says '$player'.<br>You open it and discover a bundle of banknotes inside.<br>You hastily pocket the cash, discard the envelope and try not to look suspicious.<br><br>As you turn to leave, a masked man dives out of the bushes nearby jumps into the driver's seat and roars off in the van, tyres squealing.<br>It's probably wise for you to make yourself scarce for a while."
-    }
+  }
 }

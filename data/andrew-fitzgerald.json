@@ -1,0 +1,24 @@
+{
+  "object": "creature",
+  "name": "andrew fitzgerald",
+  "displayName": "Andrew Fitzgerald",
+  "description": "Andrew Fitzgerald",
+  "detailedDescription": "Can haz mor Accountz. Andrew is one of our account sales managers.",
+  "attributes": {
+    "template": "creature-male-l4",
+    "imageName": "andrewfitzgerald.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "andrew",
+    "andrew f",
+    "af",
+    "fitzgerald",
+    "andy",
+    "him"
+  ]
+}

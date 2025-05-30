@@ -2,9 +2,12 @@
   "object": "mission",
   "name": "lunchtime",
   "displayName": "get some lunch",
-  "description": "Margaret has prepared a tasty roast for you.",
+  "description": "Melanie has prepared a tasty roast for you.",
   "attributes": {
-    "parent": [ "tomatoesformargaret", "startoflunch" ],
+    "parent": [
+      "tomatoesformelanie",
+      "startoflunch"
+    ],
     "type": "event",
     "missionObject": "player"
   },
@@ -20,7 +23,9 @@
         "extendedInventoryDescription": "There's $inventory in it."
       },
       "inventory": [
-        { "file": "soup" }
+        {
+          "file": "soup"
+        }
       ]
     },
     "modifyLocations": [
@@ -28,11 +33,21 @@
         "name": "servery-food-bar",
         "description": "You're in the SQL Servery serving area and lunch is being served.<br>You know how there's no such thing as a free lunch right?<br>It's not entirely true. Lunch is free here as long as you're reasonable with how much you take.",
         "inventory": [
-          { "file": "roast" },
-          { "file": "nut-roast" },
-          { "file": "salad" }
+          {
+            "file": "roast"
+          },
+          {
+            "file": "nut-roast"
+          },
+          {
+            "file": "salad"
+          }
         ],
-        "missions": [ { "file": "mission-limitfoodportions" } ]
+        "missions": [
+          {
+            "file": "mission-limitfoodportions"
+          }
+        ]
       },
       {
         "name": "servery-main",

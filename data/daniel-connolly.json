@@ -1,0 +1,53 @@
+{
+  "object": "creature",
+  "name": "daniel connolly",
+  "displayName": "Daniel Connolly",
+  "description": "Daniel Connolly",
+  "detailedDescription": "Like a cynical but gentle, marketing wolverine.<br>He runs a regular podcast on comics (along with Robin and Lou).",
+  "attributes": {
+    "template": "creature-male-l4",
+    "destinations": [
+      "atrium-seating",
+      "kitchen-ground-floor",
+      "creative-agency-area"
+    ],
+    "dislikes": [
+      "jordan marshall"
+    ],
+    "loopDelay": 5,
+    "destinationDelay": 5,
+    "imageName": "danielconnolly.jpg",
+    "contagion": [
+      {
+        "object": "Contagion",
+        "name": "zombie",
+        "displayName": "zombie",
+        "attributes": {
+          "incubationPeriod": 25,
+          "communicability": 0.5,
+          "symptoms": [
+            {
+              "action": "bite",
+              "frequency": 0.16,
+              "escalation": 0.02
+            }
+          ]
+        }
+      }
+    ],
+    "homeLocationName": "creative-agency-area"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "daniel",
+    "dan",
+    "danny",
+    "connolly",
+    "dc",
+    "him"
+  ]
+}

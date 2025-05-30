@@ -1,96 +1,96 @@
 {
-                      "object": "mission",
-                      "name": "stealsketchbook",
-                      "displayName": "steal Simon's sketch book",
-                      "description": "Steal Simon Galbraith's A3 sketchbook.",
-                      "attributes": {
-                        "missionObject": "sketchbook",
-                        "destination": "jordan miller",
-                        "static": true,
-                        "dialogue": [
-                          "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
-                          {
-                            "state": 1,
-                            "keywords": [
-                              "yes",
-                              "ok",
-                              "yup",
-                              "y"
-                            ],
-                            "response": "'Great! I'd like you to get hold of Simon Galbraith's sketchbook and bring it to me (<i>steal</i> it or <i>mug</i> him if it's easier), I'll make it worth your while.'",
-                            "nextState": 3
-                          },
-                          {
-                            "state": 1,
-                            "keywords": [
-                              "n",
-                              "no",
-                              "not",
-                              "not yet"
-                            ],
-                            "response": "'Never mind, your loss. You won't get another chance",
-                            "nextState": 99
-                          },
-                          {
-                            "state": 1,
-                            "response": "'Whatever. Check in later if you think you're up to the job.'",
-                            "nextState": 3
-                          },
-                          {
-                            "state": 3,
-                            "keywords": [
-                              "ok"
-                            ],
-                            "response": "'Come back when you've got what I'm after.'",
-                            "nextState": 3
-                          },
-                          {
-                            "state": 3,
-                            "response": "'Have you got it?'",
-                            "nextState": 4
-                          },
-                          {
-                            "state": 4,
-                            "requestedObject": "sketchbook",
-                            "keywords": [
-                              "yes",
-                              "ok",
-                              "yup",
-                              "y"
-                            ],
-                            "response": "'Excellent!'",
-                            "nextState": 3
-                          },
-                          {
-                            "state": 4,
-                            "keywords": [
-                              "n",
-                              "no",
-                              "not",
-                              "not yet"
-                            ],
-                            "response": "'Come back when you've got what I'm after.'",
-                            "nextState": 3
-                          },
-                          {
-                            "state": 4,
-                            "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
-                          }
-                        ]
-                      },
-                      "failAttributes": {
-                        "isDestroyed": true,
-                        "conversationState": 99
-                      },
-                      "conditionAttributes": {
-                        "isDestroyed": false
-                      },
-                      "reward": {
-                        "affinityModifier": 1,
-                        "decreaseAffinityFor": "simon galbraith",
-                        "increaseAffinityFor": "jordan miller",
-                        "removeObject": "sketchbook",
-                        "money": 20,
-                        "message": "Jordan says 'Nice work!'<br>'Here's &pound;20.'<br>'Head somewhere well out of the way and and keep your head down for a while.'<br>'You'll know when it's time to track me down for another chat.'"
-                      }
-                    }
+  "object": "mission",
+  "name": "stealsketchbook",
+  "displayName": "steal Stephen's sketch book",
+  "description": "Steal Stephen Goodwin's A3 sketchbook.",
+  "attributes": {
+    "missionObject": "sketchbook",
+    "destination": "jordan marshall",
+    "static": true,
+    "dialogue": [
+      "'Psst!'<br>'I've got some covert jobs if you're interested. Are you up for it?'",
+      {
+        "state": 1,
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Great! I'd like you to get hold of Stephen Goodwin's sketchbook and bring it to me (<i>steal</i> it or <i>mug</i> him if it's easier), I'll make it worth your while.'",
+        "nextState": 3
+      },
+      {
+        "state": 1,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Never mind, your loss. You won't get another chance",
+        "nextState": 99
+      },
+      {
+        "state": 1,
+        "response": "'Whatever. Check in later if you think you're up to the job.'",
+        "nextState": 3
+      },
+      {
+        "state": 3,
+        "keywords": [
+          "ok"
+        ],
+        "response": "'Come back when you've got what I'm after.'",
+        "nextState": 3
+      },
+      {
+        "state": 3,
+        "response": "'Have you got it?'",
+        "nextState": 4
+      },
+      {
+        "state": 4,
+        "requestedObject": "sketchbook",
+        "keywords": [
+          "yes",
+          "ok",
+          "yup",
+          "y"
+        ],
+        "response": "'Excellent!'",
+        "nextState": 3
+      },
+      {
+        "state": 4,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'Come back when you've got what I'm after.'",
+        "nextState": 3
+      },
+      {
+        "state": 4,
+        "response": "'I won't ask again but as i said before, I'll make it worth your while.'"
+      }
+    ]
+  },
+  "failAttributes": {
+    "isDestroyed": true,
+    "conversationState": 99
+  },
+  "conditionAttributes": {
+    "isDestroyed": false
+  },
+  "reward": {
+    "affinityModifier": 1,
+    "decreaseAffinityFor": "stephen goodwin",
+    "increaseAffinityFor": "jordan marshall",
+    "removeObject": "sketchbook",
+    "money": 20,
+    "message": "Jordan says 'Nice work!'<br>'Here's &pound;20.'<br>'Head somewhere well out of the way and and keep your head down for a while.'<br>'You'll know when it's time to track me down for another chat.'"
+  }
+}

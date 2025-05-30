@@ -1,0 +1,30 @@
+{
+  "object": "creature",
+  "name": "sophie stratford-holmes",
+  "displayName": "Sophie Stratford-holmes",
+  "description": "Sophie Stratford-holmes",
+  "detailedDescription": "One of our super-capable and friendly PA team.",
+  "attributes": {
+    "template": "creature-female-l2",
+    "affinity": 1,
+    "imageName": "sophiestratfordholmes.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "sophie",
+    "soph",
+    "sophie sh",
+    "ssh",
+    "ss",
+    "sh",
+    "sophie stratford holmes",
+    "sophie stratfordholmes",
+    "sophie holmes",
+    "sophie stratford",
+    "her"
+  ]
+}

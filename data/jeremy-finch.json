@@ -1,0 +1,24 @@
+{
+  "object": "creature",
+  "name": "jeremy finch",
+  "displayName": "Jeremy Finch",
+  "description": "Jeremy Finch",
+  "detailedDescription": "Jeremy is our head of Software Engineering.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "imageName": "jeremyfinch.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "jeremy",
+    "jez",
+    "jeremy f",
+    "jf",
+    "finch",
+    "him"
+  ]
+}

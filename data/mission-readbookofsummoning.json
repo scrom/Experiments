@@ -4,19 +4,19 @@
   "displayName": "read the book of summoning",
   "description": "You open the thick, crisp pages and start to read...<br>Yn fummonyng ye Daemonf of ye Porto Roffo ye may attayn ye greateft of rewardf.<br>Yf thou yft truly worthy then feek ye thy heart of darkneff wythyn thyne aboyde.<br>Take thyf tome and playce upon a ftar dyftylled fro ye red humor of ynnofenfe.<br>Eafh of thye fyve poyntf, muft ye yllumynate.<br>Ye portal wyll refponde to thye fummonyng wyrd; 'quya manyfeftaturuf ef'.<br>Yn all meafure thye muft refrayne of perfonal croffyng ye boundary of fummonyng.<br>Af ye gayte of rouge yf manyfeft, ye final facryfyfe muft enter...",
   "attributes": {
-      "missionObject": "book of summoning",
-      "static": true
+    "missionObject": "book of summoning",
+    "static": true
   },
   "conditionAttributes": {
-      "isDestroyed": false,
-      "read": true
+    "isDestroyed": false,
+    "read": true
   },
   "reward": {
     "aggression": 5,
     "health": -10,
     "affinityModifier": 2,
     "decreaseAffinityFor": "everyone",
-    "increaseAffinityFor": "alice easey",
+    "increaseAffinityFor": "aileen emerson",
     "repairSkill": "summoning",
     "message": "This is seriously dark.<br>Just reading as much as you have is making you feel deeply unwell and causing your head to spin. It's going to take a bit of deciphering."
   }

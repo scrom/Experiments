@@ -1,38 +1,40 @@
 {
-    "object": "location",
-    "name": "customer-delight-south",
-    "displayName": "Customer Delight",
-    "description": "You're in the Southern part of the Customer Delight development area. This is where the SQL Source control team sit. They're probably all held captive in a meeting at the moment though.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "customer-delight-south",
-        "destination": "customer-delight-central"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "customer-delight-south",
-        "destination": "customer-delight-south-east"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "customer-delight-south",
-        "destination": "customer-delight-south-west"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "build screen",
-        "template": "flat-screen",
-        "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
-      },
-      {"file": "chris-whitworth"}
-    ]
-  }
+  "object": "location",
+  "name": "customer-delight-south",
+  "displayName": "Customer Delight",
+  "description": "You're in the Southern part of the Customer Delight development area. This is where the SQL Source control team sit. They're probably all held captive in a meeting at the moment though.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "customer-delight-south",
+      "destination": "customer-delight-central"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "customer-delight-south",
+      "destination": "customer-delight-south-east"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "customer-delight-south",
+      "destination": "customer-delight-south-west"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "build screen",
+      "template": "flat-screen",
+      "detailedDescription": "This one's cycling through project, build and release status pages for SQL Source Control."
+    },
+    {
+      "file": "chris-warrington"
+    }
+  ]
+}

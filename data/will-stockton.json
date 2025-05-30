@@ -1,0 +1,35 @@
+{
+  "object": "creature",
+  "name": "will stockton",
+  "displayName": "Will Stockton",
+  "description": "Will Stockton",
+  "detailedDescription": "Chef Will, master of the Red Gate dessert!",
+  "attributes": {
+    "template": "creature-male-l3",
+    "destinations": [
+      "servery-kitchen",
+      "smoking-area"
+    ],
+    "avoiding": [
+      "first-floor-fire-escape"
+    ],
+    "loops": -1,
+    "loopDelay": 9,
+    "destinationDelay": 5,
+    "imageName": "willstockton.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "will",
+    "bill",
+    "willy",
+    "billy",
+    "ws",
+    "stockton",
+    "will s"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "object": "creature",
+  "name": "chris sanders",
+  "displayName": "Chris Sanders",
+  "description": "Chris Sanders",
+  "detailedDescription": "Project Manager and retrospective guru extraordinaire.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "affinity": 1,
+    "imageName": "chrissanders.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "chris",
+    "saunders",
+    "chris saunders",
+    "sanders",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "mission-facilitatethefacilitator"
+    }
+  ]
+}

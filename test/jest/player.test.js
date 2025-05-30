@@ -686,8 +686,8 @@ test('player is warned they are tired, thirsty and hungry', () => {
 });
 test('can inject a vaccine into self', () => {
     m0 = new map.Map();
-    var supportFromAlice = mb.buildMission({ "file": "mission-supportfromalice" });
-    var reward = supportFromAlice.success();
+    var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
+    var reward = supportFromAileen.success();
     var syringe = reward.delivers;
     var venomData = {file: "venom" };
     var venom = mb.buildArtefact(venomData);
@@ -705,8 +705,8 @@ test('can inject a vaccine into self', () => {
 
 test('injecting a vaccine provides antibodies', () => {
     m0 = new map.Map();
-    var supportFromAlice = mb.buildMission({ "file": "mission-supportfromalice" });
-    var reward = supportFromAlice.success();
+    var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
+    var reward = supportFromAileen.success();
     var syringe = reward.delivers;
     var venomData = { file: "venom" };
     var venom = mb.buildArtefact(venomData);

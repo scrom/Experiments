@@ -1,0 +1,58 @@
+{
+  "object": "creature",
+  "name": "jordan marshall",
+  "displayName": "Jordan Marshall",
+  "description": "Jordan Marshall",
+  "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
+  "attributes": {
+    "template": "creature-male-l4",
+    "attackStrength": 12,
+    "type": "creature",
+    "affinity": -2,
+    "destinations": [
+      "machine-room-east"
+    ],
+    "avoiding": [
+      "bus"
+    ],
+    "destinationDelay": 20
+  },
+  "inventory": [
+    {
+      "file": "emergency-first-aid-kit"
+    }
+  ],
+  "synonyms": [
+    "spy",
+    "jordan",
+    "marshall",
+    "jm",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "event-jordanisbleeding"
+    },
+    {
+      "file": "event-jordandies"
+    },
+    {
+      "file": "event-jordanreachesmachineroom"
+    },
+    {
+      "file": "mission-killthespy"
+    },
+    {
+      "file": "mission-stealsketchbook"
+    },
+    {
+      "file": "mission-vanarrival"
+    },
+    {
+      "file": "mission-stealvaluables"
+    },
+    {
+      "file": "mission-givetrusttokentoplayer"
+    }
+  ]
+}

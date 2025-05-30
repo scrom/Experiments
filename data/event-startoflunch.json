@@ -16,10 +16,18 @@
         "name": "servery-food-bar",
         "description": "You're in the SQL Servery serving area and lunch should be being served.<br>It looks like they're not quite ready yet. Hopefully everything's ok.",
         "inventory": [
-          { "file": "plate" },
-          { "file": "plate" },
-          { "file": "bowl" },
-          { "file": "bowl" }
+          {
+            "file": "plate"
+          },
+          {
+            "file": "plate"
+          },
+          {
+            "file": "bowl"
+          },
+          {
+            "file": "bowl"
+          }
         ]
       }
     ],
@@ -29,9 +37,11 @@
       "destinationDelay": 5
     },
     "modifyObject": {
-      "name": "margaret sexton",
+      "name": "melanie sheldon",
       "attributes": {
-        "destinations": [ "servery-food-bar" ],
+        "destinations": [
+          "servery-food-bar"
+        ],
         "destinationDelay": 75
       }
     }

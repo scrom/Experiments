@@ -46,15 +46,27 @@
         "smoke"
       ],
       "inventory": [
-        { "file": "venom" },
-        { "file": "crash-corpse"}
+        {
+          "file": "venom"
+        },
+        {
+          "file": "crash-corpse"
+        }
       ]
     },
-    { "file": "dave-convery" },
-    { "file": "roger-hart" },
-    { "file": "jordan-miller" }
+    {
+      "file": "daniel-connolly"
+    },
+    {
+      "file": "robin-hastings"
+    },
+    {
+      "file": "jordan-marshall"
+    }
   ],
   "missions": [
-    {"file": "event-playerreachescrashsite"}
+    {
+      "file": "event-playerreachescrashsite"
+    }
   ]
 }

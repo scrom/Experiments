@@ -1,0 +1,23 @@
+{
+  "object": "creature",
+  "name": "clarissa rothwell",
+  "displayName": "Clarissa Rothwell",
+  "description": "Clarissa Rothwell",
+  "detailedDescription": "She kicks ass on accounts, like many of the sales team, she's one of the reasons this place can afford to pay us all.",
+  "attributes": {
+    "template": "creature-female-l4",
+    "imageName": "clarissarothwell.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "clarissa",
+    "cassie",
+    "cr",
+    "rothwell",
+    "her"
+  ]
+}

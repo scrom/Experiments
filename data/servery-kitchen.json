@@ -1,28 +1,36 @@
-  {
-    "object": "location",
-    "name": "servery-kitchen",
-    "displayName": "Servery kitchen",
-    "description": "You're in the SQL Servery kitchen.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-kitchen",
-        "destination": "servery-back-corridor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "servery-kitchen",
-        "destination": "servery-food-bar"
-      }
-    ],
-    "inventory": [
-      {"file": "quality-rum-bottle"},
-      {"file": "marmite-jar"},
-      {"file": "margaret-sexton"},
-      {"file": "wayne-stanford"}
-    ]
-  }
+{
+  "object": "location",
+  "name": "servery-kitchen",
+  "displayName": "Servery kitchen",
+  "description": "You're in the SQL Servery kitchen.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "servery-kitchen",
+      "destination": "servery-back-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "servery-kitchen",
+      "destination": "servery-food-bar"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "quality-rum-bottle"
+    },
+    {
+      "file": "marmite-jar"
+    },
+    {
+      "file": "melanie-sheldon"
+    },
+    {
+      "file": "will-stockton"
+    }
+  ]
+}

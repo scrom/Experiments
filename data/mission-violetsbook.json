@@ -1,0 +1,23 @@
+{
+  "object": "mission",
+  "name": "violetsbook",
+  "displayName": "give Violet something interesting to read",
+  "description": "Things are pretty quiet down here today and Violet looks bored. I reckon she'd appreciate something interesting to read.",
+  "attributes": {
+    "parent": "keyfob",
+    "missionObject": "50 shades",
+    "destination": "violet wilmott",
+    "static": true
+  },
+  "conditionAttributes": {
+    "isDestroyed": false,
+    "isBroken": false
+  },
+  "reward": {
+    "removeObject": "50 shades",
+    "score": 35,
+    "affinityModifier": 2,
+    "increaseAffinityFor": "Violet Wilmott",
+    "message": "<br>Congratulations. Violet likes the book.<br><br>'Thanks $player!'<br>'If you ever need help tracking anything down, just pop down and <i>ask</i> me and I'll see what I can do.'"
+  }
+}

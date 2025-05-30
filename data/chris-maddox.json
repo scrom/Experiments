@@ -1,0 +1,37 @@
+{
+  "object": "creature",
+  "name": "chris maddox",
+  "displayName": "Chris Maddox",
+  "description": "Chris Maddox",
+  "detailedDescription": "Endlessly cheerful security guru extraordinaire. Keep him away from Rum and pub floors.",
+  "attributes": {
+    "template": "creature-male-l2",
+    "affinity": 2,
+    "destinations": [
+      "customer-delight-south-west",
+      "east-bike-racks",
+      "atrium"
+    ],
+    "loops": 3,
+    "loopDelay": 9,
+    "destinationDelay": 5,
+    "imageName": "chrismaddox.jpg"
+  },
+  "synonyms": [
+    "chris",
+    "chris m",
+    "cm",
+    "maddox",
+    "him"
+  ],
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "missions": [
+    {
+      "file": "mission-fixchrisbike"
+    }
+  ]
+}

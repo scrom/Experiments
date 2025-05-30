@@ -1,32 +1,34 @@
 {
-    "object": "location",
-    "name": "is-area",
-    "displayName": "IS team area",
-    "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "is-area",
-        "destination": "second-floor-seating-area-east"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "is-area",
-        "destination": "second-floor-east-corridor"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "is-area",
-        "destination": "core-area-west"
-      }
-    ],
-    "inventory": [
-      {"file": "amanda-mansfield"}
-    ]
-  }
+  "object": "location",
+  "name": "is-area",
+  "displayName": "IS team area",
+  "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "is-area",
+      "destination": "second-floor-seating-area-east"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "is-area",
+      "destination": "second-floor-east-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "is-area",
+      "destination": "core-area-west"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "angelina-morrison"
+    }
+  ]
+}

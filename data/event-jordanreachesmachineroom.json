@@ -6,7 +6,7 @@
   "attributes": {
     "parent": "planecrash",
     "type": "event",
-    "missionObject": "jordan miller",
+    "missionObject": "jordan marshall",
     "destination": "machine-room-east",
     "static": true
   },
@@ -19,12 +19,16 @@
   "reward": {
     "modifyObjects": [
       {
-        "name": "jordan miller",
+        "name": "jordan marshall",
         "attributes": {
-          "antibodies": [ "zombie" ]
+          "antibodies": [
+            "zombie"
+          ]
         },
         "inventory": [
-          {"file": "hard-disk"}
+          {
+            "file": "hard-disk"
+          }
         ]
       },
       {

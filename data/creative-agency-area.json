@@ -1,83 +1,85 @@
 {
-    "object": "location",
-    "name": "creative-agency-area",
-    "displayName": "Agency",
-    "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "creative-agency-area",
-        "destination": "people-team-area"
+  "object": "location",
+  "name": "creative-agency-area",
+  "displayName": "Agency",
+  "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "creative-agency-area",
+      "destination": "people-team-area"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "creative-agency-area",
+      "destination": "people-team-water-cooler"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "creative-agency-area",
+      "destination": "second-floor-seating-area-west"
+    },
+    {
+      "object": "exit",
+      "longname": "down",
+      "direction": "d",
+      "source": "creative-agency-area",
+      "destination": "ground-floor-fire-escape",
+      "description": "You crawl into the small hole under Daniel's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
+      "hidden": true,
+      "requiredAction": "crawl"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "dans-desk"
+    },
+    {
+      "object": "artefact",
+      "name": "air",
+      "description": "tang of creativity",
+      "detailedDescription": "There's something uplifting about it.",
+      "attributes": {
+        "type": "scenery",
+        "subType": "intangible",
+        "customAction": [
+          "get"
+        ],
+        "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
+        "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
+        "sound": "Clickety click, click, kerching!"
       },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "creative-agency-area",
-        "destination": "people-team-water-cooler"
+      "synonyms": [
+        "toner",
+        "creativitiy",
+        "tang"
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "clicks",
+      "description": "hum of busy marketers",
+      "detailedDescription": "Even when there's nobody here the clicks keep coming.",
+      "attributes": {
+        "type": "scenery",
+        "subType": "intangible",
+        "plural": true,
+        "customAction": [
+          "get"
+        ],
+        "defaultResult": "If you <i>listen</i>, you might just get it.",
+        "sound": "Clickety click, click, kerching!"
       },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "creative-agency-area",
-        "destination": "second-floor-seating-area-west"
-      },
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "creative-agency-area",
-        "destination": "ground-floor-fire-escape",
-        "description": "You crawl into the small hole under Dave's desk and find yourself briefly plunged into darkness.<br>After a second or so of vertigo you come to your senses somewhere outside.",
-        "hidden": true,
-        "requiredAction": "crawl"
-      }
-    ],
-    "inventory": [
-      {"file": "daves-desk"},
-      {
-        "object": "artefact",
-        "name": "air",
-        "description": "tang of creativity",
-        "detailedDescription": "There's something uplifting about it.",
-        "attributes": {
-          "type": "scenery",
-          "subType": "intangible",
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "It's just a smell, not something you can keep - except in your memory and imagination.",
-          "smell": "Sharpies. You can smell sharpies.<br>Sharpies smell of ideas!",
-          "sound": "Clickety click, click, kerching!"
-        },
-        "synonyms": [
-          "toner",
-          "creativitiy",
-          "tang"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "clicks",
-        "description": "hum of busy marketers",
-        "detailedDescription": "Even when there's nobody here the clicks keep coming.",
-        "attributes": {
-          "type": "scenery",
-          "subType": "intangible",
-          "plural": true,
-          "customAction": [
-            "get"
-          ],
-          "defaultResult": "If you <i>listen</i>, you might just get it.",
-          "sound": "Clickety click, click, kerching!"
-        },
-        "synonyms": [
-          "click",
-          "cash"
-        ]
-      }
-    ]
-  }
+      "synonyms": [
+        "click",
+        "cash"
+      ]
+    }
+  ]
+}

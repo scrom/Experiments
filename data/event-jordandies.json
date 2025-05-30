@@ -1,11 +1,11 @@
 {
   "object": "mission",
   "name": "jordandies",
-  "displayName": "Alice receives a note from Jordan (somehow)",
+  "displayName": "Aileen receives a note from Jordan (somehow)",
   "description": "",
   "attributes": {
     "type": "event",
-    "missionObject": "jordan miller",
+    "missionObject": "jordan marshall",
     "static": true
   },
   "conditionAttributes": {
@@ -14,7 +14,7 @@
   "reward": {
     "modifyObjects": [
       {
-        "name": "alice easey",
+        "name": "aileen emerson",
         "inventory": [
           {
             "object": "artefact",
@@ -32,15 +32,15 @@
               "note",
               "letter",
               "letter from jordan",
-              "alice letter",
-              "alices letter"
+              "aileen letter",
+              "aileens letter"
             ],
             "missions": [
               {
                 "object": "mission",
                 "name": "readnotefromjordan",
                 "displayName": "",
-                "description": "Alice.<br>If you get this note then chances are I'm dead already. I've been bleeding for some time and stashed this in our regular contact spot.<br>I don't think I'm going to make it any further.<br>I know you don't necessarily trust $player yet but this may be our only hope.<br>You need to explain what's going on.<br>Hopefully between you, you'll find a way to turn this around before it's too late for everyone.<br><br>See you on the other side. (And take care!)<br>J.<br>",
+                "description": "Aileen.<br>If you get this note then chances are I'm dead already. I've been bleeding for some time and stashed this in our regular contact spot.<br>I don't think I'm going to make it any further.<br>I know you don't necessarily trust $player yet but this may be our only hope.<br>You need to explain what's going on.<br>Hopefully between you, you'll find a way to turn this around before it's too late for everyone.<br><br>See you on the other side. (And take care!)<br>J.<br>",
                 "attributes": {
                   "missionObject": "handwritten note",
                   "static": true

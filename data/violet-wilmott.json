@@ -1,0 +1,36 @@
+{
+  "object": "creature",
+  "name": "violet wilmott",
+  "displayName": "Violet Wilmott",
+  "description": "Violet the receptionist",
+  "detailedDescription": "Violet's one of our support team on the customer-facing front line.<br>'Receptionist' is an understatement for what she does.<br>On top of dealing with all visitors, parcels, deliveries and random requests, she also provides telephone support for our customers.",
+  "attributes": {
+    "template": "creature-female-l3",
+    "canTravel": false,
+    "traveller": false,
+    "imageName": "violetwilmott.jpg"
+  },
+  "synonyms": [
+    "receptionist",
+    "voilet",
+    "vi",
+    "violet",
+    "vw",
+    "wilmott",
+    "violet w",
+    "her"
+  ],
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "missions": [
+    {
+      "file": "mission-talktoviolet"
+    },
+    {
+      "file": "mission-violetsbook"
+    }
+  ]
+}

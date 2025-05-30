@@ -19,13 +19,13 @@
   "reward": {
     "score": 150,
     "affinityModifier": 1,
-    "decreaseAffinityFor": "simon galbraith",
-    "message": "<br>Geat work. You managed to prevent any further loss of life.<br>The chain of near-fatal incidents is just too much to be a coincidence now though.<br><br>Mark ordered those buses. It's probably best to start with him."
+    "decreaseAffinityFor": "stephen goodwin",
+    "message": "<br>Geat work. You managed to prevent any further loss of life.<br>The chain of near-fatal incidents is just too much to be a coincidence now though.<br><br>Michael ordered those buses. It's probably best to start with him."
   },
   "fail": {
     "score": -100,
     "affinityModifier": 2,
-    "increaseAffinityFor": "simon galbraith",
+    "increaseAffinityFor": "stephen goodwin",
     "message": "<br>You failed to save eveyone. They trusted you today and you've let them down.<br>Office fatalities in the software industry are pretty rare.<br><br>It's time you tried to redeem yourself and figure out what's going on.<br>Based on your poor performance so far there's a strong chance you'll struggle though."
   }
 }

@@ -1,0 +1,35 @@
+{
+  "object": "creature",
+  "name": "michael weston",
+  "displayName": "Michael Weston",
+  "description": "Michael Weston",
+  "detailedDescription": "Michael's our head of Organizational Effectiveness.",
+  "attributes": {
+    "template": "creature-male-l3",
+    "imageName": "michaelweston.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "michael",
+    "micheal",
+    "mick",
+    "mike",
+    "mike w",
+    "michael w",
+    "mw",
+    "weston",
+    "him"
+  ],
+  "missions": [
+    {
+      "file": "mission-partytime"
+    },
+    {
+      "file": "mission-partybusprep"
+    }
+  ]
+}

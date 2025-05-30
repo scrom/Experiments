@@ -1,48 +1,48 @@
 {
-    "object": "mission",
-    "name": "partybusprep",
-    "displayName": "let Mark know you're ready to party.",
-    "description": "Mark's ordered a bus. Let's get people moving.",
-    "attributes": {
-        "parent": "partytime",
-        "missionObject": "mark wightman",
-        "static": true,
-        "dialogue": [
-            "'Hi again $player.'<br>'That was quite a job with the zombies, thanks!'<br>'As I said earlier, I think it's time we all had a break.'<br>'I've ordered a bus to take us all out. It should be waiting outside ready to go.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or more of the team on board (including yourself), it'll be time to head off.'"
-        ]
-    },
-    "conditionAttributes": {
-      "alive": true,
-      "conversationState": 1
-    },
-    "reward": {
-        "locations": [
-            {
-                "object": "location",
-                "name": "bus",
-                "displayName": "Party bus",
-                "description": "You're on the 'party bus'!<br>It's a small hired coach - not much to distinguish it really.<br>You need to encourage as many people as you can to head over here to start our celebrations.",
-                "exits": [
-                    {
-                        "object": "exit",
-                        "longname": "out",
-                        "direction": "o",
-                        "source": "bus",
-                        "destination": "office-front"
-                    }
-                ]
-            }
-        ],
+  "object": "mission",
+  "name": "partybusprep",
+  "displayName": "let Michael know you're ready to party.",
+  "description": "Michael's ordered a bus. Let's get people moving.",
+  "attributes": {
+    "parent": "partytime",
+    "missionObject": "michael weston",
+    "static": true,
+    "dialogue": [
+      "'Hi again $player.'<br>'That was quite a job with the zombies, thanks!'<br>'As I said earlier, I think it's time we all had a break.'<br>'I've ordered a bus to take us all out. It should be waiting outside ready to go.'<br>'Can you <i>ask</i> as many people as possible to <i>go</i> to the <i>bus</i> as soon as they can and then <i>wait</i> for the rest there?'<br>'Once we have a dozen or more of the team on board (including yourself), it'll be time to head off.'"
+    ]
+  },
+  "conditionAttributes": {
+    "alive": true,
+    "conversationState": 1
+  },
+  "reward": {
+    "locations": [
+      {
+        "object": "location",
+        "name": "bus",
+        "displayName": "Party bus",
+        "description": "You're on the 'party bus'!<br>It's a small hired coach - not much to distinguish it really.<br>You need to encourage as many people as you can to head over here to start our celebrations.",
         "exits": [
-            {
-                "object": "exit",
-                "longname": "in",
-                "direction": "i",
-                "source": "office-front",
-                "destination": "bus"
-            }
-        ],
-        "affinityModifier": 5,
-        "increaseAffinityFor": "all"
-    }
+          {
+            "object": "exit",
+            "longname": "out",
+            "direction": "o",
+            "source": "bus",
+            "destination": "office-front"
+          }
+        ]
+      }
+    ],
+    "exits": [
+      {
+        "object": "exit",
+        "longname": "in",
+        "direction": "i",
+        "source": "office-front",
+        "destination": "bus"
+      }
+    ],
+    "affinityModifier": 5,
+    "increaseAffinityFor": "all"
+  }
 }

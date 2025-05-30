@@ -1,46 +1,46 @@
 {
-	"object": "artefact",
-	"name": "healthy tomato plants",
-	"description": "tomato plants",
-	"detailedDescription": "They're well watered and fruiting.",
-	"attributes": {
-		"weight": 35,
-		"carryWeight": 5,
-		"imageName": "healthytomatoplants.jpg", 
-		"isBreakable": true,
-		"plural": true
-	},
-	"synonyms": [
-		"tomato plants",
-		"tomato plant",
-		"plant",
-		"plants"
-	],
-	"inventory": [
-		{
-		"object": "artefact",
-		"name": "tomatoes",
-		"description": "tomatoes",
-		"detailedDescription": "They're ripe and ready to pick.",
-		"attributes": {
-			"weight": 3,
-			"type": "food",
-			"canCollect": true,
-			"plural": true,
-            "isEdible": true,
-            "charges": 1,
-      "nutrition": 15,
-      "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
-      "taste": "They taste red. It's an odd thing to say but they really do.",
-			"customAction": [
-			"get"
-			],
-			"defaultResult": "You'll need to <i>ask</i> Filippa if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
-		},
-		"synonyms": [
-			"tomato",
-			"tomatoes"
-		]
-		}
-	]
+  "object": "artefact",
+  "name": "healthy tomato plants",
+  "description": "tomato plants",
+  "detailedDescription": "They're well watered and fruiting.",
+  "attributes": {
+    "weight": 35,
+    "carryWeight": 5,
+    "imageName": "healthytomatoplants.jpg",
+    "isBreakable": true,
+    "plural": true
+  },
+  "synonyms": [
+    "tomato plants",
+    "tomato plant",
+    "plant",
+    "plants"
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "tomatoes",
+      "description": "tomatoes",
+      "detailedDescription": "They're ripe and ready to pick.",
+      "attributes": {
+        "weight": 3,
+        "type": "food",
+        "canCollect": true,
+        "plural": true,
+        "isEdible": true,
+        "charges": 1,
+        "nutrition": 15,
+        "smell": "It's funny, freshly picked tomatoes always seem to smell like cat pee to you.",
+        "taste": "They taste red. It's an odd thing to say but they really do.",
+        "customAction": [
+          "get"
+        ],
+        "defaultResult": "You'll need to <i>ask</i> Francesca if you want her tomatoes.<br>If you <i>wait</i> around long enough, I'm sure she'll be back."
+      },
+      "synonyms": [
+        "tomato",
+        "tomatoes"
+      ]
+    }
+  ]
 }

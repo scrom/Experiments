@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "destroymaracas",
   "displayName": "destroy the maracas",
-  "description": "Chris gave James something really annoying.",
+  "description": "Chris gave Jim something really annoying.",
   "attributes": {
     "parent": "saveredgate",
     "missionObject": "maracas",
@@ -10,7 +10,7 @@
     "huntPlayer": true,
     "static": true,
     "dialogue": [
-      "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, James Dening won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
+      "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, Jim Dobbins won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
       {
         "state": 1,
         "keywords": [
@@ -54,13 +54,13 @@
   "reward": {
     "score": 25,
     "affinityModifier": 2,
-    "increaseAffinityFor": "chris whitworth",
-    "decreaseAffinityFor": "james dening",
-    "message": "<br>OK, so it wasn't the nicest thing to do to James but at least you've preserved Chris' sanity for a while."
+    "increaseAffinityFor": "chris warrington",
+    "decreaseAffinityFor": "jim dobbins",
+    "message": "<br>OK, so it wasn't the nicest thing to do to Jim but at least you've preserved Chris' sanity for a while."
   },
   "fail": {
     "message": "You know, refusing to help people out on your first day in the office is going to put you on thr fast track to nowhere.",
     "affinityModifier": 1,
-    "decreaseAffinityFor": "chris whitworth"
+    "decreaseAffinityFor": "chris warrington"
   }
 }

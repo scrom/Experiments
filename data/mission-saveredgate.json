@@ -12,26 +12,26 @@
     }
   },
   "conditionAttributes": {
-    "contagion": [ ],
+    "contagion": [],
     "contagionDeathToll": {
       "friendly": 0
     }
   },
   "reward": {
-    "removeMission": "supportfromalice",
+    "removeMission": "supportfromaileen",
     "score": 200,
     "maxHealth": 25,
     "affinityModifier": 1,
-    "increaseAffinityFor": "jordan miller",
-    "decreaseAffinityFor": "simon galbraith",
+    "increaseAffinityFor": "jordan marshall",
+    "decreaseAffinityFor": "stephen goodwin",
     "message": "<br>Congratulations. You and the rest of Red Gate survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
   },
   "fail": {
     "score": -200,
     "affinityModifier": 2,
-    "activateMission":  "retrievedisk",
-    "decreaseAffinityFor": "jordan miller",
-    "increaseAffinityFor": "simon galbraith",
+    "activateMission": "retrievedisk",
+    "decreaseAffinityFor": "jordan marshall",
+    "increaseAffinityFor": "stephen goodwin",
     "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
   }
 }

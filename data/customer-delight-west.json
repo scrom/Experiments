@@ -1,64 +1,68 @@
 {
-    "object": "location",
-    "name": "customer-delight-west",
-    "displayName": "Customer Delight",
-    "description": "You're on the West side of the Customer Delight development area - also known as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "customer-delight-west",
-        "destination": "customer-delight-central"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "customer-delight-west",
-        "destination": "customer-delight-south-west"
+  "object": "location",
+  "name": "customer-delight-west",
+  "displayName": "Customer Delight",
+  "description": "You're on the West side of the Customer Delight development area - also known as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "customer-delight-west",
+      "destination": "customer-delight-central"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "customer-delight-west",
+      "destination": "customer-delight-south-west"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
+      "attributes": {
+        "viewDestination": "west-car-park"
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "It's pretty much the same view as from downstairs - just one floor higher - people, bikes, car park.",
-        "attributes": {
-          "viewDestination": "west-car-park"
-        }
-      },
-      {
-        "object": "artefact",
-        "name": "tomato plants",
-        "description": "tomato plants",
-        "detailedDescription": "They're <b>huge!</b> But they're also rather dry and starting to wilt.",
-        "attributes": {
-          "weight": 40,
-          "canCollect": true,
-          "isBreakable": true,
-          "combinesDescription": "They really need <i>water</i>",
-          "plural": true,
-          "hideDeliveryDescription":  true,
-          "combinesWith": [
-            "water"
-          ]
-        },
-        "synonyms": [
-          "tomato plant",
-          "plant",
-          "plants",
-          "tomato",
-          "tomatoes"
-        ],
-        "delivers": [
-          {
-            "object": "artefact",
-            "template": "healthy-tomato-plants"
-          }
+    },
+    {
+      "object": "artefact",
+      "name": "tomato plants",
+      "description": "tomato plants",
+      "detailedDescription": "They're <b>huge!</b> But they're also rather dry and starting to wilt.",
+      "attributes": {
+        "weight": 40,
+        "canCollect": true,
+        "isBreakable": true,
+        "combinesDescription": "They really need <i>water</i>",
+        "plural": true,
+        "hideDeliveryDescription": true,
+        "combinesWith": [
+          "water"
         ]
       },
-      {"file": "filippa-vajda"},
-      {"file": "adam-parker"}
-    ]
-  }
+      "synonyms": [
+        "tomato plant",
+        "plant",
+        "plants",
+        "tomato",
+        "tomatoes"
+      ],
+      "delivers": [
+        {
+          "object": "artefact",
+          "template": "healthy-tomato-plants"
+        }
+      ]
+    },
+    {
+      "file": "francesca-vaughn"
+    },
+    {
+      "file": "aaron-prescott"
+    }
+  ]
+}

@@ -1,53 +1,57 @@
 {
-    "object": "location",
-    "name": "core-area-east",
-    "displayName": "Core area - DevOps corner",
-    "description": "You're in the CORE (DevOps) area. From a quick scan of the walls and monitors it looks like things are running well here at the moment.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "core-area-east",
-        "destination": "incidentals-blinkpipe"
+  "object": "location",
+  "name": "core-area-east",
+  "displayName": "Core area - DevOps corner",
+  "description": "You're in the CORE (DevOps) area. From a quick scan of the walls and monitors it looks like things are running well here at the moment.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "core-area-east",
+      "destination": "incidentals-blinkpipe"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "core-area-east",
+      "destination": "core-area-west"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "walls",
+      "description": "wall full of assorted project and team status information",
+      "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
+      "attributes": {
+        "weight": 280,
+        "type": "scenery",
+        "plural": true,
+        "canDrawOn": true
       },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "core-area-east",
-        "destination": "core-area-west"
+      "synonyms": [
+        "wall",
+        "graphs",
+        "stats"
+      ]
+    },
+    {
+      "object": "artefact",
+      "name": "monitor",
+      "template": "flat-screen",
+      "detailedDescription": "They're all cycling through web site statistics and error logs.",
+      "attributes": {
+        "type": "scenery",
+        "isBreakable": false
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "walls",
-        "description": "wall full of assorted project and team status information",
-        "detailedDescription": "There's a bunch of graphs that go up and to the right. Everything must be great.",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "plural": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "wall",
-          "graphs",
-          "stats"
-        ]
-      },
-      {
-        "object": "artefact",
-        "name": "monitor",
-        "template": "flat-screen",
-        "detailedDescription": "They're all cycling through web site statistics and error logs.",
-        "attributes": {
-          "type": "scenery",
-          "isBreakable": false
-        }
-      },
-      {"file": "zara-sheldrake"},
-      {"file": "dene-boulton"}
-    ]
-  }
+    },
+    {
+      "file": "zoe-sharpe"
+    },
+    {
+      "file": "derek-benson"
+    }
+  ]
+}

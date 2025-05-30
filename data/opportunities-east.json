@@ -1,18 +1,20 @@
 {
-    "object": "location",
-    "name": "opportunities-east",
-    "displayName": "Opportunities",
-    "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "opportunities-east",
-        "destination": "opportunities-central"
-      }
-    ],
-    "inventory": [
-      {"file": "chris-smith"}
-    ]
-  }
+  "object": "location",
+  "name": "opportunities-east",
+  "displayName": "Opportunities",
+  "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "opportunities-east",
+      "destination": "opportunities-central"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "chris-sanders"
+    }
+  ]
+}

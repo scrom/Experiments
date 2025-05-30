@@ -1,28 +1,30 @@
 {
-    "object": "mission",
-    "name": "beansinthepostroom",
-    "displayName": "John's got beans for the coffee machine",
-    "description": "John has a coffee bean delivery.",
-    "attributes": {
-        "parent": "repaircoffeemachine",
-        "missionObject": "john bowles",
-        "initiateConversation": true,
-        "huntPlayer": true,
-        "static": true,
-        "dialogue": [
-            "'Hey $player.'<br>'A parcel arrived a moment ago with the facilities team. It's been through the wars a bit but we think might be for you.'<br>'I've popped it in the post room.'"
-        ]
-    },
-    "conditionAttributes": {
-            "alive": true,
-            "conversationState": 1
-        },
-    "reward": {
-        "modifyLocation": {
-            "name": "post-room",
-            "inventory": [
-                {"file": "parcel"}
-            ]
+  "object": "mission",
+  "name": "beansinthepostroom",
+  "displayName": "Joseph's got beans for the coffee machine",
+  "description": "Joseph has a coffee bean delivery.",
+  "attributes": {
+    "parent": "repaircoffeemachine",
+    "missionObject": "joseph baxter",
+    "initiateConversation": true,
+    "huntPlayer": true,
+    "static": true,
+    "dialogue": [
+      "'Hey $player.'<br>'A parcel arrived a moment ago with the facilities team. It's been through the wars a bit but we think might be for you.'<br>'I've popped it in the post room.'"
+    ]
+  },
+  "conditionAttributes": {
+    "alive": true,
+    "conversationState": 1
+  },
+  "reward": {
+    "modifyLocation": {
+      "name": "post-room",
+      "inventory": [
+        {
+          "file": "parcel"
         }
+      ]
     }
+  }
 }

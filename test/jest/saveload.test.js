@@ -14,7 +14,7 @@ const redisgc = new gamecontroller.GameController(mb, redisfm);
 
 describe('SaveLoad Tests', () => {
     test('can load file based game', async () => {
-        const result = await gc.loadGameAsync(0, "savegame-0", "brian");
+        const result = await gc.loadGameAsync(0, "savegame-0", "brandon");
         console.debug(result);
     });
 

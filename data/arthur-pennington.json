@@ -1,0 +1,23 @@
+{
+  "object": "creature",
+  "name": "arthur pennington",
+  "displayName": "Arthur Pennington",
+  "description": "Arthur Pennington",
+  "detailedDescription": "The master of Customer Delight.",
+  "attributes": {
+    "template": "creature-male-l5",
+    "imageName": "arthurpennington.jpg"
+  },
+  "inventory": [
+    {
+      "file": "keyfob"
+    }
+  ],
+  "synonyms": [
+    "arthur",
+    "arthur p",
+    "ap",
+    "pennington",
+    "him"
+  ]
+}

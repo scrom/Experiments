@@ -1,12 +1,12 @@
 {
   "object": "mission",
   "name": "findadamstrainers",
-  "displayName": "find Adam's trainers",
-  "description": "Adam soaked his feet.",
+  "displayName": "find Aaron's trainers",
+  "description": "Aaron soaked his feet.",
   "attributes": {
     "parent": "beans",
     "missionObject": "trainers",
-    "destination": "adam parker",
+    "destination": "aaron prescott",
     "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
@@ -71,7 +71,7 @@
     "score": 25,
     "affinityModifier": 2,
     "removeObject": "trainers",
-    "increaseAffinityFor": "adam parker",
-    "message": "Adam says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'"
+    "increaseAffinityFor": "aaron prescott",
+    "message": "Aaron says 'Thanks $player.'<br>'I'm pretty sure nobody wanted to have to deal with me getting trench foot.'"
   }
 }

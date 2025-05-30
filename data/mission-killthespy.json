@@ -1,15 +1,15 @@
 {
-    "object": "mission",
-    "name": "killthespy",
-    "displayName": "kill the spy",
-    "attributes": {
-        "missionObject": "jordan miller"
-    },
-    "conditionAttributes": {
-        "dead": true
-    },
-    "reward": {
-        "score": 50,
-        "message": "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
-    }
+  "object": "mission",
+  "name": "killthespy",
+  "displayName": "kill the spy",
+  "attributes": {
+    "missionObject": "jordan marshall"
+  },
+  "conditionAttributes": {
+    "dead": true
+  },
+  "reward": {
+    "score": 50,
+    "message": "<br>Jordan (the spy) is dead! Let's hope that's the end of all our troubles."
+  }
 }

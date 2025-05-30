@@ -11,25 +11,40 @@
     "time": 300
   },
   "reward": {
-    "removeMissions": [ "limitfoodportions", "lunchtime" ],
+    "removeMissions": [
+      "limitfoodportions",
+      "lunchtime"
+    ],
     "modifyObject": {
-      "name": "margaret sexton",
+      "name": "melanie sheldon",
       "attributes": {
-        "destinations": [ "atrium-seating" ],
+        "destinations": [
+          "atrium-seating"
+        ],
         "destinationDelay": 5,
-        "traveller":  true
+        "traveller": true
       }
     },
     "modifyLocations": [
       {
         "name": "servery-food-bar",
         "description": "You're in the SQL Servery serving area.<br>The kitchen team have cleared everything away for the day.<br>You'll need to raid the cereal supply or vending machine if you're hungry this afternoon.",
-        "remove": [ "bowl", "bowl", "salad", "roast", "nut roast", "plate", "plate" ]
+        "remove": [
+          "bowl",
+          "bowl",
+          "salad",
+          "roast",
+          "nut roast",
+          "plate",
+          "plate"
+        ]
       },
       {
         "name": "servery-main",
         "description": "You're in the SQL Servery.<br>All the food sittings are over for the day. The area has been cleaned up and returned back to its normal background activity level.",
-        "remove": [ "smell of food" ]
+        "remove": [
+          "smell of food"
+        ]
       }
     ],
     "removeObject": "vat"

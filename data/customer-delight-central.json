@@ -1,66 +1,76 @@
 {
-    "object": "location",
-    "name": "customer-delight-central",
-    "displayName": "Customer Delight",
-    "description": "You're in the Customer Delight area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "customer-delight-central",
-            "destination": "customer-delight-east"
-        },
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "customer-delight-central",
-            "destination": "customer-delight-south"
-        },
-        {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "customer-delight-central",
-            "destination": "customer-delight-west"
-        },
-        {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "customer-delight-central",
-            "destination": "customer-delight-north"
-        }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "name": "wall",
-        "description": "glass wall full of LED lights",
-        "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
-        "attributes": {
-          "weight": 280,
-          "type": "scenery",
-          "plural": true,
-          "switched": true,
-          "isOn": true,
-          "canDrawOn": true
-        },
-        "synonyms": [
-          "led lights",
-          "led",
-          "leds",
-          "glass",
-          "glass wall",
-          "walls",
-          "lights"
-        ]
+  "object": "location",
+  "name": "customer-delight-central",
+  "displayName": "Customer Delight",
+  "description": "You're in the Customer Delight area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "customer-delight-central",
+      "destination": "customer-delight-east"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "customer-delight-central",
+      "destination": "customer-delight-south"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "customer-delight-central",
+      "destination": "customer-delight-west"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "customer-delight-central",
+      "destination": "customer-delight-north"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "name": "wall",
+      "description": "glass wall full of LED lights",
+      "detailedDescription": "The lights are green! The product builds are all in great shape and tests are passing. What joy!",
+      "attributes": {
+        "weight": 280,
+        "type": "scenery",
+        "plural": true,
+        "switched": true,
+        "isOn": true,
+        "canDrawOn": true
       },
-      {"file": "curved-sofa"},
-      {"file": "chris-george"},
-      {"file": "mark-wightman"},
-      {"file": "jeff-foster"},
-      {"file": "simon-cromarty"}
-    ]
-  }
+      "synonyms": [
+        "led lights",
+        "led",
+        "leds",
+        "glass",
+        "glass wall",
+        "walls",
+        "lights"
+      ]
+    },
+    {
+      "file": "curved-sofa"
+    },
+    {
+      "file": "chris-graham"
+    },
+    {
+      "file": "michael-weston"
+    },
+    {
+      "file": "jeremy-finch"
+    },
+    {
+      "file": "stephen-cartwright"
+    }
+  ]
+}

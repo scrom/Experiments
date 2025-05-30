@@ -1,0 +1,139 @@
+{
+  "$id": "creature.schema",  
+  "$comment": "All numbers used in this schema can be positive or negative and use fractions - e.g. a negative number for nutition will increase hunger rather than decrease it etc",
+  "title": "Creature",
+  "type": "object",
+  "required": ["object", "name", "description", "attributes"],
+  "properties": {
+    "object": {
+      "type": "string",
+      "enum": ["creature"]
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "detailedDescription": {
+      "type": "string"
+    },
+    "synonyms": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "attributes": {
+      "$comment": "Any attributes not included in properties that require some default value will have defaults set on construction of object. This makes all attributes optional. I may however make weight mandatory for everything that is not subtype intangible (for example)",
+      "properties": {
+        "weight": { "type": "number" },
+        "carryWeight": { "type": "number" },
+        "type": { 
+            "type": "string",
+            "enum": ["bed","book","container","door","food","junk","key","light","medical","scenery","tool","treasure","vehicle","weapon","writing"] 
+        },
+        "subType": { "type": "string", 
+            "enum": ["blunt","bottle","buff","burn","emergency","fire","intangible","plant","sharp","sharpen","van"] 
+        },
+        "imageName": { "type": "string" },
+        "extendedInventoryDescription": { "type": "string" },
+        "price": { "type": "number" },
+        "saleUnit": { "type": "number" },
+        "attackStrength": { "type": "number" },
+        "canDrawOn": { "type": "boolean" },
+        "requiresContainer": { "type": "boolean" },
+        "requiredContainer": { "type": "boolean" },
+        "isPowder": { "type": "boolean" },
+        "isLiquid": { "type": "boolean" },
+        "canCollect": { "type": "boolean" },
+        "holdsLiquid": { "type": "boolean" },
+        "isBreakable": { "type": "boolean" },
+        "isDamaged": { "type": "boolean" },
+        "isBroken": { "type": "boolean" },
+        "canOpen": { "type": "boolean" },
+        "lockable": { "type": "boolean" },
+        "autoLock": { "type": "boolean" },
+        "locked": { "type": "boolean" },
+        "hidden": { "type": "boolean" },
+        "switched": { "type": "boolean" },
+        "requiredComponentCount": { "type": "number" },
+        "flammable": { "type": "boolean" },
+        "isOn": { "type": "boolean" },
+        "charges": { "type": "number" },
+        "chargeUnit": { "type": "string" },
+        "chargesDescription": { "type": "string" },
+        "burnRate": { "type": "number" },
+        "combinesDescription": { "type": "string" },
+        "plural": { "type": "boolean" },
+        "affinityModifier": { "type": "number" },
+        "isEdible": { "type": "boolean" },
+        "nutrition": { "type": "number" },
+        "health": { "type": "number" },
+        "hideDeliveryDescription": { "type": "boolean" },
+        "sound": { "type": "string" },
+        "smell": { "type": "string" },
+        "taste": { "type": "string" },
+        "position": { 
+            "type": "string",
+            "enum": ["on","under","behind"]
+        },
+        "unlocks": { "type": "string" },
+        "hasLinkedDoor": { "type": "boolean" },
+        "combinesWith": {
+          "type": "array",
+          "items": { "type": "string" }
+      },
+        "antibodies": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "componentOf":{
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "customAction": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "defaultAction": { "type": "string" },
+        "defaultResult": { "type": "string" }
+      }
+
+    },
+    "delivers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object", "template"],
+        "properties": {
+          "object": { "type": "string" },
+          "template": { "type": "string" }
+        }
+      }
+    },
+    "linkedexits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["object", "longname", "direction", "source", "destination"],
+        "properties": {
+          "object": { "type": "string", "enum": ["exit"] },
+          "longname": { "type": "string" },
+          "direction": { "type": "string" },
+          "source": { "type": "string" },
+          "destination": { "type": "string" },
+          "hidden": { "type": "boolean" }
+        }
+      }
+    },
+    "missions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": { "type": "string" }
+        },
+        "required": ["file"]
+      }
+    }
+  }
+}

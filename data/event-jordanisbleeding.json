@@ -5,7 +5,7 @@
   "description": "",
   "attributes": {
     "type": "event",
-    "missionObject": "jordan miller",
+    "missionObject": "jordan marshall",
     "static": true
   },
   "conditionAttributes": {
@@ -14,9 +14,11 @@
   "reward": {
     "modifyObjects": [
       {
-        "name": "jordan miller",
+        "name": "jordan marshall",
         "attributes": {
-          "destinations": ["customer-delight-south-west" ]
+          "destinations": [
+            "customer-delight-south-west"
+          ]
         }
       }
     ]

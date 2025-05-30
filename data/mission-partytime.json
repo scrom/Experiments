@@ -1,45 +1,45 @@
 {
-    "object": "mission",
-    "name": "partytime",
-    "displayName": "get the party started",
-    "description": "Mark wants to organise a celebration",
-    "attributes": {
-        "parent": "saveredgate",
-        "missionObject": "mark wightman",
-        "static": true,
-        "dialogue": [
-            "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to take a break. When you're ready, come and talk to me again and we'll get something organised.'",
-            "Are you ready to go?",
-            {
-                "state": 2,
-                "keywords": [
-                    "yes",
-                    "ok",
-                    "im ready",
-                    "yup",
-                    "y"
-                ],
-                "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
-                "nextState": 3
-            },
-            {
-                "state": 2,
-                "keywords": [
-                    "n",
-                    "no",
-                    "not",
-                    "not yet"
-                ],
-                "response": "'OK. Give me a shout when you <i>are</i>.'",
-                "nextState": 1
-            }
-        ]
-    },
-    "conditionAttributes": {
-        "alive": true,
-        "conversationState": 3
-    },
-    "reward": {
-        "message": "<br>Stop back in with Mark in a little while to find out what he's got arranged."
-    }
+  "object": "mission",
+  "name": "partytime",
+  "displayName": "get the party started",
+  "description": "Michael wants to organise a celebration",
+  "attributes": {
+    "parent": "saveredgate",
+    "missionObject": "michael weston",
+    "static": true,
+    "dialogue": [
+      "'Hi $player. That's quite a first day you've had so far!'<br>'I think it's time to take a break. When you're ready, come and talk to me again and we'll get something organised.'",
+      "Are you ready to go?",
+      {
+        "state": 2,
+        "keywords": [
+          "yes",
+          "ok",
+          "im ready",
+          "yup",
+          "y"
+        ],
+        "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
+        "nextState": 3
+      },
+      {
+        "state": 2,
+        "keywords": [
+          "n",
+          "no",
+          "not",
+          "not yet"
+        ],
+        "response": "'OK. Give me a shout when you <i>are</i>.'",
+        "nextState": 1
+      }
+    ]
+  },
+  "conditionAttributes": {
+    "alive": true,
+    "conversationState": 3
+  },
+  "reward": {
+    "message": "<br>Stop back in with Michael in a little while to find out what he's got arranged."
+  }
 }
