@@ -181,7 +181,7 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
-        //serve data
+        //serve data // **This call generates a full set of canonical game data from the running game engine.  (without player data)
         app.get('/data/locations.json', async function (request, response) {
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
