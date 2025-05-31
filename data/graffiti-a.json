@@ -4,6 +4,7 @@
     "displayName": "Graffiti A meeting room",
     "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
     "attributes": {
+      "imageName": "graffiti-a.jpg",
       "dark": true
     },
     "exits": [
