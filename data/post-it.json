@@ -7,7 +7,7 @@
     "type": "junk",
     "canCollect": true,
     "affinityModifier": 2,
-    "imageName": "sticky-finger.jpg",
+    "imageName": "stickyfinger.jpg",
     "canDrawOn": true
   },
   "synonyms": [
