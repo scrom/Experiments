@@ -6,6 +6,7 @@
   "detailedDescription": "He runs the show.",
   "attributes": {
     "template": "creature-male-l5",
+    "imageName": "stephengoodwin.jpg",
     "attackStrength": 35,
     "health": 500,
     "avoiding": [
