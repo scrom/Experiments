@@ -1,0 +1,211 @@
+html
+{ 
+     margin:0; 
+    padding:0; 
+ } 
+
+body
+{
+    font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
+    font-size: 80%;
+    color: #00DD00;
+    background-color: black;
+    scrollbar-base-color: black;
+    scrollbar-track-color: black;
+    scrollbar-face-color: #006600;
+    scrollbar-arrow-color: #006600;
+
+}
+
+hr
+{
+    color: #00DD00;
+    background-color:#00DD00;
+    border-width:0;
+    height:1px;
+}
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-thumb
+{
+    border:1px solid;
+    border-radius:5px;
+    color: black;
+    background: #006600;
+}
+
+::-webkit-scrollbar-button
+{
+    border:1px solid;
+    border-radius:5px;
+    height: 10px;
+    width: 10px;
+    color: black;
+    background: #006600;
+}
+
+::-webkit-scrollbar-corner
+{
+    color: black;
+    background: black;
+}
+
+a:link {
+    color: #00FFFF;
+}
+
+.textbox
+{
+    font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
+    color: #00DD00;
+    border: 0px;
+    background-color: black;
+    width: 90%; 
+}
+
+.textbox:focus
+{
+    outline:none;
+}
+
+.left
+{
+    float: left;
+    position: relative;
+}
+.right
+{
+    float: right;
+    position: relative;
+}
+
+.textRight
+{
+    text-align: right;
+}
+
+.softBorder
+{
+    border:2px solid;
+    border-radius:5px;
+    padding:3px;
+}
+
+.noBorder
+{
+    border:0px;
+    padding:1px;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+.verticalScroll
+{
+   overflow-y:auto; 
+   overflow-x: hidden;
+}
+
+.spacer
+{
+    height:1px;
+    width:95vw;
+}
+
+.historyBox
+{
+    height:33.5vh;
+    width:95vw;
+}
+
+.inputLineBox
+{
+    height:18px;
+    font-size: 95%;
+    width:95vw;
+}
+
+.statusBarBox
+{
+    height:12px;
+    width:95vw;
+    font-size: 85%;
+    transition:color 0.5s;
+    -webkit-transition:color 0.5s;
+    -moz-transition:color 0.5s;
+    -o-transition:color 0.5s;
+}
+
+.stateBox
+{
+    position: relative;
+    z-index: 1;
+    height:48vh;
+    width:65vw;
+}
+
+.pictureBox
+{
+    position: relative;
+    z-index: 2;
+    width:30vw;
+    opacity: 0;
+}
+
+.inventoryBox
+{
+    height:30vh;
+    width:30vw;
+    z-index:0;
+}
+
+td {
+    vertical-align: top;
+}
+
+img{
+    position: relative;
+    z-index: 3;
+    aspect-ratio: auto 1 / 1;
+    height:48vh;
+}
+
+.softBorder.historyBox{}
+.softBorder.inputLineBox{}
+.softBorder.statusBarBox{}
+.softBorder.stateBox.verticalScroll{}
+.softBorder.historyBox.verticalScroll{}
+.softBorder.pictureBox{}
+.softBorder.inventoryBox.verticalScroll{}
+
+.fadeIn {
+    -webkit-animation: fadein 0.25s linear forwards;
+    animation: fadein 0.25s linear forwards;
+}
+
+.fadeOut {
+    -webkit-animation: fadeout 0.5s linear forwards;
+    animation: fadeout 0.5s linear forwards;
+}
+
+@-webkit-keyframes fadein {
+  100% { opacity: 1; }
+  0% { opacity: 0; }
+}
+
+@keyframes fadein {
+  100% { opacity: 1; }
+  0% { opacity: 0; }
+}
+@-webkit-keyframes fadeout {
+  100% { opacity: 0; }
+  0% { opacity: 1; }
+}
+
+@keyframes fadeout {
+  100% { opacity: 0; }
+  0% { opacity: 1; }
+}
