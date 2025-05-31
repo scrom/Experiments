@@ -5,6 +5,7 @@
   "detailedDescription": "You'll need this to shift Chris' bike.",
   "attributes": {
     "type": "key",
+    "imageName": "bikekey.jpg",
     "canCollect": true,
     "affinityModifier": 0,
     "unlocks": "bike"

@@ -5,6 +5,7 @@
   "detailedDescription": "A critical part of a projector. It's fragile, don't drop it!",
   "attributes": {
     "weight": 0.1,
+    "imageName": "lightbulb.jpg",
     "attackStrength": 5,
     "canCollect": true,
     "isBreakable": true,

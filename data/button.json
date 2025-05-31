@@ -5,6 +5,7 @@
   "detailedDescription": "If you <i>push</i> the button, perhaps a lift may come.",
   "attributes": {
     "defaultAction": "press",
+    "imageName": "liftcallbutton.jpg",
     "weight": 200,
     "type": "tool",
     "canOpen": true,

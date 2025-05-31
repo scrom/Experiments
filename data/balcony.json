@@ -4,6 +4,7 @@
     "description": "balcony",
     "attributes": {
         "weight": 280,
+        "imageName": "balcony.jpg",
         "type": "scenery"
     },
     "synonyms": [

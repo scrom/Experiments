@@ -6,7 +6,8 @@
   "attributes": {
     "weight": 0,
     "plural": true,
-    "type": "scenery"
+    "type": "scenery",
+    "imageName": "architecturediagram.jpg"
   },
   "synonyms": [
     "marks",

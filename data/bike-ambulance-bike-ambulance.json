@@ -5,6 +5,7 @@
   "detailedDescription": "It's an old converted NHS ambulance. It's pretty beaten-up but looks functional.",
   "attributes": {
     "weight": 3500,
+    "imageName": "bikeambulance.jpg",
     "type": "scenery",
     "canDrawOn": true
   },

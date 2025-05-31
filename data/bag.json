@@ -11,6 +11,7 @@
     "type": "container",
     "canCollect": true,
     "affinityModifier": 0,
+    "imageName": "coffeebag.jpg",
     "canOpen": true,
     "smell": "You can almost taste the coffee beans."
   },
