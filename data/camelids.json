@@ -22,6 +22,7 @@
       "detailedDescription": "Wave!",
       "attributes": {
         "viewDestination": "stairs-second-floor",
+        "imageName": "camelids.jpg",
         "customAction": [
           "get"
         ],
