@@ -145,9 +145,13 @@ a:link {
     width:800px;
 }
 
-.stateBoxNarrow
+.boxNarrow
 {
-    min-height:48vh;
+    width:800px;
+}
+
+.boxNormal
+{
     width:800px;
 }
 

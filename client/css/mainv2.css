@@ -125,14 +125,14 @@ a:link {
 .historyBox
 {
     min-height:20dvh;
-    width:99.9%;
+    grid-row: 1 / span 2;
 }
 
 .pictureBox
 {
     min-height:35dvh;
     width:99.9%;
-    grid-column: 3; grid-row: 3 / span 3;
+    grid-column: 3; grid-row: 1 / span 2;
     position: inherit;
     right: 0;
 }
@@ -140,14 +140,18 @@ a:link {
 .stateBox
 {
     min-height:35dvh;
-    grid-column: 1 / span 3; grid-row: 3 / span 3;
-    width:99.9%;
+    grid-row: 3 / span 3;
 }
 
-.stateBoxNarrow
+.boxNormal
 {
-    min-height:35dvh;
-    grid-column: 1 / span 2; grid-row: 3 / span 3;
+        grid-column: 1 / span 3; 
+        width:99.9%;
+}
+
+.boxNarrow
+{
+        grid-column: 1 / span 2; 
 }
 
 .inputLineBox
@@ -187,8 +191,8 @@ img{
 .softBorder.inventoryBox.verticalScroll{}
 
 .fadeIn {
-    -webkit-animation: fadein 0.25s linear forwards;
-    animation: fadein 0.25s linear forwards;
+    -webkit-animation: fadein 0.5s linear forwards;
+    animation: fadein 0.5s linear forwards;
 }
 
 .fadeOut {
@@ -224,8 +228,7 @@ img{
                 width: 99.5%;
                 height: 96dvh;
             }
-            #interaction { grid-column: 1 / span 3; grid-row: 1 / span 2; }
-            #inventory { grid-column: 3; grid-row: 1 / span 2; }
+            #inventory { grid-column: 3; grid-row: 3 / span 2; }
 
             #user_input { grid-column: 1 / span 3; grid-row: 7 / span 1; }
             #status_bar { grid-column: 1 / span 3; grid-row: 8 / span 1; }

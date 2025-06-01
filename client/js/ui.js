@@ -167,7 +167,7 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
             // image  has been loaded
         };    
         self.cssFadeIn(image);
-        self.cssStateNarrow();
+        self.cssBoxNarrow(interaction);
         image.addClass("softBorder");    
         image.html(img);
     };
@@ -175,7 +175,7 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
     Ui.prototype.clearImage = function() {
         _lastImageURL = "";
         self.cssFadeOut(image); 
-        self.cssStateNormal();
+        self.cssBoxNormal(interaction);
         setTimeout(function() {
             image.removeClass("softBorder");   
             image.html("");
@@ -257,13 +257,13 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         element.removeClass("fadeIn");
     };
 
-    Ui.prototype.cssStateNarrow = function() {
-        state.addClass("stateBoxNarrow");
-        state.removeClass("stateBox");
+    Ui.prototype.cssBoxNarrow = function(element) {
+        element.addClass("boxNarrow");
+        element.removeClass("boxNormal");
     };
 
-    Ui.prototype.cssStateNormal = function() {
-        state.addClass("stateBox");
-        state.removeClass("stateBoxNarrow");
+    Ui.prototype.cssBoxNormal = function(element) {
+        element.addClass("boxNormal");
+        element.removeClass("boxNarrow");
     };
 };
