@@ -31,6 +31,28 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         return console;
     };
 
+     Ui.prototype.isMobile = function() { 
+        return window.matchMedia("(pointer: coarse)").matches && window.innerWidth <= 768;
+    };
+    
+    Ui.prototype.hideMobileKeyboard = function() {
+        //hack to hide keyboard on mobile devices. Add element, set focus to it, then remove it again.
+        //do not return focus to normal input element (as is done on desktop)
+        var field = document.createElement('input');
+            field.setAttribute('type', 'text');
+            field.style.display = 'block';
+            document.body.appendChild(field);
+
+            setTimeout(function() {
+                field.focus();
+                setTimeout(function() {
+                    field.style.display = 'none';
+                }, 50);
+                document.body.removeChild(field);
+                //field.remove();
+            }, 50);
+    };
+
     //interaction with client
     Ui.prototype.setState = function (stateData) {
         if (state.text() != "") {
@@ -50,7 +72,12 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         //re-enable input. 
         //we check this state on the keyboard input listener to prevent repeated keypresses if server response is slow
         input.disabled = false;
-        input.focus();
+
+        if(self.isMobile()) {
+            self.hideMobileKeyboard();
+        } else {
+            input.focus();
+        };
     };
 
     Ui.prototype.setStatus = function(attributes, oldAttributes) {
@@ -131,7 +158,6 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
 
                     var callbackValue = input.val();
                     input.disabled = true;
-                    input.focus();
 
                     if (callback && typeof(callback) === "function") {
                         callback(callbackValue);

@@ -7,10 +7,9 @@ var ui;
 var client;
 var debug = false; //enable/disable client console logging
 	
-function init(window, body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image, version) {
+function init(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image, version) {
     // set ui version    
     const uiversion = version || 0;
-
     
     //create UI
 	ui = new Ui(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image);

@@ -702,7 +702,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                 };                       
             };
             console.info("Objects, creatures and missions built.");
-            console.debug("Missions..."+missionsList);
+            //console.debug("Missions..."+missionsList);
 
             //build spawn data
             for (var i=0; i<gameDataAsJSON.length;i++) {
