@@ -130,7 +130,6 @@ a:link {
 
 .pictureBox
 {
-    min-height:35dvh;
     width:99.9%;
     grid-column: 3; grid-row: 1 / span 2;
     position: inherit;
