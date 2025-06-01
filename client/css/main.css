@@ -227,7 +227,8 @@ img{
             #status_bar {min-height:9px; max-height:12px; width:99.9%; font-size: 85%; grid-column: 1 / span 3; grid-row: 8;}
 
             /* portrait on mobile */
-            @media (max-device-width: 640px ) {
+            /* try something like window.matchMedia("(pointer: coarse)").matches window.innerWidth <= 768;*/
+            @media (pointer: coarse) and (max-width: 800px ) {
                 #mainGrid {
                 grid-template-columns: 4fr 1fr 1fr;
                 grid-template-rows: 18px 1px auto 12px 1px auto;
