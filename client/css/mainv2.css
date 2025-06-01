@@ -60,13 +60,12 @@ a:link {
 
 .textbox
 {
-    min-height:8px;
-    max-height:17px;
     font-family: 'Courier New', courier, Calibri, Arial, modern, monospace, sans-serif;
     color: #00DD00;
     border: 0px;
     background-color: black;
-    width: 95%; 
+    width: 90%; 
+    height: 95%
 }
 
 .textbox:focus
@@ -130,6 +129,7 @@ a:link {
 
 .pictureBox
 {
+    min-height:20dvh;
     width:99.9%;
     grid-column: 3; grid-row: 1 / span 2;
     position: inherit;
@@ -156,9 +156,10 @@ a:link {
 .inputLineBox
 {
     min-height:10px;
-    max-height:18px
-    font-size: 90%;
+    max-height:18px;
+    font-size:85%;
     width:99.9%;
+    grid-column: 1 / span 3; grid-row: 6; 
 }
 
 .statusBarBox
@@ -167,6 +168,7 @@ a:link {
     max-height:12px;
     width:99.9%;
     font-size: 85%;
+    grid-column: 1 / span 3; grid-row: 8;
     transition:color 0.5s;
     -webkit-transition:color 0.5s;
     -moz-transition:color 0.5s;
@@ -179,6 +181,11 @@ img{
     max-width: 99.9%;
     max-height: 99.9%;
     object-fit: contain;
+    position: relative;
+    top : 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform    : translate(-50%, -50%);    
 }
 
 .softBorder.historyBox{}
@@ -187,7 +194,6 @@ img{
 .softBorder.stateBox.verticalScroll{}
 .softBorder.historyBox.verticalScroll{}
 .softBorder.pictureBox{}
-.softBorder.inventoryBox.verticalScroll{}
 
 .fadeIn {
     -webkit-animation: fadein 0.5s linear forwards;
@@ -221,22 +227,18 @@ img{
 /* css grid layout */
             #mainGrid {
                 display: grid;
-                grid-template-columns: 4fr 1fr;
-                grid-template-rows: 3fr 4fr 1fr 1fr 1fr;
+                grid-template-columns: 4fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 18px 1px 12px;
                 gap: 2px;
                 width: 99.5%;
                 height: 96dvh;
             }
-            #inventory { grid-column: 3; grid-row: 3 / span 2; }
-
-            #user_input { grid-column: 1 / span 3; grid-row: 7 / span 1; }
-            #status_bar { grid-column: 1 / span 3; grid-row: 8 / span 1; }
             @media (max-width: 800px) {
                 #mainGrid {
-                    grid-template-columns: 1fr;
-                    grid-template-rows: repeat(10, auto);
-                }
-                #interaction, #inventory, #current_state, #images, #user_input, #status_bar {
-                    grid-column: 1 !important;
+                grid-template-columns: 4fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 18px 1px 12px;
+                gap: 1px;
+                width: 99.5%;
+                height: 96dvh;
                 }
             }
