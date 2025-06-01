@@ -130,9 +130,9 @@ a:link {
 
 .pictureBox
 {
-    z-index: 3;
     min-height:35dvh;
     width:99.9%;
+    grid-column: 3; grid-row: 3 / span 3;
     position: inherit;
     right: 0;
 }
@@ -140,7 +140,14 @@ a:link {
 .stateBox
 {
     min-height:35dvh;
+    grid-column: 1 / span 3; grid-row: 3 / span 3;
     width:99.9%;
+}
+
+.stateBoxNarrow
+{
+    min-height:35dvh;
+    grid-column: 1 / span 2; grid-row: 3 / span 3;
 }
 
 .inputLineBox
@@ -164,7 +171,7 @@ a:link {
 }
 
 img{
-    position: relative;
+    position: inherit;
     aspect-ratio: auto 1 / 1;
     max-width: 99.9%;
     max-height: 99.9%;
@@ -219,8 +226,7 @@ img{
             }
             #interaction { grid-column: 1 / span 3; grid-row: 1 / span 2; }
             #inventory { grid-column: 3; grid-row: 1 / span 2; }
-            #current_state { grid-column: 1 / span 3; grid-row: 3 / span 3; }
-            #images { grid-column: 3; grid-row: 3 / span 3; }
+
             #user_input { grid-column: 1 / span 3; grid-row: 7 / span 1; }
             #status_bar { grid-column: 1 / span 3; grid-row: 8 / span 1; }
             @media (max-width: 800px) {

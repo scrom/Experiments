@@ -145,6 +145,12 @@ a:link {
     width:800px;
 }
 
+.stateBoxNarrow
+{
+    min-height:48vh;
+    width:800px;
+}
+
 .pictureBox
 {
     height:30vh;
