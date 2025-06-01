@@ -1,6 +1,6 @@
 html
 { 
-     margin:0; 
+    margin:0; 
     padding:0; 
  } 
 
@@ -65,6 +65,7 @@ a:link {
     border: 0px;
     background-color: black;
     width: 90%; 
+    height: 95%
 }
 
 .textbox:focus
@@ -112,70 +113,79 @@ a:link {
 .spacer
 {
     height:1px;
-    width:800px;
+    width: 99.9%;
+}
+
+.mainGrid
+{
+    max-height:97%;
 }
 
 .historyBox
 {
-    height:33.5vh;
-    width:800px;
+    min-height:20dvh;
+    grid-row: 1 / span 2;
+}
+
+.pictureBox
+{
+    min-height:20dvh;
+    width:99.9%;
+    grid-column: 3; grid-row: 1 / span 2;
+    position: inherit;
+    right: 0;
+}
+
+.stateBox
+{
+    min-height:35dvh;
+    grid-row: 3 / span 3;
+}
+
+.boxNormal
+{
+        grid-column: 1 / span 3; 
+        width:99.9%;
+}
+
+.boxNarrow
+{
+        grid-column: 1 / span 2; 
 }
 
 .inputLineBox
 {
-    height:18px;
-    font-size: 95%;
-    width:800px;
+    min-height:10px;
+    max-height:18px;
+    font-size:85%;
+    width:99.9%;
+    grid-column: 1 / span 3; grid-row: 6; 
 }
 
 .statusBarBox
 {
-    height:12px;
-    width:800px;
+    min-height:9px;
+    max-height:12px;
+    width:99.9%;
     font-size: 85%;
+    grid-column: 1 / span 3; grid-row: 8;
     transition:color 0.5s;
     -webkit-transition:color 0.5s;
     -moz-transition:color 0.5s;
     -o-transition:color 0.5s;
 }
 
-.stateBox
-{
-    height:48vh;
-    width:800px;
-}
-
-.boxNarrow
-{
-    width:800px;
-}
-
-.boxNormal
-{
-    width:800px;
-}
-
-.pictureBox
-{
-    height:30vh;
-    width:30vh;
-    opacity: 0;
-}
-
-.inventoryBox
-{
-    height:30vh;
-    width:30vh;
-    z-index:0;
-}
-
-td {
-    vertical-align: top;
-}
-
 img{
-    width:100%;
-    height:100%;
+    position: inherit;
+    aspect-ratio: auto 1 / 1;
+    max-width: 99.9%;
+    max-height: 99.9%;
+    object-fit: contain;
+    position: relative;
+    top : 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform    : translate(-50%, -50%);    
 }
 
 .softBorder.historyBox{}
@@ -184,37 +194,51 @@ img{
 .softBorder.stateBox.verticalScroll{}
 .softBorder.historyBox.verticalScroll{}
 .softBorder.pictureBox{}
-.softBorder.inventoryBox.verticalScroll{}
 
 .fadeIn {
-    width:200px;
-    height: 200px;
-    -webkit-animation: fadein 0.25s linear forwards;
-    animation: fadein 0.25s linear forwards;
+    -webkit-animation: fadein 0.5s linear forwards;
+    animation: fadein 0.5s linear forwards;
 }
 
 .fadeOut {
-    width:200px;
-    height: 200px;
     -webkit-animation: fadeout 0.5s linear forwards;
     animation: fadeout 0.5s linear forwards;
 }
 
 @-webkit-keyframes fadein {
-  100% { opacity: 1; }
+  100% { opacity: 0.9; }
   0% { opacity: 0; }
 }
 
 @keyframes fadein {
-  100% { opacity: 1; }
+  100% { opacity: 0.9; }
   0% { opacity: 0; }
 }
 @-webkit-keyframes fadeout {
   100% { opacity: 0; }
-  0% { opacity: 1; }
+  0% { opacity: 0.9; }
 }
 
 @keyframes fadeout {
   100% { opacity: 0; }
-  0% { opacity: 1; }
+  0% { opacity: 0.9; }
 }
+
+/* css grid layout */
+            #mainGrid {
+                display: grid;
+                grid-template-columns: 4fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 18px 1px 12px;
+                gap: 2px;
+                width: 99.5%;
+                height: 96dvh;
+            }
+            @media (max-width: 800px) {
+                #mainGrid {
+                grid-template-columns: 4fr 1fr 1fr;
+                grid-template-rows: 1fr 1fr 1fr 1fr 1fr 18px 1px 12px;
+                gap: 1px;
+                width: 99.5%;
+                height: 96dvh;
+                }
+            }

@@ -19,15 +19,7 @@ function init(window, body, statusBar, specialReport, state, input, inputArea, i
     ui.setState('Welcome to MVTA.<br>Your "Minimum Viable Text Adventure" experience starts here...<br><br>Please type in your name and press &lt;enter&gt; <i>(on your keyboard)</i> to start.');
 
     if (uiversion < 2) {
-        //set initial width
-        ui.setWidth();
-
-        //handle resizing
-        var resizeTimer;
-        window.resize(function () {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(ui.setWidth, 250);
-        });
+        console.append("Warning: Using old UI version")
     };
 
     //create client
