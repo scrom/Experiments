@@ -6,6 +6,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         var requireDirectory = require('require-directory');
 
         var tools = require('./tools');
+        var validatorModule = require('./validator');        
         var fs = require('fs');
         var mapObjectModule = require('./map');
         var locationObjectModule = require('./location'); 
@@ -17,6 +18,10 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         var missionsList = [];
 
         //source data: 
+        //validate data first...
+        const validator = new validatorModule.Validator(mapDataPath);
+        validator.parseJSON();
+
         var _data = requireDirectory(module, mapDataPath, { recurse: false });
         //console.debug(Object.keys(_data));
         var _rootLocationsJSON = _data[mapDataFile];
