@@ -6,6 +6,7 @@
   "detailedDescription": "Odd. Nobody seems to recognise him. Maybe he's new too?",
   "attributes": {
     "template": "creature-male-l4",
+    "imageName": "jordanmarshall.jpg"
     "attackStrength": 12,
     "type": "creature",
     "affinity": -2,

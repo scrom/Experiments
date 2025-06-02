@@ -5,7 +5,8 @@
   "description": "Chris Abbott",
   "detailedDescription": "Support and music skills. What more could you need?",
   "attributes": {
-    "template": "creature-male-l3"
+    "template": "creature-male-l3",
+    "imageName": "chrisabbot.jpg"
   },
   "inventory": [
     {
