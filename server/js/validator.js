@@ -13,10 +13,9 @@ module.exports.Validator = function Validator(dataDirectory) {
 
         //attempt to parse all data in data directory before building anything
         self.parseJSON = function() {
-            console.info(`Validating data files in: ${dataDir}`);
+            console.info(`Data validation: Validating JSON files in: ${dataDir}`);
             if (!fs.existsSync(dataDir)) {  
-                console.error(`Directory does not exist: ${dataDir}`);
-                process.exit(1);
+                throw new Error(`Directory does not exist: ${dataDir} data load cannot proceed.`);
             };
 
             fs.readdirSync(dataDir).forEach(file => {
@@ -27,11 +26,11 @@ module.exports.Validator = function Validator(dataDirectory) {
                     content = JSON.parse(content);
                     //console.info(`VALID JSON: ${file}`);
                 } catch {
-                    console.error(`ERROR: BAD JSON in  ${file}`);
-                }
-            }
+                    throw new Error(`Bad JSON in ${file} data load cannot proceed.`);
+                };
+            };
             });
-            console.info(`Data Validation completed successfully.`);
+            console.info(`Data Validation completed.`);
         };
     }
     catch(err) {
