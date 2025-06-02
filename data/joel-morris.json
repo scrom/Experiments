@@ -1,14 +1,14 @@
 {
   "object": "creature",
-  "name": "jim maddox",
-  "displayName": "Jim Maddox",
-  "description": "Jim Maddox",
+  "name": "joel morris",
+  "displayName": "joel morris",
+  "description": "joel morris",
   "detailedDescription": "He pwns the Opportunities division.",
   "attributes": {
     "template": "creature-male-l5",
     "affinity": -1,
     "traveller": false,
-    "imageName": "jimmaddox.jpg"
+    "imageName": "joelmorris.jpg"
   },
   "inventory": [
     {
@@ -16,10 +16,9 @@
     }
   ],
   "synonyms": [
-    "jim",
-    "maddox",
+    "joel",
+    "morris",
     "jm",
-    "jim",
     "him"
   ]
 }

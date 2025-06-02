@@ -7258,7 +7258,7 @@
                     "her"
                 ],
                 "dislikes": [
-                    "jim maddox"
+                    "joel morris"
                 ],
                 "missions": [
                     {
@@ -13470,9 +13470,9 @@
         "inventory": [
             {
                 "object": "creature",
-                "name": "jim maddox",
-                "displayName": "Jim Maddox",
-                "description": "Jim Maddox",
+                "name": "joel morris",
+                "displayName": "joel morris",
+                "description": "joel morris",
                 "detailedDescription": "He pwns the Opportunities division.",
                 "attributes": {
                     "weight": 160,

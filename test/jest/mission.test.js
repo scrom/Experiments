@@ -41,7 +41,7 @@ test('rewardToStringReturnsValidJSON', () => {
 });
 
 test('rewardPositivelyModifiesCreatureAffinity', () => {
-    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "jim maddox", "message": "Congratulations. You killed the spy! Have 50 points." };
+    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "joel morris", "message": "Congratulations. You killed the spy! Have 50 points." };
     const stephen = m0.getCreature('stephen goodwin');
 
     customAction.processAffinityModifiers(m0, reward);
@@ -95,12 +95,12 @@ test('rewardModifyLocationCreaturesModifiesCash', () => {
 });
 
 test('rewardNegativelyModifiesCreatureAffinity', () => {
-    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "jim maddox", "message": "Congratulations. You killed the spy! Have 50 points." };
-    const jim = m0.getCreature('jim maddox');
+    const reward = { "score": 50, "affinityModifier": 5, "increaseAffinityFor": "stephen goodwin", "decreaseAffinityFor": "joel morris", "message": "Congratulations. You killed the spy! Have 50 points." };
+    const joel = m0.getCreature('joel morris');
 
     customAction.processAffinityModifiers(m0, reward);
     const expectedResult = "<br>He really doesn't like you.";
-    const actualResult = jim.getAffinityDescription();
+    const actualResult = joel.getAffinityDescription();
     expect(actualResult).toBe(expectedResult);
 });
 
