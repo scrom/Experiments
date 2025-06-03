@@ -15,7 +15,7 @@ function init(body, statusBar, specialReport, state, input, inputArea, interacti
 	ui = new Ui(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image);
     
     //set initial message:
-    ui.setState('Welcome to MVTA.<br>Your "Minimum Viable Text Adventure" experience starts here...<br><br>Please type in your name and press &lt;enter&gt; <i>(on your keyboard)</i> to start.');
+    ui.setState('Welcome to MVTA.<br>Your "Minimum Viable Text Adventure" experience starts here...<br><br>Please type in your name at the ">" symbol and press &lt;enter&gt; <i>(on your keyboard)</i> to start.');
 
     if (uiversion < 2) {
         console.append("Warning: Using old UI version")
