@@ -5573,7 +5573,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (self.isStarving()) {
                 afflictionString += "<br>You're starving. ";
             } else if (self.isHungry()) {
-                var randomReplies = ["", "You need to <i>eat</i> soon.", "", "You're hungry.", "", "", "", "Is that food I smell?", "", ""]
+                var randomReplies = ["", "You need to <i>eat</i> soon.", "", "You're hungry.", "", "", "", "You feel hungry.", "", ""]
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 if (randomReplies[randomIndex].length > 0) {
                     afflictionString += "<br>";
@@ -5586,7 +5586,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (self.isGasping()) {
                 afflictionString += "<br>You urgently need something to drink. ";
             } else if (self.isThirsty()) {
-                var randomReplies = ["", "You're thirsty.", "", ""]
+                var randomReplies = ["", "You're thirsty.", "", "You could do with a drink.", ""]
                 var randomIndex = Math.floor(Math.random() * randomReplies.length);
                 if (randomReplies[randomIndex].length > 0) {
                     afflictionString += "<br>";
