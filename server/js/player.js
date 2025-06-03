@@ -260,6 +260,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (isPlayerArt) {
                 return "It's just some idle scrawl. Nothing you can do much with.";
             };
+
+            if (objectName == _currentLocation.getName().toLowerCase() || objectName == _currentLocation.getDisplayName().toLowerCase()) {
+                //trying to search whole location...
+                return "You don't have all day to root around everywhere. (Or maybe you do!).<br>Either way, you'll need to be more specific.";
+            };
             
             var randomReplies;
             if (container) {
@@ -3356,7 +3361,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?";};
             
             var artefact = getObjectFromPlayerOrLocation(artefactName);
-            if (!(artefact)) {return notFoundMessage(artefactName);};
+            if (!(artefact)) {
+                return notFoundMessage(artefactName);
+            };
 
             if (artefact.getSubType() == "intangible") {return self.examine(verb, artefactName);};
 
@@ -3518,6 +3525,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.examine = function(verb, artefactName, containerName, map) {
             var resultString = "";
+            //console.debug("Examine: "+artefactName+","+containerName)
             var newMissions = [];
 
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
@@ -3599,7 +3607,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             if (!(artefact) && map) {
+                //console.debug("named artefact not found")
+                //console.debug("locnames"+ _currentLocation.getName()+" :: "+ _currentLocation.getDisplayName())
                 if (artefactName == "around") {return _currentLocation.describe();};
+                if (artefactName == _currentLocation.getName().toLowerCase() || artefactName == _currentLocation.getDisplayName().toLowerCase()) {return _currentLocation.describe();};
                 var directionIndex = tools.directions.indexOf(artefactName);
                 if (directionIndex > -1) {
                     if (artefactName.length == 1) {
