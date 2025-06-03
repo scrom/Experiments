@@ -119,7 +119,8 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         let filterColour = "";
         Ui.prototype.colourMap = function(value) {
             let colourClass = "";
-            if (value >80) {colourClass = "darkGreen";}          
+            if (value >=90) {colourClass = "no";}  //no filter when mostly full
+            else if (value >80) {colourClass = "darkGreen";}          
             else if (value >60) {colourClass = "brightGreen";}
             else if (value >40) {colourClass = "brightYellow";}
             else if (value >30) {colourClass = "amber";}
