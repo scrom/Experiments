@@ -2,7 +2,10 @@
   "object": "location",
   "name": "kitchen-second-floor",
   "displayName": "Second floor kitchen",
-  "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
+  "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter (you hate that word too, right?) but not much else here to tempt you to hang around upstairs now. Overall, it's a bit of a depressing ex-space.",
+  "attributes": {
+    "imageName": "kitchen-second-floor.jpg"
+  },
   "exits": [
     {
       "object": "exit",
@@ -19,14 +22,15 @@
     {
       "object": "artefact",
       "template": "whiteboard",
-      "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
+      "detailedDescription": "This looks to have been used as a random source of amusement for the teams that are shut away up here.",
       "attributes": {
         "type": "scenery",
         "writings": [
           "Who scrubbed off my cactus?",
           "That wasn't a cactus!",
+          "Justin Beiber and his giant flaming sword",
           "meh",
-          "Richard Mitchell"
+          "pee-pee poo-poo"
         ]
       }
     },

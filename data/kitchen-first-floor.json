@@ -2,7 +2,10 @@
   "object": "location",
   "name": "kitchen-first-floor",
   "displayName": "First floor kitchen",
-  "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffe, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
+  "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffee, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
+  "attributes": {
+    "imageName": "kitchen-first-floor.jpg"
+  },
   "exits": [
     {
       "object": "exit",
