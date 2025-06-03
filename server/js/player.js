@@ -605,7 +605,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_loadCount > 0) { resultString += ',"loadCount":' + _loadCount; };
             
             if (_totalTimeTaken > 0) { resultString += ',"totalTimeTaken":' + _totalTimeTaken; };
-            if (_timeSinceEating != 500) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
+            if (_timeSinceEating != 300) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
             if (_timeSinceDrinking > 0) { resultString += ',"timeSinceDrinking":' + _timeSinceDrinking; };
             if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceResting; };
             if (_timeTrapped > 0) { resultString += ',"timeTrapped":' + _timeTrapped; };
@@ -656,7 +656,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         //these attribures are returned to the client as attributes that can be interpretred in the client UI.
         self.getClientAttributesString = function() {
             var resultString = '{"username":"'+_username+'"';
-            resultString += ',"location":"'+_currentLocation.getDisplayName()+'"';
+            if (_currentLocation) {
+                resultString += ',"location":"'+_currentLocation.getDisplayName()+'"';
+            };
             resultString += ',"money":'+_inventory.getCashBalance();
             resultString += ',"score":'+_score;
             resultString += ',"injuriesReceived":'+_injuriesReceived;
@@ -671,7 +673,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += ',"time": "'+self.time()+'"';
             //popularity + any other interesting attributes?
             resultString +='}';
-            console.debug("ReturnClientAttributes:"+resultString);
+            //console.debug("ReturnClientAttributes:"+resultString);
             return resultString;
 
         };
@@ -5729,11 +5731,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return 100-Math.round((_timeSinceEating / _hungerLimit)*100);
         };
         self.wateredPercent = function() {
-            console.debug("Watered: "+_timeSinceDrinking+"/"+_thirstLimit);
+            //console.debug("Watered: "+_timeSinceDrinking+"/"+_thirstLimit);
             return 100-Math.round((_timeSinceDrinking / _thirstLimit)*100);
         };
         self.restedPercent = function() {
-            console.debug("Rested: "+_timeSinceResting+"/"+_norestLimit);
+            //console.debug("Rested: "+_timeSinceResting+"/"+_norestLimit);
             return 100-Math.round((_timeSinceResting / _norestLimit)*100);
         };
         

@@ -111,7 +111,7 @@ test('cannot continue playing after end game', () => {
     realP.endGame();    
     const realA = new action.Action(realP, realM);
 
-    const expectedResult = '{"verb":"","object0":"","object1":"","description":"Thanks for playing.<br>There\'s nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.","attributes":{"username":"undefined","money":5,"score":0,"injuriesReceived":0,"bleeding":false}}';
+    const expectedResult = '{"verb":"","object0":"","object1":"","description":"Thanks for playing.<br>There\'s nothing more you can do here for now.<br><br>You can either <i>quit</i> and start a fresh game or <i>load</i> a previously saved game.","attributes":{"username":"undefined","money":5,"score":0,"injuriesReceived":0,"bleeding":false,"aggression":0,"health":100,"hp":100,"fed":58,"watered":100,"rested":100,"time": "09:00"}}';
     const actualResult = realA.act("look");
     expect(actualResult).toBe(expectedResult);
 });
