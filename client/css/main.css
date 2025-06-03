@@ -174,6 +174,13 @@ a:link {
     margin-left: 5px;
 }
 
+.darkGreenFilter {filter: invert(0%) sepia(80%) saturate(1000%) hue-rotate(80deg) brightness(20%);} /*#006600*/
+.brightGreenFilter {filter: invert(0%) sepia(80%) saturate(1000%) hue-rotate(80deg) brightness(80%);} /*#00FF00*/
+.brightYellowFilter {filter: invert(0%) sepia(80%) saturate(1000%) hue-rotate(0deg) brightness(100%);} /*#FFFF00*/
+.amberFilter {filter:  invert(0%) sepia(80%) saturate(1000%) hue-rotate(0deg) brightness(50%);} /*#FF9900*/
+.brightRedFilter {filter: invert(0%) sepia(90%) saturate(1000%) hue-rotate(309deg) brightness(40%);} /*#FF0000*/
+.darkRedFilter {filter: invert(0%) sepia(90%) saturate(1000%) hue-rotate(309deg) brightness(15%);} /*#770000*/
+
 img{
     position: inherit;
     aspect-ratio: auto 1 / 1;

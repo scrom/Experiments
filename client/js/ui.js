@@ -98,6 +98,37 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         let time;
         let location = "";
 
+        //default emoji
+        const scoreEmoji = '<span class="emoji" title="Score"> &#127919;</span>';
+        let heartEmoji = '<span class="emoji" title="Health"> &#129293;</span>';
+        let foodEmoji = '<span class="emoji" title="Food"> &#127829;</span>';
+        let drinkEmoji = '<span class="emoji" title="Drink"> &#129371;</span>';
+        let sleepEmoji = '<span class="emoji" title="Rest"> &#128164;</span>';
+        const cashEmoji = '<span class="emoji" title="Money"> &#128176;</span>';
+        const timeEmoji = '<span class="emoji"title="Time"> &#128337;</span>';
+
+        //define emoji colour filters based on values
+        /*
+        .brightGreenFilter
+        .darkGreenFilter
+        .brightYellowFilter
+        .amberFilter
+        .brightRedFilter
+        .darkRedFilter
+        */
+        let filterColour = "";
+        Ui.prototype.colourMap = function(value) {
+            let colourClass = "";
+            if (value >80) {colourClass = "darkGreen";}          
+            else if (value >60) {colourClass = "brightGreen";}
+            else if (value >40) {colourClass = "brightYellow";}
+            else if (value >30) {colourClass = "amber";}
+            else if (value >15) {colourClass = "brightRed";}
+            else {colourClass = "darkRed"}
+
+            return colourClass+"Filter";
+        };
+
         var contagion = "";
         if (attributes != "" && attributes != undefined){
             if (attributes.location) {
@@ -137,15 +168,24 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
 
             if (attributes.health) {
                 health = attributes.health;
+                filterColour = self.colourMap(health); 
+                heartEmoji = '<span class="emoji '+filterColour+'" title="Health"> &#129293;</span>';
             };
             if (attributes.fed) {
                 fed = attributes.fed;
+                filterColour = self.colourMap(fed);
+                foodEmoji = '<span class="emoji '+filterColour+'" title="Food"> &#127829;</span>';
+        
             };            
             if (attributes.watered) {
                 watered = attributes.watered;
+                filterColour = self.colourMap(watered);
+                drinkEmoji = '<span class="emoji '+filterColour+'" title="Drink"> &#129371;</span>';
             };
             if (attributes.rested) {
                 rested = attributes.rested;
+                filterColour = self.colourMap(rested);
+                sleepEmoji = '<span class="emoji '+filterColour+'" title="Rest"> &#128164;</span>';
             };
             if (attributes.time) {
                 time = attributes.time;
@@ -164,13 +204,7 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         };
         
         money = money.toFixed(2);
-        const scoreEmoji = '<span class="emoji" title="Score"> &#127919;</span>';
-        const heartEmoji = '<span class="emoji" title="Health"> &#129293;</span>';
-        const foodEmoji = '<span class="emoji" title="Food"> &#127829;</span>';
-        const drinkEmoji = '<span class="emoji" title="Drink"> &#129371;</span>';
-        const sleepEmoji = '<span class="emoji" title="Rest"> &#128164;</span>';
-        const cashEmoji = '<span class="emoji" title="Money"> &#128176;</span>';
-        const timeEmoji = '<span class="emoji"title="Time"> &#128337;</span>';
+
         //const locationEmoji = '<span class="emoji" title="Location"> &#129517;</span>';
         const stats = '<span class="health">'+heartEmoji+health+'</span><span class="food">'+foodEmoji+fed+'</span><span class="drink">'+drinkEmoji+watered+'</span><span class="sleep">'+sleepEmoji+rested+'</span>';
         statusBar.html('<span class="score">'+scoreEmoji+score+'</span>'+stats+'<span class="money">'+cashEmoji+money+'</span><span class="time">'+timeEmoji+time+'</span>');//<span class="location">'+locationEmoji+location+'</span>');

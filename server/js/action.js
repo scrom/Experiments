@@ -1537,8 +1537,9 @@ exports.Action = function Action(player, map, fileManager) {
                     return "Player Stealth set: "+_player.setStealth(parseInt(_object0));
                 };
 
-                if (_verb == '+heal') {
-                    return "Player Health set: "+_player.recover(parseInt(_object0));
+                if (_verb == '+heal' || _verb == '+health') {
+                    _player.updateHitPoints(parseInt(_object0));
+                    return "Player Health set to: "+_player.getHitPoints();
                 };
                 
                 if (_verb == '+dead') {
