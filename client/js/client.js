@@ -5,7 +5,7 @@ function Client(aServerHost, aServerPort, aUi) {
 	    var self = this; //closure so we don't lose reference in callbacks
 	    var objectName = "Client";
         var username = '';
-        var _attributes = {};
+        var _attributes = {}; //previous attributes
         var gameId;
         var protocol = window.location.protocol;
         var serverAddress = protocol+'//'+aServerHost; 

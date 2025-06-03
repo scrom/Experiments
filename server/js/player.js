@@ -32,16 +32,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _returnDirection;
         var _currentLocation;
         var _totalTimeTaken = 0;
-        var _timeSinceEating = tools.hoursAsTicks(2.5); // set to start half an hour away from hungry at start
+        var _timeSinceEating = tools.hoursAsTicks(1.5); // set to start 90 minutes away from hungry at start
         var _timeSinceDrinking = 0;
         var _timeSinceResting = 0;
         var _timeTrapped = 0;
         var _maxMovesUntilThirsty = tools.hoursAsTicks(1.25); //set to 75 mins
         var _additionalMovesUntilGasping = tools.minutesAsTicks(15); //set to 15 mins
+        var _thirstLimit = _maxMovesUntilThirsty + _additionalMovesUntilGasping + 10   
         var _maxMovesUntilHungry = tools.hoursAsTicks(3);//set to 3 hours
         var _additionalMovesUntilStarving = tools.hoursAsTicks(0.5); //set to "30" mins
+        var _hungerLimit = _maxMovesUntilHungry + _additionalMovesUntilStarving + 10
         var _maxMovesUntilTired = tools.hoursAsTicks(1); //set to 1 hour
         var _additionalMovesUntilExhausted = tools.minutesAsTicks(15); //set to 15 mins
+        var _norestLimit =  _maxMovesUntilTired + _additionalMovesUntilExhausted + 12
         var _contagion = [];
         var _antibodies = [];
         var _lastCreatureSpokenTo;
@@ -650,16 +653,25 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString;
         };
 
+        //these attribures are returned to the client as attributes that can be interpretred in the client UI.
         self.getClientAttributesString = function() {
             var resultString = '{"username":"'+_username+'"';
-            //resultString += ',"currentLocation":"'+_currentLocation.getDisplayName()+'"';
-            //resultString += ',"health":'+_hitPoints;
+            resultString += ',"location":"'+_currentLocation.getDisplayName()+'"';
             resultString += ',"money":'+_inventory.getCashBalance();
             resultString += ',"score":'+_score;
             resultString += ',"injuriesReceived":'+_injuriesReceived;
             resultString += ',"bleeding":'+_bleeding;
             //resultString += ',"contagion":"'+map.getContagionReport(self)+'"';
+            resultString += ',"aggression":'+self.getAggression();
+            resultString += ',"health":'+self.healthPercent();
+            resultString += ',"hp":'+_hitPoints;
+            resultString += ',"fed":'+self.fedPercent();
+            resultString += ',"watered":'+self.wateredPercent();
+            resultString += ',"rested":'+self.restedPercent();
+            resultString += ',"time": "'+self.time()+'"';
+            //popularity + any other interesting attributes?
             resultString +='}';
+            console.debug("ReturnClientAttributes:"+resultString);
             return resultString;
 
         };
@@ -5349,19 +5361,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_contagion.length > 0) {
                 reasonForDeath = "You collapse in a pool of weeping pus.<br>That was unfortunate. It looks like you were overcome by the " + _contagion[0].getName() + " contagion or something equally nasty."
             } else if (self.isGasping()) {
-                if (_timeSinceDrinking - (_maxMovesUntilThirsty + _additionalMovesUntilGasping) > 10) {
+                if (_timeSinceDrinking > _thirstLimit) {
                     reasonForDeath = "You're dead. You really do need to keep your fluid levels up if you're going to survive in this environment.";
                 };
             } else if (self.isStarving()) {
-                if (_timeSinceEating - (_maxMovesUntilHungry + _additionalMovesUntilStarving) > 10) {
+                if (_timeSinceEating > _hungerLimit) {
                     reasonForDeath = "You're dead. You really do need to keep your energy up if you're going to survive in this environment.";
                 };
             } else if (self.isExhausted()) {
-                if (_timeSinceResting - (_maxMovesUntilTired + _additionalMovesUntilExhausted) > 12) {
+                if (_timeSinceResting > _norestLimit) {
                     reasonForDeath = "You stagger onward with the pains of exhuastion setting in. After a few steps you collapse and curl into a ball to die.<br>We're all about sustainable pace here!<br>Killing yourself from exhaustion isn't really something we condone.";
-                };
-                
+                };   
             };
+
+            //@todo should probably revert creature dislikes etc here
 
             //reset aggression
             self.setAggression(0);
@@ -5709,6 +5722,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.isStarving = function() {
             if (_timeSinceEating >=_maxMovesUntilHungry+_additionalMovesUntilStarving) {return true;};
             return false;
+        };
+
+        self.fedPercent = function() {
+            //console.debug("Fed: "+_timeSinceEating+"/"+_hungerLimit);
+            return 100-Math.round((_timeSinceEating / _hungerLimit)*100);
+        };
+        self.wateredPercent = function() {
+            console.debug("Watered: "+_timeSinceDrinking+"/"+_thirstLimit);
+            return 100-Math.round((_timeSinceDrinking / _thirstLimit)*100);
+        };
+        self.restedPercent = function() {
+            console.debug("Rested: "+_timeSinceResting+"/"+_norestLimit);
+            return 100-Math.round((_timeSinceResting / _norestLimit)*100);
         };
         
         self.isThirsty = function () {

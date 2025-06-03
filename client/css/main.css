@@ -169,6 +169,11 @@ a:link {
     vertical-align: middle;
 }
 
+.emoji 
+{
+    margin-left: 5px;
+}
+
 img{
     position: inherit;
     aspect-ratio: auto 1 / 1;

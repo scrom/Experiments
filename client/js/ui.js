@@ -81,10 +81,28 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
     };
 
     Ui.prototype.setStatus = function(attributes, oldAttributes) {
-        var money = 0;
-        var score = 0;
+        /*attributes are returned to here from player.getClientAttributesString
+        Current supported attributes are:
+        "location":"'+_currentLocation.getDisplayName()+'"';
+        "injuriesReceived":'+_injuriesReceived;
+        "aggression":'+self.getAggression();
+        "hp":'+_hitPoints;
+        */
+
+        let money = 0;
+        let score = 0;
+        let health;
+        let fed = 0;
+        let watered = 0;
+        let rested = 0;
+        let time;
+        let location = "";
+
         var contagion = "";
         if (attributes != "" && attributes != undefined){
+            if (attributes.location) {
+                location = attributes.location;
+            };
             if (attributes.money) {
                 money = attributes.money;
             };
@@ -117,6 +135,22 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
                 self.bleed(false);
             };
 
+            if (attributes.health) {
+                health = attributes.health;
+            };
+            if (attributes.fed) {
+                fed = attributes.fed;
+            };            
+            if (attributes.watered) {
+                watered = attributes.watered;
+            };
+            if (attributes.rested) {
+                rested = attributes.rested;
+            };
+            if (attributes.time) {
+                time = attributes.time;
+            };
+
             if (attributes.injuriesReceived > oldAttributes.injuriesReceived) {
                 var hitCount = attributes.injuriesReceived - oldAttributes.injuriesReceived;
                 self.hit(hitCount, attributes.bleeding);
@@ -130,7 +164,16 @@ function Ui(aBody, aStatusBar, aSpecialReportArea, aStateArea, anInputField, anI
         };
         
         money = money.toFixed(2);
-        statusBar.html("Score: "+score+" Cash: &pound;"+money);
+        const scoreEmoji = '<span class="emoji" title="Score"> &#127919;</span>';
+        const heartEmoji = '<span class="emoji" title="Health"> &#129293;</span>';
+        const foodEmoji = '<span class="emoji" title="Food"> &#127829;</span>';
+        const drinkEmoji = '<span class="emoji" title="Drink"> &#129371;</span>';
+        const sleepEmoji = '<span class="emoji" title="Rest"> &#128164;</span>';
+        const cashEmoji = '<span class="emoji" title="Money"> &#128176;</span>';
+        const timeEmoji = '<span class="emoji"title="Time"> &#128337;</span>';
+        //const locationEmoji = '<span class="emoji" title="Location"> &#129517;</span>';
+        const stats = '<span class="health">'+heartEmoji+health+'</span><span class="food">'+foodEmoji+fed+'</span><span class="drink">'+drinkEmoji+watered+'</span><span class="sleep">'+sleepEmoji+rested+'</span>';
+        statusBar.html('<span class="score">'+scoreEmoji+score+'</span>'+stats+'<span class="money">'+cashEmoji+money+'</span><span class="time">'+timeEmoji+time+'</span>');//<span class="location">'+locationEmoji+location+'</span>');
     };
 
     Ui.prototype.setEvent = function(eventData) {
