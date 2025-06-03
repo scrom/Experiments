@@ -25,7 +25,7 @@
                 <div id="user_input" class="softBorder inputLineBox">
                     &gt;<input type="text" maxlength="254" class="textbox" id="input" autocomplete="off" />
                 </div>
-                <div id="status_bar" class="softBorder statusBarBox"></div>
+                <div id="status_bar" class="softBorder statusBarBox"><div id="status_bar_text" class="statusBarText"> </div></div>
             </div>
             <div id="server_events"></div>
             <section>
@@ -37,7 +37,7 @@
         <script type="text/javascript">
             //initialise game UI - pass doc structures
             //init(body, statusBar, specialReport, state, input, inputArea, interaction, events, console, image, uiversion)
-            init($("body"), $("#status_bar"), $("#inventory"), $("#current_state"), $("#input"), $("#user_input"), $("#interaction"), $("#server_events"), $("#game_console"), $("#images"),2);
+            init($("body"), $("#status_bar_text"), $("#inventory"), $("#current_state"), $("#input"), $("#user_input"), $("#interaction"), $("#server_events"), $("#game_console"), $("#images"),2);
         </script>
     </body>
 </html>
