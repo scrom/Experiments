@@ -184,6 +184,7 @@ a:link {
 img{
     position: inherit;
     aspect-ratio: auto 1 / 1;
+    filter: invert(0%) sepia(90%) saturate(1000%) hue-rotate(38deg) brightness(120%);
     max-width: 99.9%;
     max-height: 99.9%;
     object-fit: contain;
