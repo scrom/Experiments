@@ -32,7 +32,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         var _returnDirection;
         var _currentLocation;
         var _totalTimeTaken = 0;
-        var _timeSinceEating = tools.hoursAsTicks(1.5); // set to start 90 minutes away from hungry at start
+        var _timeSinceEating = tools.hoursAsTicks(2.5); // set to start ~30 minutes away from hungry at start
         var _timeSinceDrinking = 0;
         var _timeSinceResting = 0;
         var _timeTrapped = 0;
@@ -605,7 +605,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_loadCount > 0) { resultString += ',"loadCount":' + _loadCount; };
             
             if (_totalTimeTaken > 0) { resultString += ',"totalTimeTaken":' + _totalTimeTaken; };
-            if (_timeSinceEating != 300) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
+            if (_timeSinceEating != 500) { resultString += ',"timeSinceEating":' + _timeSinceEating; };
             if (_timeSinceDrinking > 0) { resultString += ',"timeSinceDrinking":' + _timeSinceDrinking; };
             if (_timeSinceResting > 0) { resultString += ',"timeSinceResting":' + _timeSinceResting; };
             if (_timeTrapped > 0) { resultString += ',"timeTrapped":' + _timeTrapped; };
