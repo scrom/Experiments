@@ -2054,7 +2054,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //reset weights
                     receiver.setWeight(originalReceiverWeight);
                     artefact.setWeight(originalArtefactWeight);
-                    return  "Sorry, you don't have a suitable container for "+newObject.getDisplayName()+".";
+                    return  "Sorry, you'll need something suitable to carry "+newObject.getSuffix()+" in.";
                 };
             };
 

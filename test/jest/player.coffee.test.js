@@ -248,7 +248,7 @@ describe('Sweet Coffee Combination Tests', () => {
         l0.addObject(coffee);
         l0.addObject(sugar);
 
-        var expectedResult = "Sorry, you don't have a suitable container for the sweet coffee.";
+        var expectedResult = "Sorry, you'll need something suitable to carry it in.";
         var actualResult = p0.put('add','coffee', "to", 'sugar');
         expect(actualResult).toBe(expectedResult);
     });
