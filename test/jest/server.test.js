@@ -156,6 +156,43 @@ describe('Server', () => {
             expect(response.length).toBe(155);
         });
 
+        test('Fetch (GET) /data/locations.json matches canonical data', async () => {
+            const request = httpMocks.createRequest({
+                method: 'GET',
+                url: config.protocol+"://"+config.hostname+":"+config.port+"/data/locations.json",
+                headers: headers
+            });
+
+            const fs = require('fs');
+            const path = require('path');
+
+            const testDataDir = '../testdata/';
+            const testFileName = 'canonical-game-data.json';
+            const resultFileName = 'testresult-game-data.json';
+            const testFilePath = path.join(__dirname, testDataDir, testFileName); // Full path to test file
+            const resultFilePath = path.join(__dirname, testDataDir, resultFileName); // Full path to test file
+
+
+            var response = await serverInstance.fetchCall(request.url);
+            const canonicalData = JSON.parse(fs.readFileSync(testFilePath))
+            console.debug(JSON.stringify(response));
+            try {
+                //write result to testData location;
+                fs.writeFileSync(resultFilePath,JSON.stringify(response));
+                expect(response).toEqual(canonicalData);
+            } catch (err) {
+                console.debug('check result file at: '+resultFilePath);
+                throw (err);
+            };
+            //if we get this far, delete result data
+            fs.unlinkSync(resultFilePath,function(err){
+                if(err) return console.error(err);
+                    console.debug('result file '+resultFileName+'deleted.');
+                    expect(fs.existsSync(resultFilePath)).toEqual(false);
+                });  
+
+        });
+
         test('Fetch (GET) /save via server with *valid* user succeeds', async () =>
         {
             const playerAttributes = {

@@ -451,7 +451,8 @@
                     "type": "tool",
                     "canOpen": true,
                     "customAction": "call",
-                    "defaultResult": "$action press"
+                    "defaultResult": "$action press",
+                    "imageName": "liftcallbutton.jpg"
                 },
                 "linkedexits": [
                     {
@@ -1297,7 +1298,7 @@
         "object": "location",
         "name": "atrium-seating",
         "displayName": "Atrium seating area",
-        "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a very large potted tree.",
+        "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a dining table and a very large potted tree.",
         "exits": [
             {
                 "object": "exit",
@@ -1318,22 +1319,24 @@
         "inventory": [
             {
                 "object": "artefact",
-                "name": "table",
-                "description": "large dining table",
-                "detailedDescription": "It's a modern, rectangular dining table.",
+                "name": "diningroomtable",
+                "description": "round wooden dining table",
+                "detailedDescription": "It's an antique style circular wooden dining table.",
                 "attributes": {
                     "weight": 120,
-                    "type": "scenery",
-                    "imageName": "diningtable.jpg",
-                    "canDrawOn": true
+                    "imageName": "diningroomtable.jpg"
                 },
                 "synonyms": [
+                    "table",
+                    "diningtable",
                     "dining table",
                     "large table",
                     "large dining table",
-                    "modern dining table",
-                    "modern rectangular dining table",
-                    "regtangular dining table"
+                    "antique",
+                    "antique dining table",
+                    "round wooden dining table",
+                    "round dining table",
+                    "circular dining table"
                 ],
                 "inventory": [
                     {
@@ -1359,6 +1362,7 @@
                             "slice",
                             "sponge cake",
                             "sponge",
+                            "victoria",
                             "victoria cake",
                             "victoria sponge",
                             "victoria sponge cake",
@@ -1542,6 +1546,7 @@
                 "attributes": {
                     "weight": 3500,
                     "type": "scenery",
+                    "imageName": "bikeambulance.jpg",
                     "canDrawOn": true
                 },
                 "synonyms": [
@@ -1680,7 +1685,8 @@
                         "detailedDescription": "It's pretty hard to see the details but it looks like the architecture for a basic ecommerce system with microservices and an event queue. ",
                         "attributes": {
                             "type": "scenery",
-                            "plural": true
+                            "plural": true,
+                            "imageName": "architecturediagram.jpg"
                         },
                         "synonyms": [
                             "marks",
@@ -1778,6 +1784,9 @@
         "name": "camelids",
         "displayName": "Camelids meeting room",
         "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>One wall has a small shelf whilst the UX team have filled another wall with post-it notes.<br>A window runs the length of the room looking out over the atrium stairs.",
+        "attributes": {
+            "imageName": "camelids.jpg"
+        },
         "exits": [
             {
                 "object": "exit",
@@ -1820,6 +1829,7 @@
                         "get"
                     ],
                     "defaultResult": "You press your face to the glass and make childish signs through the window.<br>Nobody seems to notice and you feel a little foolish.",
+                    "imageName": "camelids.jpg",
                     "canDrawOn": true,
                     "viewDestination": "stairs-second-floor"
                 },
@@ -2031,7 +2041,7 @@
                         "attributes": {
                             "canCollect": true,
                             "affinityModifier": 2,
-                            "imageName": "sticky-finger.jpg",
+                            "imageName": "stickyfinger.jpg",
                             "canDrawOn": true
                         },
                         "synonyms": [
@@ -2396,7 +2406,8 @@
                     "customAction": [
                         "get"
                     ],
-                    "defaultResult": "I think Brandon, Ben and Zoe need those, sorry."
+                    "defaultResult": "I think Brandon, Ben and Zoe need those, sorry.",
+                    "imageName": "backlog.jpg"
                 },
                 "synonyms": [
                     "paperwork",
@@ -4301,7 +4312,8 @@
                                     "type": "key",
                                     "canCollect": true,
                                     "affinityModifier": 0,
-                                    "unlocks": "bike"
+                                    "unlocks": "bike",
+                                    "imageName": "bikekey.jpg"
                                 },
                                 "synonyms": [
                                     "key",
@@ -5436,6 +5448,7 @@
                                                     "canCollect": true,
                                                     "affinityModifier": 0,
                                                     "canOpen": true,
+                                                    "imageName": "coffeebag.jpg",
                                                     "smell": "You can almost taste the coffee beans."
                                                 },
                                                 "synonyms": [
@@ -5700,6 +5713,7 @@
                     "type": "bed",
                     "canCollect": true,
                     "isBreakable": true,
+                    "imageName": "beanbag.jpg",
                     "canDrawOn": true
                 },
                 "synonyms": [
@@ -6106,6 +6120,7 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
+                    "imageName": "balcony.jpg",
                     "viewDestination": "atrium"
                 },
                 "synonyms": [
@@ -6492,7 +6507,8 @@
         "displayName": "Graffiti A meeting room",
         "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
         "attributes": {
-            "dark": true
+            "dark": true,
+            "imageName": "graffiti-a.jpg"
         },
         "exits": [
             {
@@ -6509,6 +6525,10 @@
         "name": "graffiti-b",
         "displayName": "Graffiti B meeting room",
         "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
+        "attributes": {
+            "dark": true,
+            "imageName": "graffiti-b.jpg"
+        },
         "exits": [
             {
                 "object": "exit",
@@ -7253,6 +7273,9 @@
                 ],
                 "synonyms": [
                     "angelina",
+                    "angel",
+                    "ange",
+                    "ang",
                     "gina",
                     "morrison",
                     "her"
@@ -7327,7 +7350,8 @@
                                     "affinityModifier": 0,
                                     "componentOf": [
                                         "projector"
-                                    ]
+                                    ],
+                                    "imageName": "lightbulb.jpg"
                                 },
                                 "synonyms": [
                                     "lightbulb",
@@ -7469,7 +7493,10 @@
         "object": "location",
         "name": "kitchen-first-floor",
         "displayName": "First floor kitchen",
-        "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffe, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
+        "description": "You're in a small, open kitchen area.<br>Although we encourage eveyone to go downstairs for coffee, this is here for a bit of extra convenience and has the usual array of kitcheny-type things.",
+        "attributes": {
+            "imageName": "kitchen-first-floor.jpg"
+        },
         "exits": [
             {
                 "object": "exit",
@@ -8872,6 +8899,9 @@
         "name": "kitchen-ground-floor",
         "displayName": "Kitchen",
         "description": "You're in the atrium kitchen. This is the main hub of activity for staff refreshments outside mealtimes.<br>Some years ago there was a coffee machine on each floor but they were all removed to encourage serendipity.<br>Although at the time many people complained, It's just something everybody's used to now.",
+        "attributes": {
+            "imageName": "kitchen-ground-floor.jpg"
+        },
         "exits": [
             {
                 "object": "exit",
@@ -11223,7 +11253,8 @@
                                         "avoiding": [
                                             "bus"
                                         ],
-                                        "destinationDelay": 20
+                                        "destinationDelay": 20,
+                                        "imageName": "jordanmarshall.jpg"
                                     },
                                     "inventory": [
                                         {
@@ -11781,7 +11812,10 @@
         "object": "location",
         "name": "kitchen-second-floor",
         "displayName": "Second floor kitchen",
-        "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter but not much else here to tempt you to hang around upstairs now.",
+        "description": "You're in the second floor kitchen.<br>There's a space where once a coffee machine sat, and a whiteboard with evidence of the usual random office banter (you hate that word too, right?) but not much else here to tempt you to hang around upstairs now. Overall, it's a bit of a depressing ex-space.",
+        "attributes": {
+            "imageName": "kitchen-second-floor.jpg"
+        },
         "exits": [
             {
                 "object": "exit",
@@ -11817,7 +11851,7 @@
                 "object": "artefact",
                 "name": "whiteboard",
                 "description": "large whiteboard",
-                "detailedDescription": "This one's generally a good source of amusement for the teams upstairs.",
+                "detailedDescription": "This looks to have been used as a random source of amusement for the teams that are shut away up here.",
                 "attributes": {
                     "weight": 30,
                     "type": "scenery",
@@ -11826,8 +11860,9 @@
                     "writings": [
                         "Who scrubbed off my cactus?",
                         "That wasn't a cactus!",
+                        "Justin Beiber and his giant flaming sword",
                         "meh",
-                        "Richard Mitchell"
+                        "pee-pee poo-poo"
                     ]
                 },
                 "synonyms": [
@@ -12220,7 +12255,8 @@
                         "shove",
                         "hold"
                     ],
-                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it.",
+                    "imageName": "alarmbutton.jpg"
                 },
                 "synonyms": [
                     "alarm"
@@ -12323,7 +12359,8 @@
                         "shove",
                         "hold"
                     ],
-                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it.",
+                    "imageName": "alarmbutton.jpg"
                 },
                 "synonyms": [
                     "alarm"
@@ -12443,7 +12480,8 @@
                         "shove",
                         "hold"
                     ],
-                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it."
+                    "defaultResult": "You hold the button for 3 seconds.<br>After a minute or two of ringing, a distorted voice crackles through the speaker. '~crackle... hello lift service, can I hel... ~crackle' and then dies out.<br>It looks like that service hasn't been tested in a while.<br>Let's hope you don't ever need it.",
+                    "imageName": "alarmbutton.jpg"
                 },
                 "synonyms": [
                     "alarm"
@@ -13471,7 +13509,7 @@
             {
                 "object": "creature",
                 "name": "joel morris",
-                "displayName": "joel morris",
+                "displayName": "Joel Morris",
                 "description": "joel morris",
                 "detailedDescription": "He pwns the Opportunities division.",
                 "attributes": {
@@ -13484,7 +13522,7 @@
                     "health": 275,
                     "affinity": -1,
                     "canTravel": true,
-                    "imageName": "jimmaddox.jpg"
+                    "imageName": "joelmorris.jpg"
                 },
                 "inventory": [
                     {
@@ -13509,10 +13547,9 @@
                     }
                 ],
                 "synonyms": [
-                    "jim",
-                    "maddox",
+                    "joel",
+                    "morris",
                     "jm",
-                    "jim",
                     "him"
                 ]
             }
@@ -13627,7 +13664,7 @@
                     "loops": 10,
                     "loopDelay": 9,
                     "destinationDelay": 6,
-                    "imageName": "loubyonton.jpg"
+                    "imageName": "louboynton.jpg"
                 },
                 "inventory": [
                     {
@@ -16688,6 +16725,7 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
+                    "imageName": "balcony.jpg",
                     "viewDestination": "atrium"
                 },
                 "synonyms": [
@@ -19546,7 +19584,8 @@
                     "carryWeight": 15,
                     "health": 120,
                     "canTravel": true,
-                    "traveller": true
+                    "traveller": true,
+                    "imageName": "chrisabbott.jpg"
                 },
                 "inventory": [
                     {
