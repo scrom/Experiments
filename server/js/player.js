@@ -5207,12 +5207,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.isEdible()) {
                 //allow eating very first item earlier in game.
                 if (_consumedObjects.length > 0) {
-                    //can't keep eating to heal in battle - must use medical item
-                    if (_timeSinceEating < (_maxMovesUntilHungry/3) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
-                    //can't eat if not relatively hungry (25 moves) and health between 75 and 95% - recommend rest
-                    if (_timeSinceEating < Math.floor(_maxMovesUntilHungry/2) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry at the moment but you might benefit from a rest.";};
-                    //can't eat unless hungry if health is nearly full.
-                    if ((_timeSinceEating < _maxMovesUntilHungry - (_maxMovesUntilHungry/5)) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry at the moment.";};
+                    //can't keep eating to heal in battle - must use medical item - TSE<180 (70% full) and  HP < 95% 
+                    if (_timeSinceEating < (_maxMovesUntilHungry*0.3) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry enough at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";};
+                    //can't eat if not relatively hungry TSE<300 (50% full) and health between 75 and 95% - recommend rest
+                    if (_timeSinceEating < Math.floor(_maxMovesUntilHungry*0.5) && (_hitPoints > (_maxHitPoints*.75)) && (_hitPoints < (_maxHitPoints*.95))) {return "You're not hungry enough at the moment but you might benefit from a rest.";};
+                    //can't eat unless hungry if health is nearly full. TSE <450 (25% full) 
+                    if ((_timeSinceEating < _maxMovesUntilHungry*0.75) && (_hitPoints >= (_maxHitPoints*.95))) {return "You're not hungry enough at the moment.";};
                 };
             };
             self.transmit(artefact, "bite");
@@ -5232,7 +5232,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.getNutrition() >= 20 || artefact.getSubType() == "meal") {
                         _timeSinceEating = 0;
                     } else if (artefact.getNutrition() > 0) {
-                        _timeSinceEating -= (artefact.getNutrition() * 8);
+                        _timeSinceEating -= (artefact.getNutrition() * 25); //a full meal (20+ nutrition) should give up to 600 (20*30) 
                     };
                 };
                 //console.debug('player eats some food.');

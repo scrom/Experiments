@@ -514,7 +514,7 @@ test('movingWhenExhaustedDoesDamage', () => {
 
 test('canEatFoodWhenHungry', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(55);
+    p0.increaseTimeSinceEating(50);  // set to 550
     //p0.reduceHitPoints(6);
     var expectedResult = 'You eat the slab';
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
@@ -525,7 +525,7 @@ test('canEatFoodWhenHungry', () => {
 
 test('canEatFoodWhenHungryTestBoundaryCase', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(55);
+    p0.increaseTimeSinceEating(-50); // set to 450
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
@@ -535,8 +535,8 @@ test('canEatFoodWhenHungryTestBoundaryCase', () => {
 
 test('cannotEatFoodWhenNotHungry', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(-301); //as of issue #379 player defaults to hungry soon
-    var expectedResult = "You're not hungry at the moment.";
+    p0.increaseTimeSinceEating(-51); //set to 449
+    var expectedResult = "You're not hungry enough at the moment.";
     var actualResult = p0.eat('eat', 'cake');
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -545,9 +545,9 @@ test('cannotEatFoodWhenNotHungry', () => {
 
 test('cannotEatFoodWhenNotHungryEvenIfInjured', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(-301); //as of issue #379 player defaults to hungry soon
-    p0.reduceHitPoints(6); //test boundary
-    var expectedResult = "You're not hungry at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";
+    p0.increaseTimeSinceEating(-321); //set to 179 //boundary is 180
+    p0.reduceHitPoints(6); //94% test boundary
+    var expectedResult = "You're not hungry enough at the moment.<br>You'll need to use a medical item if you need to <i>heal</i>.";
     var actualResult = p0.eat('eat', 'cake');
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -556,8 +556,8 @@ test('cannotEatFoodWhenNotHungryEvenIfInjured', () => {
 
 test('canEatFoodWhenMoreHungryAndModeratelyInjured', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(35);
-    p0.reduceHitPoints(6); //test boundary
+    p0.increaseTimeSinceEating(-200); //set to 300 
+    p0.reduceHitPoints(6); //94% test boundary
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
@@ -567,9 +567,9 @@ test('canEatFoodWhenMoreHungryAndModeratelyInjured', () => {
 
 test('cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(-200); //as of issue #379 player defaults to hungry soon 
-    p0.reduceHitPoints(5); //test boundary
-    var expectedResult = "You're not hungry at the moment.";
+    p0.increaseTimeSinceEating(-201); //set to 299
+    p0.reduceHitPoints(24); //76% - //75% test boundary
+    var expectedResult = "You're not hungry enough at the moment but you might benefit from a rest.";
     var actualResult = p0.eat('eat', 'cake');
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -578,10 +578,21 @@ test('cannotEatFoodWhenNotMoreHungryUnlessModeratelyInjured', () => {
 
 test('cannotEatFoodWhenHealthGreaterThan95Percent', () => {
     p0.get('get', food.getName());
-    p0.increaseTimeSinceEating(-500); //as of issue #379 player defaults to hungry soon
-    p0.reduceHitPoints(4);
-    var expectedResult = "You're not hungry at the moment.";
+    p0.increaseTimeSinceEating(-51); //449
+    p0.reduceHitPoints(4); //96%
+    var expectedResult = "You're not hungry enough at the moment.";
     var actualResult = p0.eat('eat', 'cake');
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('canEatFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
+    p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(-50); //450
+    p0.reduceHitPoints(4); //96%
+    var expectedResult = "You eat the slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
