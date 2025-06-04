@@ -5216,6 +5216,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
             self.transmit(artefact, "bite");
+
+            //EAT IT
             var resultString = artefact.eat(verb, self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
@@ -5224,8 +5226,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (artefact.isCollectable()) {
                         removeObjectFromPlayerOrLocation(artefactName); 
                     };
-                    _consumedObjects.push(artefact);
                 };
+
+                //Issue #564 we should push just one "charge" here - but think this needs a bit of work.
+                _consumedObjects.push(artefact);
 
                 if (verb != "lick" && verb != "taste") {
                     //only resolve hunger if actually eating thing.
@@ -5234,6 +5238,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     } else if (artefact.getNutrition() > 0) {
                         _timeSinceEating -= (artefact.getNutrition() * 25); //a full meal (20+ nutrition) should give up to 600 (20*30) 
                     };
+
+                    //prevent overeating - should only happen on first eat of something big
+                    //and tell player they're full
+                    if (_timeSinceEating <= 0) {
+                            _timeSinceEating = 0;
+                            resultString += "<br>You're feeling nicely full!";
+                    };                    
+
                 };
                 //console.debug('player eats some food.');
             };

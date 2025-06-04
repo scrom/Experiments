@@ -308,7 +308,7 @@ test('player can eat a dead creature from location', () => {
     p0.increaseTimeSinceEating(35);
     p0.reduceHitPoints(6);
 
-    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
+    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You\'re feeling nicely full!';
     const actualResult = p0.eat('eat','dead creature');
     expect(actualResult).toBe(expectedResult);
 });
@@ -320,7 +320,7 @@ test('player can eat a dead creature from inventory', () => {
     p0.increaseTimeSinceEating(35);
     p0.reduceHitPoints(6);
 
-    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.';
+    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You\'re feeling nicely full!';
     const actualResult = p0.eat('eat','dead creature');
     expect(actualResult).toBe(expectedResult);
 });
@@ -332,7 +332,7 @@ test('eating all of a dead creature carrying items drops contents', () => {
     p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
 
-    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>His possessions are scattered on the floor.';
+    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>His possessions are scattered on the floor.<br>You\'re feeling nicely full!';
     const actualResult = p0.eat('eat','dead creature');
     expect(actualResult).toBe(expectedResult);
 });
@@ -345,7 +345,7 @@ test('eating all of a dead creature carrying items returns contents to player', 
     p0.increaseTimeSinceEating(65);
     p0.reduceHitPoints(6);
 
-    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You manage to gather up his possessions.';
+    const expectedResult = 'You tear into the raw flesh of the dead creature.<br>That was pretty messy but you actually managed to get some nutrition out of him.<br>You manage to gather up his possessions.<br>You\'re feeling nicely full!';
     const actualResult = p0.eat('eat','dead creature');
     expect(actualResult).toBe(expectedResult);
 });

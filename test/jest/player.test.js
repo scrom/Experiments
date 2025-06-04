@@ -13,6 +13,7 @@ let junkAttributes;
 let breakableJunkAttributes;
 let weaponAttributes;
 let foodAttributes;
+let largeFoodAttributes;
 let bedAttributes;
 let iceCreamAttributes;
 let containerAttributes;
@@ -27,6 +28,7 @@ let c1; //creature object
 let m0; //map object
 let weapon; //weapon object
 let food; //food object
+let largeFood; //large food object - multiple slices
 let bed; //chair object
 let iceCream; //a bribe
 let container; //container object
@@ -35,6 +37,9 @@ let breakable; //breakable object
 beforeEach(() => {
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom', foodAttributes, null);
+    largeFoodAttributes = {defaultAction: "eat", weight: 9,type: "food",charges: 12, chargeUnit: "slice",chargesDescription: "There's enough here for about $charges good-sized $chargeUnit",isEdible: true, nutrition: 15}
+    largeFood = new artefact.Artefact('bigcake', 'A big cake', 'nom nom nom', largeFoodAttributes ,null);
+
     bedAttributes = { weight: 10, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: true};
     bed = new artefact.Artefact('bed', 'somewhere to rest', 'rest rest rest', bedAttributes, null);
     playerName = 'player';
@@ -65,6 +70,7 @@ beforeEach(() => {
     l0.addObject(weapon);
     l0.addObject(breakable);
     l0.addObject(food);
+    l0.addObject(largeFood);
     l0.addObject(container);
 });
 
@@ -543,6 +549,16 @@ test('cannotEatFoodWhenNotHungry', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+test('cannotEatFoodWhenNotHungryExtremeCase', () => {
+    p0.get('get', food.getName());
+    p0.increaseTimeSinceEating(-5500); //set to -5000
+    var expectedResult = "You're not hungry enough at the moment.";
+    var actualResult = p0.eat('eat', 'cake');
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('cannotEatFoodWhenNotHungryEvenIfInjured', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-321); //set to 179 //boundary is 180
@@ -593,6 +609,40 @@ test('canEatFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
     p0.reduceHitPoints(4); //96%
     var expectedResult = "You eat the slab";
     var actualResult = p0.eat('eat', 'cake').substring(0, 16);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+/*
+    largeFoodAttributes = {"defaultAction": "eat", "weight": 9,"type": "food","charges": 12, "chargeUnit": "slice","chargesDescription": "There's enough here for about $charges good-sized $chargeUnit","isEdible": true, "nutrition": 15}
+    largeFood = new artefact.Artefact('bigcake', 'A big cake', 'nom nom nom', largeFoodAttributes ,null)
+*/
+
+test('canEat1SliceOFFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
+    p0.get('get', largeFood.getName());
+    console.debug(p0.describeInventory());
+    p0.increaseTimeSinceEating(-50); //450
+    p0.reduceHitPoints(4); //96%
+    var expectedResult = "You eat A big cake"; //issue #556 - wording bug in this result - should be a slice.
+    var actualResult = p0.eat('eat', largeFood.getName()).substring(0, 18);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('canotEat2SlicesOFFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
+    //get 2 slices
+    p0.get('get', largeFood.getName());
+    p0.get('get', largeFood.getName());
+    p0.increaseTimeSinceEating(-50); //450
+    p0.reduceHitPoints(4); //96%
+    var expectedResult = "You're not hungry enough at the moment.";
+    //eat one slice:
+    p0.eat('eat', largeFood.getName());
+   //eat another slice
+    var actualResult = p0.eat('eat', largeFood.getName());
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
