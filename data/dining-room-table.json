@@ -1,0 +1,26 @@
+{
+  "object": "artefact",
+  "name": "diningroomtable",
+  "description": "round wooden dining table",
+  "detailedDescription": "It's an antique style circular wooden dining table.",
+  "attributes": {
+    "weight": 120,
+    "imageName": "diningroomtable.jpg", 
+    "isBreakable": false
+  },
+  "synonyms": [
+    "table",
+    "diningtable",
+    "dining table",
+    "large table",
+    "large dining table",
+    "antique",
+    "antique dining table",
+    "round wooden dining table",
+    "round dining table",
+    "circular dining table"
+  ],
+  "inventory": [
+    { "file": "cake" }
+  ]
+}

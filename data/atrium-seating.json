@@ -2,7 +2,7 @@
   "object": "location",
   "name": "atrium-seating",
   "displayName": "Atrium seating area",
-  "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a very large potted tree.",
+  "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a dining table and a very large potted tree.",
   "exits": [
     {
       "object": "exit",
@@ -21,7 +21,7 @@
     }
   ],
   "inventory": [
-    {"file": "dining-table"},
+    {"file": "dining-room-table"},
     {"file": "tree"},
     {"file": "chess-set"},
     {
