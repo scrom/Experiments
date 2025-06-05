@@ -430,8 +430,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };  
                 };
                 
-                if ((self.getChargeUnit()) && (self.getChargeUnit() != "charge")) {
-                    anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
+                if (self.getChargeUnit() != "charge") { //"charge" is default if null.
+                     if (self.chargesRemaining() == 1) {  //unsure why we only do this with 1 charge remaining but reverting for now.
+                        anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
+                     };
                 };
 
             };
@@ -2864,7 +2866,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     var originalCharges = self.chargesRemaining();
                     var chargesRemaining = originalCharges;
 
-                    var returnDescription = self.descriptionWithCorrectPrefix();
+                    //var returnDescription = self.descriptionWithCorrectPrefix();
+                    var amount = " ";
 
                     if (chargesRemaining >0) {
                         chargesRemaining = self.consume();
@@ -2878,8 +2881,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                             self.setWeight(newWeight);
                         };
+                        amount = " some of "
                     };
-                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+ returnDescription; //this will handle charges as we picked the description up before removing a charge.
+                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+self.getDisplayName(); //returnDescription; //this will handle charges as we picked the description up before removing a charge.
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
                         var randomReplies;
