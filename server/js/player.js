@@ -3754,7 +3754,24 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return notFoundMessage(artefactName, container);
                 };
             };
- 
+            
+            let minSize = -999; //used for viewing items on items etc.
+            // - are they looking thru a window or similar? -- this code is *almost* duplicated in notfound message.
+            var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
+            if (viewObjects.length > 0) {
+                for (var i=0;i<viewObjects.length;i++) {
+                    var destination = _map.getLocation(viewObjects[i].getViewLocation());
+                    if (destination) {
+                        var artefact = destination.getObject(artefactName);
+                        if (artefact) {
+                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
+                                minSize = tools.minimumSizeForDistanceViewing; //set minimum view size for getDescription call below...
+                            };
+                        };
+                    };
+                };
+            };
+
             resultString += artefact.getDetailedDescription(_aggression, map, minSize); //we pass aggression in here in case it's a creature
 
             if (artefact.getType() == "book") {
