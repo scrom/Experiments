@@ -3630,6 +3630,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             
             };
             
+            var minSize = -999; //used for viewing items on items etc.
             var playerArtefact;
             var locationArtefact;
             var container;        
@@ -3708,6 +3709,22 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                 };
+                
+                // - are they looking thru a window or similar? -- this code is *almost* duplicated in notfound message.
+                var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
+                if (viewObjects.length > 0 && map) {
+                for (var i=0;i<viewObjects.length;i++) {
+                    var destination = map.getLocation(viewObjects[i].getViewLocation());
+                    if (destination) {
+                        artefact = destination.getObject(artefactName);
+                        if (artefact) {
+                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
+                                minSize = tools.minimumSizeForDistanceViewing; //set minimum view size for getDescription call below...
+                            };
+                        };
+                    };
+                };
+            };
 
                 //have they pluralised something?
                 //need a reverse of tools.pluralisedescription see #567
@@ -3750,25 +3767,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!container) {
                         container = containerName;
                     };
-
                     return notFoundMessage(artefactName, container);
-                };
-            };
-            
-            let minSize = -999; //used for viewing items on items etc.
-            // - are they looking thru a window or similar? -- this code is *almost* duplicated in notfound message.
-            var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
-            if (viewObjects.length > 0) {
-                for (var i=0;i<viewObjects.length;i++) {
-                    var destination = _map.getLocation(viewObjects[i].getViewLocation());
-                    if (destination) {
-                        var artefact = destination.getObject(artefactName);
-                        if (artefact) {
-                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
-                                minSize = tools.minimumSizeForDistanceViewing; //set minimum view size for getDescription call below...
-                            };
-                        };
-                    };
                 };
             };
 
