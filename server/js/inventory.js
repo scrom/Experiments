@@ -496,7 +496,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 foundItem = true;
             };
             
-            if (ignoreScenery) {
+            if (ignoreScenery && (!foundItem)) {
                 if (item.getType() == "scenery" || item.getSubType() == "intangible") {
                     if (customAction != "hunt" && customAction != "follow" && customAction != "find") {
                         foundItem = false;

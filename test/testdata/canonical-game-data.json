@@ -8587,7 +8587,6 @@
                     "imageName": "kitchensink.jpg"
                 },
                 "synonyms": [
-                    "wash basin",
                     "sink",
                     "tap",
                     "hands",
@@ -8926,7 +8925,6 @@
                     "imageName": "kitchensink.jpg"
                 },
                 "synonyms": [
-                    "wash basin",
                     "sink",
                     "tap",
                     "hands",
@@ -13018,6 +13016,7 @@
                         },
                         "synonyms": [
                             "ice",
+                            "ice cream",
                             "icecream",
                             "99",
                             "99 flake",
@@ -13102,6 +13101,7 @@
                                 },
                                 "synonyms": [
                                     "ice",
+                                    "ice cream",
                                     "icecream",
                                     "99",
                                     "99 flake",

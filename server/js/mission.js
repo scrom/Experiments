@@ -144,8 +144,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.getRewardObject = function() {
-            if (_reward.delivers) {
-                return _reward.delivers;
+            if (_reward) {
+                if (_reward.delivers) {
+                    return _reward.delivers;
+                };
             };
             return null;
         };

@@ -3675,6 +3675,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
                 //have they pluralised something?
+                //need a reverse of tools.pluralisedescription see #567
                 if (artefactName.substr(-1) == "s" || artefactName.substr(-2) == "ii") {
                     var singularName;
                     if (artefactName.substr(-2) == "es") {
@@ -3714,6 +3715,59 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!container) {
                         container = containerName;
                     };
+
+                    //#566 is a creature carrying it?
+                    let creatures = _currentLocation.getCreatures()
+                    for (var c=0; c< creatures.length;c++) {
+                        var creaturesObject = creatures[c].getObject(artefactName); //this will also handle synonyms
+
+                        if (creaturesObject) {
+                            return "It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+".";
+                        };
+
+                        //do they sell it?
+                        if (creatures[c].sells(artefactName)) {
+                            return "I think "+creatures[c].getFirstName()+" may have some for sale.";
+                        };
+
+                        //see if any of their active (or inactive without parent) missions deliver it...
+                        let creatureMissions = creatures[c].getMissions();
+                        for (var m=0; m < creatureMissions.length; m++) {
+                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParent())) {
+                                let reward = creatureMissions[m].getRewardObject();
+                                if (reward) {
+                                    if (reward.syn(artefactName)) {
+                                        return tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for.";
+                                    };
+                                };
+                            };
+                        };
+                    };
+
+                    //#566 add handling in here for delivered items from artefacts. (creatures can't deliver items but their missions might - see just above)
+                    //there are more efficient ways of handling this but we want to try normal routes first.
+                    //get all artefacts from inventory, then location, then creatures.
+                    //find out if any "deliver" what we're looking for.
+                    let allArtefacts = _inventory.getAllObjectsAndChildren(false); //not inaccessible things
+                    allArtefacts = allArtefacts.concat(_currentLocation.getAllObjectsAndChildren(false));
+                    console.debug(allArtefacts);
+                    let deliveryItems = [];
+                    for (var a=0; a<allArtefacts.length;a++) {
+                        if (allArtefacts[a].getType() != 'creature') {
+                            //do they sell it?
+                            if (allArtefacts[a].sells(artefactName)) {"I think "+allArtefacts[a].getName()+" may have some for sale."};
+
+                            deliveryItems = allArtefacts[a].getDeliveryItems();
+                            //if (deliveryItems.length > 0) {console.debug(deliveryItems)};
+                            for (var d=0; d<deliveryItems.length;d++) {
+                                if (deliveryItems[d].syn(artefactName))  {
+                                    return "There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for.";
+                                };
+                            };
+                        };                       
+                    };
+
+
                     return notFoundMessage(artefactName, container);
                 };
             };
