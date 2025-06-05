@@ -522,8 +522,8 @@ test('canEatFoodWhenHungry', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(50);  // set to 550
     //p0.reduceHitPoints(6);
-    var expectedResult = 'You eat a slab';
-    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
+    var expectedResult = 'You eat the slab';
+    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -532,8 +532,8 @@ test('canEatFoodWhenHungry', () => {
 test('canEatFoodWhenHungryTestBoundaryCase', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-50); // set to 450
-    var expectedResult = "You eat a slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
+    var expectedResult = "You eat the slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -574,8 +574,8 @@ test('canEatFoodWhenMoreHungryAndModeratelyInjured', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-200); //set to 300 
     p0.reduceHitPoints(6); //94% test boundary
-    var expectedResult = "You eat a slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
+    var expectedResult = "You eat the slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -607,8 +607,8 @@ test('canEatFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-50); //450
     p0.reduceHitPoints(4); //96%
-    var expectedResult = "You eat a slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
+    var expectedResult = "You eat the slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);

@@ -431,7 +431,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 
                 if (self.getChargeUnit() != "charge") { //"charge" is default if null.
-                     if (self.chargesRemaining() == 1) {  //unsure why we only do this with 1 charge remaining but reverting for now.
+                     if (self.chargesRemaining() == 1) {  //We do this to handle a "split" item - when we split an item, we get a single unit back of it! (e.g. slice of cake)
                         anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
                      };
                 };

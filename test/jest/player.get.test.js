@@ -320,6 +320,8 @@ test("Test that a player can get a single slice of cake.", () => {
     let cakeJSON = fm.readFile("cake.json");
     let cake = mb.buildArtefact(cakeJSON);
 
+    //Cake is not collectable - this forces the game to "split" the cake!
+
     l0.addObject(cake);
 
     const expectedResult = "You get a slice of victoria sponge cake.";

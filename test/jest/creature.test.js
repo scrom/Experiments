@@ -1438,8 +1438,8 @@ test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "He eats a slab of sugary";
-    var actual = c0.receive(food, p0).substr(0,24);
+    var expected = "He eats the slab of sugary";
+    var actual = c0.receive(food, p0).substr(0,26);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
     expect(actual).toBe(expected);
