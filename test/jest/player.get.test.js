@@ -3,6 +3,14 @@ const player = require('../../server/js/player.js');
 const location = require('../../server/js/location.js');
 const artefact = require('../../server/js/artefact.js');
 
+const mapBuilder = require('../../server/js/mapbuilder.js');
+const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+
+const fileManager = require('../../server/js/filemanager.js');
+const testDataDir = '../../test/testdata/';
+const testImageDir = '../../test/testdata/images/';
+const fm = new fileManager.FileManager(true, testDataDir, testImageDir);
+
 let junkAttributes;
 let fixedAttributes;
 let containerAttributes;
@@ -305,5 +313,16 @@ test("Test that a player can get two out of 4 hidden objects by searching. Limit
 
     const expectedResult = "You search the container and discover a box, a box two, a box three, and a box four.<br>You collect the box and a box two.<br>Unfortunately you can't carry the rest right now.<br>You might want to come back for some of these later or <i>drop</i> something else you're carrying.";
     const actualResult = p0.search('search', container.getName());
+    expect(actualResult).toBe(expectedResult);
+});
+
+test("Test that a player can get a single slice of cake.", () => {
+    let cakeJSON = fm.readFile("cake.json");
+    let cake = mb.buildArtefact(cakeJSON);
+
+    l0.addObject(cake);
+
+    const expectedResult = "You get a slice of victoria sponge cake.";
+    const actualResult = p0.get('get', "cake");
     expect(actualResult).toBe(expectedResult);
 });

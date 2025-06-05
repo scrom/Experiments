@@ -135,6 +135,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         //take a set of objects and return simple JSON description and price.
         //de-duplicate at the same time
         self.prepareItemList = function (items, minSize) {
+            if (minSize == undefined) {
+                minSize = -999;
+            };
+
             var itemList = [];
             var finalList = [];
             for (var i = 0; i < items.length; i++) {
@@ -694,7 +698,7 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
         self.getPositionedObjects = function(showHiddenObjects, minSize, includeScenery) {
             var itemsToReturn = [];
             if (minSize == undefined) {
-                minSize = 0;
+                minSize = -999;
             };
             for (var i=0;i<_items.length;i++) {
                 if (_items[i].getWeight() >= minSize) {
