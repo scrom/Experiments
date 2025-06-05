@@ -233,7 +233,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         var notFoundMessage = function(objectName, container) {
-            //one last check - is there a spilled liquid we're trying to get?
+            //last few checks - is there a spilled liquid we're trying to get?
             if (_currentLocation.spilledLiquidExists(objectName) || _inventory.hasLiquid(objectName)) {
                 return "There's not enough left to do anything useful with.";
             };
@@ -246,7 +246,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (destination) {
                         var artefact = destination.getObject(objectName);
                         if (artefact) {
-                            if (artefact.getWeight() >= 2) {
+                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
                                 return "You can't reach "+artefact.getSuffix()+" from here.";
                             };
                         };
@@ -268,6 +268,58 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //trying to search whole location...
                 return "You don't have all day to root around everywhere. (Or maybe you do!).<br>Either way, you'll need to be more specific.";
             };
+
+            
+            //#566 is a creature carrying it?
+                    let creatures = _currentLocation.getCreatures()
+                    for (var c=0; c< creatures.length;c++) {
+                        var creaturesObject = creatures[c].getObject(objectName); //this will also handle synonyms
+
+                        if (creaturesObject) {
+                            return "It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+".";
+                        };
+
+                        //do they sell it?
+                        if (creatures[c].sells(objectName)) {
+                            return "I think "+creatures[c].getFirstName()+" may have some for sale.";
+                        };
+
+                //see if any of their active (or inactive without parent) missions deliver it...
+                        let creatureMissions = creatures[c].getMissions();
+                        for (var m=0; m < creatureMissions.length; m++) {
+                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParent())) {
+                                let reward = creatureMissions[m].getRewardObject();
+                                if (reward) {
+                                    if (reward.syn(objectName)) {
+                                        return tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for.";
+                                    };
+                                };
+                            };
+                        };
+                    };
+
+            //#566 add handling in here for delivered items from artefacts. (creatures can't deliver items but their missions might - see just above)
+            //there are more efficient ways of handling this but we want to try normal routes first.
+            //get all artefacts from inventory, then location, then creatures.
+            //find out if any "deliver" what we're looking for.
+                    let allArtefacts = _inventory.getAllObjectsAndChildren(false); //not inaccessible things
+                    allArtefacts = allArtefacts.concat(_currentLocation.getAllObjectsAndChildren(false));
+                    console.debug(allArtefacts);
+                    let deliveryItems = [];
+                    for (var a=0; a<allArtefacts.length;a++) {
+                        if (allArtefacts[a].getType() != 'creature') {
+                            //do they sell it?
+                            if (allArtefacts[a].sells(objectName)) {"I think "+allArtefacts[a].getName()+" may have some for sale."};
+
+                            deliveryItems = allArtefacts[a].getDeliveryItems();
+                            //if (deliveryItems.length > 0) {console.debug(deliveryItems)};
+                            for (var d=0; d<deliveryItems.length;d++) {
+                                if (deliveryItems[d].syn(objectName))  {
+                                    return "There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for.";
+                                };
+                            };
+                        };                       
+                    };
             
             var randomReplies;
             if (container) {
@@ -3657,23 +3709,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };
 
-                // - are they looking thru a window or similar?
-                var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
-                var minSize = -999
-                if (viewObjects.length > 0 && map) {
-                    for (var i=0;i<viewObjects.length;i++) {
-                        var destination = map.getLocation(viewObjects[i].getViewLocation());
-                        if (destination) {
-                            artefact = destination.getObject(artefactName);
-                            if (artefact) {
-                                if (artefact.getWeight() < 2) {artefact = null;};
-                                minSize = tools.minimumSizeForDistanceViewing;
-                            };
-                            break;
-                        };
-                    };
-                };
-
                 //have they pluralised something?
                 //need a reverse of tools.pluralisedescription see #567
                 if (artefactName.substr(-1) == "s" || artefactName.substr(-2) == "ii") {
@@ -3715,58 +3750,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     if (!container) {
                         container = containerName;
                     };
-
-                    //#566 is a creature carrying it?
-                    let creatures = _currentLocation.getCreatures()
-                    for (var c=0; c< creatures.length;c++) {
-                        var creaturesObject = creatures[c].getObject(artefactName); //this will also handle synonyms
-
-                        if (creaturesObject) {
-                            return "It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+".";
-                        };
-
-                        //do they sell it?
-                        if (creatures[c].sells(artefactName)) {
-                            return "I think "+creatures[c].getFirstName()+" may have some for sale.";
-                        };
-
-                        //see if any of their active (or inactive without parent) missions deliver it...
-                        let creatureMissions = creatures[c].getMissions();
-                        for (var m=0; m < creatureMissions.length; m++) {
-                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParent())) {
-                                let reward = creatureMissions[m].getRewardObject();
-                                if (reward) {
-                                    if (reward.syn(artefactName)) {
-                                        return tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for.";
-                                    };
-                                };
-                            };
-                        };
-                    };
-
-                    //#566 add handling in here for delivered items from artefacts. (creatures can't deliver items but their missions might - see just above)
-                    //there are more efficient ways of handling this but we want to try normal routes first.
-                    //get all artefacts from inventory, then location, then creatures.
-                    //find out if any "deliver" what we're looking for.
-                    let allArtefacts = _inventory.getAllObjectsAndChildren(false); //not inaccessible things
-                    allArtefacts = allArtefacts.concat(_currentLocation.getAllObjectsAndChildren(false));
-                    console.debug(allArtefacts);
-                    let deliveryItems = [];
-                    for (var a=0; a<allArtefacts.length;a++) {
-                        if (allArtefacts[a].getType() != 'creature') {
-                            //do they sell it?
-                            if (allArtefacts[a].sells(artefactName)) {"I think "+allArtefacts[a].getName()+" may have some for sale."};
-
-                            deliveryItems = allArtefacts[a].getDeliveryItems();
-                            //if (deliveryItems.length > 0) {console.debug(deliveryItems)};
-                            for (var d=0; d<deliveryItems.length;d++) {
-                                if (deliveryItems[d].syn(artefactName))  {
-                                    return "There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for.";
-                                };
-                            };
-                        };                       
-                    };
-
 
                     return notFoundMessage(artefactName, container);
                 };
