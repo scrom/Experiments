@@ -5287,7 +5287,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 if (verb != "lick" && verb != "taste") {
                     //only resolve hunger if actually eating thing.
-                    if (artefact.getNutrition() >= 20 || artefact.getSubType() == "meal") {
+                    if (artefact.getSubType() == "meal") {
                         _timeSinceEating = 0;
                     } else if (artefact.getNutrition() > 0) {
                         _timeSinceEating -= (artefact.getNutrition() * 25); //a full meal (20+ nutrition) should give up to 600 (20*30) 

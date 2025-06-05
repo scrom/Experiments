@@ -38,7 +38,7 @@ beforeEach(() => {
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom', foodAttributes, null);
     largeFoodAttributes = {defaultAction: "eat", weight: 9,type: "food",charges: 12, chargeUnit: "slice",chargesDescription: "There's enough here for about $charges good-sized $chargeUnit",isEdible: true, nutrition: 15}
-    largeFood = new artefact.Artefact('bigcake', 'A big cake', 'nom nom nom', largeFoodAttributes ,null);
+    largeFood = new artefact.Artefact('bigcake', 'a big cake', 'nom nom nom', largeFoodAttributes ,null);
 
     bedAttributes = { weight: 10, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: true};
     bed = new artefact.Artefact('bed', 'somewhere to rest', 'rest rest rest', bedAttributes, null);
@@ -522,8 +522,8 @@ test('canEatFoodWhenHungry', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(50);  // set to 550
     //p0.reduceHitPoints(6);
-    var expectedResult = 'You eat the slab';
-    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
+    var expectedResult = 'You eat a slab';
+    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -532,8 +532,8 @@ test('canEatFoodWhenHungry', () => {
 test('canEatFoodWhenHungryTestBoundaryCase', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-50); // set to 450
-    var expectedResult = "You eat the slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
+    var expectedResult = "You eat a slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -574,8 +574,8 @@ test('canEatFoodWhenMoreHungryAndModeratelyInjured', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-200); //set to 300 
     p0.reduceHitPoints(6); //94% test boundary
-    var expectedResult = "You eat the slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
+    var expectedResult = "You eat a slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -607,25 +607,20 @@ test('canEatFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
     p0.get('get', food.getName());
     p0.increaseTimeSinceEating(-50); //450
     p0.reduceHitPoints(4); //96%
-    var expectedResult = "You eat the slab";
-    var actualResult = p0.eat('eat', 'cake').substring(0, 16);
+    var expectedResult = "You eat a slab";
+    var actualResult = p0.eat('eat', 'cake').substring(0, 14);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
-
-/*
-    largeFoodAttributes = {"defaultAction": "eat", "weight": 9,"type": "food","charges": 12, "chargeUnit": "slice","chargesDescription": "There's enough here for about $charges good-sized $chargeUnit","isEdible": true, "nutrition": 15}
-    largeFood = new artefact.Artefact('bigcake', 'A big cake', 'nom nom nom', largeFoodAttributes ,null)
-*/
 
 test('canEat1SliceOFFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
     p0.get('get', largeFood.getName());
     console.debug(p0.describeInventory());
     p0.increaseTimeSinceEating(-50); //450
     p0.reduceHitPoints(4); //96%
-    var expectedResult = "You eat A big cake"; //issue #556 - wording bug in this result - should be a slice.
-    var actualResult = p0.eat('eat', largeFood.getName()).substring(0, 18);
+    var expectedResult = "You eat a slice of a big cake"; //issue #556 - wording bug in this result - should be a slice.
+    var actualResult = p0.eat('eat', largeFood.getName()).substring(0, 29);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -1088,7 +1083,7 @@ test('adding 2 identical liquids modifies remainder attributes', () => {
     p0.get('get', moreRum.getName());
     
     var combinedRum = bottle.getObject("rum");
-    var expectedResult = '{"object":"artefact","name":"rum","description":"rum","detailedDescription":"rum","attributes":{"weight":2,"type":"food","requiresContainer":true,"isLiquid":true,"canCollect":true,"plural":true,"affinityModifier":2,"isEdible":true}}';
+    var expectedResult = '{"object":"artefact","name":"rum","description":"rum","detailedDescription":"rum","attributes":{"weight":2,"type":"food","requiresContainer":true,"isLiquid":true,"canCollect":true,"charges":2,"plural":true,"affinityModifier":2,"isEdible":true}}';
     var actualResult = combinedRum.toString();
     console.debug(bottle.getDetailedDescription());
     console.debug("Expected: " + expectedResult);

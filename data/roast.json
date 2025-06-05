@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 2,
     "type": "food",
+    "subType": "meal",
     "canCollect": true,
     "requiresContainer": true,
     "requiredContainer": "plate",

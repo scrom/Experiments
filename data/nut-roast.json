@@ -7,6 +7,7 @@
     "defaultAction": "eat",
     "weight": 1,
     "type": "food",
+    "subType": "meal",
     "charges": 1,
     "canCollect": true,
     "isEdible": true,

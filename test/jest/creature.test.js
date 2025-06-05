@@ -1438,8 +1438,8 @@ test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var expected = "He eats the slab";
-    var actual = c0.receive(food, p0).substr(0,16);
+    var expected = "He eats a slab of sugary";
+    var actual = c0.receive(food, p0).substr(0,24);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
     expect(actual).toBe(expected);
@@ -1456,7 +1456,7 @@ test('receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood', 
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var resultString = c0.receive(food, p0);
-    var expected = "He eats some of the slab He holds onto the remainder for later.";
+    var expected = "He eats a slab of sugary He holds onto the remainder for later.";
     var actual = resultString.substr(0,25)+resultString.substr(-38);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
@@ -1783,11 +1783,11 @@ test('otherCreatureWillStillEatChocolate', () => {
     var c0 = m.getCreature("michael weston");
     c0.go(null, m.getLocation('machine-room-east'));
     c0.tick(6, m, p0); //ensure he's hungry
-    var foodAttributes = {weight: 1, nutrition: 5, charges: 3, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    var foodAttributes = {weight: 1, nutrition: 5, charges: 3, plural: true, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
 
-    var expected = "He eats some of the chocolate";
-    var actual = c0.receive(chocolate, p0).substr(0,29);
+    var expected = "He eats some chocolate"; // items with multiple charges and no charge unit need to be plural in order to be "some"
+    var actual = c0.receive(chocolate, p0).substr(0,22);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
     expect(actual).toBe(expected);

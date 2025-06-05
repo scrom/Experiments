@@ -374,7 +374,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
-                var validScenerySubTypes = ["","intangible", "plant"];
+                var validScenerySubTypes = ["","intangible", "plant", "furniture", "art"];
                 if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
 
@@ -389,6 +389,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var validFoodSubTypes = ["", "snack", "meal", "drink"];
                 if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
+                //food needs charges defined
+                if (_charges == -1) {_charges = 1;};
             };
 
             if (type == "light") {
@@ -428,10 +430,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };  
                 };
                 
-                if (self.chargesRemaining() == 1) {
-                    if (self.getChargeUnit() != "charge") {
-                        anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
-                    };
+                if ((self.getChargeUnit()) && (self.getChargeUnit() != "charge")) {
+                    anItemDescription = self.getChargeUnit() + " of " + anItemDescription;
                 };
 
             };
@@ -2863,8 +2863,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     
                     var originalCharges = self.chargesRemaining();
                     var chargesRemaining = originalCharges;
-                    
-                    var amount = " ";
+
+                    var returnDescription = self.descriptionWithCorrectPrefix();
+
                     if (chargesRemaining >0) {
                         chargesRemaining = self.consume();
                     };
@@ -2877,9 +2878,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
                             self.setWeight(newWeight);
                         };
-                        amount = " some of ";
                     };
-                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s + amount+ self.getDisplayName();
+                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+ returnDescription; //this will handle charges as we picked the description up before removing a charge.
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
                         var randomReplies;

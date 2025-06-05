@@ -6,6 +6,7 @@
   "attributes": {
     "weight": 3,
     "type": "food",
+    "subType": "meal",
     "canCollect": true,
     "requiresContainer": true,
     "requiredContainer": "bowl",
@@ -15,7 +16,7 @@
     "plural": true,
     "affinityModifier": 0,
     "isEdible": true,
-    "nutrition": 20,
+    "nutrition": 35,
     "smell": "It smells warm and comforting.",
     "taste": "It's 'just right'. First time too, no need for any additional salt or sugar here."
   },
