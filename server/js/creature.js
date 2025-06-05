@@ -44,7 +44,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var _bleeding = false;
         var _edible = false; //can't eat a living creature
         var _charges = 0;
-        var _nutrition = 20; //default
+        var _nutrition = 40; //default
         var _price = 0; //all items have a price (value). If it's positive, it can be bought and sold.
         var _homeLocation;
         var _currentLocation;
@@ -763,7 +763,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.customAction != undefined) { saveAttributes.customAction = creatureAttributes.customAction; };
             if (creatureAttributes.defaultResult != undefined) { saveAttributes.defaultResult = creatureAttributes.defaultResult; };
                      
-            if (creatureAttributes.nutrition != 20) { saveAttributes.nutrition = creatureAttributes.nutrition;};
+            if (creatureAttributes.nutrition != 40) { saveAttributes.nutrition = creatureAttributes.nutrition;};
             if (creatureAttributes.price != 0) { saveAttributes.price = creatureAttributes.price;};
             if (creatureAttributes.weight != 0) {saveAttributes.weight = creatureAttributes.weight;};
             if (creatureAttributes.money != 0) { saveAttributes.money = creatureAttributes.money;};      

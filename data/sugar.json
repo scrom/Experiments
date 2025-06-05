@@ -11,7 +11,7 @@
       "isPowder": true,
       "canCollect": true,
       "charges": 3,
-      "chargeUnit": "spoonfull",
+      "chargeUnit": "spoonful",
       "chargesDescription": "There's about $charges $chargeUnit left",
       "combinesDescription": "Don't waste it all, you'll need this as a sweetener",
       "plural": true,
