@@ -208,6 +208,7 @@ pip-log.txt
 /test/testdata/generated.json
 test/testdata/mvta.savedGames.json
 /test/coverage
+/coverage
 /test/jest/coverage
 _Chutzpah.coverage.html
 .coverage
