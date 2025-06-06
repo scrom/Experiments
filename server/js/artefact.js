@@ -389,8 +389,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 var validFoodSubTypes = ["", "snack", "meal", "drink"];
                 if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
-                //food needs charges defined
-                if (_charges == -1) {_charges = 1;};
+                //food doesn't need charges defined - if they are, it changes how eating them is described. (part vs whole)
             };
 
             if (type == "light") {
@@ -2866,7 +2865,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         };
                         amount = " some of "
                     };
-                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+self.getDisplayName(); //returnDescription; //this will handle charges as we picked the description up before removing a charge.
+
+                    //was it the whole thing or a piece?
+                    var objectDescription = self.getDisplayName();
+                    if (originalCharges >=1) {
+                        let chargeUnit = self.getChargeUnit();
+                        
+                        if (chargeUnit == "charge") {
+                            objectDescription = "some "+self.getRawDescription()+".";
+                        } else {                   
+                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription()+".";
+                        };
+                    };
+
+                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+objectDescription; //returnDescription;
+
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
                         var randomReplies;

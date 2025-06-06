@@ -619,8 +619,8 @@ test('canEat1SliceOFFoodWhenHealthGreaterThan95PercentIfTicksPast 449', () => {
     console.debug(p0.describeInventory());
     p0.increaseTimeSinceEating(-50); //450
     p0.reduceHitPoints(4); //96%
-    var expectedResult = "You eat a slice of a big cake"; //issue #556 - wording bug in this result - should be a slice.
-    var actualResult = p0.eat('eat', largeFood.getName()).substring(0, 29);
+    var expectedResult = "You eat a slice of big cake"; //issue #556 - wording bug in this result - should be a slice.
+    var actualResult = p0.eat('eat', largeFood.getName()).substring(0, 27);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -1067,8 +1067,32 @@ test('adding 2 identical liquids results in more liquid', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('adding 2 identical liquids modifies remainder attributes', () => {
+test('adding 2 identical liquids without defined charges modifies weight', () => {
     var liquidAttributes = { weight: 1, type: "food", canCollect: true, isEdible: true, isLiquid: true };
+    var containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, isBreakable: true, holdsLiquid: true };
+    var rum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var moreRum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
+    var bottle = new artefact.Artefact('bottle', 'bottle', 'bottle', containerAttributes, null);
+    
+    l0.addObject(moreRum);
+    console.debug(bottle.receive(rum));
+    console.debug(bottle.descriptionWithCorrectPrefix());
+    console.debug("before accept: " + bottle.getDetailedDescription());
+    console.debug(p0.acceptItem(bottle));
+    console.debug("after accept: " + bottle.getDetailedDescription());
+    p0.get('get', moreRum.getName());
+    
+    var combinedRum = bottle.getObject("rum");
+    var expectedResult = '{"object":"artefact","name":"rum","description":"rum","detailedDescription":"rum","attributes":{"weight":2,"type":"food","requiresContainer":true,"isLiquid":true,"canCollect":true,"plural":true,"affinityModifier":2,"isEdible":true}}';
+    var actualResult = combinedRum.toString();
+    console.debug(bottle.getDetailedDescription());
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('adding 2 identical liquids with defined charges weight and charges', () => {
+    var liquidAttributes = { weight: 1, type: "food", charges: 1, canCollect: true, isEdible: true, isLiquid: true };
     var containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, isBreakable: true, holdsLiquid: true };
     var rum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);
     var moreRum = new artefact.Artefact('rum', 'rum', 'rum', liquidAttributes, null);

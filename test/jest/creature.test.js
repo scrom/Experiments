@@ -1431,7 +1431,7 @@ test('receivingLargeFoodItemWhenAnimalIsNotHungryLeavesFood', () => {
 test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     var m = new map.Map();
     var p0 = new player.Player({username:"player"}, m);
-    var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    var foodAttributes = {weight: 1, nutrition: 5, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
     var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
     var l = new location.Location("room", "a room", false, true, 0);
@@ -1439,6 +1439,23 @@ test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He eats the slab of sugary";
+    var actual = c0.receive(food, p0).substr(0,26);
+    console.debug("expected:"+expected);
+    console.debug("actual:"+actual);
+    expect(actual).toBe(expected);
+});
+
+test('receivingFoodWithChargesWhenFriendlyCreatureIsHungryConsumesFood', () => {
+    var m = new map.Map();
+    var p0 = new player.Player({username:"player"}, m);
+    var foodAttributes = {weight: 1, nutrition: 5, charges: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    var food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom',foodAttributes, null);
+    var c0 = new creature.Creature('creature','beastie', 'a friendly beastie',{weight:120, attackStrength:50, gender:'male', type:'friendly', carryWeight:50, health:100, maxHealth:150});
+    var l = new location.Location("room", "a room", false, true, 0);
+    p0.setLocation(l);
+    c0.go(null,l); 
+    c0.tick(6, m, p0); //increase time since eating
+    var expected = "He eats some slab of sugar";
     var actual = c0.receive(food, p0).substr(0,26);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
@@ -1456,8 +1473,8 @@ test('receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood', 
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var resultString = c0.receive(food, p0);
-    var expected = "He eats a slab of sugary He holds onto the remainder for later.";
-    var actual = resultString.substr(0,25)+resultString.substr(-38);
+    var expected = "He eats some slab of sugary He holds onto the remainder for later.";
+    var actual = resultString.substr(0,28)+resultString.substr(-38);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
     expect(actual).toBe(expected);
@@ -1788,6 +1805,23 @@ test('otherCreatureWillStillEatChocolate', () => {
 
     var expected = "He eats some chocolate"; // items with multiple charges and no charge unit need to be plural in order to be "some"
     var actual = c0.receive(chocolate, p0).substr(0,22);
+    console.debug("expected:" + expected);
+    console.debug("actual:" + actual);
+    expect(actual).toBe(expected);
+});
+
+
+test('otherCreatureWillEatAPieceOfChocolate', () => {
+    var m = mb.buildMap();
+    var p0 = new player.Player({username:"player"}, m);
+    var c0 = m.getCreature("michael weston");
+    c0.go(null, m.getLocation('machine-room-east'));
+    c0.tick(6, m, p0); //ensure he's hungry
+    var foodAttributes = {weight: 1, nutrition: 5, charges: 3, chargeUnit: "piece", plural: true, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
+    var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
+
+    var expected = "He eats a piece of chocolate"; // items with multiple charges and no charge unit need to be plural in order to be "some"
+    var actual = c0.receive(chocolate, p0).substr(0,28);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
     expect(actual).toBe(expected);
