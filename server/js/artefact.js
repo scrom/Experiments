@@ -341,8 +341,39 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         processAttributes(attributes);
+    
+        self.addSyns = function (synonyms) {
+            _synonyms = _synonyms.concat(synonyms)
+            //deduplicate
+            let s = new Set(_synonyms);
+            _synonyms = Array.from(s);
+        };
 
-        var validateType = function(type, subType) {
+        self.getSyns = function () {
+            return _synonyms;
+        };
+    
+        self.getType = function() {
+            return _type;
+        };
+        
+        self.isLiquid = function() {
+                return _liquid;
+        };
+
+        self.isPowder = function () {
+            return _powder;
+        };
+   
+        self.willDivide = function (charges) {
+            if (!charges) {charges = _charges}
+            if (_charges > 1 && (self.getType() == "food" || self.isLiquid() || self.isPowder())) {
+                return true;
+            };
+            return false;
+        };   
+
+        var validate = function(type, subType) {
             var validobjectTypes = ["weapon","property","medical", "cure","book","junk","treasure","food","tool","door","container", "key", "bed", "light", "scenery", "writing", "vehicle", "computer"];
             if (validobjectTypes.indexOf(type) == -1) { throw "'" + type + "' is not a valid artefact type."; };//
             //console.debug(_name+' type validated: '+type);
@@ -390,6 +421,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 _edible = true;
                 //food doesn't need charges defined - if they are, it changes how eating them is described. (part vs whole)
+                            //add synonym for splitting - note as we're stil under construction, we use member variables here rather than functions.
+            };
+
+            if (_charges > 0) {
+                if ((_chargeUnit) && _chargeUnit != "charge") {
+                    if (self.willDivide(2)) { //minor hack to handle only having 1 charge but still wanting unit synonym.
+                            //variants of charge unit. unit alone may clash with other objects (e.g. "cup") so we don't add that in.
+                        self.addSyns([_chargeUnit+" of "+_description, _chargeUnit+" of "+_name]);
+                    };
+                };
             };
 
             if (type == "light") {
@@ -403,7 +444,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
         };
 
-        validateType(_type, _subType);
+        validate(_type, _subType);
 
         //return right prefix for item       
         self.descriptionWithCorrectPrefix = function (anItemDescription, plural) {
@@ -794,14 +835,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             return false;
         };
-
-        self.addSyns = function (synonyms) {
-            _synonyms = _synonyms.concat(synonyms);
-        };
-
-        self.getSyns = function () {
-            return _synonyms;
-        };
         
         //artefact only function at the moment
         self.getSourceAttributes = function () {
@@ -836,7 +869,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         //artefact only function at the moment
         self.setAttributes = function(attributes) {
             if (attributes.type != undefined) {
-                try{validateType(attributes.type, attributes.subType);}
+                try{validate(attributes.type, attributes.subType);}
                 catch(err){
                     console.error("Error: "+err);
                     return null;//exit early
@@ -860,9 +893,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "the "+_description;
         };
 
-        self.getType = function() {
-            return _type;
-        };
 
         self.getSubType = function() {
             return _subType;
@@ -905,14 +935,6 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.requiresContainer = function() {
                 return _requiresContainer
-        };
-
-        self.isLiquid = function() {
-                return _liquid;
-        };
-
-        self.isPowder = function () {
-            return _powder;
         };
         
         self.isSolid = function () {
@@ -2001,14 +2023,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             return "Rattle rattle rattle... ...Nothing happens.";
-        };
-        
-        self.willDivide = function () {
-            if (_charges > 1 && (self.getType() == "food" || self.isLiquid() || self.isPowder())) {
-                return true;
-            };
-            return false;
-        };     
+        };  
 
         self.chargesRemaining = function() {
             if (self.isDestroyed()) {return 0;};
@@ -3173,6 +3188,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             //item didn't combine - add it to inventory
+            if(anObject.willDivide(2)) {self.add}
             _inventory.add(anObject);
             return "";
         };

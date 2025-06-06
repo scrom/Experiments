@@ -1359,6 +1359,8 @@
                             "taste": "It's fresh, sweet and moist with a layer of buttercream icing and jam."
                         },
                         "synonyms": [
+                            "slice of victoria sponge cake",
+                            "slice of cake",
                             "slice",
                             "sponge cake",
                             "sponge",
@@ -2559,6 +2561,7 @@
                                     "taste": "It tastes a lot like it <i>smell</i>s."
                                 },
                                 "synonyms": [
+                                    "portion of spam",
                                     "meat",
                                     "processed meat"
                                 ]
@@ -3759,7 +3762,6 @@
                     "white",
                     "paint",
                     "walls",
-                    "white board",
                     "whitebaord"
                 ]
             }
@@ -4133,6 +4135,8 @@
                                                     ]
                                                 },
                                                 "synonyms": [
+                                                    "dose of zombie antibodies",
+                                                    "dose of vaccine",
                                                     "antibodies",
                                                     "zombie vaccine"
                                                 ]
@@ -5484,6 +5488,8 @@
                                                             "taste": "They're bitter, crunchy and pretty low in nutritional value"
                                                         },
                                                         "synonyms": [
+                                                            "cup of coffee beans",
+                                                            "cup of beans",
                                                             "coffee beans"
                                                         ]
                                                     }
@@ -5696,6 +5702,8 @@
                             "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
                         },
                         "synonyms": [
+                            "shot of rum",
+                            "shot of cheap rum",
                             "rum",
                             "agricultural rum"
                         ]
@@ -7584,6 +7592,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -7773,6 +7782,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -7962,6 +7972,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -8151,6 +8162,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -8340,6 +8352,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -8812,6 +8825,7 @@
                             "taste": "They're a rare daytime treat. It's hard to describe the happy feeling of holding a solitary shreddie on your tongue whilst stood in your place of work but it's rather good."
                         },
                         "synonyms": [
+                            "serving of shreddies",
                             "food",
                             "cereal",
                             "shreddies"
@@ -9181,6 +9195,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -9370,6 +9385,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -9559,6 +9575,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -9748,6 +9765,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -9937,6 +9955,7 @@
                                     "taste": "It seems ok. Not like that nasty soya stuff that taste like cardboard."
                                 },
                                 "synonyms": [
+                                    "serving of milk",
                                     "cow juice"
                                 ],
                                 "delivers": [
@@ -10124,6 +10143,7 @@
                             "taste": "It's sweet and crunchy in your mouth."
                         },
                         "synonyms": [
+                            "spoonful of sugar",
                             "sweetener"
                         ],
                         "delivers": [
@@ -10412,6 +10432,7 @@
                             "taste": "They're sweet, chocolatey and crunchy."
                         },
                         "synonyms": [
+                            "serving of coco pops",
                             "food",
                             "cereal",
                             "pops",
@@ -11014,6 +11035,8 @@
                                                                 ]
                                                             },
                                                             "synonyms": [
+                                                                "dose of zombie antibodies",
+                                                                "dose of vaccine",
                                                                 "antibodies",
                                                                 "zombie vaccine"
                                                             ]
@@ -11642,6 +11665,8 @@
                                                                             ]
                                                                         },
                                                                         "synonyms": [
+                                                                            "gallon of fuel",
+                                                                            "gallon of petrol",
                                                                             "fuel"
                                                                         ]
                                                                     }
@@ -12594,7 +12619,6 @@
                     "computers",
                     "bay",
                     "hard drive bay",
-                    "rack",
                     "rack mounted",
                     "rack mounted blade",
                     "rack mounted blade server",
@@ -17848,6 +17872,7 @@
                             "taste": "It's 'just right'. First time too, no need for any additional salt or sugar here."
                         },
                         "synonyms": [
+                            "bowlful of porridge",
                             "food",
                             "cereal",
                             "oats",
@@ -18047,6 +18072,8 @@
                                                 "taste": "Amazing! A complete free roast dinner never tasted so good."
                                             },
                                             "synonyms": [
+                                                "plateful of delicious roast carvery",
+                                                "plateful of roast",
                                                 "food",
                                                 "delicious food",
                                                 "delicious dinner",
@@ -18112,6 +18139,8 @@
                                                 "taste": "Hmm. Crisp and fresh. You're not sure if you're a huge fan of salad or not but it tastes as good as you'd hope a salad would really.."
                                             },
                                             "synonyms": [
+                                                "plateful of selection of salad items",
+                                                "plateful of salad",
                                                 "salad selection",
                                                 "selection",
                                                 "selection of salad",
@@ -18217,6 +18246,7 @@
                                             "taste": "Yep, it's good."
                                         },
                                         "synonyms": [
+                                            "bowlful of soup",
                                             "soup",
                                             "food"
                                         ]
