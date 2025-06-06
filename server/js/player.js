@@ -4680,7 +4680,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.getWeapon = function(verb) {
-            //find the strongest non-breakable weapon the player is carrying.
+            //find the strongest non-breakable weapon the player is carrying.destro
             var weapons = _inventory.getAllObjectsOfType('weapon');
 
             //sort by strength - note, damaged weapons may report randomly!
@@ -4921,7 +4921,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(weapon.isCollectable())) {
                 resultString =  "You attack "+ receiverDisplayName+". Unfortunately you can't move "+ weaponName +" to use as a weapon.<br>";
                 if (receiver.getType() == "creature") {
-                    resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
+                    resultString += tools.initCap(receiver.getPrefix())+ " retaliates. ";
                     resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
@@ -4932,7 +4932,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString = "You attack "+ receiverDisplayName+". Unfortunately "+ weaponName +" is useless as a weapon.<br>";
                 resultString += weapon.bash();
                 if (receiver.getType() == "creature") {
-                    resultString += tools.initCap(receiver.getPrefix())+ "retaliates. ";
+                    resultString += tools.initCap(receiver.getPrefix())+ " retaliates. ";
                     resultString += receiver.hit(self,0.2); //return 20% damage
                 };
                 return resultString;
