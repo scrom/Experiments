@@ -3569,24 +3569,28 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.getWeapon = function() {
-            //find the strongest non-breakable weapon the character is carrying.
-            var selectedWeaponStrength = 0;
-            var selectedWeapon = null;
+            //find the strongest non-breakable weapon creature is carrying.
             var weapons = _inventory.getAllObjectsOfType('weapon');
-            for(var index = 0; index < weapons.length; index++) {
-                //creature won't use a breakable weapon - will only auto-use non-breakable ones.
-                if ((weapons[index].getType() == 'weapon') && (!(weapons[index].isBreakable()))) {
-                    var weaponStrength = weapons[index].getAttackStrength();
-                    //console.debug('Creature is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
-                    if (weaponStrength > selectedWeaponStrength) {
-                        selectedWeapon = weapons[index];
-                        selectedWeaponStrength = weaponStrength;
-                    };
-                    
-                };
-            };
 
-            return selectedWeapon;
+            //sort by strength - note, damaged weapons may report randomly!
+            weapons.sort((function(a,b){return a.getAttackStrength() - b.getAttackStrength()}));
+            //in descending order - best first regardless of condition!
+            weapons.reverse(); 
+
+            for(var index = 0; index < weapons.length; index++) {
+                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones
+                if (weapons[index].isBreakable()) {continue;};
+
+                //projectiles must be in working order and usable
+                if (weapons[index].getSubType() == "projectile" && (weapons[index].isBroken())) {continue;}
+
+                    if (weapons[index].chargesRemaining() != 0 && weapons[index].checkComponents()) {  
+                        //we have our best available weapon: 
+                        //console.debug('Creature selected weapon: '+selectedWeapon.getDisplayName()
+                        return weapons[index];
+                    };    
+            };
+            //console.debug('creature is not carrying an automatically usable weapon');
         };
 
         self.collectBestAvailableWeapon = function() {
@@ -3598,6 +3602,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var currentWeapon = self.getWeapon();
             var selectedWeapon = null;
             var weapons = _currentLocation.getAllObjectsOfType('weapon')
+            
 
             for(var index = 0; index < weapons.length; index++) {
                 //creature won't collect a breakable weapon - will only auto-use non-breakable ones.

@@ -384,7 +384,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "weapon") {
-                var validWeaponSubTypes = ["","blunt","sharp","projectile"];
+                //weapons must have a subtype
+                var validWeaponSubTypes = ["blunt","sharp","projectile"];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.debug(_name+' subtype validated: '+subType);
             };
@@ -899,24 +900,30 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.supportsAction = function(verb) {
+            if (tools.unarmedAttackVerbs.includes(verb)) {return false};
+
             //validate verb against subType
             var subType = self.getSubType();
-
+            
             switch(subType) {
                 case "intangible":
                     return false;
                     break;
                 case "projectile":
-                    if (verb == "smash"||verb == "stab"|| verb == "bash"|| verb == "hit" || verb == "cut") {return false;};
+                    if (tools.sharpAttackVerbs.includes(verb)) {return false}; //can still use blunt attacks
+                    if (tools.projectileAttackVerbs.includes(verb) && self.isDamaged()) {return false};
                     break;
                 case "blunt":
-                    if (verb == "nerf"||verb == "shoot"||verb == "stab" || verb == "cut") {return false;};
+                    if (tools.sharpAttackVerbs.includes(verb)) {return false};
+                    if (tools.projectileAttackVerbs.includes(verb)) {return false};
                     break;
                 case "sharp":
-                    if (verb == "nerf"||verb == "shoot") {return false;};
+                    if (tools.projectileAttackVerbs.includes(verb)) {return false};
                     break;
                 default:
-                    if (verb == "nerf"||verb == "shoot"||verb == "stab" || verb == "cut") {return false;};
+                    //assume neither sharp, nor projectile - e.g. throwing and hitting things?
+                    if (tools.sharpAttackVerbs.includes(verb)) {return false};
+                    if (tools.projectileAttackVerbs.includes(verb)) {return false};
                     break;
             };
             return true;
@@ -1673,6 +1680,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.getAttackStrength = function() {
             if (self.isDestroyed()) {return 0;};
+
+            if (self.getType() == "weapon") {
+                //reduce damage if weapon is broken.  (a broken chair would work differently)
+                if (self.isDamaged()) {return _attackStrength*(tools.randomIntInRange(8,9)/10);}
+                if (self.isBroken()) {return _attackStrength*(tools.randomIntInRange(5,8)/10);}
+            }
             return _attackStrength;
         };
 

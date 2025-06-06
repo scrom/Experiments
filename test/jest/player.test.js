@@ -52,7 +52,7 @@ beforeEach(() => {
     p0.setLocation(l0);
     junkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     breakableJunkAttributes = {weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
-    weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};    
+    weaponAttributes = {weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", subType: "sharp", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};    
     iceCreamAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, affinityModifier:5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     containerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
@@ -781,10 +781,28 @@ test('injecting a vaccine provides antibodies', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('hittingArtefactWhenUnarmedDamagesPlayer', () => {
+test('punchingArtefactWhenUnarmedDamagesPlayer', () => {
     l0.addObject(a1);
-    var expectedResult = "You attempt a bare-knuckle fight with the box.<br>That hurt. If you're going to do that again, you might want to hit it <i>with</i> something.<br>You feel weaker. ";
+    var expectedResult = "You attempt a bare-knuckle fight with the box.<br>That hurt. You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>You feel weaker. ";
+    var actualResult = p0.hit('punch',a1.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('hittingArtefactWhenUnarmedDamagesArtefact', () => {
+    l0.addObject(a1);
+    var expectedResult = "You repeatedly hit the box against the floor and manage to destroy it. ";
     var actualResult = p0.hit('hit',a1.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('hittingImmovableArtefactWhenUnarmedDamagesPlayer', () => {
+    l0.addObject(a1);
+    var expectedResult = "You attempt a bare-knuckle fight with the wall.<br>That hurt. If you're going to do that again, you might want to hit it <i>with</i> something.<br>You feel weaker. ";
+    var actualResult = p0.hit('hit','wall');
     console.debug("Expected: "+expectedResult);
     console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -795,6 +813,35 @@ test('hittingArtefactWhenArmedDamagesArtefact', () => {
     p0.get('get', weapon.getName());
     var expectedResult = "You broke it!";
     var actualResult = p0.hit('hit',a1.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('hittingImmovableArtefactWhenArmedIsGratuitous', () => {
+    l0.addObject(a1);
+    p0.get('get', weapon.getName());
+    var expectedResult = "You repeatedly hit the wall with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
+    var actualResult = p0.hit('hit','wall');
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('stabbingImmovableArtefactWhenArmedIsGratuitous', () => {
+    l0.addObject(a1);
+    p0.get('get', weapon.getName());
+    var expectedResult = "You repeatedly stab the wall with the mighty sword.<br>It feels good in a gratuitously violent, wasteful sort of way.";
+    var actualResult = p0.hit('stab','wall');
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('stabbingImmovableArtefactWhenUnArmedIsDumb', () => {
+    l0.addObject(a1);
+    var expectedResult = "You jab wildly at the wall with your fingers whilst making savage noises.<br>";
+    var actualResult = p0.hit('stab','wall').substr(0,77);
     console.debug("Expected: "+expectedResult);
     console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -931,7 +978,7 @@ test('SmashLiquidContainerLosesContents', () => {
     l0.addObject(mug);
     l0.removeObject("sword");
     console.debug(p0.examine("examine", "mug"));
-    var expectedResult = "You repeatedly beat the coffee mug against the floor and manage to destroy it. <br>The coffee that was in it slowly trickles away.";
+    var expectedResult = "You repeatedly smash the coffee mug against the floor and manage to destroy it. <br>The coffee that was in it slowly trickles away.";
     var actualResult = p0.hit('smash', mug.getName());
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);

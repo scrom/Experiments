@@ -5,6 +5,15 @@ var self = module.exports= {
     //common data
     directions: ['n','north','s','south','e','east','w','west', 'l','left', 'r', 'right', 'i', 'in', 'o', 'out', 'u', 'up', 'd', 'down', 'c', 'continue', 'b','back'],
     positions:  ['onto', 'on to', 'on top of', 'on', 'above', 'over', 'under', 'underneath', 'below', 'beneath', 'behind'], //split words that are also "put" positions.
+
+    projectileAttackVerbs: ['nerf','shoot','fire','blast','zap'],
+    unarmedAttackVerbs: ['slap','punch','kick','thump',],
+    sharpAttackVerbs: ['stab','slice','slash', 'cut'],
+    bluntAttackVerbs: ['smash','bash','beat','whack','whip','hit','smack','swing', 'thwack','thwok','thwomp'],
+    genericAttackVerbs: ['attack','hurt'],
+    throwVerbs: ['throw','yeet', 'hurl', 'chuck', 'lob'],
+    damageVerbs: ['destry','destroy','break','force','pry','crack','damage'],
+
     onIndex: 6,
     minimumSizeForDistanceViewing : 2,
     baseTickSize: 2,
@@ -250,6 +259,11 @@ var self = module.exports= {
         };
 
         return array;
+    },
+
+    
+    randomIntInRange: function(min, max) { // min and max included 
+        return Math.floor(Math.random() * (max - min + 1) + min);
     },
 
     /* --- Direction tools --- */

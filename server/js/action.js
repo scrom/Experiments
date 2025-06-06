@@ -638,6 +638,9 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'throw':
                     case 'chuck':
+                    case 'hurl':
+                    case 'yeet':
+                    case 'lob':
                         if (tools.directions.indexOf(_object0) > -1) {
                             _ticks = 0;
                             description = "I'm sorry, "+_verb+" what now?";
@@ -776,6 +779,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'attack':
                     case 'smash':
                     case 'bash':
+                    case 'beat':
                     case 'stab':
                     case 'slice':
                     case 'slash':
@@ -1165,6 +1169,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'force':
                     case 'pry':
                     case 'crack':
+                    case 'damage':
                         if (_verb == "destry") { _verb = "destroy";};
                         _object0 = " "+_object0+" ";
                         _object0 = _object0.replace(" open ", "").trim();

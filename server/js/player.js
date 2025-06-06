@@ -4681,26 +4681,27 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.getWeapon = function(verb) {
             //find the strongest non-breakable weapon the player is carrying.
-            var selectedWeaponStrength = 0;
-            var selectedWeapon = null;
             var weapons = _inventory.getAllObjectsOfType('weapon');
-            for(var index = 0; index < weapons.length; index++) {
-                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones. (except projectiles - which must be in working order)
-                if ((weapons[index].getType() == 'weapon') && ((!(weapons[index].isBreakable())) || (weapons[index].getSubType() == "projectile" && (!weapons[index].isBroken())))) {
-                    if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0 && weapons[index].checkComponents()) {    
-                        var weaponStrength = weapons[index].getAttackStrength();
-                        //console.debug('Player is carrying weapon: '+weapons[index].getDisplayName()+' strength: '+weaponStrength);
-                        if (weaponStrength > selectedWeaponStrength) {
-                            selectedWeapon = weapons[index];
-                            selectedWeaponStrength = weaponStrength;
-                        };
-                    };    
-                };
-            };
-            //if (selectedWeapon) {console.debug('Selected weapon: '+selectedWeapon.getDisplayName());}
-            //else {console.debug('Player is not carrying an automatically usable weapon')};
 
-            return selectedWeapon;
+            //sort by strength - note, damaged weapons may report randomly!
+            weapons.sort((function(a,b){return a.getAttackStrength() - b.getAttackStrength()}));
+            //in descending order - best first regardless of condition!
+            weapons.reverse(); 
+
+            for(var index = 0; index < weapons.length; index++) {
+                //player must explicitly choose to use a breakable weapon - will only auto-use non-breakable ones
+                if (weapons[index].isBreakable()) {continue;};
+
+                //projectiles must be in working order and usable
+                if (weapons[index].getSubType() == "projectile" && (weapons[index].isBroken())) {continue;}
+
+                    if (weapons[index].supportsAction(verb) && weapons[index].chargesRemaining() != 0 && weapons[index].checkComponents()) {  
+                        //we have our best available weapon: 
+                        //console.debug('Selected weapon: '+selectedWeapon.getDisplayName()
+                        return weapons[index];
+                    };    
+            };
+            //console.debug('Player is not carrying an automatically usable weapon');
         };
 
         self.getAttackStrength = function(verb) {
@@ -4711,17 +4712,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return _baseAttackStrength;
         };
 
-        self.hurt = function(pointsToRemove, attacker) {
-            if (pointsToRemove <= 0) {
+        self.hurt = function(damagePoints, attacker) {
+            if (damagePoints <= 0) {
                 return "";
             };
 
-            self.reduceHitPoints(pointsToRemove);
+            self.reduceHitPoints(damagePoints);
 
-            //console.debug('player hit, loses '+pointsToRemove+' HP. HP remaining: '+_hitPoints);
+            //console.debug('player hit, loses '+damagePoints+' HP. HP remaining: '+_hitPoints);
 
             _injuriesReceived ++;
-            _totalDamageReceived += pointsToRemove;
+            _totalDamageReceived += damagePoints;
 
             //reduce aggression
             self.decreaseAggression(1);
@@ -4730,19 +4731,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_hitPoints <=0) {return self.kill();};
             
             if (attacker) {
-                if (pointsToRemove > 35) {
+                if (damagePoints > 35) {
                     return "That really hurt. You really can't take many more hits like that. "
-                } else if (pointsToRemove > 25) {
+                } else if (damagePoints > 25) {
                     return "It feels like " + attacker.getPrefix() + " broke something in you. "
-                } else if (pointsToRemove > 15) {
+                } else if (damagePoints > 15) {
                     return "That hurt. ";
                 };
                 return "";
             };
 
-            if (pointsToRemove > 50) {
+            if (damagePoints > 50) {
                 return "It feels like you've damaged something serious. ";
-            } else if (pointsToRemove >= 15) {
+            } else if (damagePoints >= 15) {
                 return "You feel weaker. ";
             };
             return "";
@@ -4751,12 +4752,20 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.hit = function(verb, receiverName, artefactName){
             if (tools.stringIsEmpty(receiverName)){ return "You find yourself frantically lashing at thin air.";};
 
+            // List of attack verbs by type is held in tools library
+
+            let attackType;
+            if (tools.unarmedAttackVerbs.includes(verb)) {attackType = "unarmed"}
+            else if (tools.projectileAttackVerbs.includes(verb)) {attackType = "projectile"}
+            else if (tools.sharpAttackVerbs.includes(verb)) {attackType = "sharp"}
+            else if (tools.throwVerbs.includes(verb)) {attackType = "throw"};
+
             var weapon;
             //arm with named weapon
             if (!(tools.stringIsEmpty(artefactName))){ 
                 weapon = getObjectFromPlayerOrLocation(artefactName);
                 if (!(weapon)) {return "You prepare your most aggressive stance and then realise there's no "+artefactName+" here and you don't have one on your person.<br>Fortunately, I don't think anyone noticed.";};
-                if (verb == "throw") {
+                if (attackType == "throw") {
                     if (!(weapon.isCollectable())) {return "You attempt to grab "+weapon.getDescription()+" but can't get a good enough grip to "+verb+" "+weapon.getSuffix()+".";};
                 } else {
                     if (!(weapon.supportsAction(verb))) {return "You prepare your most aggressive stance and then realise you can't effectively "+verb+" with "+weapon.getDescription()+".";};
@@ -4764,11 +4773,18 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //try to get whatever the player might be armed with instead.
-            if (!(weapon) && verb != "punch" && verb != "kick" && verb != "slap" && verb != "smack"){
-                if (self.isArmed()) {
+            //some sort of generic or armed attack.
+            let choseUnarmedAttack = "";
+            if (!(weapon)){
+                if (tools.unarmedAttackVerbs.includes(verb)){
+                    if (self.isArmed()) {
+                        {choseUnarmedAttack = "You <i>are</i> armed, but if that's what you choose to do, so be it...<br>";}
+                    };
+                } else {
+                    //select weapon by attackType
                     weapon = self.getWeapon(verb);
                 };
-            }; 
+            };
 
             //get receiver if it exists
             var receiver = getObjectFromPlayerOrLocation(receiverName);
@@ -4842,18 +4858,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 return resultString;
             };
-
-            //check if unarmed
+            
+            //check if unarmed:
             if (!(weapon)) {
-                if (verb == 'nerf'||verb == 'shoot'||verb == 'stab') {
-                    resultString = "You jab wildly at "+ receiverDisplayName+" with your fingers whilst making savage noises.<br>"; 
+                if (tools.sharpAttackVerbs.includes(verb) || tools.projectileAttackVerbs.includes(verb)) {
+                    resultString = choseUnarmedAttack+"You jab wildly at "+ receiverDisplayName+" with your fingers whilst making savage noises.<br>"; 
                 } else if (verb=='kick') {
-                    resultString = "You lash out at "+ receiverDisplayName +" but your footwork is lacking something.<br>";
-                } else {
-                    if ((verb != "smash" && verb != "bash") || (!receiver.isCollectable()) ) {
-                        resultString = "You attempt a bare-knuckle fight with " + receiverDisplayName + ".<br>";
-                    } else if (verb == "smash" || verb == "bash") {
-                        resultString = "You repeatedly beat " + receiverDisplayName + " against the floor"
+                    resultString = choseUnarmedAttack+"You lash out at "+ receiverDisplayName +" but your footwork is lacking something.<br>";
+                } else if ((tools.unarmedAttackVerbs.includes(verb)) || ((!receiver.isCollectable() && (!tools.throwVerbs.includes(verb)))) ) {
+                        resultString = choseUnarmedAttack+"You attempt a bare-knuckle fight with " + receiverDisplayName + ".<br>";
+                } else if (tools.bluntAttackVerbs.includes(verb) || tools.genericAttackVerbs.includes(verb)) {
+                        resultString = choseUnarmedAttack+"You repeatedly "+verb+" " + receiverDisplayName + " against the floor";
                         var destroyString = receiver.destroy(true);
                         if (destroyString.indexOf("You destroyed ") == 0) {
                             destroyString = " and manage to destroy " + receiver.getPrefix().toLowerCase() + ". ";
@@ -4863,13 +4878,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += destroyString;
                         resultString = processReceiverDamage(receiver, resultString, true);
                         return resultString;
-                    };
                 };
+
 
                 if (receiver.getType() == "creature") {
 
                     if (receiver.getSubType() == "friendly") {
-                        return receiver.hurt(0, self);
+                        return receiver.hurt(0, self); //could alter this to support unarmed fighting as a skill later
                     } else {
                         resultString += "You do no visible damage";
                         var tempResult = receiver.hit(self);
@@ -4880,7 +4895,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         };
                     };
                 } else { //artefact
-                    if (verb == 'nerf' || verb == 'shoot') {
+                    if ((tools.sharpAttackVerbs.includes(verb) || tools.projectileAttackVerbs.includes(verb))) {
                         var randomReplies = ["", "", "You have to admit that was a bit of an odd thing to do. I hope you feel as foolish as you looked.", "I don't know what you think you're doing but it's not making you look good.", "I have an urge to hurl insults at you for that but I'll refrain for now."]
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         resultString +=  randomReplies[randomIndex];
@@ -4888,7 +4903,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
 
                     resultString += "That hurt. ";
-                    if (verb=="punch" || verb=="kick" || verb == "slap" || verb == "smack") {
+                    if (tools.unarmedAttackVerbs.includes(verb)) {
                         resultString += "You haven't really mastered unarmed combat, you might want to use something as a weapon in future.<br>"; 
                     } else {
                         resultString += "If you're going to do that again, you might want to "+verb+" "+receiver.getSuffix()+" <i>with</i> something.<br>"; 
@@ -4923,7 +4938,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return resultString;
             };
 
-            if (weapon.getSubType() == "projectile") {
+            if (weapon.getSubType() == "projectile" && (tools.projectileAttackVerbs.includes(verb) || tools.genericAttackVerbs.includes(verb))) {
                 var randomInt = Math.floor(Math.random() * 7); 
                 if (randomInt == 0) { //1 in 7 chance of failure
                     weapon.consume();
@@ -4942,10 +4957,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             //get initial damage level
-            var pointsToRemove = weapon.getAttackStrength() + (_baseAttackStrength/2);
+            var damagePoints = weapon.getAttackStrength() + (_baseAttackStrength/2);
 
-            if (verb == "throw") {
+            if (tools.throwVerbs.includes(verb)) {
                 //has the potential to do a lot of damage - limit somewhat by weight...
+                //@todoimprove wieght limiting to max a player can currently carry (if they aren#t already carrying item)
                 var weaponWeight = weapon.getWeight();
                 if (weaponWeight > (_inventory.getCarryWeight() / 2)) {
                     weaponWeight = _inventory.getCarryWeight() / 2;
@@ -4953,9 +4969,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (_baseAttackStrength < 0) {
                     //damage penalty
                     penaltyMultiplier = -2;
-                    pointsToRemove += weaponWeight * ((_baseAttackStrength/2) / penaltyMultiplier);      
+                    damagePoints += weaponWeight * ((_baseAttackStrength/2) / penaltyMultiplier);      
                 } else {
-                    pointsToRemove += weaponWeight * (_baseAttackStrength / 2);      
+                    damagePoints += weaponWeight * (_baseAttackStrength / 2);  //could be a big hit still!   
                 };
                 
                 if (_inventory.check(weapon.getName())) {
@@ -4967,31 +4983,32 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //alter strength/damage if bleeding or nearly dying.
             if (self.healthPercent() <=5) {
-                //double damage for dying blow if they can get one in!!
-                pointsToRemove = pointsToRemove*2
+                //double damage for dying blow if they can get one in!! "critical hit"
+                damagePoints = damagePoints*2
             } else if (self.healthPercent() <=10) {
                 //50% strength
-                pointsToRemove = pointsToRemove*0.5
+                damagePoints = damagePoints*0.5
             } else if (_bleeding) {
                 //80% strength
-                pointsToRemove = pointsToRemove*0.8
+                damagePoints = damagePoints*0.8
             };
 
             //occasionally miss
-            var randomInt = Math.floor(Math.random() * 5);
+            //@todo - improve chances if player has skills in particular attack type
+            var randomInt = Math.floor(Math.random() * 7); //rebalanced - 20% miss rate was too much ~14-15% is better for now/
             if (randomInt == 0) {
-                pointsToRemove = 0;
+                damagePoints = 0;
             };  
 
-            var tempResult = receiver.hurt(Math.floor(pointsToRemove), self);
-            if (verb == "throw") {
+            var tempResult = receiver.hurt(Math.floor(damagePoints), self);
+            if (tools.throwVerbs.includes(verb)) {
                 tempResult = tempResult.replace(" "+receiver.getSuffix(), " "+ receiverDisplayName);
             };
 
             var resultString = tempResult;
 
             if (receiver.getType() != "creature" && (!(receiver.isBreakable()))) {
-                if (verb == "throw") {
+                if (tools.throwVerbs.includes(verb)) {
                     resultString +=  "You "+verb+" "+ weaponName +" at "+ receiverDisplayName+".<br>It feels good in a gratuitously violent, wasteful sort of way.";
                 } else {
                     weapon.consume(2); //use up multiple charges!
@@ -5006,15 +5023,15 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var chargesRemaining = -1
             var componentChargesRemaining = -1
             if (weapon) {
-                if (verb != "throw") {
+                if (!(tools.throwVerbs.includes(verb))) {
                     chargesRemaining = weapon.consume(); //(we may have already used some earlier)
                     componentChargesRemaining = weapon.consumeComponents();
                 };
-                if (weapon.isBreakable() && (weapon.getSubType() != "projectile" || verb == "throw")) {
+                if (weapon.isBreakable() && (weapon.getSubType() != "projectile" || tools.throwVerbs.includes(verb))) {
                     weapon.bash();
                     if (weapon.isDestroyed()) {
                         var ohDear = "<br>Oh dear. You destroyed the " + weapon.getName() + ", " + weapon.getSuffix() + " wasn't the most durable of weapons.";
-                        if (verb == "throw") {
+                        if (tools.throwVerbs.includes(verb)) {
                             ohDear = "..<br>"+tools.initCap(weapon.getPrefix())+" wasn't exactly the most durable item around here.";
                         };
                         resultString += ohDear;
@@ -5029,7 +5046,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString +="<br>You damaged "+ weaponName +".";
                     };
                 };
-                if (!weapon.isDestroyed() && verb != "throw") {
+                if (!weapon.isDestroyed() && (!(tools.throwVerbs.includes(verb)))) {
                     if (chargesRemaining == 0) {
                         resultString +="<br>You used up all the "+weapon.getChargeUnit()+"s in "+ weaponName +".";
                     };

@@ -49,7 +49,7 @@ beforeEach(() =>
     p0.setLocation(l0);
     junkAttributes = { weight: 3, carryWeight: 3, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false };
     breakableJunkAttributes = { weight: 3, carryWeight: 3, attackStrength: 5, affinityModifier: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
-    weaponAttributes = { weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon", canCollect: true, canOpen: false, isEdible: false, isBreakable: false };
+    weaponAttributes = { weight: 4, carryWeight: 0, attackStrength: 25, type: "weapon",subType: "sharp", canCollect: true, canOpen: false, isEdible: false, isBreakable: false };
     iceCreamAttributes = { weight: 1, carryWeight: 0, attackStrength: 0, affinityModifier: 5, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false };
     containerAttributes = { weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: true, isEdible: false, isBreakable: true };
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really', junkAttributes, null);

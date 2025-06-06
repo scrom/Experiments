@@ -11,6 +11,8 @@ const map = require('../../server/js/map.js');
 let mb;
 let junkAttributes;
 let a0;
+let weakWeaponAttributes;
+let lightWeaponAttributes
 
 const removeAllDoorsInMap = function(map) {
     var locations = map.getLocations();
@@ -31,6 +33,9 @@ beforeEach(() => {
     mb = new mapBuilder.MapBuilder('../../data/','root-locations');
     junkAttributes = {weight: 3, carryWeight: 0, attackStrength: 5, type: "junk", canCollect: true, canOpen: false, isEdible: false, isBreakable: false};
     a0 = new artefact.Artefact('artefact', 'artefact of little consequence', 'not much to say really',junkAttributes, null);
+
+    weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", subType: "blunt", canCollect: true};
+    lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", subType: "blunt", canCollect: true};
 });
 
 afterEach(() => {
@@ -554,9 +559,6 @@ test('weakUnarmedCreatureWillCollectWeapon', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:10, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
 
@@ -574,9 +576,6 @@ test('strongUnarmedCreatureWillNotCollectWeapon', () => {
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
-
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -596,10 +595,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOne', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", subType: "blunt", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", subType: "blunt", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -629,10 +626,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneAndRepotItToPlayerInSam
     var c0 = new creature.Creature(creatureName, 'beastie', 'a small beastie', { weight: 120, attackStrength: 15, gender: 'unknown', type: 'creature', carryWeight: 50, health: 120, affinity: -10 });
     c0.go("n", l);
 
-    var weakWeaponAttributes = { weight: 1, attackStrength: 8, type: "weapon", canCollect: true };
-    var lightWeaponAttributes = { weight: 2, attackStrength: 12, type: "weapon", canCollect: true };
-    var mediumWeaponAttributes = { weight: 4, attackStrength: 25, type: "weapon", canCollect: true };
-    var heavyWeaponAttributes = { weight: 6, attackStrength: 50, type: "weapon", canCollect: true };
+    var mediumWeaponAttributes = { weight: 4, attackStrength: 25, type: "weapon",subType: "blunt", canCollect: true };
+    var heavyWeaponAttributes = { weight: 6, attackStrength: 50, type: "weapon", subType: "blunt", canCollect: true };
 
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -657,10 +652,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAr
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", subType: "blunt", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", subType: "blunt", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -687,10 +680,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckLocationContentsAr
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", subType: "blunt", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", subType: "blunt", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -718,10 +709,8 @@ test('armedCreatureWillCollectBestWeaponAndDropCurrentOneCheckInventoryContentsA
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
-    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", subType: "blunt", canCollect: true};
+    var heavyWeaponAttributes = {weight: 6, attackStrength: 50, type: "weapon", subType: "blunt", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "light weapon", "not heavy, not strong", lightWeaponAttributes);
@@ -749,9 +738,7 @@ test('armedCreatureWillIgnoreWeakerWeapons', () => {
     var c0 = new creature.Creature(creatureName,'beastie', 'a small beastie',{weight:120, attackStrength:15, gender:'unknown', type:'creature', carryWeight:50, health:120, affinity:0});
     c0.go("n", l);
 
-    var weakWeaponAttributes = {weight: 1, attackStrength: 8, type: "weapon", canCollect: true};
-    var lightWeaponAttributes = {weight: 2, attackStrength: 12, type: "weapon", canCollect: true};
-    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", canCollect: true};
+    var mediumWeaponAttributes = {weight: 4, attackStrength: 25, type: "weapon", subType: "blunt", canCollect: true};
 
     var weakWeapon = new artefact.Artefact("weak", "a weak weapon", "pretty much pointless", weakWeaponAttributes);
     var lightWeapon = new artefact.Artefact("light", "a light weapon", "not heavy, not strong", lightWeaponAttributes);
