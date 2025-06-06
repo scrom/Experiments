@@ -2768,159 +2768,109 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.drink = function (consumer) {
-            var s = "";
-            if (consumer.getType() != "player") {
-                s = "s";
-            };
-
-            if (self.checkCustomAction("drink")) {
-                return self.getCustomActionResult("drink");
-            };
-
-            if (self.getSubType() == "intangible") {return consumer.getPrefix()+" gulp"+s+" around trying to get a mouthful of "+self.getName()+".<br>After leaping around like a guppy out of water for a while, "+ consumer.getPrefix().toLowerCase()+" decide"+s+" to give up.";}
-            if ((!self.isOpen()) && self.opens()) {return consumer.getPrefix() +"'ll need to open "+self.getSuffix()+" up first.";};
-            if (self.isDestroyed()) {return "There's nothing left for "+consumer.getSuffix()+" to drink.";};
-            if(_edible && _liquid)  {
-                
-                var originalCharges = self.chargesRemaining();
-                var chargesRemaining = originalCharges;
-                
-                var amount = " ";
-                
-                if (chargesRemaining > 0) {
-                    chargesRemaining = self.consume();
+        self.consumeEdible = function(action, consumer) {
+            const drinkVerbs = ["drink", "gulp", "quaff", "neck"]
+            if (_liquid && (!drinkVerbs.includes(action))) {action = "drink"};
+            let s = consumer.getType() != "player" ? "s" : "";
+            if (self.checkCustomAction(action)) {
+                return self.getCustomActionResult(action);
+            }
+            if (self.getSubType() == "intangible") {
+                if (drinkVerbs.includes(action) ) {
+                    return consumer.getPrefix() + " gulp" + s + " around trying to get a mouthful of " + self.getName() + ".<br>After leaping around like a guppy out of water for a while, " + consumer.getPrefix().toLowerCase() + " decide" + s + " to give up.";
+                } else {
+                    return "Nope, that's not going to work for "+consumer.getSuffix()+".";
                 };
-                if (chargesRemaining == 0) {
-                    _weight = 0;
-                } else if (chargesRemaining > 0) {
-                    if (self.willDivide()) {
-                        //decrease weight
-                        var originalWeight = self.getWeight();
-                        var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
-                        self.setWeight(newWeight);
-                    };
-                    amount = " some of ";
-                };
+            }
+            if ((!self.isOpen()) && self.opens()) {
+                return consumer.getPrefix() + "'ll need to open " + self.getSuffix() + " up first.";
+            }
+            if (self.isDestroyed()) {
+                return "There's nothing left for " + consumer.getSuffix() + " to " + action + ".";
+            }
 
-                //was it the whole thing or a piece?
-                    var objectDescription = self.getDisplayName();
-                    if (originalCharges >=1) {
-                        let chargeUnit = self.getChargeUnit();
-                        
-                        if (chargeUnit == "charge") {
-                            objectDescription = "some "+self.getRawDescription();
-                        } else {                   
-                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription();
-                        };
-                    };
-
-                var resultString = tools.initCap(consumer.getPrefix())  +" drink" +s+ " "+objectDescription; //returnDescription;
-                if (_nutrition >=0) {
-                    consumer.recover(_nutrition);
-                        var randomReplies = [". You feel better for a drink.", ". Tasty. Much better!", ". That hit the spot.", ". That quenched your thirst."];
-                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                        resultString +=randomReplies[randomIndex];
-                } else { //nutrition is negative
-                    resultString += ". That wasn't a good idea. ";
-                    resultString += consumer.hurt(_nutrition * -1);
-                };
-                resultString += self.transmit(consumer, "bite");
-                return resultString;
-            };
-
-            return _itemPrefix+"'d get stuck in your throat if you tried."
-        };
-
-        self.eat = function (verb, consumer) {
-            var s = "";
-            if (consumer.getType() != "player") {
-                s = "s";
-            };
-            
-            if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
-            };
-
-            if (verb == "lick" || verb == "taste") {
+            if (action == "lick" || action == "taste") {
                 var taste = self.getTaste();
                 if (taste) { return taste;}
                 if (self.getType() == "food") {
                     if (_nutrition < 0) {return "Not so good. I'd avoid that if I were you."};
                     return "Tastes like " + self.getName()+".";
-                };                
-            };            
+                };
+            }
 
-            if (self.getSubType() == "intangible") {return "Nope, that's not going to work for "+consumer.getSuffix()+".";}
-            if ((!self.isOpen()) && self.opens()) {return tools.initCap(consumer.getPrefix())+"'ll need to open "+self.getSuffix()+" up first.";};
-            if (self.isDestroyed()) {return "There's nothing left to chew on.";};
-            if ((!(_chewed)) || (_edible && self.chargesRemaining() != 0)) {
-                _chewed = true; 
-                if (self.isEdible()) {
-                    
-                    var originalCharges = self.chargesRemaining();
-                    var chargesRemaining = originalCharges;
+            if (_edible) {
+                if (drinkVerbs.includes(action) && (!_liquid)) {
+                    return _itemPrefix + "'d get stuck in "+consumer.getPossessiveSuffix()+" throat if "+consumer.getPrefix().toLowerCase()+" tried.";
+                };
 
-                    //var returnDescription = self.descriptionWithCorrectPrefix();
-                    var amount = " ";
+                let originalCharges = self.chargesRemaining();
+                let chargesRemaining = originalCharges;
+                if (chargesRemaining > 0) {
+                    chargesRemaining = self.consume();
+                }
+                if (chargesRemaining == 0) {
+                    _weight = 0;
+                } else if (chargesRemaining > 0) {
+                    if (self.willDivide()) {
+                        let originalWeight = self.getWeight();
+                        let newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
+                        self.setWeight(newWeight);
+                    }
+                }
+                let objectDescription = self.getDisplayName();
+                if (originalCharges >= 1) {
+                    let chargeUnit = self.getChargeUnit();
+                    if (chargeUnit == "charge") {
+                        objectDescription = "some " + self.getRawDescription();
+                    } else {
+                        objectDescription = tools.anOrA(chargeUnit) + " of " + self.getRawDescription();
+                    }
+                }
+                let resultString = tools.initCap(consumer.getPrefix()) + " " + action + s + " " + objectDescription;
+                if (_nutrition >= 0) {
+                    consumer.recover(_nutrition);
 
-                    if (chargesRemaining >0) {
-                        chargesRemaining = self.consume();
-                    };
-                    if (chargesRemaining == 0) {
-                        _weight = 0;
-                    } else if (chargesRemaining > 0) {
-                        if (self.willDivide()) {
-                            //decrease weight
-                            var originalWeight = self.getWeight();
-                            var newWeight = Math.round((originalWeight / originalCharges) * chargesRemaining * 100) / 100;
-                            self.setWeight(newWeight);
-                        };
-                        amount = " some of "
-                    };
+                    let randomReplies = [];
+                    if (_liquid) {randomReplies = [". Yup, that was a very welcome drink.", ". Tasty. Much better!", ". That hit the spot.", ". That quenched "+consumer.getPossessiveSuffix()+" thirst."]}
+                    else if (self.getSubType() == "meal") {randomReplies = [". A good meal is just what " + consumer.getSuffix() + " needed.", ". That hit the spot.", ". That'll keep " + consumer.getSuffix() + " going for hours."]}
+                    else if (_nutrition >= 20) {randomReplies = [". Mmm, tasty. Much better!", ". That hit the spot.", ". That should keep " + consumer.getSuffix() + " going for a while."]}
+                    else {randomReplies = [". Mmm, tasty.", ". Not bad!", ". That'll stave off the hunger for a short while."]}
 
-                    //was it the whole thing or a piece?
-                    var objectDescription = self.getDisplayName();
-                    if (originalCharges >=1) {
-                        let chargeUnit = self.getChargeUnit();
-                        
-                        if (chargeUnit == "charge") {
-                            objectDescription = "some "+self.getRawDescription();
-                        } else {                   
-                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription();
-                        };
-                    };
-
-                    var resultString = tools.initCap(consumer.getPrefix())+" eat"+s+" "+objectDescription; //returnDescription;
-
-                    if (_nutrition >=0) {
-                        consumer.recover(_nutrition);
-                        var randomReplies;
-                        if (self.getSubType() == "meal") {
-                            randomReplies = [". A good meal is just what "+consumer.getSuffix()+" needed.", ". That hit the spot.", ". That'll keep " + consumer.getSuffix() + " going for hours."];
-                        } else if (_nutrition >= 20) {
-                            randomReplies = [". Mmm, tasty. Much better!", ". That hit the spot.", ". That should keep " + consumer.getSuffix() + " going for a while."];
-                        } else {
-                            randomReplies = [". Mmm, tasty.", ". Not bad!",". That'll stave off the hunger for a short while."];
-                        };
-                        var randomIndex = Math.floor(Math.random() * randomReplies.length);
-                        return resultString +=randomReplies[randomIndex];
-                    } else { //nutrition is negative
-                        resultString += ". That wasn't a good idea. ";
-                        resultString += consumer.hurt(_nutrition*-1);
-                    };
-                    resultString += self.transmit(consumer, "bite");
-                    return resultString;
-
+                    if (randomReplies.length > 0) {
+                        let randomIndex = Math.floor(Math.random() * randomReplies.length);
+                        resultString += randomReplies[randomIndex];
+                    }
                 } else {
+                    resultString += ". That wasn't a good idea. ";
+                    resultString += consumer.hurt(_nutrition * -1);
+                }
+                let transmissionMethod = _liquid ? "drink" : "bite";
+                resultString += self.transmit(consumer, transmissionMethod);
+                return resultString;
+            }
+            else if (drinkVerbs.includes(action) ) {
+                //we should only get here if it's an inedible liquid
+                return "After much gagging and spluttering, it's clear "+_itemSuffix + " just won't stay down.";
+            }
+            else if (_chewed) {
+                return "It's really not worth " + consumer.getSuffix() + " trying to eat "+_itemPrefix.toLowerCase()+" again."; 
+            }         
+            else {
                     if (_price > 0) { self.discountPriceByPercent(10); };
+                    _chewed = true;
                     _detailedDescription += ".<br>"+_itemPrefix+" looks like "+_itemDescriptivePrefix.toLowerCase()+" been chewed by something.";
                     consumer.hurt(5);
                     return tools.initCap(consumer.getPrefix())+" just can't seem to keep "+_itemSuffix+" in "+consumer.getPossessiveSuffix()+" mouth without causing an injury."
-                };
-            } else {
-                return "It's really not worth " + consumer.getSuffix() + " trying to eat "+_itemPrefix.toLowerCase()+" again."; 
             };
+            
+        };
+
+        self.drink = function (consumer) {
+            return self.consumeEdible("drink", consumer);
+        };
+
+        self.eat = function (verb, consumer) {
+            return self.consumeEdible(verb, consumer)
         };
 
         self.canDeliver = function (anObjectName) {

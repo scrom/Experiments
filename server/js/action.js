@@ -736,6 +736,9 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.close(_verb, _object0);
                         break;
                     case 'drink':
+                    case 'quaff':
+                    case 'neck':
+                    case 'gulp':
                         _ticks = 1;
                         description = _player.drink(_verb, _object0);
                         break;
