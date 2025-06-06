@@ -2872,9 +2872,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         let chargeUnit = self.getChargeUnit();
                         
                         if (chargeUnit == "charge") {
-                            objectDescription = "some "+self.getRawDescription()+".";
+                            objectDescription = "some "+self.getRawDescription();
                         } else {                   
-                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription()+".";
+                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription();
                         };
                     };
 
@@ -2883,10 +2883,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (_nutrition >=0) {
                         consumer.recover(_nutrition);
                         var randomReplies;
-                        if (_nutrition >= 20) {
-                            randomReplies = [", mmm, tasty. Much better!", ", that hit the spot.", ", that should keep " + consumer.getSuffix() + " going for a while."];
+                        if (self.getSubType() == "meal") {
+                            randomReplies = [". A good meal is just what "+consumer.getSuffix()+" needed.", ". That hit the spot.", ". That'll keep " + consumer.getSuffix() + " going for hours."];
+                        } else if (_nutrition >= 20) {
+                            randomReplies = [". Mmm, tasty. Much better!", ". That hit the spot.", ". That should keep " + consumer.getSuffix() + " going for a while."];
                         } else {
-                            randomReplies = [", mmm, tasty.", ", that'll stave off the hunger for a short while."];
+                            randomReplies = [". Mmm, tasty.", ". Not bad!",". That'll stave off the hunger for a short while."];
                         };
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         return resultString +=randomReplies[randomIndex];
