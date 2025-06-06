@@ -2802,14 +2802,27 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                     amount = " some of ";
                 };
-                var resultString = tools.initCap(consumer.getPrefix()) + " drink" + s + amount + self.getDisplayName()+". ";
+
+                //was it the whole thing or a piece?
+                    var objectDescription = self.getDisplayName();
+                    if (originalCharges >=1) {
+                        let chargeUnit = self.getChargeUnit();
+                        
+                        if (chargeUnit == "charge") {
+                            objectDescription = "some "+self.getRawDescription();
+                        } else {                   
+                            objectDescription = tools.anOrA(chargeUnit)+" of "+self.getRawDescription();
+                        };
+                    };
+
+                var resultString = tools.initCap(consumer.getPrefix())  +" drink" +s+ " "+objectDescription; //returnDescription;
                 if (_nutrition >=0) {
                     consumer.recover(_nutrition);
-                        var randomReplies = ["You feel better for a drink.", "Tasty. Much better!", "That hit the spot.", "That quenched your thirst."];
+                        var randomReplies = [". You feel better for a drink.", ". Tasty. Much better!", ". That hit the spot.", ". That quenched your thirst."];
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         resultString +=randomReplies[randomIndex];
                 } else { //nutrition is negative
-                    resultString += "That wasn't a good idea. ";
+                    resultString += ". That wasn't a good idea. ";
                     resultString += consumer.hurt(_nutrition * -1);
                 };
                 resultString += self.transmit(consumer, "bite");
