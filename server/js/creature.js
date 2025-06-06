@@ -301,31 +301,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return "some " + anItemDescription;
                 };
             };
-            switch (anItemDescription.charAt(0).toLowerCase()) {
-                case "u":
-                    if (anItemDescription.length == 1) { return "a '" + anItemDescription + "'"; };
-                    //note no break - fall through case
-                case "a":
-                case "e":
-                case "i":
-                case "o":
-                case "h":
-                case "8": //e.g. "an 8 gallon container"
-                    return "an " + anItemDescription;
-                    break;
-                case "f":
-                case "l":
-                case "m":
-                case "n":
-                case "r":
-                case "s":
-                case "x":
-                    if (anItemDescription.length == 1) { return "an '" + anItemDescription + "'"; };
-                    //note no break - fall through case
-                default:
-                    return "a " + anItemDescription;
-                    break;
-            };
+
+            return tools.anOrA(anItemDescription);
         };
 
         //console.debug('carrying: '+carrying);

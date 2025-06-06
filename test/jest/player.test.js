@@ -38,7 +38,7 @@ beforeEach(() => {
     foodAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false};
     food = new artefact.Artefact('cake', 'slab of sugary goodness', 'nom nom nom', foodAttributes, null);
     largeFoodAttributes = {defaultAction: "eat", weight: 9,type: "food",charges: 12, chargeUnit: "slice",chargesDescription: "There's enough here for about $charges good-sized $chargeUnit",isEdible: true, nutrition: 15}
-    largeFood = new artefact.Artefact('bigcake', 'a big cake', 'nom nom nom', largeFoodAttributes ,null);
+    largeFood = new artefact.Artefact('bigcake', 'big cake', 'nom nom nom', largeFoodAttributes ,null);
 
     bedAttributes = { weight: 10, carryWeight: 0, attackStrength: 0, type: "bed", canCollect: true};
     bed = new artefact.Artefact('bed', 'somewhere to rest', 'rest rest rest', bedAttributes, null);

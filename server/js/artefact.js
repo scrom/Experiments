@@ -412,6 +412,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!anItemDescription) {
                 //we're referencing self instead
                 anItemDescription = self.getRawDescription();
+                
+                //before we go any futher, we need to remove any spurious prefixes here (an, a, some, the)
+
                 plural = _plural;
                 if (self.isDestroyed()) {
                     return "some "+self.getRawDescription();  
@@ -446,6 +449,9 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (plural) {
                 //special cases
                 var collectionPlurals = ["pair", "pack", "bowl", "pool", "set", "box", "tin", "jar", "packet", "bag", "bottle", "cluster", "collection", "group"];
+                if (self.getChargeUnit() != "charge") {
+                    collectionPlurals.push(self.getChargeUnit());
+                };
                 var descriptionAsWords = anItemDescription.split(" "); 
                 if (descriptionAsWords.length>2) {
                     //"x of y" ?
@@ -459,31 +465,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
             };
             
-            switch (anItemDescription.charAt(0).toLowerCase()) {
-                case "u":
-                    if (anItemDescription.length == 1) {return "a"+state+"'"+anItemDescription+"'";};
-                    //note no break - fall through case
-                case "a":
-                case "e":
-                case "i":
-                case "o":
-                case "h":
-                case "8": //e.g. "an 8 gallon container"
-                    return "an"+state+anItemDescription;
-                    break;
-                case "f":
-                case "l":
-                case "m":
-                case "n":
-                case "r":
-                case "s":
-                case "x":
-                    if (anItemDescription.length == 1) {return "an"+state+"'"+anItemDescription+"'";};
-                    //note no break - fall through case
-                default:
-                    return "a"+state+anItemDescription;
-                    break;
-            };
+            return tools.anOrA(anItemDescription, state);
         };
 
         //public member functions
@@ -1810,9 +1792,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //as it's splittable, it should also be collectable (even if original object was not)
             //@todo - check this is actually duplicating attributes - risky if not.
             sourceAttributes.canCollect = true;
-            var rawDescription = self.getRawDescription();
 
-            var splitItem = new Artefact(self.getName(), rawDescription, self.getInitialDetailedDescription(), sourceAttributes, self.getLinkedExits(), self.getDeliveryItems());
+            var newDescription = self.getRawDescription();
+
+            var splitItem = new Artefact(self.getName(), newDescription, self.getInitialDetailedDescription(), sourceAttributes, self.getLinkedExits(), self.getDeliveryItems());
             splitItem.addSyns(self.getSyns());               
             splitItem.setCharges(chargeSize);
             splitItem.setWeight(newDestinationWeight);       

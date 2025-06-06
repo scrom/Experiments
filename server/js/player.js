@@ -1393,7 +1393,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             if (inventoryItem.isCollectable()) {                                
 
                                 if (inventoryItem.isComponentOf(container.getName())) {
-                                    if (container.hasPower()) { self.switchOnOrOff('switch', 'off'); }; //kill the power
+                                    if (container.hasPower()) {container.switchOnOrOff('switch', 'off'); }; //kill the power
                                 };
 
                                 container.removeObject(inventoryItemName);
@@ -1492,7 +1492,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";}; //just in case it fails for any other reason.
         
             _inventory.add(collectedArtefact);
-            return "You "+verb+" "+collectedArtefact.descriptionWithCorrectPrefix()+".";          
+            return "You "+verb+" "+collectedArtefact.descriptionWithCorrectPrefix()+".";
         };
 
         /*Allow player to get all available objects from a location or container*/

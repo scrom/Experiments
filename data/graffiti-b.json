@@ -4,8 +4,7 @@
     "displayName": "Graffiti B meeting room",
     "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
     "attributes": {
-      "imageName": "graffiti-b.jpg",
-      "dark": true
+      "imageName": "graffiti-b.jpg"
     },
     "exits": [
       {

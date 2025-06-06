@@ -112,6 +112,35 @@ var self = module.exports= {
         return resultString;
     },
 
+    anOrA: function(anItemDescription, state) {
+            if (!state) {state = " "};
+            switch (anItemDescription.charAt(0).toLowerCase()) {
+                case "u":
+                    if (anItemDescription.length == 1) {return "a"+state+"'"+anItemDescription+"'";};
+                    //note no break - fall through case
+                case "a":
+                case "e":
+                case "i":
+                case "o":
+                case "h":
+                case "8": //e.g. "an 8 gallon container"
+                    return "an"+state+anItemDescription;
+                    break;
+                case "f":
+                case "l":
+                case "m":
+                case "n":
+                case "r":
+                case "s":
+                case "x":
+                    if (anItemDescription.length == 1) {return "an"+state+"'"+anItemDescription+"'";};
+                    //note no break - fall through case
+                default:
+                    return "a"+state+anItemDescription;
+                    break;
+            };
+    },
+
     pluraliseDescription: function (aDescription, aCount) {
         //pluralise a description based on the count provided.
         if (self.stringIsEmpty(aDescription)) { return ""; };    
