@@ -32,6 +32,22 @@ module.exports.Validator = function Validator(dataDirectory) {
             });
             console.info(`Data Validation completed.`);
         };
+
+        self.parseJSONFile = function(fileName) {
+            console.info(`Data validation: Validating JSON file: ${fileName}`);
+            const filePath = path.join(dataDir, fileName);
+            if (!fs.existsSync(filePath)) {
+                throw new Error(`File does not exist: ${filePath} data load cannot proceed.`);
+            };
+            let content = fs.readFileSync(filePath, 'utf8');
+            try {
+                content = JSON.parse(content);
+                //console.info(`VALID JSON: ${fileName}`);
+                return content;
+            } catch {
+                throw new Error(`Bad JSON in ${fileName} data load cannot proceed.`);
+            };
+        };
     }
     catch(err) {
 	    console.error("Unable to create Validator object: "+err);
