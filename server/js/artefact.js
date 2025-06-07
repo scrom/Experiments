@@ -1130,7 +1130,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                if ((!(_missions[i].hasParents()))||includeChildren == true) {
                     missions.push(_missions[i]);
                 };
             };

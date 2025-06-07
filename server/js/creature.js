@@ -917,7 +917,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var missions = [];
             //console.debug("creature missions for: " + self.getName());
             for (var i = 0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                if ((!(_missions[i].hasParents()))||includeChildren == true) {
                     missions.push(_missions[i]);
                 };
             };
@@ -2825,7 +2825,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_huntingPlayer) {return true;}; //if set outside mission
             var huntingPlayer = false;
             for (var i=0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))) {
+                if ((!(_missions[i].hasParents()))) {
                     if (_missions[i].getHuntPlayer()) {
                         huntingPlayer = true;
                         break;
@@ -2844,7 +2844,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             }; 
 
             for (var i=0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))) {
+                if ((!(_missions[i].hasParents()))) {
                     _missions[i].setHuntPlayer(bool);
                 };
             };
@@ -3043,11 +3043,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             for (i=0; i< _missions.length; i++) {
-                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
+                if (_missions[i].hasDialogue() && (!(_missions[i].hasParents()))) {
                     if (_missions[i].nextDialogueContainsKeyWord(keyword)) {
                         return self.reply("",player, keyword, map);
                     };
-                } else if (!(_missions[i].hasParent())) {
+                } else if (!(_missions[i].hasParents())) {
                     //no dialogue
                     var rewardObject = _missions[i].getRewardObject();
                     if (rewardObject) {
@@ -3459,7 +3459,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var missionsToRemove = [];
             var requestedObject;
             for (i=0; i< _missions.length; i++) {
-                if (_missions[i].hasDialogue() && (!(_missions[i].hasParent()))) {
+                if (_missions[i].hasDialogue() && (!(_missions[i].hasParents()))) {
                     if (_missions[i].isFailedOrComplete()) { 
                         missionsToRemove.push(_missions[i].getName());
                     } else {

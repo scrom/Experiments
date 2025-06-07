@@ -8,8 +8,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _name = name.toLowerCase();
         var _displayName = displayName;
         var _description = description;
-        var _parent; //parent mission - allows threads to be built up.
-        var _parents; //an object of parents - allows "and" or "or" parents to be set.
+        var _parents; //an object of parent missions - allows "and", "or", "not" parents to be set. Enable threads to be built up.
         var _dialogue = []; //an array/collection of dialogue sentences. 
         var _isStatic = false; //if true, mission stays in source location.
         var _conversationHistory = []; //track prior dialogue
@@ -31,12 +30,60 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 	    var _objectName = "mission";
         //console.debug(_objectName + ' created: '+_name+', '+_destination);
 
+        var convertOldStyleParentToNewStyleParents = function(oldParent) {
+            //old style and/or lists look like this: "parent": { "option1": "or", "option2": "or" }
+            if (!oldParent) { return null; }
+            if (typeof oldParent == "string") {
+                return {allOf: [oldParent]}; //convert to allOf parent
+            };
+            if (Array.isArray(oldParent)) {
+                if (oldParent.length == 0) { return null; }; //no parent
+                    return {allOf: oldParent};
+            } else if (typeof oldParent == "object") {
+                //work through keys of oldParent, if *value* is "and", add key to allOf, if *value* is "or", add key to anyOf
+                let allOfArray = [];
+                let anyOfArray = [];
+                for (var key in oldParent) {
+                    if (oldParent.hasOwnProperty(key)) {
+                        if (oldParent[key] == "and") {
+                            allOfArray.push(key);
+                        } else if (oldParent[key] == "or") {
+                            anyOfArray.push(key);
+                        } else {
+                            allOfArray.push(key); //default to allOf
+                        }
+                    }
+                }
+                if (allOfArray.length == 0 && anyOfArray.length == 0) {
+                    return null; //no parents
+                };
+                if (anyOfArray.length == 0 && allOfArray.length > 0) {
+                    return {allOf: allOfArray};
+                };
+                if (allOfArray.length == 0 && anyOfArray.length > 0) {
+                    return {anyOf: anyOfArray};
+                };
+                return {allOf: allOfArray, anyOf: anyOfArray};
+            };
+            return oldParent; //if we get here, oldParent is already in the new style format, so return it as is.
+        };
+
         var processAttributes = function(missionAttributes) {
             if (!missionAttributes) {return null;}; //leave defaults preset
-
             if (missionAttributes.type != undefined) {_type = missionAttributes.type;};
-            if (missionAttributes.parent != undefined) {_parent = missionAttributes.parent;};
-            if (missionAttributes.parents != undefined) {_parents = missionAttributes.parents;};
+
+            //handle old vs new stle parent attributes
+            if (missionAttributes.parent != undefined && missionAttributes.parents == undefined) {
+                //convert old style parent
+                _parents = convertOldStyleParentToNewStyleParents(missionAttributes.parent)
+            } else if (missionAttributes.parents != undefined && missionAttributes.parent == undefined) {
+                //new style parents
+                _parents = missionAttributes.parents;
+            } else if (missionAttributes.parents != undefined && missionAttributes.parent != undefined) {
+                //both set, throw error
+                throw "Mission "+_name+" has both old style parent and new style parents set. Please remove one.";
+            };
+
             if (missionAttributes.missionObject != undefined) {_missionObject = missionAttributes.missionObject;};
             if (missionAttributes.destination != undefined) {
                 _destination = missionAttributes.destination;
@@ -106,7 +153,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.getCurrentAttributes = function() {
             var currentAttributes = {};
             if (_type != "mission") {currentAttributes.type = _type;};
-            if (_parent) {currentAttributes.parent = _parent;};
             if (_parents) {currentAttributes.parents = _parents;};
             if (_missionObject) {currentAttributes.missionObject = _missionObject;};
             if (_destination && (_destination != _missionObject)) {currentAttributes.destination = _destination;};
@@ -197,99 +243,101 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.clearParent = function (missionName) {
-            //@todo if missionName is provided, only clear that parent
-            if (!missionName || missionName == _parent) {
+            //this is called with *no* parent name to clear all parents - e.g. "activateMission"
+            if (!missionName || missionName == _parents) { //if parents is just name
                 //clear all parents
-                _parent = null;
+                _parents = null;
                 return true;               
             };
 
-            //mission name is specified and _parent is not a single mission name
-            if (typeof (_parent) == 'object') {
-                if (Object.prototype.toString.call(_parent) === '[object Array]') {
+            //mission name is specified and _parents is a basic array
+            if (typeof (_parents) == 'object') {
+                if (Array.isArray(_parents)) {
                     //arrays are an "and" list of parents.
-                    for (var p = 0; p < _parent.length; p++) {
-                        if (_parent[p] == missionName) {
-                            _parent.splice(p, 1);
-                            if (_parent.length == 0) {
-                                _parent = null;
+                    for (var p = 0; p < _parents.length; p++) {
+                        if (_parents[p] == missionName) {
+                            _parents.splice(p, 1);
+                            if (_parents.length == 0) {
+                                _parents = null;
                             };
                             return true;
                         };
                     };
                 } else {
-                    //objects can be either "and" or "or"
-                    var removedAttrCount = 0;
-                    var attrCount = 0;
-                    var andAttrCount = 0;
-                    for (var attr in _parent) {
-                        //this assumes the *value* stored in the attribute is the and/or and the attribute name is the mission name
-                        if (attr == missionName) {
-                            removedAttrCount++;
-                            delete _parent[attr];
-                        } else {
-                            attrCount++;
-                            if (_parent[attr] == "and") {
-                                andAttrCount++;
-                            };                            
-                        };
-                    };
-                    if (attrCount == 0) {
-                        //no attributes left to remove
-                        _parent = null;
+                    //objects can be either "allOf" or "anyOf"
+                    //remove named mission from _parents. If it's part of an "anyOf" list, remove all "anyOf" parents.
+                    if (_parents.hasOwnProperty(missionName)) {
+                        delete _parents[missionName];
+                    }
+                    //if we have no parents left, clear the parent entirely
+                    if (Object.keys(_parents).length == 0) {
+                        _parents = null;
                         return true;
                     };
-                    if (removedAttrCount > 0) {
-                        //we've removed an attribute, are there any "and" attrs left?
-                        if (andAttrCount == 0) {
-                            //no "and" attrs left - clear parent entirely
-                            _parent = null;
-                            return true;
+                    //if we have an "allOf" list, we need to check if the missionName is in there, if so, remove it and if it's the last one, clear the "allOf" element entirely
+                    if (_parents.hasOwnProperty("allOf")) {
+                        var allOf = _parents.allOf;
+                        if (allOf.indexOf(missionName) > -1) {
+                            allOf.splice(allOf.indexOf(missionName), 1);
+                            if (allOf.length == 0) {
+                                delete _parents.allOf;
+                            };
                         };
                     };
+                    //if we have an "anyOf" list, we need to check if the missionName is in there and remove the entire "anyOf" element
+                    if (_parents.hasOwnProperty("anyOf")) {
+                        var anyOf = _parents.anyOf;
+                        if (anyOf.indexOf(missionName) > -1) {
+                            delete _parents.anyOf;
+                        };
+                    };
+                    
+                    //if we have no "allOf" or "anyOf" parents left, clear the parent entirely
+                    if (!(_parents.hasOwnProperty("allOf")) && !(_parents.hasOwnProperty("anyOf"))) {
+                            _parents = null;
+                                return true;
+                    };                    
                 };
-
             };
 
             return false;
         };
 
         self.checkParent = function (missionName) {
-            //@todo handle where parent is an object/array here instead
-            if (missionName == _parent) { return true };
-            if (typeof (_parent) == 'object') {
-                if (Object.prototype.toString.call(_parent) === '[object Array]') {
+            if (missionName == _parents) { return true };
+            if (typeof (_parents) == 'object') {
+                if (Array.isArray(_parents)) {
                     //arrays are an "and" list of parents.
-                    for (var p = 0; p < _parent.length; p++) {
-                        if (_parent[p] == missionName) {
+                    if (_parents.includes(missionName)) {return true;};
+                } else {
+                    //objects can contain "allOf" or "anyOf"
+                    //check if missionName is in "allOf" or "anyOf" parents
+                    if (_parents.hasOwnProperty("allOf")) {
+                        if (_parents.allOf.includes(missionName)) {
                             return true;
                         };
                     };
-                } else {
-                    //objects can be either "and" or "or"
-                    for (var attr in _parent) {
-                        //this assumes the *value* stored in the attribute is the parent name
-                        if (attr == missionName) {
+                    if (_parents.hasOwnProperty("anyOf")) {
+                        if (_parents.anyOf.includes(missionName)) {
                             return true;
                         };
                     };
                 };
-
             };
             return false;
         };
         
-        self.getParent = function () {
-            if (_parent) {
+        self.getParents = function () {
+            if (_parents) {
                 //@todo if parent is an object or array, return string version
-                return _parent
+                return _parents
             };
             return "none";
         };
 
-        self.hasParent = function () {
+        self.hasParents = function () {
             //checks if mission has any parent set
-            if (_parent) { return true };
+            if (_parents) { return true };
             return false;
         };
 
@@ -360,14 +408,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.wantsToTalk = function() {
-            if (self.hasParent()) {return false;};
+            if (self.hasParents()) {return false;};
             if (!(self.hasDialogue())) {return false;};
             if (_conversationState == 0) {return true;};
             return false;
         };
 
         self.willInitiateConversation = function() {
-            if (self.hasParent()) {return false;};
+            if (self.hasParents()) {return false;};
             if (!(self.hasDialogue())) {return false;};
             if (_conversationState == 0 && _initiateConversation)  {
                 return true;
@@ -796,7 +844,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
             //we also exit early if the mission is already failed or completed
-            if (self.isFailedOrComplete()||self.hasParent()) { return null; }; 
+            if (self.isFailedOrComplete()||self.hasParents()) { return null; }; 
 
             //console.debug('Checking state for mission: '+_name);
             var destroyedDestination = self.getDestroyedObject(player, _destination);

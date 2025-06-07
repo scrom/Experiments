@@ -716,7 +716,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                if ((!(_missions[i].hasParents()))||includeChildren == true) {
                     missions.push(_missions[i]);
                 };
             };

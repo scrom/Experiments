@@ -772,8 +772,8 @@ test('clearingSingleParentForMissionWith2AndParentsOnlyClearsSingleParent', () =
 
     //curiously, the nodeunit version of this test sees 2 strings returned and passes. 
     //Have modified the Jest version to pass following what the code *does* currently but unclear whether string or array should be returned (see TODO in mission.js)
-    const expectedResult = ["startoflunch"];
-    const actualResult = childMission.getParent();
+    const expectedResult = {"allOf": ["startoflunch"]};
+    const actualResult = childMission.getParents();
     expect(actualResult).toStrictEqual(expectedResult);
 });
 
@@ -821,7 +821,7 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         m0.updateMissions(1, p0);
 
         var expectedResult = "none";
-        var actualResult = mission.getParent();
+        var actualResult = mission.getParents();
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -872,8 +872,6 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
     });
 
     test('mapBuilderCanHandleBuildingAMissionWith_OR_ParentsDefined', () => {
-        const mc = new missionController.MissionController();
-
         const missionJSONString = {
             "object": "mission",
             "name": "test mission",
@@ -892,7 +890,7 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
 
         const mission = mb.buildMission(missionJSONString);
 
-        const expectedResult = '{"object":"mission","name":"test mission","displayName":"will it build?","attributes":{"type":"event", "parent":{"option1":"or", "option2":"or"}},"conditionAttributes":{"time":"666"},"reward":{"message":"tadaaa!"}}';
+        const expectedResult = '{"object":"mission","name":"test mission","displayName":"will it build?","attributes":{"type":"event", "parents":{"anyOf":["option1","option2"]}},"conditionAttributes":{"time":"666"},"reward":{"message":"tadaaa!"}}';
         const actualResult = mission.toString();
         expect(actualResult).toBe(expectedResult);
     });
@@ -923,8 +921,8 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
 
         m0.updateMissions(1, p0);
 
-        const expectedResult = '{"option1":"and"}';
-        const actualResult = tools.literalToString(mission.getParent());
+        const expectedResult = '{"allOf":["option1"]}';
+        const actualResult = tools.literalToString(mission.getParents());
         expect(actualResult).toBe(expectedResult);
     });
 

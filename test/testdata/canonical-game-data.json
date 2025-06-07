@@ -587,7 +587,11 @@
                 "displayName": "It's lunch time",
                 "attributes": {
                     "type": "event",
-                    "parent": "endofbreakfast",
+                    "parents": {
+                        "allOf": [
+                            "endofbreakfast"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -714,7 +718,11 @@
                 "displayName": "lunch time is over",
                 "attributes": {
                     "type": "event",
-                    "parent": "startoflunch",
+                    "parents": {
+                        "allOf": [
+                            "startoflunch"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -766,7 +774,11 @@
                 "displayName": "it's the end of the day",
                 "attributes": {
                     "type": "event",
-                    "parent": "endoflunch",
+                    "parents": {
+                        "allOf": [
+                            "endoflunch"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -798,7 +810,11 @@
                 "displayName": "get everyone on the party bus",
                 "description": "You did a great job of saving the company. Time for a break. Get everyone onto the party bus before it leaves!",
                 "attributes": {
-                    "parent": "partybusprep",
+                    "parents": {
+                        "allOf": [
+                            "partybusprep"
+                        ]
+                    },
                     "missionObject": "bus"
                 },
                 "failAttributes": {
@@ -893,7 +909,11 @@
                 "displayName": "steal some valuables",
                 "attributes": {
                     "type": "event",
-                    "parent": "stealsketchbook"
+                    "parents": {
+                        "allOf": [
+                            "stealsketchbook"
+                        ]
+                    }
                 },
                 "conditionAttributes": {
                     "time": "35"
@@ -1028,7 +1048,11 @@
                 "name": "scholar",
                 "displayName": "read all the things",
                 "attributes": {
-                    "parent": "bookworm",
+                    "parents": {
+                        "allOf": [
+                            "bookworm"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -1044,7 +1068,11 @@
                 "name": "chatterbox",
                 "displayName": "talk to 15 people",
                 "attributes": {
-                    "parent": "keyfob",
+                    "parents": {
+                        "allOf": [
+                            "keyfob"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -1060,7 +1088,11 @@
                 "name": "networker",
                 "displayName": "talk to every character possible",
                 "attributes": {
-                    "parent": "chatterbox",
+                    "parents": {
+                        "allOf": [
+                            "chatterbox"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -1106,7 +1138,11 @@
                 "name": "doctor",
                 "displayName": "heal more than 8 times",
                 "attributes": {
-                    "parent": "first-aider",
+                    "parents": {
+                        "allOf": [
+                            "first-aider"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -1122,7 +1158,11 @@
                 "name": "asshole",
                 "displayName": "really upset a lot of people",
                 "attributes": {
-                    "parent": "thinice",
+                    "parents": {
+                        "allOf": [
+                            "thinice"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -1585,7 +1625,11 @@
                         "displayName": "collect Chris' bike",
                         "description": "Chris booked his bike in for repairs, you'll need to <i>give</i> Chris' bike to Russell.",
                         "attributes": {
-                            "parent": "fixchrisbike",
+                            "parents": {
+                                "allOf": [
+                                    "fixchrisbike"
+                                ]
+                            },
                             "missionObject": "bike",
                             "destination": "russell",
                             "static": true
@@ -2303,7 +2347,11 @@
                         "displayName": "get Derek's chocolate",
                         "description": "Derek's wants to warm up some chocolate.",
                         "attributes": {
-                            "parent": "latte",
+                            "parents": {
+                                "allOf": [
+                                    "latte"
+                                ]
+                            },
                             "missionObject": "chocolate",
                             "destination": "derek benson",
                             "static": true,
@@ -2804,7 +2852,11 @@
                         "displayName": "get the party started",
                         "description": "Michael wants to organise a celebration",
                         "attributes": {
-                            "parent": "saveredgate",
+                            "parents": {
+                                "allOf": [
+                                    "saveredgate"
+                                ]
+                            },
                             "missionObject": "michael weston",
                             "static": true,
                             "dialogue": [
@@ -2849,7 +2901,11 @@
                         "displayName": "let Michael know you're ready to party.",
                         "description": "Michael's ordered a bus. Let's get people moving.",
                         "attributes": {
-                            "parent": "partytime",
+                            "parents": {
+                                "allOf": [
+                                    "partytime"
+                                ]
+                            },
                             "missionObject": "michael weston",
                             "static": true,
                             "dialogue": [
@@ -3000,7 +3056,11 @@
                         "displayName": "find some Rum for Stephen.",
                         "description": "Stephen's team have just shipped a major release. He wants Rum to celebrate",
                         "attributes": {
-                            "parent": "latte",
+                            "parents": {
+                                "allOf": [
+                                    "latte"
+                                ]
+                            },
                             "missionObject": "rum bottle",
                             "destination": "stephen cartwright",
                             "static": true,
@@ -3227,7 +3287,11 @@
                         "displayName": "find The Gaurdian for Brandon",
                         "description": "Brandon wants to do the crossword.",
                         "attributes": {
-                            "parent": "latte",
+                            "parents": {
+                                "allOf": [
+                                    "latte"
+                                ]
+                            },
                             "missionObject": "guardian newspaper",
                             "destination": "brandon hamilton",
                             "static": true,
@@ -3650,7 +3714,11 @@
                         "displayName": "destroy the maracas",
                         "description": "Chris gave Jim something really annoying.",
                         "attributes": {
-                            "parent": "saveredgate",
+                            "parents": {
+                                "allOf": [
+                                    "saveredgate"
+                                ]
+                            },
                             "missionObject": "maracas",
                             "initiateConversation": true,
                             "huntPlayer": true,
@@ -4034,7 +4102,11 @@
                         "displayName": "get help from Aileen dealing with Zombies",
                         "description": "Aileen knows what's going on.",
                         "attributes": {
-                            "parent": "playerreachescrashsite",
+                            "parents": {
+                                "allOf": [
+                                    "playerreachescrashsite"
+                                ]
+                            },
                             "missionObject": "aileen emerson",
                             "initiateConversation": true,
                             "huntPlayer": true,
@@ -4219,7 +4291,11 @@
                         "displayName": "fix Chris' bike",
                         "description": "Chris wants his bike fixed.",
                         "attributes": {
-                            "parent": "beans",
+                            "parents": {
+                                "allOf": [
+                                    "beans"
+                                ]
+                            },
                             "missionObject": "chris maddox",
                             "static": true,
                             "dialogue": [
@@ -4631,7 +4707,11 @@
                         "displayName": "find Aaron's trainers",
                         "description": "Aaron soaked his feet.",
                         "attributes": {
-                            "parent": "beans",
+                            "parents": {
+                                "allOf": [
+                                    "beans"
+                                ]
+                            },
                             "missionObject": "trainers",
                             "destination": "aaron prescott",
                             "static": true,
@@ -4935,7 +5015,11 @@
                 "displayName": "lay low for a while",
                 "attributes": {
                     "type": "event",
-                    "parent": "stealvaluables"
+                    "parents": {
+                        "allOf": [
+                            "stealvaluables"
+                        ]
+                    }
                 },
                 "conditionAttributes": {
                     "time": "47"
@@ -5392,7 +5476,11 @@
                         "displayName": "Joseph's got beans for the coffee machine",
                         "description": "Joseph has a coffee bean delivery.",
                         "attributes": {
-                            "parent": "repaircoffeemachine",
+                            "parents": {
+                                "allOf": [
+                                    "repaircoffeemachine"
+                                ]
+                            },
                             "missionObject": "joseph baxter",
                             "initiateConversation": true,
                             "huntPlayer": true,
@@ -7297,7 +7385,11 @@
                         "displayName": "learn projector repair from Angelina",
                         "description": "Angelina knows how to fix stuff.",
                         "attributes": {
-                            "parent": "keyfob",
+                            "parents": {
+                                "allOf": [
+                                    "keyfob"
+                                ]
+                            },
                             "missionObject": "angelina morrison",
                             "static": true,
                             "dialogue": [
@@ -10875,7 +10967,11 @@
                 "displayName": "there's been a plane crash",
                 "attributes": {
                     "type": "event",
-                    "parent": "latte",
+                    "parents": {
+                        "allOf": [
+                            "latte"
+                        ]
+                    },
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
@@ -11401,7 +11497,11 @@
                                             "displayName": "Jordan needs to reach the machine room",
                                             "attributes": {
                                                 "type": "event",
-                                                "parent": "planecrash",
+                                                "parents": {
+                                                    "allOf": [
+                                                        "planecrash"
+                                                    ]
+                                                },
                                                 "missionObject": "jordan marshall",
                                                 "destination": "machine-room-east",
                                                 "static": true
@@ -11578,7 +11678,11 @@
                                             "displayName": "fill the van",
                                             "description": "Steal &pound;100 worth of valuables from the company.",
                                             "attributes": {
-                                                "parent": "awaitvanarrival",
+                                                "parents": {
+                                                    "allOf": [
+                                                        "awaitvanarrival"
+                                                    ]
+                                                },
                                                 "missionObject": "jordan marshall",
                                                 "initiateConversation": true,
                                                 "huntPlayer": true,
@@ -11691,7 +11795,11 @@
                                             "displayName": "steal some valuables",
                                             "description": "Steal &pound;100 worth of valuables from the company.",
                                             "attributes": {
-                                                "parent": "vanarrival",
+                                                "parents": {
+                                                    "allOf": [
+                                                        "vanarrival"
+                                                    ]
+                                                },
                                                 "missionObject": "van"
                                             },
                                             "conditionAttributes": {
@@ -11765,7 +11873,11 @@
                                             "name": "givetrusttokentoplayer",
                                             "displayName": "receive a token of trust",
                                             "attributes": {
-                                                "parent": "laylow",
+                                                "parents": {
+                                                    "allOf": [
+                                                        "laylow"
+                                                    ]
+                                                },
                                                 "missionObject": "jordan marshall",
                                                 "initiateConversation": true,
                                                 "huntPlayer": true,
@@ -11793,7 +11905,11 @@
                                     "displayName": "Player reaches plane crash site",
                                     "attributes": {
                                         "type": "event",
-                                        "parent": "planecrash",
+                                        "parents": {
+                                            "allOf": [
+                                                "planecrash"
+                                            ]
+                                        },
                                         "missionObject": "player"
                                     },
                                     "conditionAttributes": {
@@ -13197,7 +13313,11 @@
                 "displayName": "heal the survivors from the bus explosion",
                 "description": "Things just seem to be getting worse for you.<br>You need to save lives - fast. Time to triage and <i>heal</i> the wounded, I hope you've got a medical kit handy.",
                 "attributes": {
-                    "parent": "partybus"
+                    "parents": {
+                        "allOf": [
+                            "partybus"
+                        ]
+                    }
                 },
                 "failAttributes": {
                     "deathToll": {
@@ -13457,7 +13577,11 @@
                         "displayName": "find some post-its for Chris.",
                         "description": "Chris is due to run a workshop but needs some fresh stickies.",
                         "attributes": {
-                            "parent": "saveredgate",
+                            "parents": {
+                                "allOf": [
+                                    "saveredgate"
+                                ]
+                            },
                             "missionObject": "post-it pad",
                             "destination": "chris sanders",
                             "static": true,
@@ -13791,7 +13915,11 @@
                         "displayName": "find the rest of the podcast team.",
                         "description": "Lou's trying to find Daniel and Robin.",
                         "attributes": {
-                            "parent": "latte",
+                            "parents": {
+                                "allOf": [
+                                    "latte"
+                                ]
+                            },
                             "missionObject": "lou boynton",
                             "initiateConversation": true,
                             "huntPlayer": true,
@@ -14629,7 +14757,11 @@
                         "displayName": "repair the projector",
                         "description": "The projector's broken, someone needs to fix it.",
                         "attributes": {
-                            "parent": "teachprojectorrepair",
+                            "parents": {
+                                "allOf": [
+                                    "teachprojectorrepair"
+                                ]
+                            },
                             "missionObject": "projector"
                         },
                         "failAttributes": {
@@ -14758,7 +14890,11 @@
                         "displayName": "retrieve the stolen hard disk",
                         "description": "Retrieve a stolen hard drive.",
                         "attributes": {
-                            "parent": "saveredgate",
+                            "parents": {
+                                "allOf": [
+                                    "saveredgate"
+                                ]
+                            },
                             "missionObject": "hard disk",
                             "destination": "stephen goodwin",
                             "initiateConversation": true,
@@ -15131,7 +15267,11 @@
                         "displayName": "give Violet something interesting to read",
                         "description": "Things are pretty quiet down here today and Violet looks bored. I reckon she'd appreciate something interesting to read.",
                         "attributes": {
-                            "parent": "keyfob",
+                            "parents": {
+                                "allOf": [
+                                    "keyfob"
+                                ]
+                            },
                             "missionObject": "50 shades",
                             "destination": "violet wilmott",
                             "static": true
@@ -15190,7 +15330,11 @@
                 "displayName": "get a keyfob",
                 "description": "(You need to <i>sign in</i> to get a keyfob for the office.)",
                 "attributes": {
-                    "parent": "talktoviolet",
+                    "parents": {
+                        "allOf": [
+                            "talktoviolet"
+                        ]
+                    },
                     "missionObject": "visitors book",
                     "static": true
                 },
@@ -15909,7 +16053,11 @@
                         "displayName": "hide Jim' wig",
                         "description": "Make the wig 'go away'.",
                         "attributes": {
-                            "parent": "keyfob",
+                            "parents": {
+                                "allOf": [
+                                    "keyfob"
+                                ]
+                            },
                             "missionObject": "wig",
                             "static": true,
                             "dialogue": [
@@ -18034,10 +18182,12 @@
                         "description": "Melanie has prepared a tasty roast for you.",
                         "attributes": {
                             "type": "event",
-                            "parent": [
-                                "tomatoesformelanie",
-                                "startoflunch"
-                            ],
+                            "parents": {
+                                "allOf": [
+                                    "tomatoesformelanie",
+                                    "startoflunch"
+                                ]
+                            },
                             "missionObject": "player"
                         },
                         "conditionAttributes": {
@@ -18267,7 +18417,11 @@
                         "displayName": "get some fresh tomatoes for Melanie",
                         "description": "Melanie needs some fresh tomatoes.",
                         "attributes": {
-                            "parent": "endofbreakfast",
+                            "parents": {
+                                "allOf": [
+                                    "endofbreakfast"
+                                ]
+                            },
                             "missionObject": "tomatoes",
                             "destination": "melanie sheldon",
                             "static": true,
@@ -20065,7 +20219,11 @@
                 "displayName": "save Red Gate from the zombie contagion",
                 "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
                 "attributes": {
-                    "parent": "planecrash"
+                    "parents": {
+                        "allOf": [
+                            "planecrash"
+                        ]
+                    }
                 },
                 "failAttributes": {
                     "contagionDeathToll": {

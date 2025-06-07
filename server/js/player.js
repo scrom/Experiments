@@ -290,7 +290,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //see if any of their active (or inactive without parent) missions deliver it...
                         let creatureMissions = creatures[c].getMissions();
                         for (var m=0; m < creatureMissions.length; m++) {
-                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParent())) {
+                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParents())) {
                                 let reward = creatureMissions[m].getRewardObject();
                                 if (reward) {
                                     if (reward.syn(objectName)) {
@@ -1136,7 +1136,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.getMissions = function(includeChildren) {
             var missions = [];
             for (var i=0; i < _missions.length; i++) {
-                if ((!(_missions[i].hasParent()))||includeChildren == true) {
+                if ((!(_missions[i].hasParents()))||includeChildren == true) {
                     missions.push(_missions[i]);
                 };
             };
@@ -3610,12 +3610,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //note we're splicing a *copy*, not the original array!
                     if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
                     if (!(newMissions[j].getDescription())) { hiddenMissionCount++; };
-                    if (newMissions[j].hasParent()) { hiddenMissionCount++; };
+                    if (newMissions[j].hasParents()) { hiddenMissionCount++; };
                 };
 
                 if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
                 for (var i = 0; i < newMissions.length; i++) {
-                    if (!newMissions[i].hasParent()) {
+                    if (!newMissions[i].hasParents()) {
                         newMissions[i].startTimer();
                         
                         var missionDescription = newMissions[i].getDescription();
@@ -4203,12 +4203,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             for (var j=0; j< newMissions.length;j++) {
                 if (newMissions[j].hasDialogue()) {newMissions.splice(j,1);};
                 if (!(newMissions[j].getDescription())) { hiddenMissionCount++; };
-                if (newMissions[j].hasParent()) { hiddenMissionCount++; };
+                if (newMissions[j].hasParents()) { hiddenMissionCount++; };
             };
 
             if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
             for (var i = 0; i < newMissions.length; i++) {
-                if (!newMissions[i].hasParent()) {
+                if (!newMissions[i].hasParents()) {
                     newMissions[i].startTimer();
              
                     var missionDescription = newMissions[i].getDescription();
@@ -6018,7 +6018,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var missions = _missions.concat(_currentLocation.getMissions());
             if (missions.length > 0) {status+="<i>Tasks:</i><br>";};
             for (var i = 0; i < missions.length; i++) {
-                if (!missions[i].hasParent()) {
+                if (!missions[i].hasParents()) {
                     var missionDescription = missions[i].getDescription();
                     if (missionDescription) {
                         status += missionDescription + "<br>";

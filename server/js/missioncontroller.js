@@ -96,9 +96,9 @@ module.exports.MissionController = function MissionController() {
             
             for (var i = 0; i < missions.length; i++) {
                 if (missions[i].getType() != "event") {
-                    allMissions.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? " + missions[i].isActive());
+                    allMissions.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParents() + ". Active? " + missions[i].isActive());
                 } else {
-                    events.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParent() + ". Active? " + missions[i].isActive());
+                    events.push(missions[i].getName() + " - " + missions[i].getDisplayName() + ". Parent: " + missions[i].getParents() + ". Active? " + missions[i].isActive());
                 };
             };
             
@@ -148,7 +148,7 @@ module.exports.MissionController = function MissionController() {
             var initialScore = player.getScore();
             var missionName = mission.getName();
             
-            if (!mission.hasParent()) {
+            if (!mission.hasParents()) {
                 if (missionOwner) {
                     if (missionOwner.getName() == "player") {
                         mission.startTimer(); //something missed starting the timer previously. Try agian now.
@@ -206,7 +206,7 @@ module.exports.MissionController = function MissionController() {
             //clear parents from any child missions (from newly completed missions) to make them accessible
             //and initiate those local to the player
             var resultString = "";
-            if (!missionToStart.hasParent()) {
+            if (!missionToStart.hasParents()) {
                 //has no parents already
                 return resultString;
             };
@@ -218,7 +218,7 @@ module.exports.MissionController = function MissionController() {
                 var missionName = newlyCompletedMissions[j];
                 if (missionToStart.checkParent(missionName)) {
                     missionToStart.clearParent(missionName);
-                    if (missionToStart.hasParent()) {
+                    if (missionToStart.hasParents()) {
                         //still has other parents
                         continue;
                     };
