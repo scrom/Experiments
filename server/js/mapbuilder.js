@@ -581,6 +581,9 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                             console.warn("MISSION DATA WARNING: mission destination contains mixed case; may not be true objectName'"+missionData.attributes.destination+"'.");
                         };
                     };
+                    if (missionData.attributes.parents) {
+                        missionData.attributes.parents = self.unpackConditionAttributes(missionData.attributes.parents);
+                    };
                     if (missionData.attributes.type == "event") {
                         _map.incrementEventCount();
                     } else {

@@ -9,6 +9,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         var _displayName = displayName;
         var _description = description;
         var _parent; //parent mission - allows threads to be built up.
+        var _parents; //an object of parents - allows "and" or "or" parents to be set.
         var _dialogue = []; //an array/collection of dialogue sentences. 
         var _isStatic = false; //if true, mission stays in source location.
         var _conversationHistory = []; //track prior dialogue
@@ -35,6 +36,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             if (missionAttributes.type != undefined) {_type = missionAttributes.type;};
             if (missionAttributes.parent != undefined) {_parent = missionAttributes.parent;};
+            if (missionAttributes.parents != undefined) {_parents = missionAttributes.parents;};
             if (missionAttributes.missionObject != undefined) {_missionObject = missionAttributes.missionObject;};
             if (missionAttributes.destination != undefined) {
                 _destination = missionAttributes.destination;
@@ -105,6 +107,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var currentAttributes = {};
             if (_type != "mission") {currentAttributes.type = _type;};
             if (_parent) {currentAttributes.parent = _parent;};
+            if (_parents) {currentAttributes.parents = _parents;};
             if (_missionObject) {currentAttributes.missionObject = _missionObject;};
             if (_destination && (_destination != _missionObject)) {currentAttributes.destination = _destination;};
             if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
