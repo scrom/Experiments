@@ -4,7 +4,6 @@ const creature = require('../../server/js/creature.js');
 const location = require('../../server/js/location.js');
 const artefact = require('../../server/js/artefact.js');
 const inventory = require('../../server/js/inventory.js');
-const contagion = require('../../server/js/contagion.js');
 const mapBuilder = require('../../server/js/mapbuilder.js');
 const map = require('../../server/js/map.js');
 const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
@@ -381,6 +380,7 @@ describe('Sweet Coffee Combination Tests', () =>
         _inventory.add(cup);
         coffeeMachine.unlock(key);
         coffeeMachine.receive(coffeeBeans);
+        console.debug("Coffee machine description: " + coffeeMachine.getDetailedDescription());
         const expectedResult = "The only available cup already has some tea in it. There isn't room for coffee as well.";
         const actualResult = p0.get("get", "coffee");
         expect(actualResult).toBe(expectedResult);
@@ -610,3 +610,70 @@ describe('Sweet Coffee Combination Tests', () =>
         expect(actualResult).toBe(expectedResult);
     });
 });
+
+    test('playerCanGetLatte', () =>
+    {
+        const fileManager = require('../../server/js/filemanager.js');
+        const dataDir = '../../data/';
+        const imageDir = '../../images/';
+        const fm = new fileManager.FileManager(true, dataDir, imageDir);
+
+        m0 = mb.buildMap();
+        p0 = new player.Player({ carryWeight: 25 }, m0, null);
+        l0 = m0.getLocation("kitchen-ground-floor")
+        p0.setLocation(l0);
+
+        const coffeeMachine = l0.getObject("coffee machine", true, true);
+        coffeeMachine.forceRepair();
+        //ensure beans are in machine
+        let beansJSON = fm.readFile("beans.json");
+        let beans = mb.buildArtefact(beansJSON);
+        coffeeMachine.receive(beans);
+
+        let milkJSON = fm.readFile("milk.json");
+        let milk = mb.buildArtefact(milkJSON);
+        coffeeMachine.receive(milk);
+
+        console.debug("Coffee machine description: " + coffeeMachine.getDetailedDescription());
+
+        coffeeMachine.switchOnOrOff("switch", "on");
+
+        const expectedResult = "You collect latte into a nearby cup.<br>";
+        const actualResult = p0.get('get', 'latte');
+        expect(actualResult).toBe(expectedResult);
+    });
+
+
+    test('playerCanCompleteLatteMission', () =>
+    {
+        const fileManager = require('../../server/js/filemanager.js');
+        const dataDir = '../../data/';
+        const imageDir = '../../images/';
+        const fm = new fileManager.FileManager(true, dataDir, imageDir);
+
+        m0 = mb.buildMap();
+        p0 = new player.Player({ carryWeight: 25 }, m0, mb);
+        const atrium = m0.getLocation("atrium");
+        console.debug(p0.setLocation(atrium));
+        l0 = m0.getLocation("kitchen-ground-floor")
+        console.debug(p0.setLocation(l0));
+        const coffeeMachine = l0.getObject("coffee machine", true, true);
+        coffeeMachine.forceRepair();
+        //ensure beans are in machine
+        let beansJSON = fm.readFile("beans.json");
+        let beans = mb.buildArtefact(beansJSON);
+        coffeeMachine.receive(beans);
+
+        let milkJSON = fm.readFile("milk.json");
+        let milk = mb.buildArtefact(milkJSON);
+        coffeeMachine.receive(milk);
+
+        console.debug("Coffee machine description: " + coffeeMachine.getDetailedDescription());
+
+        coffeeMachine.switchOnOrOff("switch", "on");
+        p0.get('get', 'latte');
+
+        const expectedResult = "<br><br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far.<br><br>That's a start at least. You still need to get your latte though.<br>(It has to be a latte! Coffee just won't do.)<br><br>Congratulations, you got the coffee machine working!<br>";
+        const actualResult = m0.updateMissions(5, p0);
+        expect(actualResult).toBe(expectedResult);
+    });

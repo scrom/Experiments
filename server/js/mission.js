@@ -243,6 +243,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.clearParent = function (missionName) {
+            if (!(_parents)) { return true; }
             //this is called with *no* parent name to clear all parents - e.g. "activateMission"
             if (!missionName || missionName == _parents) { //if parents is just name
                 //clear all parents
@@ -305,6 +306,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.checkParent = function (missionName) {
             if (missionName == _parents) { return true };
+            if (!(_parents)) { return false; }
             if (typeof (_parents) == 'object') {
                 if (Array.isArray(_parents)) {
                     //arrays are an "and" list of parents.
