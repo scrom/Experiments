@@ -1,6 +1,6 @@
 {
   "object": "mission",
-  "name": "anycoffee",
+  "name": "twocoffees",
   "displayName": "get yourself 2 different coffees",
   "description": "Testing Coffee Missions.",
   "attributes": {

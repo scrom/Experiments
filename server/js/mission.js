@@ -592,9 +592,9 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             if (typeof(requiredContents) == 'object') {
                 //we have  amore complex object to check
-                //if we have an "allOf" list, we need to check all items exist and return true if so!
                 let allOfConfirmed = false;
                 let anyOfConfirmed = false;
+                //if we have an "allOf" list, we need to check all items exist and return true if so!
                 if (requiredContents.hasOwnProperty("allOf")) {
                         var allOf = requiredContents.allOf;
                         var contentsCount = 0;
@@ -619,6 +619,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                                 break; //exit early if we found a match
                             };
                         };
+                } else {
+                    anyOfConfirmed = true;
                 };
 
                 if (allOfConfirmed && anyOfConfirmed) {

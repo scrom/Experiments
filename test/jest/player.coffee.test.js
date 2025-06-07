@@ -762,11 +762,16 @@ describe('Sweet Coffee Combination Tests', () =>
         p0.get('get', 'coffee');
 
         //ensure it doesn't complete early...
-        console.debug(m0.updateMissions(5, p0));
+        console.debug(m0.updateMissions(5, p0)); //first time it will catch fixing the coffee machine
 
-        p0.get('get', 'latte');
+        //need another cup!
+        let cupJSON = fm.readFile("cup.json");
+        let cup = mb.buildArtefact(cupJSON);
+        p0.acceptItem(cup);
 
-        const expectedResult = "<br>Congratulations, you managed to get your coffee. And it's not a latte!";
+        console.debug(p0.get('get', 'latte'));
+
+        const expectedResult = "<br>Congratulations, you managed to get two different coffees.<br>";
         const actualResult = m0.updateMissions(5, p0).substring(0, expectedResult.length);
         expect(actualResult).toBe(expectedResult);
     });
