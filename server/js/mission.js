@@ -553,22 +553,80 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.checkForRequiredContents = function(missionObject, requiredContents) {
-            var contentsCount = 0;
-            var requiredContentsCount = requiredContents.length;
-            if (requiredContentsCount > 0) {
-                var missionObjectInventory = missionObject.getInventoryObject(); 
-                
-                for (var i = 0; i < requiredContents.length; i++) {
-                    //console.debug("checking for " + requiredContents[i]);
-                    if (missionObjectInventory.check(requiredContents[i])) { contentsCount++; };
-                };
-            };
-            //console.debug("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
-      
-            if (contentsCount == requiredContentsCount) {
+            console.debug("Checking for required contents: "+requiredContents);
+
+            //if required contents is not set, we assume success
+            if (!requiredContents || requiredContents == null || requiredContents == undefined || requiredContents == "") {
+                //console.debug("no required contents set, returning true");
                 return true;
             };
-       
+
+            var missionObjectInventory = missionObject.getInventoryObject(); 
+
+            //if required contents is a string
+            if (typeof(requiredContents) == 'string') {
+                //console.debug("required contents is a string: "+requiredContents);
+                //if it's a string, we assume it's a single item
+                if (missionObjectInventory.check(requiredContents)) {
+                    return true;
+                };
+            };
+
+            //if required contents is a simple array ...
+            if (Array.isArray(requiredContents)) {
+                var contentsCount = 0;
+
+                var requiredContentsCount = requiredContents.length;
+                if (requiredContentsCount > 0) {
+                    for (var i = 0; i < requiredContents.length; i++) {
+                        //console.debug("checking for " + requiredContents[i]);
+                        if (missionObjectInventory.check(requiredContents[i])) { contentsCount++; };
+                    };
+                };
+                //console.debug("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
+        
+                if (contentsCount == requiredContentsCount) {
+                    return true;
+                };
+            };
+
+            if (typeof(requiredContents) == 'object') {
+                //we have  amore complex object to check
+                //if we have an "allOf" list, we need to check all items exist and return true if so!
+                let allOfConfirmed = false;
+                let anyOfConfirmed = false;
+                if (requiredContents.hasOwnProperty("allOf")) {
+                        var allOf = requiredContents.allOf;
+                        var contentsCount = 0;
+                        for (var i = 0; i < allOf.length; i++) {
+                            if (missionObjectInventory.check(allOf[i])) {
+                                contentsCount++;
+                            };
+                        };
+                        if (contentsCount == allOf.length) {
+                            allOfConfirmed = true;
+                        };
+                } else {
+                    allOfConfirmed = true;
+                };
+
+                //if we have an "anyOf" list, we need to check if the object name is in there return true if so!
+                if (requiredContents.hasOwnProperty("anyOf")) {
+                        var anyOf = requiredContents.anyOf;
+                        for (var i = 0; i < anyOf.length; i++) {
+                            if (missionObjectInventory.check(anyOf[i])) {
+                                anyOfConfirmed = true;
+                                break; //exit early if we found a match
+                            };
+                        };
+                };
+
+                if (allOfConfirmed && anyOfConfirmed) {
+                    return true;
+                };
+
+            };
+            //if we get here, we have no match
             return false;
         };
 

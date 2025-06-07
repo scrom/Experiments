@@ -1,0 +1,18 @@
+{
+  "object": "mission",
+  "name": "anycoffee",
+  "displayName": "get yourself 2 different coffees",
+  "description": "Testing Coffee Missions.",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "contains": { 
+       "allOf": ["coffee", "latte"]
+    }
+  },
+  "reward": {
+    "score": 75,
+    "message": "Congratulations, you managed to get two different coffees."
+  }
+}
