@@ -1743,6 +1743,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return _chewed;
         };
 
+        self.forceRepair = function() {
+            //force opening and repair of object
+                _broken = false;
+                _damaged = false;
+                _chewed = false;
+                if (_locked) {
+                    _locked = false;
+                };
+                if (_opens) {
+                    _open = true;
+                }
+
+            return self.getDisplayName() + " repaired.";
+        };
+
         self.combinesWith = function(anObject, crossCheck) {
             if (self.isDestroyed()) {return false;};
             var combinesWithResultArray = self.getCombinesWith();

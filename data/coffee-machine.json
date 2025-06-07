@@ -13,7 +13,7 @@
         "isBroken": true,
         "canOpen": true,
         "lockable": true,
-        "locked": true,
+        "locked": false,
         "switched": true,
         "requiredComponentCount": 1,
         "imageName": "coffeemachine.jpg",

@@ -266,7 +266,6 @@ describe('Sweet Coffee Combination Tests', () =>
         const key = new artefact.Artefact('key', 'a vending machine key', "Just a plain key.", coffeeMachineKeyAttributes);
         const openBreakableContainerAttributes = { weight: 2, carryWeight: 2, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true };
         const cup = new artefact.Artefact('cup', 'a coffee cup', "Some coffee in here would be great.", openBreakableContainerAttributes, null);
-        const bottomkitchen = new location.Location('kitchen-ground-floor', "You're in the atrium kitchen.");
         const p0 = new player.Player({ carryWeight: 25 }, null, null);
         const _inventory = p0.getInventoryObject();
         _inventory.add(cup);
@@ -274,6 +273,34 @@ describe('Sweet Coffee Combination Tests', () =>
         coffeeMachine.receive(coffeeBeans);
         const expectedResult = 'You now have a cup of coffee.';
         const actualResult = coffeeMachine.relinquish('coffee', p0);
+        expect(actualResult).toBe(expectedResult);
+    });
+  
+    test('playerCannotDrinkCoffeeWithoutVendingFirstEvenIfBroken', () =>
+    {
+        m0 = mb.buildMap();
+        p0 = new player.Player({ carryWeight: 25 }, m0, null);
+        p0.setLocation(m0.getLocation("kitchen-ground-floor"));
+
+        const expectedResult = "You'll need to get coffee from the coffee vending machine or elsewhere before you can drink any."
+        const actualResult = p0.drink('drink', 'coffee');
+        expect(actualResult).toBe(expectedResult);
+    });
+
+    test('playerCannotDrinkCoffeeWithoutVendingFirst', () =>
+    {
+        m0 = mb.buildMap();
+        p0 = new player.Player({ carryWeight: 25 }, m0, null);
+        p0.setLocation(m0.getLocation("kitchen-ground-floor"));
+
+        const coffeeMachine = m0.getObject("coffee machine", true, true);
+        coffeeMachine.forceRepair();
+        //ensure beans are in machine
+        const beans = m0.getObject("beans", true, true)
+        coffeeMachine.receive(beans);
+
+        const expectedResult = "You'll need to get coffee from the coffee vending machine or elsewhere before you can drink any."
+        const actualResult = p0.drink('drink', 'coffee');
         expect(actualResult).toBe(expectedResult);
     });
 

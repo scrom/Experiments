@@ -29,9 +29,6 @@
   "inventory": [
     {
       "file": "unwanted-books"
-    },
-    {
-      "file": "coffee-machine-manual"
     }
   ]
 }

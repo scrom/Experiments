@@ -1644,6 +1644,20 @@ exports.Action = function Action(player, map, fileManager) {
                     else { return _map.find(_object0, true, true); };
                 };
 
+                if (_verb == '+get') {
+                    let inventory = _player.getInventoryObject();
+                    if(_object1) { return inventory.add(_map.getObject(_object1, true, true));}
+                    else { return inventory.add(_map.getObject(_object0, true, true)); };
+                };
+
+                if (_verb == '+fix') {
+                    var item = _map.getObject(_object0);
+                    if (item) {
+                        return item.forceRepair();
+                    };
+                    return "cannot find " + _object0 + " to fix";
+                };
+
                 if (_verb == '+missions') {
                     return _map.listAllMissions(_player);
                 };
