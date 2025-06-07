@@ -1,0 +1,18 @@
+{
+  "object": "mission",
+  "name": "anycoffee",
+  "displayName": "get yourself a coffee",
+  "description": "It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with a latte (or some other sort of coffee).",
+  "attributes": {
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "contains": { 
+       "anyOf": ["coffee", "sweet coffee", "latte", "sweet latte", "white coffee", "sweet white coffee"]
+    }
+  },
+  "reward": {
+    "score": 75,
+    "message": "<br>Congratulations, you managed to get your coffee. And it's not a latte!"
+  }
+}

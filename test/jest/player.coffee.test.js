@@ -677,3 +677,47 @@ describe('Sweet Coffee Combination Tests', () =>
         const actualResult = m0.updateMissions(5, p0);
         expect(actualResult).toBe(expectedResult);
     });
+
+
+    test('playerCanCompleteAnyCoffeeMission', () =>
+    {
+        const fileManager = require('../../server/js/filemanager.js');
+        const dataDir = '../../data/';
+        const testDataDir = '../../test/testdata/';
+
+        const imageDir = '../../images/';
+        const fm = new fileManager.FileManager(true, dataDir, imageDir);
+        const testDatafm = new fileManager.FileManager(true, testDataDir, imageDir);
+
+
+        m0 = mb.buildMap();
+        p0 = new player.Player({ carryWeight: 25 }, m0, mb);
+
+        let anyCoffeeJSON = testDatafm.readFile("mission-anycoffee.json");
+        let anyCoffeeMission = mb.buildMission(anyCoffeeJSON);
+        p0.addMission(anyCoffeeMission);
+        anyCoffeeMission.startTimer(); //activate mission
+
+        l0 = m0.getLocation("kitchen-ground-floor")
+        console.debug(p0.setLocation(l0));
+        const coffeeMachine = l0.getObject("coffee machine", true, true);
+        coffeeMachine.forceRepair();
+        //ensure beans are in machine
+        let beansJSON = fm.readFile("beans.json");
+        let beans = mb.buildArtefact(beansJSON);
+        coffeeMachine.receive(beans);
+
+        let milkJSON = fm.readFile("milk.json");
+        let milk = mb.buildArtefact(milkJSON);
+        coffeeMachine.receive(milk);
+
+        console.debug("Coffee machine description: " + coffeeMachine.getDetailedDescription());
+        console.debug("Status: " + p0.status());
+
+        coffeeMachine.switchOnOrOff("switch", "on");
+        p0.get('get', 'latte');
+
+        const expectedResult = "Congratulations, you managed to get your coffee. And it's not a latte!";
+        const actualResult = m0.updateMissions(5, p0);
+        expect(actualResult).toBe(expectedResult);
+    });
