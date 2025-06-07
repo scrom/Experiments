@@ -898,6 +898,20 @@ test('deliberatelyDestroyingLiquidContainerLosesLiquidContents', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+
+test('destroyingEmptyContainerDoesntSayAnythingAboutContents', () => {    
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 1, attackStrength: 2, type: "container", holdsLiquid: true, canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var mug = new artefact.Artefact('mug', 'a coffee mug', "Some coffee in here would be great.", openBreakableContainerAttributes, null)
+    l0.addObject(mug);
+    console.debug(p0.examine("examine","mug"));
+    p0.get('get', mug.getName());
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!";
+    var actualResult = p0.breakOrDestroy('destroy',mug.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('deliberatelyBreakingLiquidContainerLosesLiquidContents', () => {    
     var drinkAttributes = {weight: 1, carryWeight: 0, attackStrength: 0, type: "food", canCollect: true, canOpen: false, isEdible: true, isBreakable: false, requiresContainer: true, isLiquid: true};
     var coffee = new artefact.Artefact('coffee', 'coffee', "Development fuel.", drinkAttributes, null); 
@@ -928,6 +942,46 @@ test('deliberatelyBreakingBloodContainerLeavesBloodOnFloor', () => {
     p0.breakOrDestroy('break',mug.getName());
     var expectedResult = "You're not carrying anything that you can collect the blood into.";
     var actualResult = p0.get('get',"blood");
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('destroyingHeldContainerGathersContents', () => {    
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var box = new artefact.Artefact('box', 'a box', "It holds stuff.", openBreakableContainerAttributes, null)
+    l0.addObject(box);
+    box.receive(weapon);
+    console.debug(p0.examine("examine","box"));
+    p0.get('get', box.getName());
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!<br>You manage to gather up its contents.";
+    var actualResult = p0.breakOrDestroy('destroy',box.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('destroyingLocationContainerScattersContents', () => {    
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var box = new artefact.Artefact('box', 'a box', "It holds stuff.", openBreakableContainerAttributes, null)
+    l0.addObject(box);
+    box.receive(weapon);
+    console.debug(p0.examine("examine","box"));
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!<br>Its contents are scattered on the floor.";
+    var actualResult = p0.breakOrDestroy('destroy',box.getName());
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('destroyingEmptyContainerDoesntSayAnythingAboutContents', () => {    
+    var openBreakableContainerAttributes = {weight: 2, carryWeight: 25, attackStrength: 2, type: "container", canCollect: true, canOpen: false, isEdible: false, isBreakable: true};
+    var box = new artefact.Artefact('box', 'a box', "It holds stuff.", openBreakableContainerAttributes, null)
+    l0.addObject(box);
+    console.debug(p0.examine("examine","box"));
+    var expectedResult = "You set to with your bare hands and sheer malicious ingenuity in a bid to cause damage.<br>You destroyed it!";
+    var actualResult = p0.breakOrDestroy('destroy',box.getName());
     console.debug("Expected: "+expectedResult);
     console.debug("Actual  : "+actualResult);
     expect(actualResult).toBe(expectedResult);

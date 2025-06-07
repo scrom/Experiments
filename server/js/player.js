@@ -217,6 +217,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //once the objects are in their new homes, we can remove them from the old.
             //this resolves array index splicing issues (splicing an array being iterated over causes odd results)
+
+            if (contents.length == 0) {return "";}; //if no contents, nothing to remove.
+            
             for (var i=0; i<contents.length;i++) {
                 artefact.removeObject(contents[i].getName());
             };
