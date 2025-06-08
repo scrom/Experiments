@@ -627,6 +627,83 @@ exports.Map = function Map() {
             };
         };
         
+        self.findBestPath = function(destinationName, attempts, currentLocation, inventory, avoiding) {
+            if (!(attempts)) { attempts = 25 };
+            if (isNaN(attempts)) { attempts = 25 };
+            var bestPathLength = 1/0; //infinity
+            var path;
+            var duplicateCount = 0;
+            for (var i=0;i<attempts;i++) {
+                var tempPath = self.findPath(true, destinationName, currentLocation, currentLocation, inventory, avoiding);
+
+                //if we can't find a path at the moment.
+                if (!(tempPath)) {return [];};
+
+                if (tempPath.length <= 2) {
+                    //we've found the shortest possible path already, stop here.
+                    return tempPath;
+                };
+                if (tempPath.length == bestPathLength) {
+                   duplicateCount ++;
+                }; 
+                if (duplicateCount > 2  && attempts <=25) {
+                    return tempPath;
+                };
+                if (tempPath.length < bestPathLength) {
+                    path = tempPath;
+                    bestPathLength = path.length;
+                };
+            };
+            return path;
+        };
+
+        self.findPath = function(randomiseSearch, destinationName, homeLocation, currentLocation, inventory, avoiding, lastDirection, visitedLocations) {
+            if (!(currentLocation)) {currentLocation = homeLocation;};
+
+            if (!(visitedLocations)) {visitedLocations = [currentLocation.getName()];}
+            else {visitedLocations.push(currentLocation.getName())};
+
+            //console.debug("finding path from "+currentLocation.getName()+" to "+destinationName);
+
+            if (currentLocation.getName() == destinationName) {
+                //pathfinder destination found;
+                return [];
+             };       
+
+            var exits = currentLocation.getAvailableExits(true, inventory, false); //don't use emergency exits!
+            if (exits.length == 1 && currentLocation.getName() != homeLocation.getName()) {return null;};
+
+            if (randomiseSearch) {
+                exits = tools.shuffle(exits);
+            };
+
+            for (var e=0;e<exits.length;e++) {
+                var direction = exits[e].getDirection();
+                if (direction == tools.oppositeOf(lastDirection)) {
+                    continue;
+                };
+
+                if (exits[e].getDestinationName() == homeLocation.getName()) {
+                    continue;
+                };
+
+                if (visitedLocations.indexOf(exits[e].getDestinationName()) >-1) {
+                    continue;
+                };
+
+                if (avoiding.indexOf(exits[e].getDestinationName()) >-1) {
+                    continue;
+                };
+
+                var newPath = self.findPath(randomiseSearch, destinationName, homeLocation, self.getLocation(exits[e].getDestinationName()), inventory, avoiding, direction, visitedLocations);
+
+                if (newPath) {
+                    newPath.push(exits[e].getDirection());
+                    return newPath;
+                };
+            };
+        };
+
         self.getObjectLocationName = function (objectName, includeHiddenObjects, minObjectSize, searchCreatures) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* retrieve creatures
