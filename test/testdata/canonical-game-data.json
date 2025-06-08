@@ -19080,7 +19080,7 @@
                 "name": "cat",
                 "displayName": "the cat",
                 "description": "small tabby cat",
-                "detailedDescription": "It looks like a stray. I think it's hungry.",
+                "detailedDescription": "It looks like a stray. I wonder if it's hungry?",
                 "attributes": {
                     "customAction": [
                         "get",

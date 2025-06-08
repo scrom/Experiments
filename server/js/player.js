@@ -1880,9 +1880,59 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return resultString + shakeResult;
         };
 
-        
+        self.touch = function(verb, firstArtefactName) {
+            // if only one artefact - return touch attribute if an artefact, a dead creature, or a high affinity NPC
+            // eventually add support for secondArtefact - we're touching something with something else - will need specific handling for that. (e.g. touching wire to battery, touching sword with wand)
+            //touch & feel are fairly innocuous.
+            const basicTouchVerbs = ['touch', 'feel'];
+            //for other verbs, if it's an artefact - check if the word "soft" is in their texture description - otherwise player is being weird
+            //if it's a dead creature - thats probably weird.
+
+            //trap when object or creature don't exist
+            var resultString = 'You '+verb;
+            if (tools.stringIsEmpty(firstArtefactName)){return tools.initCap(verb)+" what?"};
+
+            var firstArtefact = getObjectFromPlayerOrLocation(firstArtefactName);
+            if (!(firstArtefact)) {return notFoundMessage(firstArtefactName);};
+
+            if (firstArtefact.getSubType() == "intangible") {
+                resultString = tools.initCap(firstArtefact.getName())+" isn't really something you can "+verb+".";
+                resultString += "<br>You try anyway.<br>After a while, your arms get tired and you feel slightly awkward.";
+                return resultString;
+            };  
+
+            let corpse = "";
+            if (firstArtefact.getType() == "creature" && firstArtefact.isDead()) {
+                corpse = "the lifeless body of ";
+            };
+
+            resultString = "You reach out and " + verb + " " + corpse + firstArtefact.getDisplayName() + ". ";
+
+            if (firstArtefact.getType() != "creature" || firstArtefact.isDead()) {
+                let texture = firstArtefact.getTexture(_map, self);
+                if (!texture) {return resultString+"You don't feel anything of note."}
+                if (basicTouchVerbs.includes(verb) || texture.includes("soft")) {
+                    //@todo add handling for touching a button or screen? (not soft)
+                    return resultString+texture;
+                };
+
+                return "No, I will not "+verb+" "+firstArtefact.getDisplayName()+"! <i>(Weirdo!)</i>";
+
+            };
+
+            //living creature
+            if (firstArtefact.getType() == "creature") {
+                resultString += firstArtefact.getTexture(_map, self);
+            }
+
+            return resultString;
+
+
+        };
+
         /*Allow player to rub an object - potentially with another*/
         self.rub = function(verb, splitWord, firstArtefactName, secondArtefactName) {
+            // 'rub''polish'buff''sharpen''sharp''smooth'
 
             if (secondArtefactName && splitWord != "with" && splitWord != "on") {splitWord = "on"};
 
@@ -1906,7 +1956,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var secondArtefact;
             if (tools.stringIsEmpty(secondArtefactName)) {
                 //attempt to get polish or sharpen object (if verbs match)
-                if (verb == "sharpen") {
+                if (verb == "sharpen" || verb == "sharp") {
                     secondArtefact = _inventory.getObjectBySubType("sharpen", true);
                     if (!secondArtefact) {
                         secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("sharpen", true);
@@ -1914,7 +1964,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     splitWord = "with";
                     //fail if nothing to sharpen with
                     if (!secondArtefact) {return "You can't find anything to "+verb+" "+firstArtefact.getDisplayName()+" with.";}
-                } else if (verb == "polish") {
+                } else if (verb == "polish" || verb == "buff") {
                     secondArtefact = _inventory.getObjectBySubType("buff", true);
                     if (!secondArtefact) {
                         secondArtefact = _currentLocation.getInventoryObject().getObjectBySubType("buff", true);
@@ -1945,7 +1995,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 secondArtefact = tempArtefact;
             };
 
-            if (firstArtefact.getSubType() != "sharp" && verb == "sharpen") {
+            if (firstArtefact.getSubType() != "sharp" && (verb == "sharpen" || verb == "sharp")) {
                 return "Try sharpening something more sensible.";
             };
 
@@ -4739,7 +4789,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 } else if (damagePoints > 25) {
                     return "It feels like " + attacker.getPrefix() + " broke something in you. "
                 } else if (damagePoints > 15) {
-                    return "That hurt. ";
+                    return "That hurt! ";
                 };
                 return "";
             };

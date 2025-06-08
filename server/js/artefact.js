@@ -77,6 +77,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var _smell;
         var _sound;
         var _taste;
+        var _texture;
         var _contagion = [];
         var _antibodies = [];
         var _canDrawOn = false;
@@ -321,6 +322,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.smell != undefined) {_smell = artefactAttributes.smell;};     
             if (artefactAttributes.sound != undefined) { _sound = artefactAttributes.sound; };
             if (artefactAttributes.taste != undefined) { _taste = artefactAttributes.taste; };  
+            if (artefactAttributes.texture != undefined) { _texture = artefactAttributes.texture; };  
             if (artefactAttributes.wetted != undefined) {_wetted = artefactAttributes.wetted;};     
             if (artefactAttributes.viewDestination != undefined) {_viewDestination = artefactAttributes.viewDestination;};     
             
@@ -601,6 +603,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Try as you might, you just don't find playing with " + self.descriptionWithCorrectPrefix() + " as entertaining as you'd hoped.";
         };
 
+        self.getTexture = function() {
+            return _texture;
+        };
+
+        self.setTexture = function(texture) {
+            _texture = texture;
+        };
         self.getSmell = function() {
             return _smell;
         };
@@ -697,6 +706,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             currentAttributes.smell = _smell;
             currentAttributes.sound = _sound;
             currentAttributes.taste = _taste;
+            currentAttributes.texture = _texture;
             currentAttributes.wetted = _wetted;
             currentAttributes.contagion = _contagion;
             currentAttributes.antibodies = _antibodies;

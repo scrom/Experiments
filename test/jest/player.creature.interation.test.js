@@ -431,3 +431,29 @@ test('player cannot eat a live creature', () => {
     const actualResult = p0.eat('eat','creature');
     expect(actualResult).toBe(expectedResult);
 });
+
+test('player can touch a dead creature', () => {
+    const deadCreature = new creature.Creature('dead creature', 'A dead creature', "crunchy.", {weight:20, attackStrength:12, gender:'male', type:'friendly', carryWeight:51, health:0, affinity:5, canTravel:true});
+    deadCreature.go(null,l0); 
+    p0.get('get','dead creature');
+
+    const expectedResult = 'You reach out and feel the lifeless body of the dead creature. It\'s cold and unyielding.';
+    const actualResult = p0.touch('feel','dead creature');
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player can touch a friendly live creature', () => {
+    p0.get('get','creature');
+
+    const expectedResult = 'You reach out and touch the creature. He seems to appreciate your attention.';
+    const actualResult = p0.touch('touch','creature');
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player cannot touch a hostile live creature', () => {
+    p0.get('get','evil');
+
+    const expectedResult = "It lashes out at you.";
+    const actualResult = p0.touch('touch','evil');
+    expect(actualResult).toContain(expectedResult);
+});

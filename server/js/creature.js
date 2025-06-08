@@ -1,4 +1,5 @@
 "use strict";
+
 //Creature object
 exports.Creature = function Creature(name, description, detailedDescription, attributes, carrying, sells) {
     try{
@@ -71,6 +72,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 	    var _objectName = "creature";
         var _imageName;
         var _smell;
+        var _texture;
         var _sound;
         var _taste;
         var _contagion = [];
@@ -192,7 +194,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.currentDelay != undefined) {_currentDelay = creatureAttributes.currentDelay;};
             if (creatureAttributes.returnDirection != undefined) {_returnDirection = creatureAttributes.returnDirection;};            
             if (creatureAttributes.imageName != undefined) {_imageName = creatureAttributes.imageName;};                
-            if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};                
+            if (creatureAttributes.smell != undefined) {_smell = creatureAttributes.smell;};  
+            if (creatureAttributes.texture != undefined) {_texture = creatureAttributes.texture;}              
             if (creatureAttributes.sound != undefined) { _sound = creatureAttributes.sound; };
             if (creatureAttributes.taste != undefined) { _taste = creatureAttributes.taste; }; 
             if (creatureAttributes.contagion != undefined) {
@@ -472,6 +475,78 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
         };
 
+        self.getTexture = function(map, player) {
+            //@todo - add contact-based contagion here!
+            if (self.isDead()) {
+                if (_texture) {
+                    return _texture;
+                };
+
+                return "It's cold and unyielding."
+            };
+
+            let resultString = "";
+
+            //if affinity is high, they like it, increase affinity further (and return texture);
+            //otherwise, they really don't appreciate it.
+            if (self.getAffinity() >= 5){
+                self.increaseAffinity(1);
+                var prefix = self.getPrefix();
+                var s = "s";
+                if (prefix == "They") {s = "";}
+
+                
+                resultString = prefix + " seem"+s+" to appreciate your attention.";
+                if (_texture) {
+                    return resultString +"<br>"+ prefix + " feel"+s+" like "+_texture;
+                }
+                return resultString;
+            };
+
+            //random chance of negatively impacting affinity
+            var affinityImpact = Math.floor(Math.random() * 1.5);
+            self.decreaseAffinity(affinityImpact, false);
+            player.increaseAggression(1); //don't do this.
+
+            var randomReplies = ["I don't think " + self.getPrefix().toLowerCase() + " appreciates that.", "C'mon, really?!", "Seriously. Consent is a thing you know.", "That's <i>not</i> acceptable behaviour."];
+                if (self.getSubType() != "animal") {
+                    randomReplies.push(self.getPrefix() + " says 'Will you stop that please.'");
+                    randomReplies.push(self.getPrefix() + " says 'HEY!'");
+                    randomReplies.push(self.getPrefix() + " says 'Back... ...off.'");
+                } else {
+                    randomReplies.push(self.getPrefix() + " growls a warning to you.");
+                    randomReplies.push(self.getPrefix() + " shrinks away from you making small whimpering noises.");
+                };
+                var randomIndex = Math.floor(Math.random() * randomReplies.length);
+                
+                resultString = randomReplies[randomIndex];
+
+                let retaliation = ""
+                if (_affinity <=-3) {
+                    //you get attacked
+                    resultString += "<br>"+self.getPrefix()+" lashes out at you. ";
+                    retaliation = self.hit(player, 0.5);
+                    resultString += retaliation;
+                } else if (_affinity <= 0) {
+                    if (map && player) {
+                         retaliation = self.fightOrFlight(map,player);
+                    };
+                    if (retaliation.length ==0) {
+                        retaliation = "<br>You're lucky you didn't get a slap this time."
+                    };
+                    resultString += retaliation;
+                } else if (_affinity <= 2) {
+                    resultString += "<br>You aren't making a good impression with " + self.getSuffix()+ ". Maybe ease off there?";
+                };
+
+            return resultString;
+
+        };
+
+        self.setTexture = function(texture) {
+            _texture = texture;
+        };
+
         self.getSmell = function() {
             var resultString;
 
@@ -714,6 +789,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             currentAttributes.smell = _smell;  
             currentAttributes.sound = _sound;
             currentAttributes.taste = _taste; 
+            currentAttributes.texture = _texture;
                
             currentAttributes.contagion = _contagion;                     
             currentAttributes.antibodies = _antibodies;  
@@ -1410,7 +1486,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
             
             //occasionally miss
-            var randomInt = Math.floor(Math.random() * 5);
+            var randomInt = Math.floor(Math.random() * 7);
             if (randomInt == 0) {
                 currentAttackStrength = 0;
             };  

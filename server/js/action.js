@@ -704,10 +704,12 @@ exports.Action = function Action(player, map, fileManager) {
                         //fall through to "shove"
                     case 'shove':
                     case 'press':
+                    case 'tap':
                     case 'push':
                     case 'nudge':
                     case 'prod':
                     case 'poke':
+                    case 'jostle':
                         _ticks = 1;              
                         description = _player.shove(_verb, _object0);
                         break;
@@ -1014,20 +1016,38 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = 1;
                         description = _player.wave(_verb, _object0, _object1);
                         break;
+                    /*
+                    case 'squeeze':
+                    case 'grasp':
+                    case 'clutch':
+                    case 'clasp':
+                    case 'hold':
+                    */
+                    /*
+                    case 'smoosh':
+                    case 'smear':
+                    case 'squish':
+                    */
                     case 'touch':
+                    case 'feel':                        
+                    case 'pat':                        
                     case 'stroke':
-                    case 'feel': 
                     case 'caress':                 
                     case 'pet':
+                    case 'hug':
+                    case 'embrace':
+                    case 'cuddle':
+                    case 'snuggle':
+                    case 'nuzzle':
+                        //see #270 - either activate something (like press) - or return a texture description in some cases.
+                        description = _player.touch(_verb, _object0);
+                        break;
                     case 'rub':
                     case 'polish':
                     case 'buff':
                     case 'sharpen':
-                    case 'smooth':
-                    case 'smoosh':
                     case 'sharp':
-                    case 'smear':
-                    case 'squish':
+                    case 'smooth':
                         description = _player.rub(_verb, _splitWord, _object0, _object1);
                         break;
                     case 'talk':
@@ -1434,8 +1454,6 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'undo':
                     case 'unpick':
                     case 'tighten': //may also need to support "do up"? 
-                    //case 'touch': // see #270 - either activate something (like press) - or return a texture description
-                    //case 'feel': // see #270 - either activate something (like press) - or return a texture description
                     case 'cast': //see #18
                     case 'summon': //see #18
                     default:
