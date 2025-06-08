@@ -1316,6 +1316,20 @@ test('can get recommended direction for object if in line of sight', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+
+test('can look at remote location if it is in line of sight', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "You peer toward the kitchen but can't quite make any clear details out. You'll need to find your way there to take a proper look.";
+    var actualResult = p0.examine("examine", "kitchen", null, m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('can get recommended direction if in line of sight', () => {
     m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
@@ -1352,6 +1366,38 @@ test('cannot get recommended direction if not in line of sight', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+test('cannot look at remote location that is not mentioned in description', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("room-404");
+    p0.setLocation(restArea);
+    const objectName = "peacock meeting room"
+    const expectedResults = [
+        "There's no "+objectName+" here and you're not carrying any either.",
+        "You can't see any "+objectName+" around here.",
+        "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.",
+        "You'll need to try somewhere (or someone) else for that.",
+        "There's no "+objectName+" available here at the moment."
+    ];
+    var actualResult = p0.examine("examine", "peacock meeting room", null, m0);
+    console.debug("Actual  : " + actualResult);
+    expect(expectedResults).toContain(actualResult);
+});
+
+test('can look at location mentioned in description (if nearby)', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("first-floor-fire-escape");
+    p0.setLocation(restArea);
+    console.debug("Loc: "+m0.getClosestMatchingLocation("smoking area", restArea, p0.getInventoryObject()));
+    var expectedResult = "You peer toward the smoking area but can't quite make any clear details out. You'll need to find your way there to take a proper look.";
+    var actualResult = p0.examine("examine", "smoking area", null, m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
 
 test('can get recommended direction if not in line of sight but mentioned in description', () => {
     //should have a path but not a direct visible one

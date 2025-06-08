@@ -271,8 +271,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 //trying to search whole location...
                 return "You don't have all day to root around everywhere. (Or maybe you do!).<br>Either way, you'll need to be more specific.";
             };
-
-            
+          
             //#566 is a creature carrying it?
                     let creatures = _currentLocation.getCreatures()
                     for (var c=0; c< creatures.length;c++) {
@@ -307,7 +306,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //find out if any "deliver" what we're looking for.
                     let allArtefacts = _inventory.getAllObjectsAndChildren(false); //not inaccessible things
                     allArtefacts = allArtefacts.concat(_currentLocation.getAllObjectsAndChildren(false));
-                    console.debug(allArtefacts);
+                    //console.debug(allArtefacts);
                     let deliveryItems = [];
                     for (var a=0; a<allArtefacts.length;a++) {
                         if (allArtefacts[a].getType() != 'creature') {
@@ -323,6 +322,38 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             };
                         };                       
                     };
+
+            //is is a location or distant object mentioned in the description?
+                //can player see artefact/location from where they're standing?
+                //try object first, then plain location name, then location display name, then syns            
+                var desiredLocationName = _map.getObjectLocationName(objectName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
+                if (!desiredLocationName) {
+                    var desiredLocation = _map.getLocation(objectName, true);
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (!desiredLocationName) {
+                    desiredLocation = _map.getClosestMatchingLocation(objectName, _currentLocation, _inventory)
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (desiredLocationName) {
+                    var path = _map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
+                    if (!path) {
+                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
+                        if (_currentLocation.getDescription().includes(desiredLocationName) || _currentLocation.getDescription().includes(objectName)) {
+                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
+                            path = _map.findBestPath(desiredLocationName, 5, _currentLocation, _inventory);
+                            path.reverse(); //reverse the path so that the first direction is the first in the list.
+                        };
+                    };
+                    if (path) {
+                        //path found - we can see it.
+                        return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out. You'll need to find your way there to take a proper look."
+                    };
+                };
             
             var randomReplies;
             if (container) {

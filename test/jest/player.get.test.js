@@ -77,6 +77,12 @@ test("Test that a player can get an object from an open container they're carryi
 });
 
 test("Test that a player cannot get an object from a closed container they're carrying.", () => {
+    const map = require('../../server/js/map.js');
+    const m0 = new map.Map();
+    m0.addLocation(l0);
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    p0.setLocation(l0);
+
     container.receive(a1);
     p0.get('get', container.getName());
     const objectName = "box";
@@ -99,7 +105,13 @@ test("Test that a player can get an object from an open container in a location.
     expect(actualResult).toBe(expectedResult);
 });
 
-test("Test that a player cannot get an object from an closed container in a location.", () => {
+test("Test that a player cannot get an object from a closed container in a location.", () => {
+    const map = require('../../server/js/map.js');
+    const m0 = new map.Map();
+    m0.addLocation(l0);
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    p0.setLocation(l0);
+
     container.moveOrOpen('open');  
     container.receive(a1);
     container.close('close');
@@ -116,6 +128,12 @@ test("Test that a player cannot get an object from an closed container in a loca
 });
 
 test("Test that a player cannot get an object that doesn't exist.", () => {
+    const map = require('../../server/js/map.js');
+    const m0 = new map.Map();
+    m0.addLocation(l0);
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    p0.setLocation(l0);
+
     const objectName = "nothing";
     const expectedResults = [
         "There's no "+objectName+" here and you're not carrying any either.",
