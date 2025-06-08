@@ -59,7 +59,7 @@
     "message": "<br>OK, so it wasn't the nicest thing to do to Jim but at least you've preserved Chris' sanity for a while."
   },
   "fail": {
-    "message": "You know, refusing to help people out on your first day in the office is going to put you on thr fast track to nowhere.",
+    "message": "You know, refusing to help people out on your first day in the office is going to put you on the fast track to nowhere.",
     "affinityModifier": 1,
     "decreaseAffinityFor": "chris warrington"
   }

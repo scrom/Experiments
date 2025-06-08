@@ -384,6 +384,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     case "destroyedSource":
                         message += "<br>You can no longer "+self.getDisplayName()+". You needed to use "+failObject.getOriginalDisplayName()+" but it's been destroyed.";
                         break;
+                    case "conversationState":
+                        message += "<br>Hmm. Well that's a conversation you won't be having again. You didn't want to "+self.getDisplayName()+" anyway, right?!";
+                        break;
+                    case "failAttributes":
+                        message += ""; //no message, we just fail silently - shouldn't really get here as "expected" mission failures around attributes should have their own message set.
+                        break;
+
                 };
             };
 
@@ -552,11 +559,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return response;
         };
 
-        self.checkForRequiredContents = function(missionObject, requiredContents) {
-            console.debug("Checking for required contents: "+requiredContents);
+        self.checkContents = function(missionObject, contentsAttribute) {
+            console.debug("Checking for contents: "+contentsAttribute);
 
             //if required contents is not set, we assume success
-            if (!requiredContents || requiredContents == null || requiredContents == undefined || requiredContents == "") {
+            if (!contentsAttribute || contentsAttribute == null || contentsAttribute == undefined || contentsAttribute == "") {
                 //console.debug("no required contents set, returning true");
                 return true;
             };
@@ -564,33 +571,33 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var missionObjectInventory = missionObject.getInventoryObject(); 
 
             //if required contents is a string
-            if (typeof(requiredContents) == 'string') {
-                //console.debug("required contents is a string: "+requiredContents);
+            if (typeof(contentsAttribute) == 'string') {
+                //console.debug("required contents is a string: "+contentsAttribute);
                 //if it's a string, we assume it's a single item
-                if (missionObjectInventory.check(requiredContents)) {
+                if (missionObjectInventory.check(contentsAttribute)) {
                     return true;
                 };
             };
 
             //if required contents is a simple array ...
-            if (Array.isArray(requiredContents)) {
+            if (Array.isArray(contentsAttribute)) {
                 var contentsCount = 0;
 
-                var requiredContentsCount = requiredContents.length;
-                if (requiredContentsCount > 0) {
-                    for (var i = 0; i < requiredContents.length; i++) {
-                        //console.debug("checking for " + requiredContents[i]);
-                        if (missionObjectInventory.check(requiredContents[i])) { contentsCount++; };
+                var contentsAttributeCount = contentsAttribute.length;
+                if (contentsAttributeCount > 0) {
+                    for (var i = 0; i < contentsAttribute.length; i++) {
+                        //console.debug("checking for " + contentsAttribute[i]);
+                        if (missionObjectInventory.check(contentsAttribute[i])) { contentsCount++; };
                     };
                 };
-                //console.debug("required condition: ("+missionObject.getName()+" - contents("+ requiredContentsCount+")) " + requiredContents + " matched: " + contentsCount + " items.");
+                //console.debug("required condition: ("+missionObject.getName()+" - contents("+ contentsAttributeCount+")) " + contentsAttribute + " matched: " + contentsCount + " items.");
         
-                if (contentsCount == requiredContentsCount) {
+                if (contentsCount == contentsAttributeCount) {
                     return true;
                 };
             };
 
-            if (typeof(requiredContents) == 'object') {
+            if (typeof(contentsAttribute) == 'object') {
                 //we have  amore complex object to check
                 let allOfConfirmed = false;
                 let anyOfConfirmed = false;
@@ -598,11 +605,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
                 //if we have a "noneOf" list, we need to check if the object name is in there return FALSE if so!
                 //we cover this first so we can exit early if we find a match.
-                if (requiredContents.hasOwnProperty("noneOf")) {
-                        var noneOf = requiredContents.noneOf;
+                if (contentsAttribute.hasOwnProperty("noneOf")) {
+                        var noneOf = contentsAttribute.noneOf;
                         for (var i = 0; i < noneOf.length; i++) {
                             if (missionObjectInventory.check(noneOf[i])) {
-                                return false;  //fail - exit completely if we found a match
+                                return false;  // exit early if we found a match
                             };
                         };
                         noneOfConfirmed = true; //if we get here, noneOf is confirmed - none found
@@ -611,8 +618,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
                 
                 //if we have an "allOf" list, we need to check all items exist and return true if so!
-                if (requiredContents.hasOwnProperty("allOf")) {
-                        var allOf = requiredContents.allOf;
+                if (contentsAttribute.hasOwnProperty("allOf")) {
+                        var allOf = contentsAttribute.allOf;
                         var contentsCount = 0;
                         for (var i = 0; i < allOf.length; i++) {
                             if (missionObjectInventory.check(allOf[i])) {
@@ -627,8 +634,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
 
                 //if we have an "anyOf" list, we need to check if the object name is in there return true if so!
-                if (requiredContents.hasOwnProperty("anyOf")) {
-                        var anyOf = requiredContents.anyOf;
+                if (contentsAttribute.hasOwnProperty("anyOf")) {
+                        var anyOf = contentsAttribute.anyOf;
                         for (var i = 0; i < anyOf.length; i++) {
                             if (missionObjectInventory.check(anyOf[i])) {
                                 anyOfConfirmed = true;
@@ -648,52 +655,53 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return false;
         };
 
-        self.checkForRequiredAntibodies = function(missionObject, requiredAntibodies) {
+        self.checkAntibodies = function(missionObject, antibodiesAttribute) {
+            //antibodiesAttribute is an array of antibodies
             var contentsCount = 0;
-            var requiredAntibodiesCount = requiredAntibodies.length;
+            var antibodiesAttributeCount = antibodiesAttribute.length;
             var attribs = missionObject.getCurrentAttributes()
             var antibodies = attribs.antibodies;
             var antibodiesLength = Object.keys(antibodies).length;
 
-            if (requiredAntibodiesCount ==0 && antibodiesLength>0) {
+            if (antibodiesAttributeCount ==0 && antibodiesLength>0) {
                 return false;
             }; 
-            if (requiredAntibodiesCount ==0 && antibodiesLength==0) {
+            if (antibodiesAttributeCount ==0 && antibodiesLength==0) {
                 return true;
             }; 
 
-            for (var i=0; i<requiredAntibodies.length;i++) {
-                if (antibodies.indexOf(requiredAntibodies[i]) >-1) {contentsCount++;};
+            for (var i=0; i<antibodiesAttribute.length;i++) {
+                if (antibodies.indexOf(antibodiesAttribute[i]) >-1) {contentsCount++;};
             };
       
-            if (contentsCount == requiredAntibodiesCount) {
-                //console.debug("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+            if (contentsCount == antibodiesAttributeCount) {
+                //console.debug("required condition: (contents) "+contentsAttribute+" matched: "+contentsCount+" items.");
                 return true;
             };
 
             return false;
         };
 
-        self.checkForRequiredContagion = function(missionObject, requiredContagion) {
+        self.checkContagion = function(missionObject, contagionAttribute) {
             var contentsCount = 0;
-            var requiredContagionCount = requiredContagion.length;
+            var contagionAttributeCount = contagionAttribute.length;
             var attribs = missionObject.getCurrentAttributes()
             var contagion = attribs.contagion;
             var contagionLength = Object.keys(contagion).length;
 
-            if (requiredContagionCount ==0 && contagionLength>0) {
+            if (contagionAttributeCount ==0 && contagionLength>0) {
                 return false;
             }; 
-            if (requiredContagionCount ==0 && contagionLength==0) {
+            if (contagionAttributeCount ==0 && contagionLength==0) {
                 return true;
             }; 
 
-            for (var i=0; i<requiredContagion.length;i++) {
-                if (contagion.indexOf(requiredContagion[i]) >-1) {contentsCount++;};
+            for (var i=0; i<contagionAttribute.length;i++) {
+                if (contagion.indexOf(contagionAttribute[i]) >-1) {contentsCount++;};
             };
       
-            if (contentsCount == requiredContagionCount) {
-                //console.debug("required condition: (contents) "+requiredContents+" matched: "+contentsCount+" items.");
+            if (contentsCount == contagionAttributeCount) {
+                //console.debug("required condition: (contents) "+contentsAttribute+" matched: "+contentsCount+" items.");
                 return true;
             };
 
@@ -957,7 +965,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (_failAttributes.hasOwnProperty("conversationState")) {    
                     //have we got to a *specific* state?                   
                     if (_conversationState == _failAttributes["conversationState"]) {
-                        return self.fail("failAttributes");
+                        return self.fail("conversationState");
                     };                          
                 };
             };
@@ -1027,14 +1035,16 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //is something critical dead?
             var failIfDead = false;
-            if (_conditionAttributes.hasOwnProperty("dead")) {
-                if (_conditionAttributes["dead"] != true) {
-                    failIfDead = true;
+            if (_conditionAttributes) {
+                if (_conditionAttributes.hasOwnProperty("dead")) {
+                    if (_conditionAttributes["dead"] != true) { 
+                        failIfDead = true;
+                    };
                 };
-            };
-            if (_conditionAttributes.hasOwnProperty("alive")) {
-                if (_conditionAttributes["alive"] == true) {
-                    failIfDead = true;
+                if (_conditionAttributes.hasOwnProperty("alive")) {
+                    if (_conditionAttributes["alive"] == true) {
+                        failIfDead = true;
+                    };
                 };
             };
             if (_failAttributes) {
@@ -1053,12 +1063,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             var deadCreature;
             if (failIfDead) {
+                //if something critical needs to be alive, check if it's dead somewhere.
                 deadCreature = self.getDeadCreature(player, map, _missionObject);
-            };
 
-            if (!(deadCreature)) {
-                if (_missionObject != _destination) {
-                    deadCreature = self.getDeadCreature(player, map, _destination);
+                if (!(deadCreature)) {
+                    if (_missionObject != _destination) {
+                        deadCreature = self.getDeadCreature(player, map, _destination);
+                    };
                 };
             };
 
@@ -1072,14 +1083,24 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 return self.fail("failAttributes");
             };
 
+            if (_failAttributes) {
+                //do we have a more complex "contains" fail condition?
+                if (_failAttributes.hasOwnProperty("contains")) {
+                    //console.debug('checking contents...');                        
+                    if (self.checkContents(missionObject, _failAttributes["contains"])) {
+                        return self.fail("failAttributes");
+                    };
+                };
+            };
+
             //console.debug('mission object retrieved. Checking condition attributes...');
             //we don't bother to calculate this earlier as even if all success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
-            //checkRequiredContents - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+            //checkRequiredContents - these aren't returned as an object attribute (and as an array/object are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("contains")) {
                 //console.debug('checking contents...');                        
-                if (self.checkForRequiredContents(missionObject, _conditionAttributes["contains"])) {
+                if (self.checkContents(missionObject, _conditionAttributes["contains"])) {
                     successCount++;
                 } else {
                     //short-circuit here as cannot be successful
@@ -1090,7 +1111,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("antibodies")) {
                 //console.debug('checking antibodies...');                        
-                if (self.checkForRequiredAntibodies(missionObject, _conditionAttributes["antibodies"])) {
+                if (self.checkAntibodies(missionObject, _conditionAttributes["antibodies"])) {
                     successCount++;
                 } else {
                     //short-circuit here as cannot be successful
@@ -1101,7 +1122,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
             if (_conditionAttributes.hasOwnProperty("contagion")) {
                 //console.debug('checking contagion...');                       
-                if (self.checkForRequiredContagion(missionObject, _conditionAttributes["contagion"])) {
+                if (self.checkContagion(missionObject, _conditionAttributes["contagion"])) {
                     successCount++;
                 } else {
                     //short-circuit here as cannot be successful
@@ -1134,6 +1155,8 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return self.success();
                 };
             };
+
+            return null; //no success or failure yet
         };
 
         self.isActive = function() {
