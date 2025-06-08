@@ -594,6 +594,22 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 //we have  amore complex object to check
                 let allOfConfirmed = false;
                 let anyOfConfirmed = false;
+                let noneOfConfirmed = false;
+
+                //if we have a "noneOf" list, we need to check if the object name is in there return FALSE if so!
+                //we cover this first so we can exit early if we find a match.
+                if (requiredContents.hasOwnProperty("noneOf")) {
+                        var noneOf = requiredContents.noneOf;
+                        for (var i = 0; i < noneOf.length; i++) {
+                            if (missionObjectInventory.check(noneOf[i])) {
+                                return false;  //fail - exit completely if we found a match
+                            };
+                        };
+                        noneOfConfirmed = true; //if we get here, noneOf is confirmed - none found
+                } else {
+                    noneOfConfirmed = true; // no noneOf list, so we assume it's confirmed
+                };
+                
                 //if we have an "allOf" list, we need to check all items exist and return true if so!
                 if (requiredContents.hasOwnProperty("allOf")) {
                         var allOf = requiredContents.allOf;
@@ -623,7 +639,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     anyOfConfirmed = true;
                 };
 
-                if (allOfConfirmed && anyOfConfirmed) {
+                if (allOfConfirmed && anyOfConfirmed && noneOfConfirmed) {
                     return true;
                 };
 
