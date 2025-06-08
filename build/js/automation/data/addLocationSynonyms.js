@@ -33,15 +33,17 @@ fs.readdirSync(dataDir).forEach(file => {
       // Remove bracketed content before splitting
       const displayNameNoBrackets = json.displayName.replace(/\([^\)]*\)/g, '');
       displayNameNoBrackets.split(/[\s\-\_]+/).forEach(word => {
-        if (word && word.length > 1) synonyms.add(word.toLowerCase());
+      if (word && word.length > 1) synonyms.add(word.toLowerCase());
       });
 
       // Add hyphenated words as extra synonyms
       const hyphenMatches = displayNameNoBrackets.match(/\b[\w]+-[\w-]+\b/g);
       if (hyphenMatches) {
-        hyphenMatches.forEach(hyphenWord => {
-          synonyms.add(hyphenWord.toLowerCase());
-        });
+      hyphenMatches.forEach(hyphenWord => {
+        synonyms.add(hyphenWord.toLowerCase());
+        // Also add with hyphens replaced by spaces
+        synonyms.add(hyphenWord.replace(/-/g, ' ').toLowerCase());
+      });
       }
     }
 
