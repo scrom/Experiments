@@ -4319,23 +4319,37 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(artefact)) {
                 //can player see artefact/location from where they're standing?
-                var desiredLocation = map.getLocation(artefactName, true);
-                var desiredLocationName;
-                if (desiredLocation) {
-                    desiredLocationName = desiredLocation.getName();
+                //try object first, then plain location name, then location display name, then syns            
+                var desiredLocationName = map.getObjectLocationName(artefactName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
+                if (!desiredLocationName) {
+                    var desiredLocation = map.getLocation(artefactName, true);
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
                 };
                 if (!desiredLocationName) {
-                    desiredLocationName = map.getObjectLocationName(artefactName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
+                    desiredLocation = map.getClosestMatchingLocation(artefactName, _currentLocation, _inventory)
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
                 };
                 if (desiredLocationName) {
                     var path = map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
+                    if (!path) {
+                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
+                        if (_currentLocation.getDescription().includes(desiredLocationName) || _currentLocation.getDescription().includes(artefactName)) {
+                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
+                            path = map.findBestPath(desiredLocationName, 5, _currentLocation, _inventory);
+                            path.reverse(); //reverse the path so that the first direction is the first in the list.
+                        };
+                    };
                     if (path) {
                         //path found
                         var direction = tools.directions[tools.directions.indexOf(path[0]) + 1];
                         var toThe = "";
                         if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
                         if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
-                        return "From a quick peer around it looks like you'll need to head "+toThe+direction+" from here."
+                        return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
                     };
                 };
                 return "You'll need to explore and find your way there yourself I'm afraid.";

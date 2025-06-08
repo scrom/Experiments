@@ -12,6 +12,12 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 eastbound",
+            "a14-eastbound",
+            "eastbound"
+        ],
         "exits": []
     },
     {
@@ -27,6 +33,14 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout",
+            "a14-roundabout",
+            "milton",
+            "milton roundabout",
+            "roundabout"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -59,6 +73,15 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout east",
+            "a14-roundabout-east",
+            "east",
+            "milton",
+            "milton roundabout",
+            "roundabout"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -91,6 +114,15 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout entrance",
+            "a14-roundabout-entrance",
+            "entrance",
+            "milton",
+            "milton roundabout",
+            "roundabout"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -123,6 +155,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout north east",
+            "a14-roundabout-north-east",
+            "east",
+            "milton",
+            "milton roundabout",
+            "north",
+            "roundabout"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -155,6 +197,15 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout south",
+            "a14-roundabout-south",
+            "milton",
+            "milton roundabout",
+            "roundabout",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -187,6 +238,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 roundabout south west",
+            "a14-roundabout-south-west",
+            "milton",
+            "milton roundabout",
+            "roundabout",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -219,6 +280,12 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "a14",
+            "a14 westbound",
+            "a14-westbound",
+            "westbound"
+        ],
         "exits": []
     },
     {
@@ -234,6 +301,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "access",
+            "access road central",
+            "access-road-central",
+            "business",
+            "business park access road",
+            "central",
+            "park",
+            "road"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -258,6 +335,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "access",
+            "access road east",
+            "access-road-east",
+            "business",
+            "business park access road",
+            "east",
+            "park",
+            "road"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -282,6 +369,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "access",
+            "access road junction",
+            "access-road-junction",
+            "business",
+            "business park access road",
+            "junction",
+            "park",
+            "road"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -314,6 +411,16 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "access",
+            "access road west",
+            "access-road-west",
+            "business",
+            "business park access road",
+            "park",
+            "road",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -333,6 +440,9 @@
         "attributes": {
             "start": true
         },
+        "synonyms": [
+            "atrium"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -1347,6 +1457,14 @@
         "name": "atrium-seating",
         "displayName": "Atrium seating area",
         "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a dining table and a very large potted tree.",
+        "synonyms": [
+            "area",
+            "atrium",
+            "atrium seating",
+            "atrium seating area",
+            "atrium-seating",
+            "seating"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -1578,6 +1696,12 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "ambulance",
+            "bike",
+            "bike ambulance",
+            "bike-ambulance"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -1662,6 +1786,14 @@
         "name": "buenosaires",
         "displayName": "Buenos Aires interview room",
         "description": "You're in the Buenos Aires interview room.<br>Despite containing all the things you'd expect of an interview room, it still manages to feel empty and clinical.",
+        "synonyms": [
+            "aires",
+            "buenos",
+            "buenos aires interview room",
+            "buenosaires",
+            "interview",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -1841,6 +1973,12 @@
         "attributes": {
             "imageName": "camelids.jpg"
         },
+        "synonyms": [
+            "camelids",
+            "camelids meeting room",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -2118,6 +2256,16 @@
         "name": "core-area-east",
         "displayName": "Core area - DevOps corner",
         "description": "You're in the CORE (DevOps) area. From a quick scan of the walls and monitors it looks like things are running well here at the moment.",
+        "synonyms": [
+            "area",
+            "core",
+            "core area - devops corner",
+            "core area east",
+            "core-area-east",
+            "corner",
+            "devops",
+            "east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -2429,6 +2577,16 @@
         "name": "core-area-west",
         "displayName": "Core area - PM territory",
         "description": "You're in the CORE Project Management zone. The team have been battling the backlog of business requests and working their way to Cloud glory.",
+        "synonyms": [
+            "area",
+            "core",
+            "core area - pm territory",
+            "core area west",
+            "core-area-west",
+            "pm",
+            "territory",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -2485,6 +2643,13 @@
         "name": "creative-agency-area",
         "displayName": "Agency",
         "description": "You're in the Agency Den. There's a tang of creativity (or is that printer toner?) in the air and the sound of clicks being converted to cash. ",
+        "synonyms": [
+            "agency",
+            "area",
+            "creative",
+            "creative agency area",
+            "creative-agency-area"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -2674,6 +2839,14 @@
         "name": "customer-delight-central",
         "displayName": "Customer Delight",
         "description": "You're in the Customer Delight area - a large, open-plan office space.<br>From where you're standing, the most dominant feature in the room is a floor-to-ceiling glass wall decorated with LED lights.",
+        "synonyms": [
+            "central",
+            "customer",
+            "customer delight",
+            "customer delight central",
+            "customer-delight-central",
+            "delight"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3165,6 +3338,14 @@
         "name": "customer-delight-east",
         "displayName": "Customer Delight",
         "description": "You're at the Eastern entrance of the Customer Delight area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight east",
+            "customer-delight-east",
+            "delight",
+            "east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3201,6 +3382,15 @@
         "name": "customer-delight-management-area",
         "displayName": "Customer Delight",
         "description": "You're in the dead-zone of Customer Delight between the glass wall and 'Jellyfish'.<br>There's a vacuum where the CEO and PA's used to sit although it's adequately filled by the presence of Jim Dobbins when he's around.",
+        "synonyms": [
+            "area",
+            "customer",
+            "customer delight",
+            "customer delight management area",
+            "customer-delight-management-area",
+            "delight",
+            "management"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3522,6 +3712,14 @@
         "name": "customer-delight-north",
         "displayName": "Customer Delight",
         "description": "You're in a thoroughfare in the Northern part of the Customer Delight area.<br>To the East lies our customer support team and a couple of meeting rooms whilst to the West is a small break-out area.<br>North heads towards the 'back stairs' whilst South takes you to the main Customer Delight areas.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight north",
+            "customer-delight-north",
+            "delight",
+            "north"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3611,6 +3809,14 @@
         "name": "customer-delight-south",
         "displayName": "Customer Delight",
         "description": "You're in the Southern part of the Customer Delight development area. This is where the SQL Source control team sit. They're probably all held captive in a meeting at the moment though.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight south",
+            "customer-delight-south",
+            "delight",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3795,6 +4001,15 @@
         "name": "customer-delight-south-east",
         "displayName": "Customer Delight",
         "description": "You're in the South-Eastern corner of the Customer Delight development area.<br>This is the part of the large area occupied be the SQL Source Control development team.<br>One of the walls has been painted for use as a whiteboard.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight south east",
+            "customer-delight-south-east",
+            "delight",
+            "east",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -3848,6 +4063,15 @@
         "name": "customer-delight-south-west",
         "displayName": "Customer Delight",
         "description": "You're in the South-West corner of the Customer Delight development area.  Currently this plays home to the SQL Monitor team.<br>There's another big glass wall here.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight south west",
+            "customer-delight-south-west",
+            "delight",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -4426,6 +4650,14 @@
         "name": "customer-delight-west",
         "displayName": "Customer Delight",
         "description": "You're on the West side of the Customer Delight development area - also known as 'User Experience Alley'.<br>This is where most of our UX staff in customer delight sit as it's right between all the development teams. There's a window to the west that overlooks one of the car parks.",
+        "synonyms": [
+            "customer",
+            "customer delight",
+            "customer delight west",
+            "customer-delight-west",
+            "delight",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -4799,6 +5031,12 @@
         "name": "darth-vader",
         "displayName": "Darth Vader",
         "description": "You're in the 'Darth Vader' meeting room. This is a really great space that it seems most people forget exists.<br>I guess it's tucked out of the way behind the facilities team in the furthest corner of the office.<br>It's bright, airy, spacious and has a great view outside.",
+        "synonyms": [
+            "darth",
+            "darth vader",
+            "darth-vader",
+            "vader"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -4914,6 +5152,15 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "bike",
+            "bike racks",
+            "bike racks (east side)",
+            "east",
+            "east bike racks",
+            "east-bike-racks",
+            "racks"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5000,6 +5247,14 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "car",
+            "car park",
+            "east",
+            "east car park",
+            "east-car-park",
+            "park"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5043,6 +5298,14 @@
         "name": "east-corridor-ground-floor",
         "displayName": "East corridor ground floor",
         "description": "You're in the East corridor of the ground floor.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "east corridor ground floor",
+            "east-corridor-ground-floor",
+            "floor",
+            "ground"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5072,6 +5335,16 @@
         "name": "east-corridor-ground-floor-north-east",
         "displayName": "East corridor ground floor",
         "description": "You're at the North end of the ground floor East corridor.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "east corridor ground floor",
+            "east corridor ground floor north east",
+            "east-corridor-ground-floor-north-east",
+            "floor",
+            "ground",
+            "north"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5101,6 +5374,17 @@
         "name": "east-corridor-ground-floor-north-west",
         "displayName": "East corridor ground floor",
         "description": "You're standing in a short corridor just outside the post room.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "east corridor ground floor",
+            "east corridor ground floor north west",
+            "east-corridor-ground-floor-north-west",
+            "floor",
+            "ground",
+            "north",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5165,6 +5449,17 @@
         "name": "east-end-south-corridor-ground-floor",
         "displayName": "South corridor ground floor",
         "description": "You're near the East end of the South corridor on the ground floor.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "east end south corridor ground floor",
+            "east-end-south-corridor-ground-floor",
+            "end",
+            "floor",
+            "ground",
+            "south",
+            "south corridor ground floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5245,6 +5540,17 @@
         "name": "east-south-end-corridor-ground-floor",
         "displayName": "East corridor ground floor",
         "description": "You're near the South end of the East corridor on the ground floor.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "east corridor ground floor",
+            "east south end corridor ground floor",
+            "east-south-end-corridor-ground-floor",
+            "end",
+            "floor",
+            "ground",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5274,6 +5580,16 @@
         "name": "enterprise-meeting-room",
         "displayName": "Enterpri(z)e meeting room",
         "description": "You're in the Enterprise meeting room. Mostly it's just another meeting room. Like most rooms at the front of the building it offers a great opportunity to peer through the window at the people coming and going from the office.",
+        "synonyms": [
+            "enterpri(z)e meeting room",
+            "enterprie",
+            "enterprie meeting room",
+            "enterprise",
+            "enterprise meeting room",
+            "enterprise-meeting-room",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5350,6 +5666,14 @@
         "name": "facilities-area",
         "displayName": "Facilities team area",
         "description": "You're in the Facilities team area. They work tirelessly to keep the building running, clean, safe and maintained. Just don't annoy them, you'll regret it.",
+        "synonyms": [
+            "area",
+            "facilities",
+            "facilities area",
+            "facilities team area",
+            "facilities-area",
+            "team"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5606,6 +5930,14 @@
         "name": "finance-area",
         "displayName": "Finance team area",
         "description": "You're in the Finance team area. You <i>really</i> need to be nice to this lot. They sort out your pay and expenses as well as all the rest of the cash running through this place.",
+        "synonyms": [
+            "area",
+            "finance",
+            "finance area",
+            "finance team area",
+            "finance-area",
+            "team"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5683,6 +6015,18 @@
         "name": "first-floor-back-stairs-east",
         "displayName": "Back stairs (East) - 1st floor",
         "description": "You're standing on the north-east staircase.",
+        "synonyms": [
+            "1st",
+            "back",
+            "back stairs  - 1st floor",
+            "back stairs (east) - 1st floor",
+            "east",
+            "first",
+            "first floor back stairs east",
+            "first-floor-back-stairs-east",
+            "floor",
+            "stairs"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5712,6 +6056,18 @@
         "name": "first-floor-back-stairs-west",
         "displayName": "Back stairs (West) - 1st floor",
         "description": "You're halfway up the west fire escape staircase.",
+        "synonyms": [
+            "1st",
+            "back",
+            "back stairs  - 1st floor",
+            "back stairs (west) - 1st floor",
+            "first",
+            "first floor back stairs west",
+            "first-floor-back-stairs-west",
+            "floor",
+            "stairs",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5741,6 +6097,18 @@
         "name": "first-floor-cubby-hole",
         "displayName": "Function heads & support cubby hole",
         "description": "You're in the First floor cubby hole.<br>The area is lined with whiteboards and there are assorted chairs and bean bags scattered around.",
+        "synonyms": [
+            "cubby",
+            "first",
+            "first floor cubby hole",
+            "first-floor-cubby-hole",
+            "floor",
+            "function",
+            "function heads & support cubby hole",
+            "heads",
+            "hole",
+            "support"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -5834,6 +6202,15 @@
         "name": "first-floor-cubicle",
         "displayName": "Toilet cubicle",
         "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
+        "synonyms": [
+            "cubicle",
+            "first",
+            "first floor cubicle",
+            "first-floor-cubicle",
+            "floor",
+            "toilet",
+            "toilet cubicle"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6015,6 +6392,15 @@
         "attributes": {
             "type": "outdoor"
         },
+        "synonyms": [
+            "escape",
+            "fire",
+            "fire escape",
+            "first",
+            "first floor fire escape",
+            "first-floor-fire-escape",
+            "floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6088,6 +6474,15 @@
         "name": "first-floor-landing-central",
         "displayName": "First floor landing",
         "description": "You're on the first floor landing.",
+        "synonyms": [
+            "central",
+            "first",
+            "first floor landing",
+            "first floor landing central",
+            "first-floor-landing-central",
+            "floor",
+            "landing"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6117,6 +6512,15 @@
         "name": "first-floor-landing-east",
         "displayName": "First floor landing",
         "description": "You're at the East end of the first floor landing.<br>Through the nearby window you can often see some of the sales team relaxing.",
+        "synonyms": [
+            "east",
+            "first",
+            "first floor landing",
+            "first floor landing east",
+            "first-floor-landing-east",
+            "floor",
+            "landing"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6192,6 +6596,15 @@
         "name": "first-floor-landing-west",
         "displayName": "First floor landing",
         "description": "You're at the West end of the first floor landing.<br>Peering over the balcony you see people wandering about their business down below.",
+        "synonyms": [
+            "first",
+            "first floor landing",
+            "first floor landing west",
+            "first-floor-landing-west",
+            "floor",
+            "landing",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6239,6 +6652,13 @@
         "name": "first-floor-toilet",
         "displayName": "First floor toilet",
         "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
+        "synonyms": [
+            "first",
+            "first floor toilet",
+            "first-floor-toilet",
+            "floor",
+            "toilet"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6485,6 +6905,13 @@
         "name": "fishing",
         "displayName": "'Fishing' meeting room",
         "description": "You're in the slightly dingy and sparsely furninshed 'Fishing' meeting room. It's long, narrow and has glass walls on 2 sides.<br>Peering back outside you can see the facilities team area.<br>Now you <i>really</i> know how a goldfish feels.",
+        "synonyms": [
+            "'fishing'",
+            "'fishing' meeting room",
+            "fishing",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6580,6 +7007,14 @@
         "name": "flowers-a",
         "displayName": "Flowers A meeting room",
         "description": "You're in the Flowers A meeting room. It's bright & airy in here.<br>If you want to use the AV equipment, forget it. Use the TV instead.",
+        "synonyms": [
+            "flowers",
+            "flowers a",
+            "flowers a meeting room",
+            "flowers-a",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6595,6 +7030,14 @@
         "name": "flowers-b",
         "displayName": "Flowers B meeting room",
         "description": "You're in the Flowers B meeting room. This is a great medium-sized room that often gets overlooked. Possibly because it's regularly closed off to be used for massages.",
+        "synonyms": [
+            "flowers",
+            "flowers b",
+            "flowers b meeting room",
+            "flowers-b",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6614,6 +7057,14 @@
             "dark": true,
             "imageName": "graffiti-a.jpg"
         },
+        "synonyms": [
+            "graffiti",
+            "graffiti a",
+            "graffiti a meeting room",
+            "graffiti-a",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6632,6 +7083,14 @@
         "attributes": {
             "imageName": "graffiti-b.jpg"
         },
+        "synonyms": [
+            "graffiti",
+            "graffiti b",
+            "graffiti b meeting room",
+            "graffiti-b",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6703,6 +7162,18 @@
         "attributes": {
             "dark": true
         },
+        "synonyms": [
+            "back",
+            "back stairs  - ground floor",
+            "back stairs (east) - ground floor",
+            "east",
+            "floor",
+            "ground",
+            "ground floor back stair east",
+            "ground-floor-back-stair-east",
+            "stair",
+            "stairs"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6743,6 +7214,17 @@
         "attributes": {
             "dark": true
         },
+        "synonyms": [
+            "back",
+            "back stairs  - ground floor",
+            "back stairs (west) - ground floor",
+            "floor",
+            "ground",
+            "ground floor back stairs west",
+            "ground-floor-back-stairs-west",
+            "stairs",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6765,6 +7247,15 @@
         "name": "ground-floor-cubicle",
         "displayName": "Toilet cubicle",
         "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
+        "synonyms": [
+            "cubicle",
+            "floor",
+            "ground",
+            "ground floor cubicle",
+            "ground-floor-cubicle",
+            "toilet",
+            "toilet cubicle"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6946,6 +7437,15 @@
         "attributes": {
             "type": "outdoor"
         },
+        "synonyms": [
+            "escape",
+            "fire",
+            "fire escape",
+            "floor",
+            "ground",
+            "ground floor fire escape",
+            "ground-floor-fire-escape"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -6959,8 +7459,7 @@
                 "longname": "North",
                 "direction": "n",
                 "source": "ground-floor-fire-escape",
-                "destination": "smoking-area",
-                "hidden": true
+                "destination": "smoking-area"
             }
         ],
         "inventory": [
@@ -7013,8 +7512,7 @@
                         "longname": "North",
                         "direction": "n",
                         "source": "ground-floor-fire-escape",
-                        "destination": "smoking-area",
-                        "hidden": true
+                        "destination": "smoking-area"
                     }
                 ],
                 "synonyms": [
@@ -7031,6 +7529,13 @@
         "name": "ground-floor-toilet",
         "displayName": "Ground floor toilet",
         "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+        "synonyms": [
+            "floor",
+            "ground",
+            "ground floor toilet",
+            "ground-floor-toilet",
+            "toilet"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -7276,6 +7781,14 @@
         "name": "incidentals-blinkpipe",
         "displayName": "Incidentals area",
         "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
+        "synonyms": [
+            "area",
+            "blinkpipe",
+            "incidentals",
+            "incidentals area",
+            "incidentals blinkpipe",
+            "incidentals-blinkpipe"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -7305,6 +7818,14 @@
         "name": "is-area",
         "displayName": "IS team area",
         "description": "You're in the IS area. The team here keep this show on the road. Anything you need, they can usually get it or fix it for you.",
+        "synonyms": [
+            "area",
+            "is",
+            "is area",
+            "is team area",
+            "is-area",
+            "team"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -7484,6 +8005,13 @@
         "name": "jellyfish-meeting-room",
         "displayName": "Jellyfish",
         "description": "You're in the 'Jellyfish' meeting room. The carpet in here is a rather vivid green and the walls are a tasteful wipe-clean pale blue.<br>It's a not-to-subtle under-sea kindof theme.<br>Through the window to the north you can see the main office stairs.<br>You ponder who's going to spill their coffee out there today.",
+        "synonyms": [
+            "jellyfish",
+            "jellyfish meeting room",
+            "jellyfish-meeting-room",
+            "meeting",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -7604,6 +8132,14 @@
         "attributes": {
             "imageName": "kitchen-first-floor.jpg"
         },
+        "synonyms": [
+            "first",
+            "first floor kitchen",
+            "floor",
+            "kitchen",
+            "kitchen first floor",
+            "kitchen-first-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -9014,6 +9550,13 @@
         "attributes": {
             "imageName": "kitchen-ground-floor.jpg"
         },
+        "synonyms": [
+            "floor",
+            "ground",
+            "kitchen",
+            "kitchen ground floor",
+            "kitchen-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -10999,6 +11542,15 @@
                                     "bike"
                                 ]
                             },
+                            "synonyms": [
+                                "crash",
+                                "crash site",
+                                "crash-site",
+                                "disaster",
+                                "disaster scene",
+                                "scene",
+                                "site"
+                            ],
                             "exits": [
                                 {
                                     "object": "exit",
@@ -11716,6 +12268,16 @@
                                                                 "van"
                                                             ]
                                                         },
+                                                        "synonyms": [
+                                                            "car",
+                                                            "car park",
+                                                            "car park (east)",
+                                                            "corner",
+                                                            "east",
+                                                            "east car park corner",
+                                                            "east-car-park-corner",
+                                                            "park"
+                                                        ],
                                                         "exits": [
                                                             {
                                                                 "object": "exit",
@@ -11961,6 +12523,14 @@
         "attributes": {
             "imageName": "kitchen-second-floor.jpg"
         },
+        "synonyms": [
+            "floor",
+            "kitchen",
+            "kitchen second floor",
+            "kitchen-second-floor",
+            "second",
+            "second floor kitchen"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12066,6 +12636,14 @@
         "name": "lawyer-lobby",
         "displayName": "Lawyer's lobby",
         "description": "You're in the lobby of the resident law firm.<br>There's an air of bureaucracy, suits and books to the place.",
+        "synonyms": [
+            "lawyer",
+            "lawyer lobby",
+            "lawyer's",
+            "lawyer's lobby",
+            "lawyer-lobby",
+            "lobby"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12081,6 +12659,9 @@
         "name": "library",
         "displayName": "Library",
         "description": "You're in the atrium library.<br>This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
+        "synonyms": [
+            "library"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12410,6 +12991,13 @@
         "attributes": {
             "imageName": "liftdoor-1.jpg"
         },
+        "synonyms": [
+            "first",
+            "floor",
+            "lift",
+            "lift first floor",
+            "lift-first-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12520,6 +13108,13 @@
         "attributes": {
             "imageName": "liftdoor.jpg"
         },
+        "synonyms": [
+            "floor",
+            "ground",
+            "lift",
+            "lift ground floor",
+            "lift-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12642,6 +13237,13 @@
         "attributes": {
             "imageName": "liftdoor-2.jpg"
         },
+        "synonyms": [
+            "floor",
+            "lift",
+            "lift second floor",
+            "lift-second-floor",
+            "second"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12756,6 +13358,14 @@
         "name": "machine-room-east",
         "displayName": "Machine room",
         "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
+        "synonyms": [
+            "east",
+            "machine",
+            "machine room",
+            "machine room east",
+            "machine-room-east",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12867,6 +13477,14 @@
         "name": "machine-room-west",
         "displayName": "Machine room",
         "description": "You're in the IS storage area.<br>You're not meant to be in here unaccompanied I think. There are cables, wires, tools and spare pieces of hardware arrayed around you.",
+        "synonyms": [
+            "machine",
+            "machine room",
+            "machine room west",
+            "machine-room-west",
+            "room",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12938,6 +13556,11 @@
         "name": "marketing",
         "displayName": "Marketing area",
         "description": "You're in the Marketing area.",
+        "synonyms": [
+            "area",
+            "marketing",
+            "marketing area"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -12953,6 +13576,12 @@
         "name": "mercedes",
         "displayName": "Mercedes meeting room",
         "description": "You're in the Mercedes meeting room. It's a small, odd-shaped room that's rarely used by anyone but the locals.<br>In fact these days it's used more than anything else for raucous games of Mariokart.<br>The lack of seating in here ensures people don't camp out for too long though.",
+        "synonyms": [
+            "meeting",
+            "mercedes",
+            "mercedes meeting room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13030,6 +13659,12 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "milton",
+            "milton road",
+            "milton-road",
+            "road"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13054,6 +13689,15 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "end",
+            "milton",
+            "milton road",
+            "milton road north end",
+            "milton-road-north-end",
+            "north",
+            "road"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13070,6 +13714,16 @@
         "name": "northwest-corridor-ground-floor",
         "displayName": "West corridor ground floor",
         "description": "You're in the West corridor of the ground floor.",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "ground",
+            "northwest",
+            "northwest corridor ground floor",
+            "northwest-corridor-ground-floor",
+            "west",
+            "west corridor ground floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13147,6 +13801,12 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "front",
+            "office",
+            "office front",
+            "office-front"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13357,6 +14017,12 @@
         "name": "opportunities-central",
         "displayName": "Opportunities",
         "description": "You're standing next to a large floor-to-ceiling glass wall in middle of the opportunities and ventures area.",
+        "synonyms": [
+            "central",
+            "opportunities",
+            "opportunities central",
+            "opportunities-central"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13437,6 +14103,12 @@
         "name": "opportunities-cubbyhole",
         "displayName": "Opportunities cubbyhole",
         "description": "You're in a dead-end room full of clutter in the opportunities and ventures area.",
+        "synonyms": [
+            "cubbyhole",
+            "opportunities",
+            "opportunities cubbyhole",
+            "opportunities-cubbyhole"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13520,6 +14192,12 @@
         "name": "opportunities-east",
         "displayName": "Opportunities",
         "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
+        "synonyms": [
+            "east",
+            "opportunities",
+            "opportunities east",
+            "opportunities-east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13677,6 +14355,12 @@
         "name": "opportunities-north",
         "displayName": "Opportunities",
         "description": "You're in north end of the opportunities and ventures area.",
+        "synonyms": [
+            "north",
+            "opportunities",
+            "opportunities north",
+            "opportunities-north"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13762,6 +14446,13 @@
         "name": "opportunities-north-corridor",
         "displayName": "Opportunities",
         "description": "You're in a corridor at the north end of the opportunities and ventures area.",
+        "synonyms": [
+            "corridor",
+            "north",
+            "opportunities",
+            "opportunities north corridor",
+            "opportunities-north-corridor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13791,6 +14482,14 @@
         "name": "opportunities-north-east-corridor",
         "displayName": "Opportunities",
         "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "north",
+            "opportunities",
+            "opportunities north east corridor",
+            "opportunities-north-east-corridor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -13813,6 +14512,12 @@
         "name": "opportunities-south",
         "displayName": "Opportunities",
         "description": "You're in south end of the opportunities and ventures area.",
+        "synonyms": [
+            "opportunities",
+            "opportunities south",
+            "opportunities-south",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14043,6 +14748,13 @@
         "name": "opportunities-south-west",
         "displayName": "Opportunities",
         "description": "You're in South-West corner of the opportunities and ventures area.<br>All around you are new market ideas blooming into fruition.",
+        "synonyms": [
+            "opportunities",
+            "opportunities south west",
+            "opportunities-south-west",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14065,6 +14777,12 @@
         "name": "opportunities-west",
         "displayName": "Opportunities",
         "description": "You're standing in part of the opportunities and ventures area.<br>Peering through a window to the West you see staff wandering past on their way to and from their bikes.",
+        "synonyms": [
+            "opportunities",
+            "opportunities west",
+            "opportunities-west",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14107,6 +14825,15 @@
         "name": "paint-pots",
         "displayName": "Paint Pots meeting room",
         "description": "You're in the Paint Pots meeting room. The lack of visible light adds to the sense of foreboding.<br>You feel like this is a room specially reserved for difficult HR conversations. You'd be wrong of course!",
+        "synonyms": [
+            "meeting",
+            "paint",
+            "paint pots",
+            "paint pots meeting room",
+            "paint-pots",
+            "pots",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14203,6 +14930,12 @@
         "name": "peacock",
         "displayName": "Peacock meeting room",
         "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
+        "synonyms": [
+            "meeting",
+            "peacock",
+            "peacock meeting room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14296,6 +15029,13 @@
         "name": "people-team-area",
         "displayName": "People Team area",
         "description": "You're in the People Team area. For such an overworked group they're always available and happy to help.",
+        "synonyms": [
+            "area",
+            "people",
+            "people team area",
+            "people-team-area",
+            "team"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14318,6 +15058,15 @@
         "name": "people-team-north",
         "displayName": "People Team area",
         "description": "You're on the Northern edge of the People Team area.",
+        "synonyms": [
+            "area",
+            "north",
+            "people",
+            "people team area",
+            "people team north",
+            "people-team-north",
+            "team"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14347,6 +15096,16 @@
         "name": "people-team-north-west",
         "displayName": "People Team area",
         "description": "You're in the North-West corner of the People Team area.",
+        "synonyms": [
+            "area",
+            "north",
+            "people",
+            "people team area",
+            "people team north west",
+            "people-team-north-west",
+            "team",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14369,6 +15128,15 @@
         "name": "people-team-water-cooler",
         "displayName": "Water cooler",
         "description": "You're stood by a water cooler on the west wing of the second floor. A corridor leads North and East. There are team areas to the South and meeting rooms to the West.",
+        "synonyms": [
+            "cooler",
+            "people",
+            "people team water cooler",
+            "people-team-water-cooler",
+            "team",
+            "water",
+            "water cooler"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14500,6 +15268,12 @@
         "attributes": {
             "echo": true
         },
+        "synonyms": [
+            "meeting",
+            "pioneer",
+            "pioneer meeting room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14570,6 +15344,12 @@
         "name": "plant-room",
         "displayName": "Plant Room",
         "description": "You're in the plant room. The metaphorical engine for the building.<br>There's a strong metallic tang in the air and the hum of heavy machinery sings in your ears.",
+        "synonyms": [
+            "plant",
+            "plant room",
+            "plant-room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14689,6 +15469,12 @@
         "name": "poppy",
         "displayName": "Poppy meeting room",
         "description": "You're in the Poppy meeting room. The AV equipment in here could use some love.",
+        "synonyms": [
+            "meeting",
+            "poppy",
+            "poppy meeting room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -14991,6 +15777,12 @@
         "name": "post-room",
         "displayName": "Post room",
         "description": "You're in the post room.<br>Dotted around the shelves and floor are parcels of all sizes.<br>One of the great things about this place is that the reception staff are willing to take deliveries for all staff.<br>It means most stuff in the post room is from Amazon or similar and Christmas is a bit crazy but it beats waiting at home for a delivery.",
+        "synonyms": [
+            "post",
+            "post room",
+            "post-room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15072,6 +15864,12 @@
         "name": "punts",
         "displayName": "Punts meeting room",
         "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
+        "synonyms": [
+            "meeting",
+            "punts",
+            "punts meeting room",
+            "room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15087,6 +15885,9 @@
         "name": "reception",
         "displayName": "Reception",
         "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+        "synonyms": [
+            "reception"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15386,6 +16187,15 @@
         "name": "rest-area-ground-floor",
         "displayName": "Rest area",
         "description": "You're in the ground floor rest area.",
+        "synonyms": [
+            "area",
+            "floor",
+            "ground",
+            "rest",
+            "rest area",
+            "rest area ground floor",
+            "rest-area-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15560,6 +16370,9 @@
         "attributes": {
             "type": "outdoor"
         },
+        "synonyms": [
+            "roof"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15617,6 +16430,12 @@
         "name": "room-404",
         "displayName": "Room 404",
         "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
+        "synonyms": [
+            "404",
+            "room",
+            "room 404",
+            "room-404"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15635,6 +16454,12 @@
         "attributes": {
             "type": "outdoor"
         },
+        "synonyms": [
+            "bins",
+            "rubbish",
+            "rubbish bins",
+            "rubbish-bins"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15782,6 +16607,15 @@
         "name": "sales-break-out",
         "displayName": "Sales area",
         "description": "You're stood in a small break out area. The area is dominated by a large sofa and TV.",
+        "synonyms": [
+            "area",
+            "break",
+            "out",
+            "sales",
+            "sales area",
+            "sales break out",
+            "sales-break-out"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -15886,6 +16720,14 @@
         "name": "sales-main",
         "displayName": "Sales area",
         "description": "You're in the main sales and marketing area.<br>There's a low level hum of telephone conversation.",
+        "synonyms": [
+            "area",
+            "main",
+            "sales",
+            "sales area",
+            "sales main",
+            "sales-main"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16203,6 +17045,14 @@
         "name": "sales-north",
         "displayName": "Sales area",
         "description": "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.",
+        "synonyms": [
+            "area",
+            "north",
+            "sales",
+            "sales area",
+            "sales north",
+            "sales-north"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16239,6 +17089,14 @@
         "name": "sales-seating",
         "displayName": "Sales area",
         "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
+        "synonyms": [
+            "area",
+            "sales",
+            "sales area",
+            "sales seating",
+            "sales-seating",
+            "seating"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16304,6 +17162,14 @@
         "name": "sales-south",
         "displayName": "Sales area",
         "description": "You're at the south end of the sales and marketing area.",
+        "synonyms": [
+            "area",
+            "sales",
+            "sales area",
+            "sales south",
+            "sales-south",
+            "south"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16326,6 +17192,18 @@
         "name": "second-floor-back-stairs-east",
         "displayName": "Back stairs (East) - 2nd floor",
         "description": "You're at the top of the Eastern back staircase. This is very much a path less-travelled.<br>From here you can take a short-cut down to the Sales and Marketing teams or South to Finance and Facilities.",
+        "synonyms": [
+            "2nd",
+            "back",
+            "back stairs  - 2nd floor",
+            "back stairs (east) - 2nd floor",
+            "east",
+            "floor",
+            "second",
+            "second floor back stairs east",
+            "second-floor-back-stairs-east",
+            "stairs"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16348,6 +17226,18 @@
         "name": "second-floor-back-stairs-west",
         "displayName": "Back stairs (West) - 2nd floor",
         "description": "You're standing at the top of the west fire escape staircase.",
+        "synonyms": [
+            "2nd",
+            "back",
+            "back stairs  - 2nd floor",
+            "back stairs (west) - 2nd floor",
+            "floor",
+            "second",
+            "second floor back stairs west",
+            "second-floor-back-stairs-west",
+            "stairs",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16373,6 +17263,15 @@
         "attributes": {
             "dark": true
         },
+        "synonyms": [
+            "cubicle",
+            "floor",
+            "second",
+            "second floor cubicle",
+            "second-floor-cubicle",
+            "toilet",
+            "toilet cubicle"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16574,6 +17473,14 @@
         "name": "second-floor-east-corridor",
         "displayName": "Second floor East corridor",
         "description": "You're in the East corridor on the second floor. Domain of all things IS.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "floor",
+            "second",
+            "second floor east corridor",
+            "second-floor-east-corridor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16641,6 +17548,15 @@
         "attributes": {
             "type": "outdoor"
         },
+        "synonyms": [
+            "escape",
+            "fire",
+            "fire escape",
+            "floor",
+            "second",
+            "second floor fire escape",
+            "second-floor-fire-escape"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16714,6 +17630,15 @@
         "name": "second-floor-landing-central",
         "displayName": "Second floor landing",
         "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+        "synonyms": [
+            "central",
+            "floor",
+            "landing",
+            "second",
+            "second floor landing",
+            "second floor landing central",
+            "second-floor-landing-central"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16796,6 +17721,15 @@
         "name": "second-floor-landing-east",
         "displayName": "Second floor landing",
         "description": "You're at the east end of the second floor landing. Peering through the window to the East, you can just about make out the facilities team on the other side of the glass.",
+        "synonyms": [
+            "east",
+            "floor",
+            "landing",
+            "second",
+            "second floor landing",
+            "second floor landing east",
+            "second-floor-landing-east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16871,6 +17805,15 @@
         "name": "second-floor-landing-west",
         "displayName": "Second floor landing",
         "description": "You're at the West end of the second floor landing. Peering over the balcony you consider throwing something down. If only there was a slide here.",
+        "synonyms": [
+            "floor",
+            "landing",
+            "second",
+            "second floor landing",
+            "second floor landing west",
+            "second-floor-landing-west",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16918,6 +17861,17 @@
         "name": "second-floor-north-west-corridor-central",
         "displayName": "Second floor West corridor",
         "description": "You're part-way along a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the East and West.",
+        "synonyms": [
+            "central",
+            "corridor",
+            "floor",
+            "north",
+            "second",
+            "second floor north west corridor central",
+            "second floor west corridor",
+            "second-floor-north-west-corridor-central",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16947,6 +17901,17 @@
         "name": "second-floor-north-west-corridor-north-central",
         "displayName": "Second floor West corridor",
         "description": "You're in a roughly North-South running corridor in the North-West corner of the second floor.",
+        "synonyms": [
+            "central",
+            "corridor",
+            "floor",
+            "north",
+            "second",
+            "second floor north west corridor north central",
+            "second floor west corridor",
+            "second-floor-north-west-corridor-north-central",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -16976,6 +17941,17 @@
         "name": "second-floor-north-west-corridor-north-east",
         "displayName": "Second floor West corridor",
         "description": "You're at a bend in a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the North and East.",
+        "synonyms": [
+            "corridor",
+            "east",
+            "floor",
+            "north",
+            "second",
+            "second floor north west corridor north east",
+            "second floor west corridor",
+            "second-floor-north-west-corridor-north-east",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17012,6 +17988,17 @@
         "name": "second-floor-north-west-corridor-north-end",
         "displayName": "Second floor West corridor",
         "description": "You're in a North-South corridor at the North-West corner of the second floor. To the North is a staircase leading down.",
+        "synonyms": [
+            "corridor",
+            "end",
+            "floor",
+            "north",
+            "second",
+            "second floor north west corridor north end",
+            "second floor west corridor",
+            "second-floor-north-west-corridor-north-end",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17041,6 +18028,17 @@
         "name": "second-floor-north-west-corridor-south",
         "displayName": "Second floor West corridor",
         "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard.",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "north",
+            "second",
+            "second floor north west corridor south",
+            "second floor west corridor",
+            "second-floor-north-west-corridor-south",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17070,6 +18068,15 @@
         "name": "second-floor-printer-area",
         "displayName": "Printer area",
         "description": "You're in a small glass-walled corner bounded by corridors.",
+        "synonyms": [
+            "area",
+            "floor",
+            "printer",
+            "printer area",
+            "second",
+            "second floor printer area",
+            "second-floor-printer-area"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17228,6 +18235,15 @@
         "name": "second-floor-reception",
         "displayName": "Former reception",
         "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
+        "synonyms": [
+            "floor",
+            "former",
+            "former reception",
+            "reception",
+            "second",
+            "second floor reception",
+            "second-floor-reception"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17292,6 +18308,17 @@
         "name": "second-floor-seating-area-east",
         "displayName": "Rest area",
         "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
+        "synonyms": [
+            "area",
+            "east",
+            "floor",
+            "rest",
+            "rest area",
+            "seating",
+            "second",
+            "second floor seating area east",
+            "second-floor-seating-area-east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17437,6 +18464,17 @@
         "name": "second-floor-seating-area-west",
         "displayName": "Rest area",
         "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
+        "synonyms": [
+            "area",
+            "floor",
+            "rest",
+            "rest area",
+            "seating",
+            "second",
+            "second floor seating area west",
+            "second-floor-seating-area-west",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17513,6 +18551,13 @@
         "name": "second-floor-toilet",
         "displayName": "Second floor toilet",
         "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>There's a tatty-looking sign on the toilet cubicle door.",
+        "synonyms": [
+            "floor",
+            "second",
+            "second floor toilet",
+            "second-floor-toilet",
+            "toilet"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17780,6 +18825,16 @@
         "name": "second-floor-west-corridor",
         "displayName": "Second floor South corridor",
         "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "second",
+            "second floor south corridor",
+            "second floor west corridor",
+            "second-floor-west-corridor",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17809,6 +18864,13 @@
         "name": "servery-back-corridor",
         "displayName": "Servery back corridor",
         "description": "You're in the back corridor of the SQL Servery. There's a slight smell of industrial kitchens here.",
+        "synonyms": [
+            "back",
+            "corridor",
+            "servery",
+            "servery back corridor",
+            "servery-back-corridor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -17873,6 +18935,13 @@
         "name": "servery-food-bar",
         "displayName": "Servery",
         "description": "You're standing by the SQL Servery serving area and salad bar.<br>It's breakfast time. The kitchen team have laid out a breakfast spread of fruit and porridge.",
+        "synonyms": [
+            "bar",
+            "food",
+            "servery",
+            "servery food bar",
+            "servery-food-bar"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18044,6 +19113,12 @@
         "name": "servery-kitchen",
         "displayName": "Servery kitchen",
         "description": "You're in the SQL Servery kitchen.",
+        "synonyms": [
+            "kitchen",
+            "servery",
+            "servery kitchen",
+            "servery-kitchen"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18564,6 +19639,12 @@
         "name": "servery-main",
         "displayName": "Servery",
         "description": "You're in the SQL Servery. It's still early enough in the morning for a few of the staff here to be wandering past to get their breakfasts.",
+        "synonyms": [
+            "main",
+            "servery",
+            "servery main",
+            "servery-main"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18713,6 +19794,13 @@
         "name": "servery-north-west",
         "displayName": "Servery",
         "description": "You're standing at the North-West corner of the servery. The walls here are decorated with postcards and photos.<br>This is the main thoroughfare for staff heading to and from the servery at lunchtimes.",
+        "synonyms": [
+            "north",
+            "servery",
+            "servery north west",
+            "servery-north-west",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18853,6 +19941,13 @@
         "name": "servery-south-west",
         "displayName": "Servery",
         "description": "You're in the South-West corner of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
+        "synonyms": [
+            "servery",
+            "servery south west",
+            "servery-south-west",
+            "south",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18904,6 +19999,13 @@
         "name": "shower-ground-floor",
         "displayName": "Shower",
         "description": "You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.",
+        "synonyms": [
+            "floor",
+            "ground",
+            "shower",
+            "shower ground floor",
+            "shower-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18940,6 +20042,12 @@
         "name": "signpost",
         "displayName": "Signpost meeting room",
         "description": "You're in the SignPost meeting room.",
+        "synonyms": [
+            "meeting",
+            "room",
+            "signpost",
+            "signpost meeting room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -18961,6 +20069,12 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "area",
+            "smoking",
+            "smoking area",
+            "smoking-area"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19056,8 +20170,7 @@
                         "longname": "North",
                         "direction": "n",
                         "source": "ground-floor-fire-escape",
-                        "destination": "smoking-area",
-                        "hidden": true
+                        "destination": "smoking-area"
                     },
                     {
                         "object": "exit",
@@ -19329,6 +20442,15 @@
         "name": "snorting-horses",
         "displayName": "Snorting Horses meeting room",
         "description": "You're in the Snorting Horses meeting room.<br>There's a great view out of the windows. The table has been rendered to look like straw, one wall is covered in rosettes whilst the other mixes acoustic treatment with some rather alarming horse-head-shaped lighting.<br>Overall there's something deeply unsettling about spending time alone in here.",
+        "synonyms": [
+            "horses",
+            "meeting",
+            "room",
+            "snorting",
+            "snorting horses",
+            "snorting horses meeting room",
+            "snorting-horses"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19364,6 +20486,16 @@
         "name": "southeast-corridor-ground-floor",
         "displayName": "South corridor ground floor",
         "description": "You're at the South-East intersection of two corridors on the ground floor.",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "ground",
+            "south",
+            "south corridor ground floor",
+            "southeast",
+            "southeast corridor ground floor",
+            "southeast-corridor-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19393,6 +20525,16 @@
         "name": "southwest-corridor-ground-floor",
         "displayName": "South corridor ground floor",
         "description": "You're in the South-West corner intersection of two corridors of the ground floor. There is a meeting room to the West.",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "ground",
+            "south",
+            "south corridor ground floor",
+            "southwest",
+            "southwest corridor ground floor",
+            "southwest-corridor-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19422,6 +20564,12 @@
         "name": "spiderman",
         "displayName": "Spiderman meeting room",
         "description": "You're in the Spiderman meeting room. (Or is that Spider-man?) There are large windows on 2 walls.<br>You feel somewhat exposed here",
+        "synonyms": [
+            "meeting",
+            "room",
+            "spiderman",
+            "spiderman meeting room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19457,6 +20605,15 @@
         "name": "stairs-first-floor",
         "displayName": "Stairs - 1st floor",
         "description": "You're halfway up the main office staircase.",
+        "synonyms": [
+            "1st",
+            "first",
+            "floor",
+            "stairs",
+            "stairs - 1st floor",
+            "stairs first floor",
+            "stairs-first-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19528,6 +20685,14 @@
         "name": "stairs-ground-floor",
         "displayName": "Stairs - Ground floor",
         "description": "You're standing at the foot of the stairs.",
+        "synonyms": [
+            "floor",
+            "ground",
+            "stairs",
+            "stairs - ground floor",
+            "stairs ground floor",
+            "stairs-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19606,6 +20771,15 @@
         "name": "stairs-second-floor",
         "displayName": "Stairs - 2nd floor",
         "description": "You're standing at the top of the main staircase The view's great from up here.",
+        "synonyms": [
+            "2nd",
+            "floor",
+            "second",
+            "stairs",
+            "stairs - 2nd floor",
+            "stairs second floor",
+            "stairs-second-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19670,6 +20844,12 @@
         "name": "support-east",
         "displayName": "Support",
         "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
+        "synonyms": [
+            "east",
+            "support",
+            "support east",
+            "support-east"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19738,6 +20918,12 @@
         "name": "support-west",
         "displayName": "Support",
         "description": "You're in the support area.",
+        "synonyms": [
+            "support",
+            "support west",
+            "support-west",
+            "west"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19817,6 +21003,15 @@
         "name": "thinking-hats",
         "displayName": "Thinking Hats meeting room",
         "description": "You're in the Thinking Hats meeting room. The seats in here are really tricky to pick up and move and it's oddly chilly. Perhaps it's haunted?",
+        "synonyms": [
+            "hats",
+            "meeting",
+            "room",
+            "thinking",
+            "thinking hats",
+            "thinking hats meeting room",
+            "thinking-hats"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19836,6 +21031,14 @@
             "type": "outdoor",
             "imageName": "fire-escape-top.jpg"
         },
+        "synonyms": [
+            "escape",
+            "fire",
+            "fire escape",
+            "top",
+            "top fire escape",
+            "top-fire-escape"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19859,6 +21062,14 @@
         "name": "traffic-jam-meeting-room",
         "displayName": "Traffic Jam meeting room",
         "description": "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.",
+        "synonyms": [
+            "jam",
+            "meeting",
+            "room",
+            "traffic",
+            "traffic jam meeting room",
+            "traffic-jam-meeting-room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19895,6 +21106,12 @@
         "name": "war-room",
         "displayName": "War Room",
         "description": "You're in the War room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
+        "synonyms": [
+            "room",
+            "war",
+            "war room",
+            "war-room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -19916,6 +21133,12 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "area",
+            "waste",
+            "waste area",
+            "waste-area"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20050,6 +21273,13 @@
         "name": "web-meeting-room",
         "displayName": "Web meeting room",
         "description": "You're in 'Web'. When not in use for small meetings this room doubles as an in-office hairdressing salon.<br>The carpet in here feels strange underfoot.",
+        "synonyms": [
+            "meeting",
+            "room",
+            "web",
+            "web meeting room",
+            "web-meeting-room"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20115,6 +21345,15 @@
                 "bike"
             ]
         },
+        "synonyms": [
+            "bike",
+            "bike racks",
+            "bike racks (west)",
+            "racks",
+            "west",
+            "west bike racks",
+            "west-bike-racks"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20204,6 +21443,15 @@
                 "van"
             ]
         },
+        "synonyms": [
+            "car",
+            "car park",
+            "car park (west)",
+            "park",
+            "west",
+            "west car park",
+            "west-car-park"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20269,6 +21517,14 @@
         "name": "west-corridor-ground-floor",
         "displayName": "West corridor ground floor",
         "description": "You're near the South end of the West corridor of the ground floor.",
+        "synonyms": [
+            "corridor",
+            "floor",
+            "ground",
+            "west",
+            "west corridor ground floor",
+            "west-corridor-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20298,6 +21554,17 @@
         "name": "west-end-south-corridor-ground-floor",
         "displayName": "South corridor ground floor",
         "description": "You're near the West end of the South corridor on the ground floor.",
+        "synonyms": [
+            "corridor",
+            "end",
+            "floor",
+            "ground",
+            "south",
+            "south corridor ground floor",
+            "west",
+            "west end south corridor ground floor",
+            "west-end-south-corridor-ground-floor"
+        ],
         "exits": [
             {
                 "object": "exit",
@@ -20327,6 +21594,13 @@
         "name": "windows-meeting-room",
         "displayName": "Windows meeting room",
         "description": "You're in the 'Windows' meeting room.<br>It's a bit of a misnomer really as the meeting room next door has more windows. Perhaps it's just irony.<br>The room's slightly cramped but you can just about fit four people in here for a short meeting.<br>One of the walls is oddly curved for no obvious reason.",
+        "synonyms": [
+            "meeting",
+            "room",
+            "windows",
+            "windows meeting room",
+            "windows-meeting-room"
+        ],
         "exits": [
             {
                 "object": "exit",

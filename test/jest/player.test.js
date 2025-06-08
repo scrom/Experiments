@@ -1309,7 +1309,7 @@ test('can get recommended direction for object if in line of sight', () => {
     m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
-    var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
+    var expectedResult = "From a quick peer around it looks like you'll need to head to the <i>West</i> from here.";
     var actualResult = p0.goObject("go", "to", "coffee machine", m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -1320,19 +1320,48 @@ test('can get recommended direction if in line of sight', () => {
     m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
-    var expectedResult = "From a quick peer around it looks like you'll need to head to the West from here.";
+    var expectedResult = "From a quick peer around it looks like you'll need to head to the <i>West</i> from here.";
     var actualResult = p0.goObject("go", "to", "kitchen", m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
 
-test('cannot get recommended direction if not in line of sight', () => {
+test('cannot get recommended direction if not accessible', () => {
+    //need to pass through a locked door
     m0 = mb.buildMap();
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
-    var expectedResult = "You'll need to explore and find your way there yourself I'm afraid.";
+    var expectedResult = "You'll need to explore and find your way there yourself I'm afraid."; 
     var actualResult = p0.goObject("go", "to", "poppy", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('cannot get recommended direction if not in line of sight', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("room-404");
+    p0.setLocation(restArea);
+    var expectedResult = "You'll need to explore and find your way there yourself I'm afraid.";
+    var actualResult = p0.goObject("go", "to", "peacock", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('can get recommended direction if not in line of sight but mentioned in description', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("first-floor-fire-escape");
+    p0.setLocation(restArea);
+    var locationName = "smoking-area";
+    console.debug(m0.findBestPath(locationName, 5, restArea, p0.getInventoryObject()));
+    var expectedResult = "From a quick peer around it looks like you'll need to head <i>down</i> from here.";
+    var actualResult = p0.goObject("go", "to", "smoking area", m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);

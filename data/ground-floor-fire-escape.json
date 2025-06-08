@@ -19,8 +19,7 @@
       "longname": "North",
       "direction": "n",
       "source": "ground-floor-fire-escape",
-      "destination": "smoking-area",
-      "hidden": true
+      "destination": "smoking-area"
     }
   ],
   "inventory": [
