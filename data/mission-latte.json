@@ -1,17 +1,18 @@
 {
   "object": "mission",
   "name": "latte",
-  "displayName": "get yourself a latte",
-  "description": "It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with a latte.",
+  "displayName": "get yourself a coffee",
+  "description": "It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with some sort of coffee.<br><i>(you work in tech, tea just won't cut it at this time of the morning!)</i>",
   "attributes": {
-    "missionObject": "latte",
-    "destination": "player"
+    "missionObject": "player"
   },
   "conditionAttributes": {
-    "isDestroyed": false
+    "contains": { 
+       "anyOf": ["coffee", "sweet coffee", "latte", "sweet latte", "white coffee", "sweet white coffee"]
+    }
   },
   "reward": {
     "score": 75,
-    "message": "<br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
+    "message": "<br>Congratulations, you managed to get your coffee. That was somewhat more effort than expected though.<br><br>Still... no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br><br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far."
   }
 }

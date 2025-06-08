@@ -207,6 +207,7 @@ pip-log.txt
 /test/TestResults
 /test/testdata/generated.json
 test/testdata/mvta.savedGames.json
+test/testdata/testresult-game-data.json
 /test/coverage
 /coverage
 /test/jest/coverage

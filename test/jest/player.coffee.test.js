@@ -673,7 +673,7 @@ describe('Sweet Coffee Combination Tests', () =>
         coffeeMachine.switchOnOrOff("switch", "on");
         p0.get('get', 'latte');
 
-        const expectedResult = "<br><br>Congratulations, you managed to get your latte. That was somewhat more effort than expected though.<br><br>Still, no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far.<br><br>That's a start at least. You still need to get your latte though.<br>(It has to be a latte! Coffee just won't do.)<br><br>Congratulations, you got the coffee machine working!<br>";
+        const expectedResult = "<br><br>Congratulations, you managed to get your coffee. That was somewhat more effort than expected though.<br><br>Still... no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br><br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far.<br><br>That's a start at least. You still need to get your coffee though.<br><br>Congratulations, you got the coffee machine working!<br>";
         const actualResult = m0.updateMissions(5, p0);
         expect(actualResult).toBe(expectedResult);
     });
