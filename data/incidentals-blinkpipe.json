@@ -1,29 +1,37 @@
 {
-    "object": "location",
-    "name": "incidentals-blinkpipe",
-    "displayName": "Incidentals area",
-    "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "incidentals-blinkpipe",
-        "destination": "core-area-east"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "incidentals-blinkpipe",
-        "destination": "finance-area"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "incidentals-blinkpipe",
-        "destination": "punts"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "incidentals-blinkpipe",
+  "displayName": "Incidentals area",
+  "description": "You're in the space between Core and Finance occupied by the Blinkpipe team. Some of them look oddly familiar although you rarely actually come into contact with them.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "incidentals-blinkpipe",
+      "destination": "core-area-east"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "incidentals-blinkpipe",
+      "destination": "finance-area"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "incidentals-blinkpipe",
+      "destination": "punts"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "blinkpipe",
+    "incidentals",
+    "incidentals area",
+    "incidentals blinkpipe",
+    "incidentals-blinkpipe"
+  ]
+}

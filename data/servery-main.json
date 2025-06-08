@@ -103,5 +103,11 @@
     {
       "file": "breakfast"
     }
+  ],
+  "synonyms": [
+    "main",
+    "servery",
+    "servery main",
+    "servery-main"
   ]
 }

@@ -1,33 +1,43 @@
-  {
-    "object": "location",
-    "name": "sales-seating",
-    "displayName": "Sales area",
-    "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "sales-seating",
-        "destination": "sales-break-out"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "sales-seating",
-        "destination": "traffic-jam-meeting-room"
+{
+  "object": "location",
+  "name": "sales-seating",
+  "displayName": "Sales area",
+  "description": "You're in a small seating area. Peering down through the windows to the West you can see the atrium. To the North is a meeting room.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "sales-seating",
+      "destination": "sales-break-out"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "sales-seating",
+      "destination": "traffic-jam-meeting-room"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "It's usually pretty busy down there.",
+      "attributes": {
+        "viewDestination": "reception"
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "It's usually pretty busy down there.",
-        "attributes": {
-          "viewDestination": "reception"
-        }
-      },
-      {"file": "chairs"}
-    ]
-  }
+    },
+    {
+      "file": "chairs"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "sales",
+    "sales area",
+    "sales seating",
+    "sales-seating",
+    "seating"
+  ]
+}

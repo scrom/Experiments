@@ -41,5 +41,13 @@
       "object": "artefact",
       "template": "first-aid-kit"
     }
+  ],
+  "synonyms": [
+    "floor",
+    "kitchen",
+    "kitchen second floor",
+    "kitchen-second-floor",
+    "second",
+    "second floor kitchen"
   ]
 }

@@ -21,9 +21,15 @@
     }
   ],
   "inventory": [
-    {"file": "dining-room-table"},
-    {"file": "tree"},
-    {"file": "chess-set"},
+    {
+      "file": "dining-room-table"
+    },
+    {
+      "file": "tree"
+    },
+    {
+      "file": "chess-set"
+    },
     {
       "object": "artefact",
       "template": "window",
@@ -32,7 +38,19 @@
         "viewDestination": "lawyer-lobby"
       }
     },
-    {"file": "lawyer-door"},
-    {"file": "morpheus-chair"}
+    {
+      "file": "lawyer-door"
+    },
+    {
+      "file": "morpheus-chair"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "atrium",
+    "atrium seating",
+    "atrium seating area",
+    "atrium-seating",
+    "seating"
   ]
-  }
+}

@@ -1,55 +1,68 @@
-  {
-    "object": "location",
-    "name": "second-floor-cubicle",
-    "displayName": "Toilet cubicle",
-    "description": "You're in a toilet cubicle. The toilet is making some unhealthy gugling noises and the smell in here is terrible.<br> I think there's a good reason this one was out of order.",
-    "attributes": {
-      "dark": true
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "second-floor-cubicle",
-        "destination": "second-floor-toilet",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "cubicle-door-out",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "out",
-            "direction": "o",
-            "source": "second-floor-cubicle",
-            "destination": "second-floor-toilet",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "toilet",
-        "detailedDescription": "It looks like the maintenance team have been working on this one.",
-        "attributes": {
-          "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.<br>When you get a chance, you might want to drop an anonymous maintenance request to the Facilities Team to sort your mess out.",
-          "imageName": "brokentoilet.jpg",
-          "smell": "I'll leave it up to your imagination."
+{
+  "object": "location",
+  "name": "second-floor-cubicle",
+  "displayName": "Toilet cubicle",
+  "description": "You're in a toilet cubicle. The toilet is making some unhealthy gugling noises and the smell in here is terrible.<br> I think there's a good reason this one was out of order.",
+  "attributes": {
+    "dark": true
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "out",
+      "direction": "o",
+      "source": "second-floor-cubicle",
+      "destination": "second-floor-toilet",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "cubicle-door-out",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "out",
+          "direction": "o",
+          "source": "second-floor-cubicle",
+          "destination": "second-floor-toilet",
+          "hidden": true
         }
-      },
-      {
-        "object": "artefact",
-        "template": "toilet-brush"
-      },
-      {"file": "newspaper"},
-      {"file": "boy-scout-article"}
-    ]
-  }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "floor"
+    },
+    {
+      "object": "artefact",
+      "template": "toilet",
+      "detailedDescription": "It looks like the maintenance team have been working on this one.",
+      "attributes": {
+        "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.<br>When you get a chance, you might want to drop an anonymous maintenance request to the Facilities Team to sort your mess out.",
+        "imageName": "brokentoilet.jpg",
+        "smell": "I'll leave it up to your imagination."
+      }
+    },
+    {
+      "object": "artefact",
+      "template": "toilet-brush"
+    },
+    {
+      "file": "newspaper"
+    },
+    {
+      "file": "boy-scout-article"
+    }
+  ],
+  "synonyms": [
+    "cubicle",
+    "floor",
+    "second",
+    "second floor cubicle",
+    "second-floor-cubicle",
+    "toilet",
+    "toilet cubicle"
+  ]
+}

@@ -1,31 +1,39 @@
-  {
-    "object": "location",
-    "name": "traffic-jam-meeting-room",
-    "displayName": "Traffic Jam meeting room",
-    "description": "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "traffic-jam-meeting-room",
-            "destination": "sales-seating"
-        }
-    ],
-    "inventory": [
-              {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "You peer out of the window and look down to the office entrance.",
-        "attributes": {
-          "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows",
-          "outside",
-          "view"
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "traffic-jam-meeting-room",
+  "displayName": "Traffic Jam meeting room",
+  "description": "You're in the 'Traffic Jam' meeting room.<br>There's quite a good view outside from here although it does feel like a bit of a fishbowl.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "traffic-jam-meeting-room",
+      "destination": "sales-seating"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "You peer out of the window and look down to the office entrance.",
+      "attributes": {
+        "viewDestination": "office-front"
+      },
+      "synonyms": [
+        "glass",
+        "windows",
+        "outside",
+        "view"
+      ]
+    }
+  ],
+  "synonyms": [
+    "jam",
+    "meeting",
+    "room",
+    "traffic",
+    "traffic jam meeting room",
+    "traffic-jam-meeting-room"
+  ]
+}

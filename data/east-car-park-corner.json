@@ -1,33 +1,45 @@
 {
-    "object": "location",
-    "name": "east-car-park-corner",
-    "displayName": "Car park (East)",
-    "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
-    "attributes": {
-        "type": "outdoor",
-        "vehiclesAllowed": [
-            "bike",
-            "van"
-        ]
-    },
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "east-car-park-corner",
-            "destination": "access-road-east",
-            "requiredAction": "drive"
-        },
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "east-car-park-corner",
-            "destination": "waste-area"
-        }
-    ],
-    "inventory": [
-        { "file": "van" }
+  "object": "location",
+  "name": "east-car-park-corner",
+  "displayName": "Car park (East)",
+  "description": "You're standing by a medium-sized non-descript white delivery van.<br>It seems odd to be parked around the side here. Usually we receive deliveries around the front.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike",
+      "van"
     ]
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "east-car-park-corner",
+      "destination": "access-road-east",
+      "requiredAction": "drive"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "east-car-park-corner",
+      "destination": "waste-area"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "van"
+    }
+  ],
+  "synonyms": [
+    "car",
+    "car park",
+    "car park (east)",
+    "corner",
+    "east",
+    "east car park corner",
+    "east-car-park-corner",
+    "park"
+  ]
 }

@@ -1,47 +1,56 @@
-  {
-    "object": "location",
-    "name": "second-floor-reception",
-    "displayName": "Former reception",
-    "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
-    "exits": [
+{
+  "object": "location",
+  "name": "second-floor-reception",
+  "displayName": "Former reception",
+  "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "second-floor-reception",
+      "destination": "second-floor-west-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "second-floor-reception",
+      "destination": "stairs-second-floor",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "second-floor-reception",
+      "destination": "second-floor-seating-area-west"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "office-door",
+      "detailedDescription": "It leads out to the second floor stairs.<br>Like most modern office building doors it closes (and locks) automatically.",
+      "linkedexits": [
         {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "second-floor-reception",
-            "destination": "second-floor-west-corridor"
-        },
-        {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "second-floor-reception",
-            "destination": "stairs-second-floor",
-            "hidden": true
-        },
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "second-floor-reception",
-            "destination": "second-floor-seating-area-west"
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "second-floor-reception",
+          "destination": "stairs-second-floor",
+          "hidden": true
         }
-    ],
-    "inventory": [ 
-        {
-            "object": "artefact",
-            "template": "office-door",
-            "detailedDescription": "It leads out to the second floor stairs.<br>Like most modern office building doors it closes (and locks) automatically.",
-            "linkedexits": [
-                {
-                    "object": "exit",
-                    "longname": "North",
-                    "direction": "n",
-                    "source": "second-floor-reception",
-                    "destination": "stairs-second-floor",
-                    "hidden": true
-                }
-            ]
-        }
-    ]
-  }
+      ]
+    }
+  ],
+  "synonyms": [
+    "floor",
+    "former",
+    "former reception",
+    "reception",
+    "second",
+    "second floor reception",
+    "second-floor-reception"
+  ]
+}

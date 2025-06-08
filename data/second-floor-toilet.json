@@ -73,5 +73,12 @@
       "object": "artefact",
       "template": "basin"
     }
+  ],
+  "synonyms": [
+    "floor",
+    "second",
+    "second floor toilet",
+    "second-floor-toilet",
+    "toilet"
   ]
 }

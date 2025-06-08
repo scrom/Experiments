@@ -1,46 +1,57 @@
 {
-    "object": "location",
-    "name": "ground-floor-cubicle",
-    "displayName": "Toilet cubicle",
-    "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "ground-floor-cubicle",
-        "destination": "ground-floor-toilet",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "cubicle-door-out",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "out",
-            "direction": "o",
-            "source": "ground-floor-cubicle",
-            "destination": "ground-floor-toilet",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "toilet",
-        "detailedDescription": "It looks like it's in lovely clean, working order!"
-      },
-      {
-        "object": "artefact",
-        "template": "toilet-brush"
-      },
-      {"file": "solid-article"}
-    ]
-  }
+  "object": "location",
+  "name": "ground-floor-cubicle",
+  "displayName": "Toilet cubicle",
+  "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "out",
+      "direction": "o",
+      "source": "ground-floor-cubicle",
+      "destination": "ground-floor-toilet",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "floor"
+    },
+    {
+      "object": "artefact",
+      "template": "cubicle-door-out",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "out",
+          "direction": "o",
+          "source": "ground-floor-cubicle",
+          "destination": "ground-floor-toilet",
+          "hidden": true
+        }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "toilet",
+      "detailedDescription": "It looks like it's in lovely clean, working order!"
+    },
+    {
+      "object": "artefact",
+      "template": "toilet-brush"
+    },
+    {
+      "file": "solid-article"
+    }
+  ],
+  "synonyms": [
+    "cubicle",
+    "floor",
+    "ground",
+    "ground floor cubicle",
+    "ground-floor-cubicle",
+    "toilet",
+    "toilet cubicle"
+  ]
+}

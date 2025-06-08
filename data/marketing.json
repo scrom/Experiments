@@ -1,15 +1,20 @@
 {
-    "object": "location",
-    "name": "marketing",
-    "displayName": "Marketing area",
-    "description": "You're in the Marketing area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "marketing",
-        "destination": "sales-north"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "marketing",
+  "displayName": "Marketing area",
+  "description": "You're in the Marketing area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "marketing",
+      "destination": "sales-north"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "marketing",
+    "marketing area"
+  ]
+}

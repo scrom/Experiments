@@ -71,5 +71,12 @@
         "defaultResult": "Sorry, they belong in here."
       }
     }
+  ],
+  "synonyms": [
+    "meeting",
+    "room",
+    "windows",
+    "windows meeting room",
+    "windows-meeting-room"
   ]
 }

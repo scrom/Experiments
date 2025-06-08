@@ -1,15 +1,21 @@
-  {
-    "object": "location",
-    "name": "war-room",
-    "displayName": "War Room",
-    "description": "You're in the War room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "war-room",
-        "destination": "second-floor-north-west-corridor-central"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "war-room",
+  "displayName": "War Room",
+  "description": "You're in the War room. Once upon a time this was a little-used library. It's a long narrow space that's not used for management stand-ups.<br>The walls are filled with long-forgotten organisational restructuring plans.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "war-room",
+      "destination": "second-floor-north-west-corridor-central"
+    }
+  ],
+  "synonyms": [
+    "room",
+    "war",
+    "war room",
+    "war-room"
+  ]
+}

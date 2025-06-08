@@ -1,15 +1,21 @@
-  {
-    "object": "location",
-    "name": "room-404",
-    "displayName": "Room 404",
-    "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "room-404",
-        "destination": "southeast-corridor-ground-floor"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "room-404",
+  "displayName": "Room 404",
+  "description": "You're in Room 404. It's like a giant 'notfound' error staring at you from beneath a bowler hat.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "room-404",
+      "destination": "southeast-corridor-ground-floor"
+    }
+  ],
+  "synonyms": [
+    "404",
+    "room",
+    "room 404",
+    "room-404"
+  ]
+}

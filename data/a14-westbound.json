@@ -1,14 +1,20 @@
-  {
-    "object": "location",
-    "name": "a14-westbound",
-    "displayName": "A14 Westbound",
-    "description": "You're stationary on the slip road of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>You might as well just <i>quit</i> now.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    }
-  }
+{
+  "object": "location",
+  "name": "a14-westbound",
+  "displayName": "A14 Westbound",
+  "description": "You're stationary on the slip road of the A14 westbound.<br>It looks like you're stuck here for eternity.<br>You might as well just <i>quit</i> now.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike",
+      "car",
+      "van"
+    ]
+  },
+  "synonyms": [
+    "a14",
+    "a14 westbound",
+    "a14-westbound",
+    "westbound"
+  ]
+}

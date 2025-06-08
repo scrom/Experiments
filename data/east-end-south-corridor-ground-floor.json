@@ -1,61 +1,72 @@
 {
-    "object": "location",
-    "name": "east-end-south-corridor-ground-floor",
-    "displayName": "South corridor ground floor",
-    "description": "You're near the East end of the South corridor on the ground floor.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "east-end-south-corridor-ground-floor",
-        "destination": "west-end-south-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "east-end-south-corridor-ground-floor",
-        "destination": "graffiti-a"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "east-end-south-corridor-ground-floor",
-        "destination": "smoking-area",
-        "hidden": true
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "east-end-south-corridor-ground-floor",
-        "destination": "southeast-corridor-ground-floor"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "fire-exit",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "east-end-south-corridor-ground-floor",
-            "destination": "smoking-area",
-            "hidden": true
-          },
-          {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "smoking-area",
-            "destination": "east-end-south-corridor-ground-floor",
-            "hidden": true
-          }
-        ]
-      }
-    ]
-  }
+  "object": "location",
+  "name": "east-end-south-corridor-ground-floor",
+  "displayName": "South corridor ground floor",
+  "description": "You're near the East end of the South corridor on the ground floor.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "east-end-south-corridor-ground-floor",
+      "destination": "west-end-south-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "east-end-south-corridor-ground-floor",
+      "destination": "graffiti-a"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "east-end-south-corridor-ground-floor",
+      "destination": "smoking-area",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "east-end-south-corridor-ground-floor",
+      "destination": "southeast-corridor-ground-floor"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "fire-exit",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "South",
+          "direction": "s",
+          "source": "east-end-south-corridor-ground-floor",
+          "destination": "smoking-area",
+          "hidden": true
+        },
+        {
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "smoking-area",
+          "destination": "east-end-south-corridor-ground-floor",
+          "hidden": true
+        }
+      ]
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "east",
+    "east end south corridor ground floor",
+    "east-end-south-corridor-ground-floor",
+    "end",
+    "floor",
+    "ground",
+    "south",
+    "south corridor ground floor"
+  ]
+}

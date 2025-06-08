@@ -47,5 +47,12 @@
         }
       ]
     }
+  ],
+  "synonyms": [
+    "floor",
+    "lift",
+    "lift second floor",
+    "lift-second-floor",
+    "second"
   ]
 }

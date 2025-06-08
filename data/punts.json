@@ -1,15 +1,21 @@
-  {
-    "object": "location",
-    "name": "punts",
-    "displayName": "Punts meeting room",
-    "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "punts",
-        "destination": "incidentals-blinkpipe"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "punts",
+  "displayName": "Punts meeting room",
+  "description": "You're in the Punts meeting room. It's probably the narrowest meeting room in the building. Just room for 2 and a PC.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "punts",
+      "destination": "incidentals-blinkpipe"
+    }
+  ],
+  "synonyms": [
+    "meeting",
+    "punts",
+    "punts meeting room",
+    "room"
+  ]
+}

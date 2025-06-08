@@ -1,61 +1,69 @@
-  {
-    "object": "location",
-    "name": "stairs-ground-floor",
-    "displayName": "Stairs - Ground floor",
-    "description": "You're standing at the foot of the stairs.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "stairs-ground-floor",
-        "destination": "atrium"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "stairs-ground-floor",
-        "destination": "library"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "stairs-ground-floor",
-        "destination": "kitchen-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "stairs-ground-floor",
-        "destination": "northwest-corridor-ground-floor",
-        "hidden": true
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "stairs-ground-floor",
-        "destination": "stairs-first-floor"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "office-door",
-        "detailedDescription": "It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "stairs-ground-floor",
-            "destination": "northwest-corridor-ground-floor",
-            "hidden": true
-          }
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "stairs-ground-floor",
+  "displayName": "Stairs - Ground floor",
+  "description": "You're standing at the foot of the stairs.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "stairs-ground-floor",
+      "destination": "atrium"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "stairs-ground-floor",
+      "destination": "library"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "stairs-ground-floor",
+      "destination": "kitchen-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "stairs-ground-floor",
+      "destination": "northwest-corridor-ground-floor",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "up",
+      "direction": "u",
+      "source": "stairs-ground-floor",
+      "destination": "stairs-first-floor"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "office-door",
+      "detailedDescription": "It's one of the main doors into the ground floor working area.<br>Like most modern office building doors it closes (and locks) automatically.",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "South",
+          "direction": "s",
+          "source": "stairs-ground-floor",
+          "destination": "northwest-corridor-ground-floor",
+          "hidden": true
+        }
+      ]
+    }
+  ],
+  "synonyms": [
+    "floor",
+    "ground",
+    "stairs",
+    "stairs - ground floor",
+    "stairs ground floor",
+    "stairs-ground-floor"
+  ]
+}

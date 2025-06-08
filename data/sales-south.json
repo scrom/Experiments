@@ -1,22 +1,30 @@
-  {
-    "object": "location",
-    "name": "sales-south",
-    "displayName": "Sales area",
-    "description": "You're at the south end of the sales and marketing area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "sales-south",
-        "destination": "servery-food-bar"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "sales-south",
-        "destination": "sales-main"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "sales-south",
+  "displayName": "Sales area",
+  "description": "You're at the south end of the sales and marketing area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "sales-south",
+      "destination": "servery-food-bar"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "sales-south",
+      "destination": "sales-main"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "sales",
+    "sales area",
+    "sales south",
+    "sales-south",
+    "south"
+  ]
+}

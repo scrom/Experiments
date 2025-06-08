@@ -33,9 +33,19 @@
     }
   ],
   "inventory": [
-    {"file": "ice-cream-man"}
+    {
+      "file": "ice-cream-man"
+    }
   ],
   "missions": [
-      {"file": "mission-healbusvictims"}
+    {
+      "file": "mission-healbusvictims"
+    }
+  ],
+  "synonyms": [
+    "front",
+    "office",
+    "office front",
+    "office-front"
   ]
-  }
+}

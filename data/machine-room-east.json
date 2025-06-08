@@ -19,5 +19,13 @@
     {
       "file": "console"
     }
+  ],
+  "synonyms": [
+    "east",
+    "machine",
+    "machine room",
+    "machine room east",
+    "machine-room-east",
+    "room"
   ]
 }

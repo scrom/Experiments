@@ -1,25 +1,36 @@
 {
-    "object": "location",
-    "name": "ground-floor-back-stairs-west",
-    "displayName": "Back stairs (West) - Ground floor",
-    "description": "You're in the bottom of the west 'back' stairs (despite it being at the front of the building).",
-    "attributes": {
-      "dark": true
+  "object": "location",
+  "name": "ground-floor-back-stairs-west",
+  "displayName": "Back stairs (West) - Ground floor",
+  "description": "You're in the bottom of the west 'back' stairs (despite it being at the front of the building).",
+  "attributes": {
+    "dark": true
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "ground-floor-back-stairs-west",
+      "destination": "opportunities-north"
     },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "opportunities-north"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "ground-floor-back-stairs-west",
-        "destination": "first-floor-back-stairs-west"
-      }
-    ]
-  }
+    {
+      "object": "exit",
+      "longname": "up",
+      "direction": "u",
+      "source": "ground-floor-back-stairs-west",
+      "destination": "first-floor-back-stairs-west"
+    }
+  ],
+  "synonyms": [
+    "back",
+    "back stairs  - ground floor",
+    "back stairs (west) - ground floor",
+    "floor",
+    "ground",
+    "ground floor back stairs west",
+    "ground-floor-back-stairs-west",
+    "stairs",
+    "west"
+  ]
+}

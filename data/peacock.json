@@ -1,34 +1,45 @@
-  {
-    "object": "location",
-    "name": "peacock",
-    "displayName": "Peacock meeting room",
-    "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "peacock",
-            "destination": "opportunities-north-corridor"
-        }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "You peer out of the window and look out to the office entrance.",
-        "attributes": {
-          "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows",
-          "outside"
-        ]
+{
+  "object": "location",
+  "name": "peacock",
+  "displayName": "Peacock meeting room",
+  "description": "You're in the Peacock meeting room. Other than meetings, this room doubles as a miniature recording studio.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "peacock",
+      "destination": "opportunities-north-corridor"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "You peer out of the window and look out to the office entrance.",
+      "attributes": {
+        "viewDestination": "office-front"
       },
-      { "file": "chairs" },
-      { "file": "table" },
-      { "file": "recording-equipment" }
-
-     ]
+      "synonyms": [
+        "glass",
+        "windows",
+        "outside"
+      ]
+    },
+    {
+      "file": "chairs"
+    },
+    {
+      "file": "table"
+    },
+    {
+      "file": "recording-equipment"
+    }
+  ],
+  "synonyms": [
+    "meeting",
+    "peacock",
+    "peacock meeting room",
+    "room"
+  ]
 }

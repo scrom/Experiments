@@ -1,22 +1,30 @@
 {
-    "object": "location",
-    "name": "opportunities-north-east-corridor",
-    "displayName": "Opportunities",
-    "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "opportunities-north-east-corridor",
-        "destination": "opportunities-north-corridor"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "opportunities-north-east-corridor",
-        "destination": "spiderman"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "opportunities-north-east-corridor",
+  "displayName": "Opportunities",
+  "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "opportunities-north-east-corridor",
+      "destination": "opportunities-north-corridor"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "opportunities-north-east-corridor",
+      "destination": "spiderman"
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "east",
+    "north",
+    "opportunities",
+    "opportunities north east corridor",
+    "opportunities-north-east-corridor"
+  ]
+}

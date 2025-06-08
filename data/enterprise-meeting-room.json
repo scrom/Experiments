@@ -24,7 +24,7 @@
         "people"
       ]
     },
-        {
+    {
       "object": "artefact",
       "template": "chairs",
       "description": "pair of office chairs"
@@ -41,5 +41,15 @@
         "circular table"
       ]
     }
+  ],
+  "synonyms": [
+    "enterpri(z)e meeting room",
+    "enterprie",
+    "enterprie meeting room",
+    "enterprise",
+    "enterprise meeting room",
+    "enterprise-meeting-room",
+    "meeting",
+    "room"
   ]
-  }
+}

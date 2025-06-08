@@ -1,29 +1,40 @@
 {
-    "object": "location",
-    "name": "east-south-end-corridor-ground-floor",
-    "displayName": "East corridor ground floor",
-    "description": "You're near the South end of the East corridor on the ground floor.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "east-south-end-corridor-ground-floor",
-        "destination": "southeast-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "east-south-end-corridor-ground-floor",
-        "destination": "east-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "east-south-end-corridor-ground-floor",
-        "destination": "rest-area-ground-floor"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "east-south-end-corridor-ground-floor",
+  "displayName": "East corridor ground floor",
+  "description": "You're near the South end of the East corridor on the ground floor.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "east-south-end-corridor-ground-floor",
+      "destination": "southeast-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "east-south-end-corridor-ground-floor",
+      "destination": "east-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "east-south-end-corridor-ground-floor",
+      "destination": "rest-area-ground-floor"
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "east",
+    "east corridor ground floor",
+    "east south end corridor ground floor",
+    "east-south-end-corridor-ground-floor",
+    "end",
+    "floor",
+    "ground",
+    "south"
+  ]
+}

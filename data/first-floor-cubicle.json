@@ -1,49 +1,60 @@
 {
-    "object": "location",
-    "name": "first-floor-cubicle",
-    "displayName": "Toilet cubicle",
-    "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "out",
-        "direction": "o",
-        "source": "first-floor-cubicle",
-        "destination": "first-floor-toilet",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "cubicle-door-out",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "out",
-            "direction": "o",
-            "source": "first-floor-cubicle",
-            "destination": "first-floor-toilet",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "toilet",
-        "attributes": {
-          "defaultResult": "You try a test-flush on the toilet before use but it just seems to be constantly refilling and not enough water for a proper flush. It's probably best to use another one."
+  "object": "location",
+  "name": "first-floor-cubicle",
+  "displayName": "Toilet cubicle",
+  "description": "You're in a first floor toilet cubicle.<br>The toilet is still refilling from a previous flush. You might need to hang around for a while if you plan on using this one.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "out",
+      "direction": "o",
+      "source": "first-floor-cubicle",
+      "destination": "first-floor-toilet",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "floor"
+    },
+    {
+      "object": "artefact",
+      "template": "cubicle-door-out",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "out",
+          "direction": "o",
+          "source": "first-floor-cubicle",
+          "destination": "first-floor-toilet",
+          "hidden": true
         }
-      },
-      {
-        "object": "artefact",
-        "template": "toilet-brush",
-        "detailedDescription": "Be nice and clean up after yourself when you're done.<br>This one looks like it's been used recently (yum!)"
-      },
-      {"file": "security-article"}
-    ]
-  }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "toilet",
+      "attributes": {
+        "defaultResult": "You try a test-flush on the toilet before use but it just seems to be constantly refilling and not enough water for a proper flush. It's probably best to use another one."
+      }
+    },
+    {
+      "object": "artefact",
+      "template": "toilet-brush",
+      "detailedDescription": "Be nice and clean up after yourself when you're done.<br>This one looks like it's been used recently (yum!)"
+    },
+    {
+      "file": "security-article"
+    }
+  ],
+  "synonyms": [
+    "cubicle",
+    "first",
+    "first floor cubicle",
+    "first-floor-cubicle",
+    "floor",
+    "toilet",
+    "toilet cubicle"
+  ]
+}

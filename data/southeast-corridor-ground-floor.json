@@ -1,29 +1,39 @@
-  {
-    "object": "location",
-    "name": "southeast-corridor-ground-floor",
-    "displayName": "South corridor ground floor",
-    "description": "You're at the South-East intersection of two corridors on the ground floor.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "southeast-corridor-ground-floor",
-        "destination": "east-end-south-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "southeast-corridor-ground-floor",
-        "destination": "room-404"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "southeast-corridor-ground-floor",
-        "destination": "east-south-end-corridor-ground-floor"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "southeast-corridor-ground-floor",
+  "displayName": "South corridor ground floor",
+  "description": "You're at the South-East intersection of two corridors on the ground floor.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "southeast-corridor-ground-floor",
+      "destination": "east-end-south-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "southeast-corridor-ground-floor",
+      "destination": "room-404"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "southeast-corridor-ground-floor",
+      "destination": "east-south-end-corridor-ground-floor"
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "floor",
+    "ground",
+    "south",
+    "south corridor ground floor",
+    "southeast",
+    "southeast corridor ground floor",
+    "southeast-corridor-ground-floor"
+  ]
+}

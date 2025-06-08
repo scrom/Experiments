@@ -1,33 +1,44 @@
-  {
-    "object": "location",
-    "name": "west-car-park",
-    "displayName": "Car park (West)",
-    "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "west-car-park",
-        "destination": "office-front"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "west-car-park",
-        "destination": "west-bike-racks"
-      }
-    ],
-    "missions": [
-      {"file": "mission-saveredgate"}
+{
+  "object": "location",
+  "name": "west-car-park",
+  "displayName": "Car park (West)",
+  "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike",
+      "car",
+      "van"
     ]
-  }
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "west-car-park",
+      "destination": "office-front"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "west-car-park",
+      "destination": "west-bike-racks"
+    }
+  ],
+  "missions": [
+    {
+      "file": "mission-saveredgate"
+    }
+  ],
+  "synonyms": [
+    "car",
+    "car park",
+    "car park (west)",
+    "park",
+    "west",
+    "west car park",
+    "west-car-park"
+  ]
+}

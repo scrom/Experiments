@@ -1,29 +1,37 @@
-  {
-    "object": "location",
-    "name": "west-corridor-ground-floor",
-    "displayName": "West corridor ground floor",
-    "description": "You're near the South end of the West corridor of the ground floor.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "west-corridor-ground-floor",
-        "destination": "northwest-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "west-corridor-ground-floor",
-        "destination": "southwest-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "west-corridor-ground-floor",
-        "destination": "opportunities-south"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "west-corridor-ground-floor",
+  "displayName": "West corridor ground floor",
+  "description": "You're near the South end of the West corridor of the ground floor.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "west-corridor-ground-floor",
+      "destination": "northwest-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "west-corridor-ground-floor",
+      "destination": "southwest-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "west-corridor-ground-floor",
+      "destination": "opportunities-south"
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "floor",
+    "ground",
+    "west",
+    "west corridor ground floor",
+    "west-corridor-ground-floor"
+  ]
+}

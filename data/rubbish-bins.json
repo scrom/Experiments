@@ -1,23 +1,33 @@
-  {
-    "object": "location",
-    "name": "rubbish-bins",
-    "displayName": "Rubbish bins",
-    "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
-    "attributes": {
-        "type": "outdoor"
+{
+  "object": "location",
+  "name": "rubbish-bins",
+  "displayName": "Rubbish bins",
+  "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+  "attributes": {
+    "type": "outdoor"
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "rubbish-bins",
+      "destination": "waste-area",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "file": "waste-gate"
     },
-    "exits": [
-        {
-            "object": "exit",
-            "longname": "West",
-            "direction": "w",
-            "source": "rubbish-bins",
-            "destination": "waste-area",
-            "hidden": true
-        }
-    ],
-    "inventory": [
-        {"file": "waste-gate"},
-        {"file": "skip"}
-    ]
-  }
+    {
+      "file": "skip"
+    }
+  ],
+  "synonyms": [
+    "bins",
+    "rubbish",
+    "rubbish bins",
+    "rubbish-bins"
+  ]
+}

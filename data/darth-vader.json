@@ -1,54 +1,60 @@
 {
-    "object": "location",
-    "name": "darth-vader",
-    "displayName": "Darth Vader",
-    "description": "You're in the 'Darth Vader' meeting room. This is a really great space that it seems most people forget exists.<br>I guess it's tucked out of the way behind the facilities team in the furthest corner of the office.<br>It's bright, airy, spacious and has a great view outside.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "darth-vader",
-        "destination": "facilities-area"
+  "object": "location",
+  "name": "darth-vader",
+  "displayName": "Darth Vader",
+  "description": "You're in the 'Darth Vader' meeting room. This is a really great space that it seems most people forget exists.<br>I guess it's tucked out of the way behind the facilities team in the furthest corner of the office.<br>It's bright, airy, spacious and has a great view outside.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "darth-vader",
+      "destination": "facilities-area"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "You peer out of the window and look down to the office entrance.",
+      "attributes": {
+        "viewDestination": "office-front"
+      },
+      "synonyms": [
+        "glass",
+        "windows",
+        "outside"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "whiteboard",
+      "detailedDescription": "It's in surprisingly good shape!"
+    },
+    {
+      "object": "artefact",
+      "template": "whiteboard-pen",
+      "detailedDescription": "It's a decent-ish black whiteboard pen",
+      "attributes": {
+        "charges": 30
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "window",
-        "detailedDescription": "You peer out of the window and look down to the office entrance.",
-        "attributes": {
-          "viewDestination": "office-front"
-        },
-        "synonyms": [
-          "glass",
-          "windows",
-          "outside"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "whiteboard",
-        "detailedDescription": "It's in surprisingly good shape!"
-      },
-      {
-        "object": "artefact",
-        "template": "whiteboard-pen",
-        "detailedDescription": "It's a decent-ish black whiteboard pen",
-        "attributes": {
-          "charges": 30
-        }
-      },
-      {
-        "object": "artefact",
-        "template": "table",
-        "description": "large oval table",
-        "detailedDescription": "It's the kind you see in office boardrooms."
-      },
-      {
-        "object": "artefact",
-        "template": "chairs",
-        "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though."
-      }
-    ]
-  }
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "description": "large oval table",
+      "detailedDescription": "It's the kind you see in office boardrooms."
+    },
+    {
+      "object": "artefact",
+      "template": "chairs",
+      "detailedDescription": "They're fairly plain chairs. There's enough to fit a decent-sized team in here for a meeting though."
+    }
+  ],
+  "synonyms": [
+    "darth",
+    "darth vader",
+    "darth-vader",
+    "vader"
+  ]
+}

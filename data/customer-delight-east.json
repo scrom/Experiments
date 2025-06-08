@@ -1,36 +1,44 @@
 {
-    "object": "location",
-    "name": "customer-delight-east",
-    "displayName": "Customer Delight",
-    "description": "You're at the Eastern entrance of the Customer Delight area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "customer-delight-east",
-        "destination": "servery-north-west"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "customer-delight-east",
-        "destination": "customer-delight-central"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "customer-delight-east",
-        "destination": "customer-delight-management-area"
-      },
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "customer-delight-east",
-        "destination": "customer-delight-south-east"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "customer-delight-east",
+  "displayName": "Customer Delight",
+  "description": "You're at the Eastern entrance of the Customer Delight area.<br>To the West you can see a glass wall with LED build status lights. You feel somewhat drawn to their glow.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "customer-delight-east",
+      "destination": "servery-north-west"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "customer-delight-east",
+      "destination": "customer-delight-central"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "customer-delight-east",
+      "destination": "customer-delight-management-area"
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "customer-delight-east",
+      "destination": "customer-delight-south-east"
+    }
+  ],
+  "synonyms": [
+    "customer",
+    "customer delight",
+    "customer delight east",
+    "customer-delight-east",
+    "delight",
+    "east"
+  ]
+}

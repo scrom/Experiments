@@ -4,8 +4,8 @@
   "displayName": "Camelids meeting room",
   "description": "You're in 'Camelids'. It's had a fairly recent makeover from the facilities team to give it a Moroccan theme with comfortable seating and tasteful decoration.<br>It blends the function of a meeting room with the space to relax and chat.<br>One wall has a small shelf whilst the UX team have filled another wall with post-it notes.<br>A window runs the length of the room looking out over the atrium stairs.",
   "attributes": {
-  "imageName": "camelids.jpg"
-    },
+    "imageName": "camelids.jpg"
+  },
   "exits": [
     {
       "object": "exit",
@@ -87,5 +87,11 @@
     {
       "file": "notes"
     }
+  ],
+  "synonyms": [
+    "camelids",
+    "camelids meeting room",
+    "meeting",
+    "room"
   ]
 }

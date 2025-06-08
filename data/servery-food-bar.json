@@ -1,35 +1,50 @@
-  {
-    "object": "location",
-    "name": "servery-food-bar",
-    "displayName": "Servery",
-    "description": "You're standing by the SQL Servery serving area and salad bar.<br>It's breakfast time. The kitchen team have laid out a breakfast spread of fruit and porridge.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-food-bar",
-        "destination": "servery-kitchen"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "servery-food-bar",
-        "destination": "servery-main"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "servery-food-bar",
-        "destination": "sales-south"
-      }
-    ],
-    "inventory": [
-      { "file": "bowl" },
-      { "file": "bowl" },
-      { "file": "bowl" },
-      { "file": "vat" }
-    ]
-  }
+{
+  "object": "location",
+  "name": "servery-food-bar",
+  "displayName": "Servery",
+  "description": "You're standing by the SQL Servery serving area and salad bar.<br>It's breakfast time. The kitchen team have laid out a breakfast spread of fruit and porridge.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "servery-food-bar",
+      "destination": "servery-kitchen"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "servery-food-bar",
+      "destination": "servery-main"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "servery-food-bar",
+      "destination": "sales-south"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "bowl"
+    },
+    {
+      "file": "bowl"
+    },
+    {
+      "file": "bowl"
+    },
+    {
+      "file": "vat"
+    }
+  ],
+  "synonyms": [
+    "bar",
+    "food",
+    "servery",
+    "servery food bar",
+    "servery-food-bar"
+  ]
+}

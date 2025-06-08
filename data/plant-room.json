@@ -26,5 +26,11 @@
     {
       "file": "rag"
     }
+  ],
+  "synonyms": [
+    "plant",
+    "plant room",
+    "plant-room",
+    "room"
   ]
 }

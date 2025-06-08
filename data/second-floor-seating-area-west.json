@@ -1,59 +1,70 @@
-  {
-    "object": "location",
-    "name": "second-floor-seating-area-west",
-    "displayName": "Rest area",
-    "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "second-floor-seating-area-west",
-        "destination": "creative-agency-area"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-seating-area-west",
-        "destination": "second-floor-reception"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "second-floor-seating-area-west",
-        "destination": "second-floor-seating-area-east"
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "chairs",
-        "description": "comfy armchairs",
-        "detailedDescription": "They're small but comfortable armchairs.",
-        "synonyms": [
-          "chair",
-          "comfy chair",
-          "comfy armchair",
-          "comfortable chair",
-          "small armchair",
-          "small chair"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "table",
-        "description": "small coffee table",
-        "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
-        "synonyms": [
-          "coffee table",
-          "small table",
-          "small coffee table",
-          "wooden coffee table",
-          "small wooden coffee table",
-          "small wooden  table"
-        ]
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "second-floor-seating-area-west",
+  "displayName": "Rest area",
+  "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "second-floor-seating-area-west",
+      "destination": "creative-agency-area"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "second-floor-seating-area-west",
+      "destination": "second-floor-reception"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "second-floor-seating-area-west",
+      "destination": "second-floor-seating-area-east"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "chairs",
+      "description": "comfy armchairs",
+      "detailedDescription": "They're small but comfortable armchairs.",
+      "synonyms": [
+        "chair",
+        "comfy chair",
+        "comfy armchair",
+        "comfortable chair",
+        "small armchair",
+        "small chair"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "table",
+      "description": "small coffee table",
+      "detailedDescription": "It's a small, wooden coffee table. Nothing particularly special.",
+      "synonyms": [
+        "coffee table",
+        "small table",
+        "small coffee table",
+        "wooden coffee table",
+        "small wooden coffee table",
+        "small wooden  table"
+      ]
+    }
+  ],
+  "synonyms": [
+    "area",
+    "floor",
+    "rest",
+    "rest area",
+    "seating",
+    "second",
+    "second floor seating area west",
+    "second-floor-seating-area-west",
+    "west"
+  ]
+}

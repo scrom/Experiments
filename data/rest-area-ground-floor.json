@@ -22,5 +22,14 @@
     {
       "file": "snack-machine"
     }
+  ],
+  "synonyms": [
+    "area",
+    "floor",
+    "ground",
+    "rest",
+    "rest area",
+    "rest area ground floor",
+    "rest-area-ground-floor"
   ]
 }

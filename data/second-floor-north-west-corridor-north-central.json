@@ -1,29 +1,40 @@
-  {
-    "object": "location",
-    "name": "second-floor-north-west-corridor-north-central",
-    "displayName": "Second floor West corridor",
-    "description": "You're in a roughly North-South running corridor in the North-West corner of the second floor.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "second-floor-north-west-corridor-north-central",
-        "destination": "second-floor-north-west-corridor-north-end"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "second-floor-north-west-corridor-north-central",
-        "destination": "flowers-b"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "second-floor-north-west-corridor-north-central",
-        "destination": "second-floor-north-west-corridor-north-east"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "second-floor-north-west-corridor-north-central",
+  "displayName": "Second floor West corridor",
+  "description": "You're in a roughly North-South running corridor in the North-West corner of the second floor.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "second-floor-north-west-corridor-north-central",
+      "destination": "second-floor-north-west-corridor-north-end"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "second-floor-north-west-corridor-north-central",
+      "destination": "flowers-b"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "second-floor-north-west-corridor-north-central",
+      "destination": "second-floor-north-west-corridor-north-east"
+    }
+  ],
+  "synonyms": [
+    "central",
+    "corridor",
+    "floor",
+    "north",
+    "second",
+    "second floor north west corridor north central",
+    "second floor west corridor",
+    "second-floor-north-west-corridor-north-central",
+    "west"
+  ]
+}

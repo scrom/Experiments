@@ -1,21 +1,31 @@
 {
-    "object": "location",
-    "name": "graffiti-b",
-    "displayName": "Graffiti B meeting room",
-    "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
-    "attributes": {
-      "imageName": "graffiti-b.jpg"
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "graffiti-b",
-        "destination": "west-end-south-corridor-ground-floor"
-      }
-    ],
-    "inventory": [
-      {"file": "torch"}
-    ]
-  }
+  "object": "location",
+  "name": "graffiti-b",
+  "displayName": "Graffiti B meeting room",
+  "description": "You're in the Graffiti-B meeting room. It's all bright and shiny.",
+  "attributes": {
+    "imageName": "graffiti-b.jpg"
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "graffiti-b",
+      "destination": "west-end-south-corridor-ground-floor"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "torch"
+    }
+  ],
+  "synonyms": [
+    "graffiti",
+    "graffiti b",
+    "graffiti b meeting room",
+    "graffiti-b",
+    "meeting",
+    "room"
+  ]
+}

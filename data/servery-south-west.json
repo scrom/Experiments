@@ -1,25 +1,34 @@
-  {
-    "object": "location",
-    "name": "servery-south-west",
-    "displayName": "Servery",
-    "description": "You're in the South-West corner of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "servery-south-west",
-        "destination": "servery-north-west"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "servery-south-west",
-        "destination": "servery-main"
-      }
-    ],
-    "inventory": [
-      {"file": "network-switch"}
-    ]
-  }
+{
+  "object": "location",
+  "name": "servery-south-west",
+  "displayName": "Servery",
+  "description": "You're in the South-West corner of the servery. The lights of network switches and wiring looms blink silently at you, enticing you to play with the wires.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "servery-south-west",
+      "destination": "servery-north-west"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "servery-south-west",
+      "destination": "servery-main"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "network-switch"
+    }
+  ],
+  "synonyms": [
+    "servery",
+    "servery south west",
+    "servery-south-west",
+    "south",
+    "west"
+  ]
+}

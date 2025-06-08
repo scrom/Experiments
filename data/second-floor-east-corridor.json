@@ -1,47 +1,55 @@
-  {
-    "object": "location",
-    "name": "second-floor-east-corridor",
-    "displayName": "Second floor East corridor",
-    "description": "You're in the East corridor on the second floor. Domain of all things IS.",
-    "exits": [
+{
+  "object": "location",
+  "name": "second-floor-east-corridor",
+  "displayName": "Second floor East corridor",
+  "description": "You're in the East corridor on the second floor. Domain of all things IS.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "second-floor-east-corridor",
+      "destination": "is-area"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "second-floor-east-corridor",
+      "destination": "machine-room-west"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "second-floor-east-corridor",
+      "destination": "second-floor-landing-east",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "office-door",
+      "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
+      "linkedexits": [
         {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "second-floor-east-corridor",
-            "destination": "is-area"
-        },
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "second-floor-east-corridor",
-            "destination": "machine-room-west"
-        },
-        {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "second-floor-east-corridor",
-            "destination": "second-floor-landing-east",
-            "hidden": true
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "second-floor-east-corridor",
+          "destination": "second-floor-landing-east",
+          "hidden": true
         }
-    ],
-    "inventory": [      
-        {
-            "object": "artefact",
-            "template": "office-door",
-            "detailedDescription": "It leads out to the second floor landing.<br>Like most modern office building doors it closes (and locks) automatically.",
-            "linkedexits": [
-                {
-                    "object": "exit",
-                    "longname": "North",
-                    "direction": "n",
-                    "source": "second-floor-east-corridor",
-                    "destination": "second-floor-landing-east",
-                    "hidden": true
-                }
-            ]
-        }
-    ]
-  }
+      ]
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "east",
+    "floor",
+    "second",
+    "second floor east corridor",
+    "second-floor-east-corridor"
+  ]
+}

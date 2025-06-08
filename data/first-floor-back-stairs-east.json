@@ -1,29 +1,41 @@
 {
-    "object": "location",
-    "name": "first-floor-back-stairs-east",
-    "displayName": "Back stairs (East) - 1st floor",
-    "description": "You're standing on the north-east staircase.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "first-floor-back-stairs-east",
-        "destination": "sales-north"
-      },
-      {
-        "object": "exit",
-        "longname": "down",
-        "direction": "d",
-        "source": "first-floor-back-stairs-east",
-        "destination": "ground-floor-back-stair-east"
-      },
-      {
-        "object": "exit",
-        "longname": "up",
-        "direction": "u",
-        "source": "first-floor-back-stairs-east",
-        "destination": "second-floor-back-stairs-east"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "first-floor-back-stairs-east",
+  "displayName": "Back stairs (East) - 1st floor",
+  "description": "You're standing on the north-east staircase.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "first-floor-back-stairs-east",
+      "destination": "sales-north"
+    },
+    {
+      "object": "exit",
+      "longname": "down",
+      "direction": "d",
+      "source": "first-floor-back-stairs-east",
+      "destination": "ground-floor-back-stair-east"
+    },
+    {
+      "object": "exit",
+      "longname": "up",
+      "direction": "u",
+      "source": "first-floor-back-stairs-east",
+      "destination": "second-floor-back-stairs-east"
+    }
+  ],
+  "synonyms": [
+    "1st",
+    "back",
+    "back stairs  - 1st floor",
+    "back stairs (east) - 1st floor",
+    "east",
+    "first",
+    "first floor back stairs east",
+    "first-floor-back-stairs-east",
+    "floor",
+    "stairs"
+  ]
+}

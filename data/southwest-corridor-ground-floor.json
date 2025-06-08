@@ -1,29 +1,39 @@
-  {
-    "object": "location",
-    "name": "southwest-corridor-ground-floor",
-    "displayName": "South corridor ground floor",
-    "description": "You're in the South-West corner intersection of two corridors of the ground floor. There is a meeting room to the West.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "southwest-corridor-ground-floor",
-        "destination": "west-corridor-ground-floor"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "southwest-corridor-ground-floor",
-        "destination": "poppy"
-      },
-      {
-        "object": "exit",
-        "longname": "East",
-        "direction": "e",
-        "source": "southwest-corridor-ground-floor",
-        "destination": "west-end-south-corridor-ground-floor"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "southwest-corridor-ground-floor",
+  "displayName": "South corridor ground floor",
+  "description": "You're in the South-West corner intersection of two corridors of the ground floor. There is a meeting room to the West.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "southwest-corridor-ground-floor",
+      "destination": "west-corridor-ground-floor"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "southwest-corridor-ground-floor",
+      "destination": "poppy"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "southwest-corridor-ground-floor",
+      "destination": "west-end-south-corridor-ground-floor"
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "floor",
+    "ground",
+    "south",
+    "south corridor ground floor",
+    "southwest",
+    "southwest corridor ground floor",
+    "southwest-corridor-ground-floor"
+  ]
+}

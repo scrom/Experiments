@@ -1,32 +1,40 @@
-  {
-    "object": "location",
-    "name": "a14-roundabout",
-    "displayName": "Milton roundabout",
-    "description": "You're on the Milton roundabout.",
-    "attributes": {
-      "type": "outdoor",
-      "vehiclesAllowed": [
-        "bike",
-        "car",
-        "van"
-      ]
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "Left",
-        "direction": "l",
-        "source": "a14-roundabout",
-        "destination": "a10-nothbound",
-        "requiredAction": "drive"
-      },
-      {
-        "object": "exit",
-        "longname": "Continue",
-        "direction": "c",
-        "source": "a14-roundabout",
-        "destination": "a14-roundabout-east",
-        "requiredAction": "drive"
-      }
+{
+  "object": "location",
+  "name": "a14-roundabout",
+  "displayName": "Milton roundabout",
+  "description": "You're on the Milton roundabout.",
+  "attributes": {
+    "type": "outdoor",
+    "vehiclesAllowed": [
+      "bike",
+      "car",
+      "van"
     ]
-  }
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "Left",
+      "direction": "l",
+      "source": "a14-roundabout",
+      "destination": "a10-nothbound",
+      "requiredAction": "drive"
+    },
+    {
+      "object": "exit",
+      "longname": "Continue",
+      "direction": "c",
+      "source": "a14-roundabout",
+      "destination": "a14-roundabout-east",
+      "requiredAction": "drive"
+    }
+  ],
+  "synonyms": [
+    "a14",
+    "a14 roundabout",
+    "a14-roundabout",
+    "milton",
+    "milton roundabout",
+    "roundabout"
+  ]
+}

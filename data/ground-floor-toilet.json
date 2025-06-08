@@ -1,67 +1,74 @@
 {
-    "object": "location",
-    "name": "ground-floor-toilet",
-    "displayName": "Ground floor toilet",
-    "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "ground-floor-toilet",
-        "destination": "atrium"
-      },
-      {
-        "object": "exit",
-        "longname": "in",
-        "direction": "i",
-        "source": "ground-floor-toilet",
-        "destination": "ground-floor-cubicle",
-        "hidden": true
-      }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "mirror",
-        "synonyms": [
-          "bathroom mirror"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "hand-dryer"
-      },
-      {
-        "object": "artefact",
-        "template": "cubicle-door-in",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "in",
-            "direction": "i",
-            "source": "ground-floor-toilet",
-            "destination": "ground-floor-cubicle",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "soap",
-        "description": "soap dispenser",
-        "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
-      },
-      {
-        "object": "artefact",
-        "template": "basin",
-        "attributes": {
-          "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm."
+  "object": "location",
+  "name": "ground-floor-toilet",
+  "displayName": "Ground floor toilet",
+  "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "ground-floor-toilet",
+      "destination": "atrium"
+    },
+    {
+      "object": "exit",
+      "longname": "in",
+      "direction": "i",
+      "source": "ground-floor-toilet",
+      "destination": "ground-floor-cubicle",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "floor"
+    },
+    {
+      "object": "artefact",
+      "template": "mirror",
+      "synonyms": [
+        "bathroom mirror"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "hand-dryer"
+    },
+    {
+      "object": "artefact",
+      "template": "cubicle-door-in",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "in",
+          "direction": "i",
+          "source": "ground-floor-toilet",
+          "destination": "ground-floor-cubicle",
+          "hidden": true
         }
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "soap",
+      "description": "soap dispenser",
+      "defaultResult": "That's annoying. It looks like all the soap in this bathroom has run out."
+    },
+    {
+      "object": "artefact",
+      "template": "basin",
+      "attributes": {
+        "defaultResult": "You rinse your hands in the basin and ponder on where all the water in this place comes from and goes to.<br>Hmmm."
       }
-    ]
-  }
+    }
+  ],
+  "synonyms": [
+    "floor",
+    "ground",
+    "ground floor toilet",
+    "ground-floor-toilet",
+    "toilet"
+  ]
+}

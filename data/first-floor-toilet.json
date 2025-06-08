@@ -1,70 +1,77 @@
 {
-    "object": "location",
-    "name": "first-floor-toilet",
-    "displayName": "First floor toilet",
-    "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "first-floor-toilet",
-        "destination": "first-floor-landing-west"
-      },
-      {
-        "object": "exit",
-        "longname": "in",
-        "direction": "i",
-        "source": "first-floor-toilet",
-        "destination": "first-floor-cubicle",
-        "hidden": true
+  "object": "location",
+  "name": "first-floor-toilet",
+  "displayName": "First floor toilet",
+  "description": "You're in the first floor toilet.<br>It's a lot like all the others here although there's a subtle difference in colour.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "first-floor-toilet",
+      "destination": "first-floor-landing-west"
+    },
+    {
+      "object": "exit",
+      "longname": "in",
+      "direction": "i",
+      "source": "first-floor-toilet",
+      "destination": "first-floor-cubicle",
+      "hidden": true
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "floor"
+    },
+    {
+      "object": "artefact",
+      "template": "mirror",
+      "synonyms": [
+        "bathroom mirror"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "hand-dryer",
+      "attributes": {
+        "defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
       }
-    ],
-    "inventory": [
-      {
-        "object": "artefact",
-        "template": "floor"
-      },
-      {
-        "object": "artefact",
-        "template": "mirror",
-        "synonyms": [
-          "bathroom mirror"
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "hand-dryer",
-        "attributes": {
-          "defaultResult": "You wave your hands under the dryer. After a while it cuts out automatically but at least your hands seem mostly dry.<br>You wonder how someone would be able to dry their face with one of these and reminisce about the days of 'real' paper towels."
+    },
+    {
+      "object": "artefact",
+      "template": "cubicle-door-in",
+      "linkedexits": [
+        {
+          "object": "exit",
+          "longname": "in",
+          "direction": "i",
+          "source": "first-floor-toilet",
+          "destination": "first-floor-cubicle",
+          "hidden": true
         }
-      },
-      {
-        "object": "artefact",
-        "template": "cubicle-door-in",
-        "linkedexits": [
-          {
-            "object": "exit",
-            "longname": "in",
-            "direction": "i",
-            "source": "first-floor-toilet",
-            "destination": "first-floor-cubicle",
-            "hidden": true
-          }
-        ]
-      },
-      {
-        "object": "artefact",
-        "template": "soap",
-        "attributes": {
-          "type": "junk",
-          "canCollect": true,
-          "isBreakable": true
-        }
-      },
-      {
-        "object": "artefact",
-        "template": "basin"
+      ]
+    },
+    {
+      "object": "artefact",
+      "template": "soap",
+      "attributes": {
+        "type": "junk",
+        "canCollect": true,
+        "isBreakable": true
       }
-    ]
-  }
+    },
+    {
+      "object": "artefact",
+      "template": "basin"
+    }
+  ],
+  "synonyms": [
+    "first",
+    "first floor toilet",
+    "first-floor-toilet",
+    "floor",
+    "toilet"
+  ]
+}

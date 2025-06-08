@@ -1,19 +1,27 @@
 {
-    "object": "location",
-    "name": "graffiti-a",
-    "displayName": "Graffiti A meeting room",
-    "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
-    "attributes": {
-      "imageName": "graffiti-a.jpg",
-      "dark": true
-    },
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "graffiti-a",
-        "destination": "east-end-south-corridor-ground-floor"
-      }
-    ]
-  }
+  "object": "location",
+  "name": "graffiti-a",
+  "displayName": "Graffiti A meeting room",
+  "description": "You're in the Graffiti-A meeting room. The decor is amazing but there's very little natural light.",
+  "attributes": {
+    "imageName": "graffiti-a.jpg",
+    "dark": true
+  },
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "graffiti-a",
+      "destination": "east-end-south-corridor-ground-floor"
+    }
+  ],
+  "synonyms": [
+    "graffiti",
+    "graffiti a",
+    "graffiti a meeting room",
+    "graffiti-a",
+    "meeting",
+    "room"
+  ]
+}

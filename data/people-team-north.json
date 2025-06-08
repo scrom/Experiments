@@ -1,29 +1,38 @@
-  {
-    "object": "location",
-    "name": "people-team-north",
-    "displayName": "People Team area",
-    "description": "You're on the Northern edge of the People Team area.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "people-team-north",
-        "destination": "people-team-area"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "people-team-north",
-        "destination": "people-team-north-west"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "people-team-north",
-        "destination": "paint-pots"
-      }
-    ]
-  }
+{
+  "object": "location",
+  "name": "people-team-north",
+  "displayName": "People Team area",
+  "description": "You're on the Northern edge of the People Team area.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "people-team-north",
+      "destination": "people-team-area"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "people-team-north",
+      "destination": "people-team-north-west"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "people-team-north",
+      "destination": "paint-pots"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "north",
+    "people",
+    "people team area",
+    "people team north",
+    "people-team-north",
+    "team"
+  ]
+}

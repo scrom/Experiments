@@ -1,45 +1,58 @@
 {
-    "object": "location",
-    "name": "east-corridor-ground-floor-north-west",
-    "displayName": "East corridor ground floor",
-    "description": "You're standing in a short corridor just outside the post room.",
-    "exits": [
+  "object": "location",
+  "name": "east-corridor-ground-floor-north-west",
+  "displayName": "East corridor ground floor",
+  "description": "You're standing in a short corridor just outside the post room.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "east-corridor-ground-floor-north-west",
+      "destination": "reception",
+      "hidden": true
+    },
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "east-corridor-ground-floor-north-west",
+      "destination": "post-room"
+    },
+    {
+      "object": "exit",
+      "longname": "East",
+      "direction": "e",
+      "source": "east-corridor-ground-floor-north-west",
+      "destination": "east-corridor-ground-floor-north-east"
+    }
+  ],
+  "inventory": [
+    {
+      "object": "artefact",
+      "template": "office-door",
+      "detailedDescription": "It leads out to the reception area.<br>Like most modern office building doors it closes (and locks) automatically.",
+      "linkedexits": [
         {
-            "object": "exit",
-            "longname": "North",
-            "direction": "n",
-            "source": "east-corridor-ground-floor-north-west",
-            "destination": "reception",
-            "hidden": true
-        },
-        {
-            "object": "exit",
-            "longname": "South",
-            "direction": "s",
-            "source": "east-corridor-ground-floor-north-west",
-            "destination": "post-room"
-        },
-        {
-            "object": "exit",
-            "longname": "East",
-            "direction": "e",
-            "source": "east-corridor-ground-floor-north-west",
-            "destination": "east-corridor-ground-floor-north-east"
+          "object": "exit",
+          "longname": "North",
+          "direction": "n",
+          "source": "east-corridor-ground-floor-north-west",
+          "destination": "reception",
+          "hidden": true
         }
-    ],
-    "inventory": [        {
-            "object": "artefact",
-            "template": "office-door",
-            "detailedDescription": "It leads out to the reception area.<br>Like most modern office building doors it closes (and locks) automatically.",
-            "linkedexits": [
-                {
-                    "object": "exit",
-                    "longname": "North",
-                    "direction": "n",
-                    "source": "east-corridor-ground-floor-north-west",
-                    "destination": "reception",
-                    "hidden": true
-                }
-            ]
-        }]
-  }
+      ]
+    }
+  ],
+  "synonyms": [
+    "corridor",
+    "east",
+    "east corridor ground floor",
+    "east corridor ground floor north west",
+    "east-corridor-ground-floor-north-west",
+    "floor",
+    "ground",
+    "north",
+    "west"
+  ]
+}

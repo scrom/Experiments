@@ -1,32 +1,42 @@
 {
-    "object": "location",
-    "name": "finance-area",
-    "displayName": "Finance team area",
-    "description": "You're in the Finance team area. You <i>really</i> need to be nice to this lot. They sort out your pay and expenses as well as all the rest of the cash running through this place.",
-    "exits": [
-      {
-        "object": "exit",
-        "longname": "South",
-        "direction": "s",
-        "source": "finance-area",
-        "destination": "incidentals-blinkpipe"
-      },
-      {
-        "object": "exit",
-        "longname": "West",
-        "direction": "w",
-        "source": "finance-area",
-        "destination": "facilities-area"
-      },
-      {
-        "object": "exit",
-        "longname": "North",
-        "direction": "n",
-        "source": "finance-area",
-        "destination": "second-floor-back-stairs-east"
-      }
-    ],
-    "inventory": [
-      {"file": "black-book"}
-    ]
-  }
+  "object": "location",
+  "name": "finance-area",
+  "displayName": "Finance team area",
+  "description": "You're in the Finance team area. You <i>really</i> need to be nice to this lot. They sort out your pay and expenses as well as all the rest of the cash running through this place.",
+  "exits": [
+    {
+      "object": "exit",
+      "longname": "South",
+      "direction": "s",
+      "source": "finance-area",
+      "destination": "incidentals-blinkpipe"
+    },
+    {
+      "object": "exit",
+      "longname": "West",
+      "direction": "w",
+      "source": "finance-area",
+      "destination": "facilities-area"
+    },
+    {
+      "object": "exit",
+      "longname": "North",
+      "direction": "n",
+      "source": "finance-area",
+      "destination": "second-floor-back-stairs-east"
+    }
+  ],
+  "inventory": [
+    {
+      "file": "black-book"
+    }
+  ],
+  "synonyms": [
+    "area",
+    "finance",
+    "finance area",
+    "finance team area",
+    "finance-area",
+    "team"
+  ]
+}
