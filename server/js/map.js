@@ -9,6 +9,7 @@ exports.Map = function Map() {
         var self = this; //closure so we don't lose this reference in callbacks
         var _missionController = new missionControllerModule.MissionController(self);
         var _locationIndexMap = [];
+        var _locationNamesToSyns = [];
         var _locations = [];
         var _spawnDefinitions = [];
         var _startLocationIndex = 0;
@@ -99,6 +100,7 @@ exports.Map = function Map() {
         self.addLocation = function(location){
             _locations.push(location);
             _locationIndexMap.push(location.getName());
+            _locationNamesToSyns[location.getName()] = location.getSyns();
             var newIndex = _locations.length-1;
             if (location.isStart()) {_startLocationIndex = newIndex;};
             return newIndex;
@@ -184,6 +186,7 @@ exports.Map = function Map() {
             if (locationToRemove.getName() == locationName) {
                 _locations.splice(locationToRemoveIndex,1); 
                 _locationIndexMap.splice(locationToRemoveIndex,1); 
+                delete _locationNamesToSyns[locationToRemove.getName()];
             } else {
                 //we have a corrupted location map, find manually instead.
                 for (var i=0; i<_locations.length;i++) {
@@ -196,6 +199,7 @@ exports.Map = function Map() {
                         var locName = _locationIndexMap[i];
                         if (locName == locationToRemove.getName()) {
                             _locationIndexMap.splice(i,1); 
+                            delete _locationNamesToSyns[locName];
                         } else {
                             console.warn("Map.removeLocation: location index map corrupted, working manually for now but performance will be impacted");   
                         };
@@ -450,6 +454,53 @@ exports.Map = function Map() {
             return locationsAsString;
         };
 
+        self.getLocationsBySyn = function(synonym) {
+            var locations = [];
+            for (var locName in _locationNamesToSyns) {
+                if (_locationNamesToSyns[locName].includes(synonym)) {
+                    locations.push(self.getLocation(locName));
+                };
+            };
+            return locations;
+        };
+
+        self.getSynonymsForLocation = function(locationName) {
+            //returns an array of synonyms for a location
+            if (_locationNamesToSyns.hasOwnProperty(locationName)) {
+                return _locationNamesToSyns[locationName];
+            }
+            return [];
+        };
+
+        self.getClosestMatchingLocation = function(synonym, referenceLocation, inventory) {
+            var closestLocation = null;
+            var closestDistance = Infinity;
+
+            var locations = self.getLocationsBySyn(synonym);
+            for (var i = 0; i < locations.length; i++) {
+                const directions = self.findBestPath(locations[i].getName(), 5, referenceLocation, inventory);
+                if (!directions || directions.length == 0) {
+                    continue; //no path found, skip this location
+                };
+                var distance = directions.length;
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    closestLocation = locations[i];
+                }
+            }
+            return closestLocation;
+        };
+
+        self.getDistanceToLocation = function(locationName, referenceLocation, inventory) {
+            //returns the distance to a location from a reference location
+            //if no path is found, returns -1
+            var directions = self.findBestPath(locationName, 5, referenceLocation, inventory);
+            if (!directions || directions.length == 0) {
+                return -1; //no path found
+            };
+            return directions.length;
+        };
+
         self.getLocation = function(aName, useDisplayName){
             var index = _locationIndexMap.indexOf(aName);
             var returnLocation = _locations[index];
@@ -574,7 +625,7 @@ exports.Map = function Map() {
 
         self.getObject = function(objectName) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
-            //it *will* retrieve creatures
+            //it *will* retrieve creatures but not what they are carrying
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
@@ -687,13 +738,16 @@ exports.Map = function Map() {
                     continue;
                 };
 
-                if (visitedLocations.indexOf(exits[e].getDestinationName()) >-1) {
-                    continue;
+                if (visitedLocations) {
+                    if (visitedLocations.indexOf(exits[e].getDestinationName()) >-1) {
+                        continue;
+                    };
                 };
-
-                if (avoiding.indexOf(exits[e].getDestinationName()) >-1) {
-                    continue;
-                };
+                if (avoiding) {
+                    if (avoiding.indexOf(exits[e].getDestinationName()) >-1) {
+                        continue;
+                    };
+                }
 
                 var newPath = self.findPath(randomiseSearch, destinationName, homeLocation, self.getLocation(exits[e].getDestinationName()), inventory, avoiding, direction, visitedLocations);
 

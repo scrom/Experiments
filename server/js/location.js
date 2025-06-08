@@ -14,6 +14,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         //self.location = {}; //JSON representation of location {description, objects, exits, creatures}
         var _name = name.toLowerCase();
         var _displayName = displayName || name.replace(/-/g," ");
+        var _synonyms = [];
         var _visits = 0;
         var _vehiclesAllowed = [];
         var _dark = false;
@@ -39,6 +40,7 @@ exports.Location = function Location(name, displayName, description, attributes)
 
         var processAttributes = function(locationAttributes) {
             if (!locationAttributes) {return null;}; //leave defaults preset
+            if (locationAttributes.synonyms != undefined) { _synonyms = locationAttributes.synonyms;};
             if (locationAttributes.dark) {_dark = locationAttributes.dark;};
             if (locationAttributes.echo) {_echo = locationAttributes.echo;};
             if (locationAttributes.type) {_type = locationAttributes.type;};            
@@ -54,6 +56,17 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         processAttributes(attributes);
+
+        self.addSyns = function (synonyms) {
+            _synonyms = _synonyms.concat(synonyms)
+            //deduplicate
+            let s = new Set(_synonyms);
+            _synonyms = Array.from(s);
+        };
+
+        self.getSyns = function () {
+            return _synonyms;
+        };
         
         var validateType = function(type, subType) {
             var validobjectTypes = ["indoor", "outdoor"];
@@ -70,6 +83,14 @@ exports.Location = function Location(name, displayName, description, attributes)
             var attributes = JSON.stringify(self.getAttributesToSave());
             if (attributes != "{}") {
                 resultString += ',"attributes":'+attributes;
+            };
+            if (_synonyms.length >0) {
+                resultString+= ',"synonyms":[';
+                for(var i=0; i<_synonyms.length;i++) {
+                    if (i>0) {resultString+= ',';};
+                    resultString+= '"'+_synonyms[i]+'"';
+                };
+                resultString+= ']';
             };
             resultString += ',"exits":[';
 
@@ -133,6 +154,40 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (locationAttributes.imageName != undefined) {saveAttributes.imageName = locationAttributes.imageName;};
 
             return saveAttributes;
+        };
+
+        self.syn = function (synonym) {
+            if (!synonym) {
+                return false;
+            };
+            //match by name first
+            if (synonym == _name) {
+                return true; 
+            }; 
+
+            //match by displayName 
+            if (synonym == self.getDisplayName()) { 
+                return true; 
+            }; 
+
+            //ensure we have syns array
+            if (!(_synonyms)) {
+                _synonyms = [];
+            };
+            if (_synonyms.indexOf(synonym) > -1) { 
+                return true; 
+            };
+
+            //description - complete match
+            if (synonym == self.getDescription()) { 
+                return true; 
+            };
+            
+            if (synonym.substr(synonym.length-1) == "s") {
+                return self.syn(synonym.substr(0, synonym.length - 1));
+            };
+
+            return false;
         };
 
         self.defaultScenery = function() {

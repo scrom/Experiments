@@ -612,7 +612,13 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     else {locationData.attributes.dark=false;};
                     if (locationData.attributes.start == "true" || locationData.attributes.start == true) {locationData.attributes.start = true;}
                     else {locationData.attributes.start=false;};
+                } else {
+                    locationData.attributes = {};
                 };
+                if (locationData.synonyms) {locationData.attributes.synonyms = locationData.synonyms;};
+                    //locationData.synonyms.forEach(function(synonym) {
+                    //    _map.addLocationSynonym(locationData.name, synonym);
+                    //});
                 var newLocation = new locationObjectModule.Location(locationData.name,locationData.displayName,locationData.description,locationData.attributes);
                 return newLocation;
             }  catch(err) {
