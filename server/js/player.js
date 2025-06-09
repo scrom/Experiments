@@ -6023,12 +6023,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.stats = function (map) {
             //private local function
-            var pluralise = function (number, units) {
-                var resultString = number + " " + units;
-                if (number == 1) { return resultString; };
-                return resultString+"s";
-            };
-
             var temporise = function (number) {
                 if (number == 1) { return "once" }
                 if (number == 2) { return "twice" }
@@ -6051,33 +6045,33 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (_killedCount > 0) { status += "You have been killed " + temporise(_killedCount) + ".<br>" };
             if (_cheatCount > 0) { status += "You have cheated (or tried to cheat) " + temporise(_cheatCount) + ".<br>" };
             if (_saveCount > 0) { status += "You have saved your progress "+ temporise(_saveCount)+".<br>"};
-            if (_loadCount > 0) { status += "You have loaded "+pluralise(_loadCount, "saved game")+".<br>"};
-            status += "You have taken "+pluralise(_stepsTaken,"step")+".<br>"; 
+            if (_loadCount > 0) { status += "You have loaded "+tools.pluraliseDescription("saved game", _loadCount)+".<br>"};
+            status += "You have taken "+tools.pluraliseDescription("step", _stepsTaken)+".<br>"; 
             status += "You have visited " + _locationsFound + " out of " + mapLocationCount + " locations.<br>";
             //@todo - change this to a %complete value eventually
             if (_missionsCompleted.length > 0) { status += "You have completed "+_missionsCompleted.length+" out of "+map.getMissionCount() + " possible tasks.<br>"; };
-            if (_missionsFailed.length > 0) { status += "You have failed " + pluralise(_missionsFailed.length,"task") + ".<br>"; };
+            if (_missionsFailed.length > 0) { status += "You have failed " +tools.pluraliseDescription("task", _missionsFailed.length) + ".<br>"; };
              
             if (_booksRead > 0) { status += "You have read " + _booksRead +" out of "+map.getBookCount()+ " items" + ".<br>"; };
             if (_creaturesSpokenTo > 0) { status += "You have spoken to " + _creaturesSpokenTo + " out of "+map.getCreatureCount()+" characters" + ".<br>"; };
             
-            if (_repairSkills.length > 0) { status += "You have gained " + pluralise(_repairSkills.length,"skill") + ".<br>"; };
-            if (_consumedObjects.length > 0) { status += "You have eaten or drunk " + pluralise(_consumedObjects.length,"item") + ".<br>"; };
+            if (_repairSkills.length > 0) { status += "You have gained " +tools.pluraliseDescription("skill", _repairSkills.length) + ".<br>"; };
+            if (_consumedObjects.length > 0) { status += "You have eaten or drunk " +tools.pluraliseDescription("item", _consumedObjects.length) + ".<br>"; };
             
             if (_waitCount > 0) {status += "You've hung around waiting for something to happen "+temporise(_waitCount)+".<br>";};
             if (_restsTaken > 0) {status += "You have rested "+temporise(_restsTaken)+".<br>";};
             if (_sleepsTaken > 0) {status += "You have slept "+temporise(_sleepsTaken)+".<br>";};
 
-            if (_drawingCount > 0) {status += "You have drawn "+pluralise(_drawingCount, "picture")+".<br>";};
-            if (_drawingCount > 0) {status += "You have written "+pluralise(_writingCount, "note")+".<br>";};
+            if (_drawingCount > 0) {status += "You have drawn "+tools.pluraliseDescription("picture", _drawingCount)+".<br>";};
+            if (_drawingCount > 0) {status += "You have written "+tools.pluraliseDescription("note", _writingCount)+".<br>";};
 
             if (_cashGained > 0) status += "You have gained a total of &pound;"+_cashGained.toFixed(2)+" in cash.<br>";
             if (_stolenCash > 0) status += "Of the total cash you've gained, &pound;"+_stolenCash.toFixed(2)+" was acquired by stealing.<br>";
             if (_cashSpent > 0) status += "You have spent a total of &pound;"+_cashSpent.toFixed(2)+" in cash.<br>";
 
-            if (_stolenObjects.length > 0) {status += "You have stolen "+pluralise(_stolenObjects.length,"item")+".<br>";};             
-            if (_destroyedObjects.length > 0) { status += "You have destroyed " + pluralise(_destroyedObjects.length, "item") + ".<br>"; };
-            if (_killedCreatures.length > 0) {status += "You have killed "+pluralise(_killedCreatures.length,"character")+".<br>";};             
+            if (_stolenObjects.length > 0) {status += "You have stolen "+tools.pluraliseDescription("item", _stolenObjects.length)+".<br>";};             
+            if (_destroyedObjects.length > 0) { status += "You have destroyed " +tools.pluraliseDescription("item", _destroyedObjects.length) + ".<br>"; };
+            if (_killedCreatures.length > 0) {status += "You have killed "+tools.pluraliseDescription("character", _killedCreatures.length)+".<br>";};             
 
             if (_aggression > 0) {status += "Your aggression level is "+self.getAggression()+".<br>";};
             if (_maxAggression > 0) {status += "Your maximum aggression level so far is "+_maxAggression+".<br>";};
@@ -6085,7 +6079,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if (maxMinAffinity.min < 0) {status += "Your minimum character affinity so far is "+maxMinAffinity.min+".<br>";};
             
             if (_injuriesReceived > 0) {status += "You have been injured "+ temporise(_injuriesReceived)+".<br>";};
-            if (_totalDamageReceived > 0) {status += "You have received "+_totalDamageReceived+" points of damage (in total) during this game.<br>";};
+            if (_totalDamageReceived > 0) {status += "You have received "+tools.pluraliseDescription("point", _totalDamageReceived)+" of damage (in total) during this game.<br>";};
             //if (_objectsChewed > 0) status += "You have chewed "+_objectsChewed+" objects.<br>";
             
             status += "Total game time taken so far: " + tools.time(0, 0, _totalTimeTaken) + ".<br>"; 
