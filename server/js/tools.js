@@ -213,6 +213,60 @@ var self = module.exports= {
         return resultString;
     },
 
+    unpluraliseDescription: function (aDescription) {
+        // Attempt to convert a pluralised description back to singular.
+        if (self.stringIsEmpty(aDescription)) { return ""; }
+
+        var wordToReplace = aDescription;
+        var replacement = wordToReplace;
+
+        var descriptionAsWords = aDescription.split(" ");
+        if (descriptionAsWords.length > 2) {
+            // "x of y" ?
+            if (descriptionAsWords[1] == "of") {
+                wordToReplace = descriptionAsWords[0];
+            }
+        }
+
+        // Irregular plurals
+        if (wordToReplace === "children") {
+            replacement = "child";
+        } else if (wordToReplace === "feet") {
+            replacement = "foot";
+        } else if (wordToReplace === "teeth") {
+            replacement = "tooth";
+        } else if (wordToReplace === "mice") {
+            replacement = "mouse";
+        } else if (wordToReplace === "people") {
+            replacement = "person";
+        } else if (
+            wordToReplace.match(/(cacti|fungi|nuclei|foci|radii|stimuli|viri)$/)
+        ) {
+            // Words ending with 'i' that become 'us' in singular
+            replacement = wordToReplace.replace(/i$/, "us");
+        } else if (
+            wordToReplace === "sheep" ||
+            wordToReplace === "deer" ||
+            wordToReplace === "fish" ||
+            wordToReplace === "species"
+        ) {
+            // Irregular nouns that do not change in plural
+            replacement = wordToReplace;
+        } else if (wordToReplace.match(/(ches|shes|xes|ses|fes|zes)$/)) {
+            // Remove 'es' for regular plurals
+            replacement = wordToReplace.replace(/es$/, "");
+        } else if (wordToReplace.match(/ies$/)) {
+            // 'ies' -> 'y'
+            replacement = wordToReplace.replace(/ies$/, "y");
+        } else if (wordToReplace.match(/s$/) && !wordToReplace.match(/ss$/)) {
+            // Remove trailing 's' for regular plurals (but not for 'ss')
+            replacement = wordToReplace.replace(/s$/, "");
+        }
+
+        var resultString = aDescription.replace(wordToReplace, replacement);
+        return resultString;
+    },
+
     /* --- custom array handling ---*/
 
     listSeparator: function(listPosition, listLength) {
