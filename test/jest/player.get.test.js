@@ -384,9 +384,15 @@ test("Test that a player can get water from the kitchen sink.", () => {
     const expectedResult = "You collect water into a nearby drinking glass.<br>";
 
     //check glass is no longer in location and is now in inventory!
-    expect(false).toBe(true); //fail as a reminder to sort out checks!
+    var originalLocationInventorySize = kitchen.getInventoryObject().size();
+
     const actualResult = p0.get('get', 'water');
     expect(actualResult).toBe(expectedResult);
+
+    expect(originalLocationInventorySize).toBe(kitchen.getInventoryObject().size()+1); 
+
+    var playerHasGlass = p0.getInventoryObject().check("glass");
+    expect(playerHasGlass).toBe(true); 
 });
 
 
