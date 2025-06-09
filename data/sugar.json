@@ -20,6 +20,7 @@
       "hideDeliveryDescription":  true,
       "smell": "It's just sugar.",
       "taste": "It's sweet and crunchy in your mouth.",
+      "texture": "The crunchy granules stick to your fingers.<br>As you brush them off you wonder if putting glass in an industrial blender would produce something similar.",
       "combinesWith": [
           "coffee",
           "latte",

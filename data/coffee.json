@@ -17,6 +17,7 @@
       "nutrition": 8,
       "smell": "It smells warm and rich.",
       "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores.",
+      "texture": "Well it's not thick enough to stand your spoon in. Also... it's hot!",
       "hideDeliveryDescription":  true,
       "combinesWith": [
           "milk",

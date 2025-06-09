@@ -13,6 +13,7 @@
     "traveller": true,
     "smell": "It's scurrying around too much to get close enough to smell it.",
     "sound": "Squeeeeeek!",
+    "texture": "Hmmm... Smooth on the outside, crunchy and squishy on the inside.",
     "imageName": "mouse.jpg", 
     "customAction": [
 			"get", "catch"

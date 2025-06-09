@@ -791,6 +791,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (artefactAttributes.smell != undefined) {saveAttributes.smell = artefactAttributes.smell;};                
             if (artefactAttributes.sound != undefined) { saveAttributes.sound = artefactAttributes.sound; };
             if (artefactAttributes.taste != undefined) { saveAttributes.taste = artefactAttributes.taste; };  
+            if (artefactAttributes.texture != undefined) { saveAttributes.texture = artefactAttributes.texture; };
             if (artefactAttributes.wetted.length >0) {saveAttributes.wetted = artefactAttributes.wetted;};           
             if (artefactAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];

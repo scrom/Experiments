@@ -858,6 +858,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (creatureAttributes.smell != undefined) {saveAttributes.smell = creatureAttributes.smell;};
             if (creatureAttributes.sound != undefined) { saveAttributes.sound = creatureAttributes.sound; };
             if (creatureAttributes.taste != undefined) { saveAttributes.taste = creatureAttributes.taste; };
+            if (creatureAttributes.texture != undefined) { saveAttributes.texture = creatureAttributes.texture; };
             if (creatureAttributes.contagion.length>0) {
                 saveAttributes.contagion = [];
                 for (var c=0;c<creatureAttributes.contagion.length;c++) {
