@@ -10783,7 +10783,8 @@
                             ],
                             "imageName": "sugar.jpg",
                             "smell": "It's just sugar.",
-                            "taste": "It's sweet and crunchy in your mouth."
+                            "taste": "It's sweet and crunchy in your mouth.",
+                            "texture": "The crunchy granules stick to your fingers.<br>As you brush them off you wonder if putting glass in an industrial blender would produce something similar."
                         },
                         "synonyms": [
                             "spoonful of sugar",
@@ -11316,7 +11317,8 @@
                                 "sugar"
                             ],
                             "smell": "It smells warm and rich.",
-                            "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores."
+                            "taste": "It's surprisingly good for office coffee. Better than many chain coffee stores.",
+                            "texture": "Well it's not thick enough to stand your spoon in. Also... it's hot!"
                         },
                         "synonyms": [
                             "brew",
@@ -12418,7 +12420,8 @@
                                                                 "traveller": true,
                                                                 "imageName": "mouse.jpg",
                                                                 "smell": "It's scurrying around too much to get close enough to smell it.",
-                                                                "sound": "Squeeeeeek!"
+                                                                "sound": "Squeeeeeek!",
+                                                                "texture": "Hmmm... Smooth on the outside, crunchy and squishy on the inside."
                                                             },
                                                             "synonyms": [
                                                                 "it",
