@@ -39,7 +39,7 @@ describe('REDISFileManager', () => {
 
     test('writeGameData writes to REDIS with no errors - using async', async () => {
         jest.setTimeout(10000);
-        const data = ["{\"foo\":\"bar\"}", "{\"baz\":\"qux\"}", "{\"quux\":\"corge\"}", "{\"grault\":\"garply\"}", "{\"waldo\":\"fred\"}", "{\"plugh\":\"xyzzy\"}", "{\"thud\":\"foo\"}"];;
+        const data = ["{\"foo\":\"bar\"}", "{\"baz\":\"qux\"}", "{\"quux\":\"corge\"}", "{\"grault\":\"garply\"}", "{\"waldo\":\"fred\"}", "{\"plugh\":\"xyzzy\"}", "{\"thud\":\"foo\"}"];
         try {
             const success = await fm.writeGameDataAsync(testFileName, data, true);
             expect(success).toBe(true);

@@ -1415,7 +1415,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (resultString.substr(0, 4) == "<br>") { resultString = resultString.substr(4); }; //trim opening line break if needed.
 
-            return resultString+tools.imgTag(self);;
+            return resultString+tools.imgTag(self);
         };
 
         self.read = function (verb) {

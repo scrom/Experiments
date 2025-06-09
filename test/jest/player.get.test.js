@@ -349,7 +349,7 @@ test("Test that a player can get a single slice of cake.", () => {
 
 test("Test that a player can get *one* bowl of coco pops.", () => {
     mb.buildMap();
-    const m0 = mb.buildMap();;
+    const m0 = mb.buildMap();
     p0 = new player.Player({"username": playerName}, m0, mb);
     let kitchen = m0.getLocation("kitchen-ground-floor")
     p0.setLocation(kitchen);

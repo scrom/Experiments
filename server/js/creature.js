@@ -1390,7 +1390,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     };
                 };
 
-                return resultString;
+                return resultString + tools.imgTag(self);
             };
 
             if (_repairSkills.length>0) {
@@ -1418,7 +1418,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 else { resultString +="<br>"+_genderPrefix+" wants to <i>talk</i> to you about something.";};
             };
 
-            return resultString+tools.imgTag(self);;
+            return resultString + tools.imgTag(self);
         };
 
         self.getType = function() {
