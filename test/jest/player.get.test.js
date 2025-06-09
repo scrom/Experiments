@@ -372,3 +372,50 @@ test("Test that a player can get *two* bowls of coco pops.", () => {
     const actualResult = p0.get('get', 'coco pops');
     expect(actualResult).toBe(expectedResult);
 });
+
+
+test("Test that a player can get water from the kitchen sink.", () => {
+    //sing "delivers" water so basic get needs to route through "delivered" items and then get a glass or similar to put it in.
+    const m0 = mb.buildMap();
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    let kitchen = m0.getLocation("kitchen-ground-floor")
+    p0.setLocation(kitchen);
+
+    const expectedResult = "You collect water into a nearby drinking glass.<br>";
+
+    //check glass is no longer in location and is now in inventory!
+    expect(false).toBe(true); //fail as a reminder to sort out checks!
+    const actualResult = p0.get('get', 'water');
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test("Test that a player cannot add coco pops to water.", () => {
+    //sing "delivers" water so basic get needs to route through "delivered" items and then get a glass or similar to put it in.
+    const m0 = mb.buildMap();
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    let kitchen = m0.getLocation("kitchen-ground-floor")
+    p0.setLocation(kitchen);
+
+    const expectedResult = "You try and try but can't find a satisfactory way to make them fit.";
+
+    p0.get('get', 'water');
+
+    const actualResult = p0.put('put', 'coco pops', 'into' , 'water');
+    expect(actualResult).toBe(expectedResult);
+});
+
+test("Test that a player cannot add coco pops to a glass of water.", () => {
+    //sing "delivers" water so basic get needs to route through "delivered" items and then get a glass or similar to put it in.
+    const m0 = mb.buildMap();
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    let kitchen = m0.getLocation("kitchen-ground-floor")
+    p0.setLocation(kitchen);
+
+    const expectedResult = "You attempt to add coco pops to the glass but decide they won't really mix well with the water that's already in there.";
+
+    p0.get('get', 'water');
+
+    const actualResult = p0.put('put', 'coco pops', 'into' , 'glass');
+    expect(actualResult).toBe(expectedResult);
+});

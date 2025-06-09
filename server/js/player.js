@@ -1335,7 +1335,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var allLocationObjects = _currentLocation.getAllObjects(false, true);
                 for (var i=0;i<allLocationObjects.length;i++) {
                     var deliversRequestedItem = false;
-                    var tempDeliveryItem;
+                    var exampleDeliveryItem;
                     if (allLocationObjects[i].getType() == 'creature') {
                         continue;
                     };
@@ -1344,44 +1344,50 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     for (var d=0;d<deliveryItems.length;d++) {
                         if (deliveryItems[d].getName() == artefactName) {
                             deliversRequestedItem = true;
-                            tempDeliveryItem = deliveryItems[d];
+                            exampleDeliveryItem = deliveryItems[d];
                             break;
                         };
                     };
                     if (!deliversRequestedItem) {
                         continue;
                     };
-                    var tmpRequiresContainer = tempDeliveryItem.requiresContainer();
-                    if (tmpRequiresContainer) {
-                        var tmpSuitableContainer = _inventory.getSuitableContainer(tempDeliveryItem);
-                        if (!tmpSuitableContainer) {
-                            var tmpRequiredContainerName = tempDeliveryItem.getRequiredContainer();
-                            var tmpRequiredContainer;
-                            if (tmpRequiredContainerName) {
-                                tmpRequiredContainer = getObjectFromPlayerOrLocation(tmpRequiredContainerName);
+                    var deliveryItemRequiresContainer = exampleDeliveryItem.requiresContainer();
+                    if (deliveryItemRequiresContainer) {
+                        var checkSuitableContainer = _inventory.getSuitableContainer(exampleDeliveryItem); 
+                        if (!(checkSuitableContainer)) {
+                            //try location too...
+                             var locationInventory = _currentLocation.getInventoryObject();
+                            checkSuitableContainer = locationInventory.getSuitableContainer(exampleDeliveryItem);
+                        };
+                        if (!checkSuitableContainer) {
+                            //do we need something specific?
+                            var requiredContainerName = exampleDeliveryItem.getRequiredContainer();
+                            var requiredContainer;
+                            if (requiredContainerName) {
+                                requiredContainer = getObjectFromPlayerOrLocation(requiredContainerName);
                             };
                             //@todo issue #394 -potentially get an alternate suitable container from locaiton inventory at this point.
-                            if (tmpRequiredContainer) {
-                                if (tmpRequiredContainer.isBroken() || tmpRequiredContainer.isDestroyed()) {
+                            if (requiredContainer) {
+                                if (requiredContainer.isBroken() || requiredContainer.isDestroyed()) {
                                     //the required object exists but can't carry it.
-                                    return "It looks like the only available " + tmpRequiredContainer.getName() + " around here has seen better days."; 
+                                    return "It looks like the only available " + requiredContainer.getName() + " around here has seen better days."; 
                                 };
-                                if (tmpRequiredContainer.getInventorySize() > 0 && (!(tmpRequiredContainer.canCarry(tempDeliveryItem)))) {
-                                    var tmpContainerInventory = tmpRequiredContainer.getInventoryObject();
-                                    var deliveryItemName = tempDeliveryItem.getName();
+                                if (requiredContainer.getInventorySize() > 0 && (!(requiredContainer.canCarry(exampleDeliveryItem)))) {
+                                    var requiredContainerInventory = requiredContainer.getInventoryObject();
+                                    var deliveryItemName = exampleDeliveryItem.getName();
                                     //depending on whether container already has some of this in it, tweak the "full" wording.
-                                    if (tmpContainerInventory.check(deliveryItemName)) {
+                                    if (requiredContainerInventory.check(deliveryItemName)) {
                                         deliveryItemName = "any more.";
                                     } else {
                                         deliveryItemName += " as well.";
                                     };
-                                    return "The only available " + tmpRequiredContainer.getName() + " already has "+ tmpContainerInventory.listObjects()+" in "+ tmpRequiredContainer.getSuffix()+". There isn't room for "+ deliveryItemName;
+                                    return "The only available " + requiredContainer.getName() + " already has "+ requiredContainerInventory.listObjects()+" in "+ requiredContainer.getSuffix()+". There isn't room for "+ deliveryItemName;
                                 };
-                                if (tmpRequiredContainer.getCarryWeight() < tempDeliveryItem.getWeight()) {
-                                    return "You need a " + tmpRequiredContainer.getName() + " that can hold " + tempDeliveryItem.getName() + ". None here seem to fit the bill.";
+                                if (requiredContainer.getCarryWeight() < exampleDeliveryItem.getWeight()) {
+                                    return "You need a " + requiredContainer.getName() + " that can hold " + exampleDeliveryItem.getName() + ". None here seem to fit the bill.";
                                 };
                             } else {
-                                return "Sorry. You can't collect " + tempDeliveryItem.getDisplayName() + " without something suitable to carry " + tempDeliveryItem.getSuffix() + " in."; 
+                                return "Sorry. You can't collect " + exampleDeliveryItem.getDisplayName() + " without something suitable to carry " + exampleDeliveryItem.getSuffix() + " in."; 
                             };
                         };
                     };

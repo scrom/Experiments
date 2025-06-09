@@ -5,7 +5,7 @@
   "detailedDescription": "No real nutritional value but great for thirst and plants.",
   "attributes": {
     "defaultAction": "drink",
-    "weight": 1,
+    "weight": 0.5,
     "type": "food",
     "requiresContainer": true,
     "isLiquid": true,
