@@ -2588,7 +2588,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
         /*Allow player to put something in an object */
-    self.put = function(verb, artefactName, splitword, receiverName, requiredContainer, artefact){
+    self.put = function(verb, artefactName, splitword, receiverName, requiredContainer, artefact, receiver){
             var resultString = "";
             var artefactPreviouslyCollected = false;
             var collectedArtefact;
@@ -2600,8 +2600,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (tools.stringIsEmpty(receiverName)) { return tools.initCap(verb) + " " + artefactName + " where?"; };
                 if (artefactName == "all") { return "Sorry, you'll need to be more specific."; };
                                 
-                if (verb == "collect") {
-                    //try location first if collecting
+                if (verb == "collect" && (!artefact)) {
+                    //try location first if collecting and don't already have it
                     artefact = getObjectFromLocation(artefactName);
                 };
                 if (!(artefact)) {
@@ -2610,37 +2610,43 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 
                 
                 if (!(artefact)) { return notFoundMessage(artefactName); };
+
+                //replace requested artefact name with real name...
+                artefactName = artefact.getName();
             };
 
-            //replace requested artefact name with real name...
-            artefactName = artefact.getName();
 
-            //get receiver if it exists
-            var receiver = getObjectFromPlayerOrLocation(receiverName);
-            if (!(receiver)) {
-                if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
-                return notFoundMessage(receiverName);
-            };
-            
-            if (artefact.getSubType() == "intangible") {
-                return tools.initCap(artefact.getName()) + " isn't really something you can do much with." +
-                        "<br>You try anyway. After a while, your arms get tired and you feel slightly awkward.";
-            };
-            
-            if (artefact.getType() == "scenery") {
-                return tools.initCap(artefact.getDisplayName()) + " is just scenery. You're not going to accomplish anything by doing that.";
-            };
-            
-            if (!artefact.isCollectable()) {
-                return "You try in vain to move " + artefact.getDisplayName() + " to where you want it but just end up tired and annoyed."
+            if (!receiver) {
+                //get receiver if it exists and we don't already have one.
+                receiver = getObjectFromPlayerOrLocation(receiverName);
+                if (!(receiver)) {
+                    if (requiredContainer) {return "Sorry, you need a "+requiredContainer+" to carry "+artefact.getDisplayName()+".";};
+                    return notFoundMessage(receiverName);
+                };
             };
 
-            //validate if it's a container
+            //validate it's a container
             if (receiver.getType() == "creature") {
                 if (receiver.isDead()) {
                     return  "You're not really qualified as a taxidermist are you? Please stop interfering with corpses.";  
                 } else {
                     return  "It's probably better to 'give' "+artefact.getDisplayName()+" to "+receiver.getSuffix()+"."; 
+                };
+            };
+            
+            //we only need to do all this if we hadn't previously collected it...
+            if (!collectedArtefact) {
+                if (artefact.getSubType() == "intangible") {
+                    return tools.initCap(artefact.getName()) + " isn't really something you can do much with." +
+                            "<br>You try anyway. After a while, your arms get tired and you feel slightly awkward.";
+                };
+                
+                if (artefact.getType() == "scenery") {
+                    return tools.initCap(artefact.getDisplayName()) + " is just scenery. You're not going to accomplish anything by doing that.";
+                };
+                
+                if (!artefact.isCollectable()) {
+                    return "You try in vain to move " + artefact.getDisplayName() + " to where you want it but just end up tired and annoyed."
                 };
             };
 
@@ -2651,6 +2657,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.combinesWith(receiver, true)) {
                 return self.combine(artefact, receiver)                   
             };
+
             //if object combines with something in contents...
             if (artefact.combinesWithContentsOf(receiver)) {
                 var combinesWithResult = artefact.getCombinesWith();
@@ -2666,7 +2673,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 return self.combine(artefact, newReceiver)                   
             } else {
-                if (verb == "combine") {return "Combining "+artefactName+" and "+receiver.getName()+" doesn't make anything new.";};
+                if (verb == "combine") {return "Combining "+artefactName+" and "+receiver.getName()+" won't make anything new.";};
             };
                 
             //check receiver can carry item (container or not)
@@ -2692,27 +2699,39 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return receiver.getDescriptivePrefix() + " broken. You'll need to fix " + receiver.getSuffix() + " first.";
                 };
                 
-                //issue #395 at this point, if artefact has multiple charges, figure out how much receiver can hold and split artefact.
+                //it's too big to fit in its entirety, can we fit a portion in?
+                //if artefact has multiple charges, figure out how much receiver *can* hold and split artefact.
                 if (artefact.willDivide() && receiver.getCarryWeight() > 0) {
                     var spaceToFill = receiver.getRemainingSpace();
-                    var chargesRequired = Math.floor(spaceToFill / artefact.getChargeWeight());
+                    var chargesRequired = Math.floor(spaceToFill / artefact.getChargeWeight()); //round down to whole integer
+
+                    //const expectedWeight = artefact.getChargeWeight() * chargesRequired;
                     if (chargesRequired == 0) {
                         return "There isn't enough room in " + receiver.getDisplayName() + " for " + artefact.getDisplayName()+".";
                     };
+
+                   // console.debug("Charges in original artefact:"+artefact.chargesRemaining());
                     //we only perform a test split here
                     var newArtefact = artefact.split(chargesRequired, false);
                     //if we have a new artefact at this point, we've split from the original.
-                    var putResult = self.put(verb, artefactName, "into", receiverName, requiredContainer, newArtefact);
-                    
-                    if (putResult.indexOf("$fail$") == -1) {
-                        //if successful, throw away the split part from the original
-                        artefact.split(chargesRequired, true);
-                    } else {
-                        putResult = putResult.replace("$fail$", "");
+                    if (newArtefact) {
+                        //console.debug("Charges in new artefact:"+newArtefact.chargesRemaining());
+                        //the split part *will* fit. 
+                        newArtefact = artefact.split(chargesRequired, true); //do a proper split.
+                        //console.debug("New Artefact weight = "+newArtefact.getWeight());
+                        var putResult = self.put(verb, artefactName, "into", receiverName, requiredContainer, newArtefact, receiver); //include new artefact and current receiver.
+
+                        //when does PutResult == null?
+                        
+                        if (putResult.includes("$fail$")) {
+                            //strip out "fail" placeholder and return as-is.
+                            putResult = putResult.replace("$fail$", "");
+                        };
+                        return putResult;
                     };
-                    return putResult;
                 };
-                    
+
+                //put into container has not been possible...
                 if (artefact.isLiquid() || artefact.isPowder()) {
                     //if receiver is liquid or powder it would have combined at this point. Therefore only "waste" if adding to a solid.
                     if (!receiver.isLiquid() && !receiver.isPowder()) {

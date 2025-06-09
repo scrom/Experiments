@@ -346,3 +346,29 @@ test("Test that a player can get a single slice of cake.", () => {
     const actualResult = p0.get('get', "cake");
     expect(actualResult).toBe(expectedResult);
 });
+
+test("Test that a player can get *one* bowl of coco pops.", () => {
+    mb.buildMap();
+    const m0 = mb.buildMap();;
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    let kitchen = m0.getLocation("kitchen-ground-floor")
+    p0.setLocation(kitchen);
+
+    console.debug("Location: "+kitchen)
+
+    const expectedResult = "You collect some coco pops into a nearby bowl.<br>";
+    const actualResult = p0.get('get', 'coco pops');
+    expect(actualResult).toBe(expectedResult);
+});
+
+test("Test that a player can get *two* bowls of coco pops.", () => {
+    const m0 = mb.buildMap();
+    p0 = new player.Player({"username": playerName}, m0, mb);
+    let kitchen = m0.getLocation("kitchen-ground-floor")
+    p0.setLocation(kitchen);
+
+    p0.get('get', 'coco pops');
+    const expectedResult = "You collect some coco pops into a nearby drinking glass.<br>";
+    const actualResult = p0.get('get', 'coco pops');
+    expect(actualResult).toBe(expectedResult);
+});

@@ -1810,7 +1810,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         
         self.split = function (chargeSize, removeSplitPart) {
             
-            if (chargeSize == self.chargesRemaining()) {
+            if (chargeSize >= self.chargesRemaining()) {
                 //caller will need to handle nothing coming back and taking whole item instead.
                 return null;
             };
@@ -1822,15 +1822,16 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //adjust/define weight and charges
             var originalWeight = self.getWeight();
             var originalCharges = self.chargesRemaining();
+            var chargeWeight = self.getChargeWeight();
 
-            var newDestinationWeight = Math.round((originalWeight / originalCharges) * chargeSize * 100) / 100;
+            var newDestinationWeight = chargeWeight * chargeSize;
             
             //we sometimes call artefact.split to test a result - in these cases we don't want to remove it from the original 
             if (removeSplitPart) {
                 self.consume(chargeSize);
                 
                 //set new weights rounded to 1 decimal place
-                var newSourceWeight = Math.round((originalWeight / originalCharges) * self.chargesRemaining() * 100) / 100;
+                var newSourceWeight = chargeWeight * self.chargesRemaining();
                 if (originalWeight < newSourceWeight + newDestinationWeight) {
                     //catch rounding issues
                     var reduceSourceWeightBy = (newSourceWeight + newDestinationWeight) - originalWeight;
@@ -2078,7 +2079,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.getChargeWeight = function () {
             if (!self.willDivide()) { return self.getWeight(); };
             if (_charges < 1) { return self.getWeight(); };
-            return Math.round((self.getWeight() / self.chargesRemaining()) * 10) / 10;
+            return (self.getWeight() / self.chargesRemaining()).toFixed(1);
         };
 
         self.setCharges = function(newValue) {

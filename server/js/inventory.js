@@ -269,7 +269,10 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 return false;
             };
 
-            if ((anObject.getWeight() + self.getWeight()) > _maxCarryingWeight) {
+            //reminder - we're inside the inventory here - self.getWeight is the weight of other inventory contents.
+            const objectWeight = anObject.getWeight();
+            const inventoryWeight = self.getWeight()
+            if ((objectWeight + inventoryWeight) > _maxCarryingWeight) {
                 //console.debug("can't carry total weight of "+parseFloat(anObject.getWeight()+self.getWeight()));
                 return false;
             };
