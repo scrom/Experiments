@@ -3821,60 +3821,60 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 // - are they looking thru a window or similar? -- this code is *almost* duplicated in notfound message.
                 var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
                 if (viewObjects.length > 0 && map) {
-                for (var i=0;i<viewObjects.length;i++) {
-                    var destination = map.getLocation(viewObjects[i].getViewLocation());
-                    if (destination) {
-                        artefact = destination.getObject(artefactName);
-                        if (artefact) {
-                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
-                                minSize = tools.minimumSizeForDistanceViewing; //set minimum view size for getDescription call below...
+                    for (var i=0;i<viewObjects.length;i++) {
+                        var destination = map.getLocation(viewObjects[i].getViewLocation());
+                        if (destination) {
+                            artefact = destination.getObject(artefactName);
+                            if (artefact) {
+                                if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
+                                    minSize = tools.minimumSizeForDistanceViewing; //set minimum view size for getDescription call below...
+                                };
                             };
                         };
                     };
                 };
-            };
 
                 //have they pluralised something?
                 //need a reverse of tools.pluralisedescription see #567
-                if (artefactName.substr(-1) == "s" || artefactName.substr(-2) == "ii") {
-                    var singularName;
-                    if (artefactName.substr(-2) == "es") {
-                        singularName = artefactName.substr(0, artefactName.length-2);
-                    } else if (artefactName.substr(-2) == "es"){
-                        singularName = artefactName.substr(0, artefactName.length-2)+"us";
-                    } else if (artefactName.substr(-1) == "s"){
-                        singularName = artefactName.substr(0, artefactName.length-1);                        
-                    };
+                var singularName = tools.unpluraliseDescription(artefactName);
+                if (singularName != artefactName) {
 
-                    var tempArtefacts = _inventory.getAllObjectsWithSyn(singularName);
-                    if (tempArtefacts.length < 2) {
-                        tempArtefacts = tempArtefacts.concat(_inventory.getAllObjectsOfType(singularName));
+                    //do we have it already?
+                    var checkArtefacts = _inventory.getAllObjectsWithSyn(singularName);
+
+                    //as soon as we have more than 2 matches, we need player to clarify...
+                    if (checkArtefacts.length < 2) {
+                        checkArtefacts = checkArtefacts.concat(_inventory.getAllObjectsOfType(singularName));
                     };
-                    if (tempArtefacts.length < 2) {
-                        tempArtefacts = tempArtefacts.concat(_currentLocation.getAllObjectsWithSyn(singularName));
+                    if (checkArtefacts.length < 2) {
+                        checkArtefacts = checkArtefacts.concat(_currentLocation.getAllObjectsWithSyn(singularName));
                     };
-                    if (tempArtefacts.length < 2) {
-                        tempArtefacts = tempArtefacts.concat(_currentLocation.getAllObjectsOfType(singularName));
+                    if (checkArtefacts.length < 2) {
+                        checkArtefacts = checkArtefacts.concat(_currentLocation.getAllObjectsOfType(singularName));
                     };
-                    if (tempArtefacts.length < 2) {
-                        if (tempArtefacts.length == 1) {
-                            artefact = tempArtefacts[0];
+                    if (checkArtefacts.length < 2) {
+                        if (checkArtefacts.length == 1) {
+                            //success! we found what they were asking for!
+                            artefact = checkArtefacts[0];
                         };
                     } else {
+                        //too many possibilities
                         return "There's more than one " + singularName + " available to you here. You'll need to be more specific.<br>You can " + verb + " an item in your <i>inventory</i> - e.g. '" + verb + " my " + singularName +
-                           "', in this <i>location</i> e.g. '" + verb + " " + singularName + " in location'." +
-                           "<br> Or in another specific item. e.g. '" + verb + " " + singularName + " in box'.";
+                            "', in this <i>location</i> e.g. '" + verb + " " + singularName + " in location'." +
+                            "<br> Or in another specific item. e.g. '" + verb + " " + singularName + " in box'.";
                     };
                 };
 
-                if (!artefact) {                    
+                //still not found...
+                if (!artefact) {            
+                    //is it "me" you're looking for?   
+                    //we do this very late in case something else has the same synonym/name first!     
                     if (self.syn(artefactName)) {
                         return self.status();
                     };
 
-                    if (!container) {
-                        container = containerName;
-                    };
+                    if (!container) { container = containerName; };
+                    //container can be either an object or string here - notfound handles both.
                     return notFoundMessage(artefactName, container);
                 };
             };
