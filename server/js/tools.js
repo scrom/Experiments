@@ -199,9 +199,12 @@ var self = module.exports= {
                wordToReplace.substr(-2) == "us") {
             replacement = wordToReplace + "es";
         } else if (wordToReplace.substr(-1) == "x" ||
-               wordToReplace.substr(-1) == "s" ||
-               wordToReplace.substr(-1) == "f") {
+               wordToReplace.substr(-1) == "s") {
             replacement = wordToReplace + "es";
+        } else if (wordToReplace.substr(-1) == "f") {
+            replacement = wordToReplace.slice(0, -1) + "ves";
+        } else if (wordToReplace.substr(-3) == "ife") { //interesting case
+            replacement = wordToReplace.slice(0, -2) + "ves";
         } else if (wordToReplace.substr(-1) == "y") {
             replacement = wordToReplace.slice(0, -1) + "ies";
         } else {
@@ -255,6 +258,12 @@ var self = module.exports= {
         } else if (wordToReplace.match(/(ches|shes|xes|ses|fes|zes)$/)) {
             // Remove 'es' for regular plurals
             replacement = wordToReplace.replace(/es$/, "");
+        } else if (wordToReplace.match(/ives$/)) {
+            // 'ives' -> 'fe'
+            replacement = wordToReplace.replace(/ves$/, "fe");
+        } else if (wordToReplace.match(/ves$/)) {
+            // 'ives' -> 'fe'
+            replacement = wordToReplace.replace(/ves$/, "f");
         } else if (wordToReplace.match(/ies$/)) {
             // 'ies' -> 'y'
             replacement = wordToReplace.replace(/ies$/, "y");

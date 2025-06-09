@@ -58,7 +58,7 @@ describe('tools.js basic unit tests', () => {
             expect(tools.literalToString("string")).toBe("string");
         });
 
-        test('pluraliseDescription pluralizes correctly', () => {
+        test('pluraliseDescription pluralises correctly', () => {
             // Regular plurals
             expect(tools.pluraliseDescription("box", 2)).toBe("2 boxes");
             expect(tools.pluraliseDescription("bus", 2)).toBe("2 buses");
@@ -67,12 +67,15 @@ describe('tools.js basic unit tests', () => {
             expect(tools.pluraliseDescription("apple", 3)).toBe("3 apples");
             expect(tools.pluraliseDescription("dish", 2)).toBe("2 dishes");
             expect(tools.pluraliseDescription("church", 2)).toBe("2 churches");
-            expect(tools.pluraliseDescription("leaf", 2)).toBe("2 leafes"); // Note: not "leaves" due to implementation
-            expect(tools.pluraliseDescription("baby", 2)).toBe("2 babies"); // Note: implementation adds "es" not "ies"
+            expect(tools.pluraliseDescription("leaf", 2)).toBe("2 leaves"); 
+            expect(tools.pluraliseDescription("knife", 2)).toBe("2 knives"); 
+            expect(tools.pluraliseDescription("baby", 2)).toBe("2 babies"); 
             expect(tools.pluraliseDescription("cat", 2)).toBe("2 cats");
             expect(tools.pluraliseDescription("dog", 2)).toBe("2 dogs");
             expect(tools.pluraliseDescription("fox", 2)).toBe("2 foxes");
-            expect(tools.pluraliseDescription("bus", 1)).toBe("bus");
+            expect(tools.pluraliseDescription("bus", 2)).toBe("2 buses");
+
+            //with a count of 1 - don't pluralise
             expect(tools.pluraliseDescription("dish", 1)).toBe("dish");
 
             // Irregular plurals
@@ -105,11 +108,68 @@ describe('tools.js basic unit tests', () => {
             expect(tools.pluraliseDescription("apple")).toBe("apple");
             expect(tools.pluraliseDescription("bus")).toBe("bus");
 
+            //multiword
+            expect(tools.pluraliseDescription("ice cream", 5)).toBe("5 ice creams");
+
             // Edge cases
             expect(tools.pluraliseDescription("", 2)).toBe("");
             expect(tools.pluraliseDescription(null, 2)).toBe("");
             expect(tools.pluraliseDescription(undefined, 2)).toBe("");
         });
+    });
+
+    test('unpluraliseDescription unpluralises correctly', () => {
+            // Regular plurals
+            expect(tools.unpluraliseDescription("boxes")).toBe("box");
+            expect(tools.unpluraliseDescription("buses")).toBe("bus");
+            expect(tools.unpluraliseDescription("things")).toBe("thing");
+            expect(tools.unpluraliseDescription("apple")).toBe("apple");
+            expect(tools.unpluraliseDescription("apples")).toBe("apple");
+            expect(tools.unpluraliseDescription("dishes")).toBe("dish");
+            expect(tools.unpluraliseDescription("churches")).toBe("church");
+            expect(tools.unpluraliseDescription("leaves")).toBe("leaf");
+            expect(tools.unpluraliseDescription("knives")).toBe("knife");
+            expect(tools.unpluraliseDescription("babies")).toBe("baby"); 
+            expect(tools.unpluraliseDescription("cats")).toBe("cat");
+            expect(tools.unpluraliseDescription("dogs")).toBe("dog");
+            expect(tools.unpluraliseDescription("foxes")).toBe("fox");
+            //expect(tools.unpluraliseDescription("bus")).toBe("bus"); // won't handle this  - it's also not a plural
+            expect(tools.unpluraliseDescription("dish")).toBe("dish");
+
+            // Irregular plurals
+            expect(tools.unpluraliseDescription("children")).toBe("child");
+            expect(tools.unpluraliseDescription("feet")).toBe("foot");
+            expect(tools.unpluraliseDescription("teeth")).toBe("tooth");
+            expect(tools.unpluraliseDescription("mice")).toBe("mouse");
+            expect(tools.unpluraliseDescription("people")).toBe("person");
+
+            // Words ending with 'us' that become 'i'
+            expect(tools.unpluraliseDescription("cacti")).toBe("cactus");
+            expect(tools.unpluraliseDescription("fungi")).toBe("fungus");
+            expect(tools.unpluraliseDescription("nuclei")).toBe("nucleus");
+            expect(tools.unpluraliseDescription("foci")).toBe("focus");
+            expect(tools.pluraliseDescription("radius", 2)).toBe("2 radii");
+            expect(tools.pluraliseDescription("stimulus", 2)).toBe("2 stimuli");
+            expect(tools.pluraliseDescription("virus", 2)).toBe("2 viri");
+
+            // Irregular nouns that do not change in plural
+            expect(tools.pluraliseDescription("sheep", 2)).toBe("2 sheep");
+            expect(tools.pluraliseDescription("deer", 2)).toBe("2 deer");
+            expect(tools.pluraliseDescription("fish", 2)).toBe("2 fish");
+            expect(tools.pluraliseDescription("species", 2)).toBe("2 species");
+
+            // "x of y" pattern
+            expect(tools.pluraliseDescription("box of apples", 2)).toBe("2 boxes of apples");
+            expect(tools.pluraliseDescription("child of light", 2)).toBe("2 children of light");
+
+            // No count (should not pluralize)
+            expect(tools.pluraliseDescription("apple")).toBe("apple");
+            expect(tools.pluraliseDescription("bus")).toBe("bus");
+
+            // Edge cases
+            expect(tools.pluraliseDescription("", 2)).toBe("");
+            expect(tools.pluraliseDescription(null, 2)).toBe("");
+            expect(tools.pluraliseDescription(undefined, 2)).toBe("");
     });
 
     describe('Array handling', () => {
