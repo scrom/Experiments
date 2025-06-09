@@ -1230,9 +1230,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.dislikes = function(aCreature) {
             if (self.isDead()) {return false;};
             var creatureName = aCreature.getName();
-            for (var j=0; j<_dislikes.length;j++) {
-                if (creatureName == _dislikes[j]) {return true;};
-            };
+            if (_dislikes.includes(creatureName)) {return true;};
             return false;
         };
 

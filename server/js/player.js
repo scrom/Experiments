@@ -4596,7 +4596,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         var res = "Your "+_riding.getName()+" has run out of ";
                          for (var c=0;c<consumedComponents.length;c++) {
                             res += tools.listSeparator(c, consumedComponents.length);
-                            status += "'"+consumedComponents[c]+"'";
                          };
                          res += ".<br>";
                          return res;
@@ -4712,7 +4711,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "Your "+_riding.getName()+" has run out of ";
                          for (var c=0;c<consumedComponents.length;c++) {
                             resultString += tools.listSeparator(c, consumedComponents.length);
-                            status += "'"+consumedComponents[c]+"'";
                          };
                          for (var c=0;c<consumedComponents.length;c++) {
                             _riding.removeObject(consumedComponents[c].getName());

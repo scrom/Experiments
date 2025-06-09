@@ -944,9 +944,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         };
 
         self.isComponentOf = function (anObjectName) {
-            for (var i = 0; i < _componentOf.length; i++) {
-                if (_componentOf[i] == anObjectName) { return true; };
-            };
+            if (_componentOf.includes(anObjectName)) {return true;};
             return false;
         };
 
