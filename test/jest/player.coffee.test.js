@@ -638,7 +638,7 @@ describe('Sweet Coffee Combination Tests', () =>
 
         coffeeMachine.switchOnOrOff("switch", "on");
 
-        const expectedResult = "You collect latte into a nearby cup.<br>";
+        const expectedResult = "You collect latte into a nearby cup.<br>$imagemug.jpg/$image";
         const actualResult = p0.get('get', 'latte');
         expect(actualResult).toBe(expectedResult);
     });

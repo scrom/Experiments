@@ -71,6 +71,15 @@ var self = module.exports= {
         if (self.stringIsEmpty(aString)) {return "";};
         return aString.charAt(0).toUpperCase() + aString.slice(1);
     },
+
+    //if object has an associated image name, return a "$image" delimeted tag with the name.
+    imgTag: function(anObject) {
+        // does the passed in object support the getImageName function?
+        if(!anObject.getImageName) {return ""};
+        let imageName = anObject.getImageName();
+        if (imageName) {return "$image"+imageName+"/$image";};
+        return "";
+    },
     
     //convert an object "literal" (my bad terminology) to a string
     literalToString: function (literal) {

@@ -1835,7 +1835,7 @@ test('creatureCanSellItemToPlayer', () => {
     p0.setLocation(l0);    
     seller.go(null, m0.getLocation('home'));
 
-    var expected = "The ice cream man sells you a 99 flake ice cream.";
+    var expected = "The ice cream man sells you a 99 flake ice cream.$imageice-cream.jpg/$image";
     var actual = seller.sell("ice cream", p0);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);

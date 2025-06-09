@@ -1398,7 +1398,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //we got the requested object back!
                         return tempResultString;
                     } else {
-                        return "You'll need to figure out what's wrong with "+allLocationObjects[i].getDisplayName()+" before you can get any "+artefactName+"."
+                        return "You'll need to figure out what's wrong with "+allLocationObjects[i].getDisplayName()+" before you can get any "+artefactName+"." +tools.imgTag(allLocationObjects[i]);
                     };
                 };
 
@@ -1406,11 +1406,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var creatures = _currentLocation.getCreatures();
                 for (var c=0;c<creatures.length;c++) {
                     if (creatures[c].sells(artefactName)) {
-                        return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+".";
+                        return "You'll need to <i>buy</i> that from "+creatures[c].getDisplayName()+"." +tools.imgTag(creatures[c]) ;
                     };
                     if (creatures[c].check(artefactName)) {
                         if (!(creatures[c].isDead())) {
-                            return "I think "+creatures[c].getDisplayName()+" has what you're after.";
+                            return "I think "+creatures[c].getDisplayName()+" has what you're after." +tools.imgTag(creatures[c]) ;
                         };
                         return creatures[c].relinquish(artefactName,self,_currentLocation.getInventoryObject())
                     };
@@ -1438,8 +1438,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                                 container.removeObject(inventoryItemName);
                                 _inventory.add(inventoryItem);
-
-                                return "You take " + inventoryItem.getDescription() + " from " + containerName + ".";
+                                return "You take " + inventoryItem.getDescription() + " from " + containerName + "."  +tools.imgTag(inventoryItem) ;
                             };
                         };
                     };
@@ -1950,7 +1949,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!texture) {return resultString+"You don't feel anything of note."}
                 if (basicTouchVerbs.includes(verb) || texture.includes("soft")) {
                     //@todo add handling for touching a button or screen? (not soft)
-                    return resultString+texture;
+                    return resultString + texture + tools.imgTag(firstArtefact);
                 };
 
                 return "No, I will not "+verb+" "+firstArtefact.getDisplayName()+"! <i>(Weirdo!)</i>";
@@ -2231,7 +2230,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (containerIsInLocation) {
                     console.debug(originalObjectIsInContainer);
                     if (!(originalObjectIsInContainer)) {
-                        return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+".";
+                        return resultString + ".<br>You use "+container.getDisplayName()+" found nearby to collect "+newObject.getDisplayName()+"." +tools.imgTag(container);
                     } else {                        
                         //assume the player knows what they're doing... 
                         if (newObject.getName() != artefact.getName() && newObject.getName() != receiver.getName()) {
@@ -2241,7 +2240,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return resultString+".";
                     };
                 } else {
-                    return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName()+".";
+                    return resultString +".<br>Your "+container.getName()+" now contains "+newObject.getName()+"." +tools.imgTag(container);
                 };
             
             };
@@ -2261,7 +2260,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += " to produce "+newObject.getName();
             };
 
-            return resultString+".";              
+            return resultString+"." + tools.imgTag(newObject);   
         };
         
         self.type = function (verb, text, receiverName) {
@@ -4050,12 +4049,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var writings = artefact.getWritings();
             var drawings = artefact.getDrawings();
             var noteCount = writings.length + drawings.length;
-                       
-            var imageName = artefact.getImageName();
-            var imageString = "";
-            if (imageName) {
-                imageString = "$image" + imageName + "/$image";
-            };
 
             if (artefact.getType() != "book" && noteCount == 0) {
                 var result;
@@ -4063,13 +4056,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     result = artefact.getCustomActionResult("read");
                     if (result) {return result;};
                 };
-                return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+"." + imageString;
+                return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+"." +tools.imgTag(artefact);
             };
 
             if (artefact.isRead() && noteCount == 0) {
                 return "You've read "+artefact.getSuffix()+" before, you're not going to gain anything new from reading "+artefact.getSuffix()+" again.";
             } else if (artefact.isRead() && noteCount > 0) {
-                resultString += "You've read "+artefact.getSuffix()+" before but you decide to check the additional notes and drawings.";
+                resultString += "You've read "+artefact.getSuffix()+" before but you decide to check the additional notes and drawings." +tools.imgTag(artefact);
             } else {
                 _booksRead ++;
             };
@@ -4091,7 +4084,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 if (!result && newMissions.length == 0 && noteCount == 0) {
                     resultString += "<br>" + artefact.getDescriptivePrefix() + " mildly interesting but you learn nothing new.";
-                    return resultString + imageString;
+                    return resultString +tools.imgTag(artefact);
                 };
 
                 if (newMissions.length>0) {resultString+= "<br>";};
@@ -4111,7 +4104,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 resultString += "<br>"+artefact.describeNotes();
             };
 
-            return resultString + imageString;
+            return resultString +tools.imgTag(artefact);
 
         };
 

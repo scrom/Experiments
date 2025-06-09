@@ -1414,12 +1414,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (resultString.substr(0, 4) == "<br>") { resultString = resultString.substr(4); }; //trim opening line break if needed.
-            
-            if (_imageName) {
-                resultString += "$image" + _imageName + "/$image";
-            };
 
-            return resultString;
+            return resultString+tools.imgTag(self);;
         };
 
         self.read = function (verb) {
@@ -1428,10 +1424,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 _read = true;
                 resultString += "You " + verb + " " + self.getDisplayName() + ".";
             };
-            if (_imageName) {
-                resultString += "$image"+_imageName+"/$image";
-            };
-            return resultString;
+
+            return resultString+tools.imgTag(self);
         };
 
         self.isRead = function() {
@@ -3025,7 +3019,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 return tools.initCap(self.getDisplayName()) + " doesn't contain " + anObjectName + ".";
             };
 
-            if (delivering && !(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong.";};
+            if (delivering && !(self.canDeliver(anObjectName))) { return "Sorry. "+self.getDisplayName()+" "+doesPlural()+" seem to be working at the moment.<br>Try <i>examining</i> "+self.getSuffix()+" to see what's wrong."+tools.imgTag(self);};
             
             if (!(objectToGive.isCollectable())) {
                 if (objectToGive.checkCustomAction("get")) {
@@ -3077,7 +3071,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     //player has container
                     //did it combine with something and "vanish"?
                     if (playerInventory.check(objectToGive.getName(), true)) {
-                        return "You now have a " + suitableContainer.getName() + " of " + objectToGive.getName() + ".";
+                        return "You now have a " + suitableContainer.getName() + " of " + objectToGive.getName() + "."+tools.imgTag(suitableContainer);
                     } else {
                         return resultString;
                     };
@@ -3098,7 +3092,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     };
                     playerInventory.add(suitableContainer);
                     
-                    return resultString ;
+                    return resultString+tools.imgTag(suitableContainer) ;
                 };
 
                 //if the player can't pick it up.
@@ -3112,7 +3106,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                   return "You take "+objectToGive.getDisplayName()+".<br>Hopefully nobody needs "+self.getDisplayName()+" to work any time soon.<br>";      
             };
 
-            return "You're now carrying "+objectToGive.getDescription()+".";
+            return "You're now carrying "+objectToGive.getDescription()+"."+tools.imgTag(objectToGive);
         };
 
         self.addLiquid = function(liquidName) {

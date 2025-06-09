@@ -381,7 +381,7 @@ test("Test that a player can get water from the kitchen sink.", () => {
     let kitchen = m0.getLocation("kitchen-ground-floor")
     p0.setLocation(kitchen);
 
-    const expectedResult = "You collect water into a nearby drinking glass.<br>";
+    const expectedResult = "You collect water into a nearby drinking glass.<br>$imagedrinkingglass.jpg/$image";
 
     //check glass is no longer in location and is now in inventory!
     var originalLocationInventorySize = kitchen.getInventoryObject().size();

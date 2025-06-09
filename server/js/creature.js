@@ -1418,10 +1418,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 else { resultString +="<br>"+_genderPrefix+" wants to <i>talk</i> to you about something.";};
             };
 
-            if (_imageName) {
-                resultString += "$image"+_imageName+"/$image";
-            };
-            return resultString;
+            return resultString+tools.imgTag(self);;
         };
 
         self.getType = function() {
@@ -2065,7 +2062,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             playerInventory.add(objectToGive);
             _inventory.remove(anObjectName);
 
-            if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from " + self.getFirstName() + "'s corpse.";};
+            if (self.isDead()) {return "You quietly take "+objectToGive.getDisplayName()+" from " + self.getFirstName() + "'s corpse."+tools.imgTag(objectToGive);};
   
             //reduce creature affinity by article modifier
             self.decreaseAffinity(affinityModifier);
@@ -2079,7 +2076,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             //@todo - add a random response here.
             //@todo improve for they/them    
-            return "'Sure. Here you go.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+".";
+            return "'Sure. Here you go.'<br>"+tools.initCap(_genderPrefix)+" hands you "+objectToGive.getDisplayName()+"."+tools.imgTag(objectToGive);
         };
 
         self.sell = function (anObjectName, player) {
@@ -2135,8 +2132,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             //turn on delay
             _currentDelay = 0;
-
-            return tools.initCap(self.getFirstName()) + " sells you " + deliveredItem.getDescription() + ".";
+            return tools.initCap(self.getFirstName()) + " sells you " + deliveredItem.getDescription() + "."+tools.imgTag(deliveredItem);
         };
 
 
@@ -2932,10 +2928,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_affinity <0) {return _genderPrefix+" doesn't like your attitude and doesn't want to talk to you at the moment."};
             
             //creature will reply after this point...
-            var returnImage = "";
-            if (_imageName) {
-                returnImage = "$image" + _imageName + "/$image";
-            };
+            var returnImage = tools.imgTag(self);
 
             if (_affinity >= 2) { willFindArtefacts = true };
             //@todo improve for they/them
@@ -3004,10 +2997,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return initialReply;
             };
 
-            var returnImage = "";
-            if (_imageName) {
-                returnImage= "$image"+_imageName+"/$image";
-            };
+            var returnImage = tools.imgTag(self);
 
             if (!(_canTravel)) {return self.getFirstName()+" says 'I'm not planning on going anywhere.'"+returnImage; };
 
@@ -3043,10 +3033,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 replyName = self.getFirstName();
             };
             
-            var returnImage = "";
-            if (_imageName) {
-                returnImage= "$image"+_imageName+"/$image";
-            };
+            var returnImage = tools.imgTag(self);
             
             if (_currentLocation) {
                 if (locationName == _currentLocation.getName()) {
@@ -3112,10 +3099,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 return initialReply;
             };
 
-            var returnImage = "";
-            if (_imageName) {
-                returnImage= "$image"+_imageName+"/$image";
-            };
+            var returnImage = tools.imgTag(self);
 
             for (i=0; i< _missions.length; i++) {
                 if (_missions[i].hasDialogue() && (!(_missions[i].hasParents()))) {
@@ -3597,10 +3581,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (!(_spokenToPlayer)) {_spokenToPlayer = true;};
-            if (_imageName) {
-                response += "$image"+_imageName+"/$image";
-            };
-            response+= "<br>"
+
+            response+=tools.imgTag(self)+"<br>";
 
             if (requestedObject) {
                 response += player.give("give", requestedObject, self.getName())+"<br>";
