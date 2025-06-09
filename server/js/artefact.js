@@ -112,7 +112,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             //set plural grammar for more sensible responses
             if (_plural) {
-                if (_liquid || _powder) {
+                if (_liquid) {
                     _itemPrefix = "It";
                     _itemSuffix = "it";
                     _itemPossessiveSuffix = "its";
@@ -3210,7 +3210,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     if (inventoryLiquidOrPowder.getName() != anObject.getName()) {
                         //we're mixing 2 liquids that shouldn't combine.
                         resultString = "$fail$You attempt to add " + anObject.getName() + " to " + self.getDisplayName();
-                        return resultString + " but decide "+self.getPrefix().toLowerCase()+" won't really mix well with " + inventoryLiquidOrPowder.getDisplayName() + " that's already in there.";
+                        return resultString + " but decide "+anObject.getPrefix().toLowerCase()+" won't really mix well with " + inventoryLiquidOrPowder.getDisplayName() + " that's already in there.";
                     } else {
                         //this is a liquid with the same name - is is comparable
                         if (self.compareLiquidOrPowder(anObject, inventoryLiquidOrPowder)) {
