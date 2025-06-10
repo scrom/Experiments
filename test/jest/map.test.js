@@ -106,8 +106,8 @@ test('getClosestMatchingLocation', () => {
     p0.acceptItem(keyfob);
 
     const inventory = p0.getInventoryObject();
-    const expectedResult = "signpost"; // This is the expected location name for the synonym "meeting";
+    const expectedResult = ["signpost","graffiti-a"]; // These are the expected location names for the synonym "meeting"; (depending on how the semi-random pathfinder worked)
     const foundLocation = m0.getClosestMatchingLocation(synonym, referenceLocation, inventory);
     expect(foundLocation).toBeDefined();
-    expect(foundLocation.getName()).toBe(expectedResult);
+    expect(expectedResult).toContain(foundLocation.getName());
 });
