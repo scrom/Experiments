@@ -5893,7 +5893,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         resultString += "<br>Assuming you followed someone in here you'll have to hold out for a while and hope they come back.";
                     };
                 } else if (_timeTrapped == 10) {                    
-                    resultString += "You're still trapped.<br>You'll either need to <i>wait</i> for help, find an ingenious way out of here, or give up, curl up, and die.<br>(Or of course you can <i>quit</i> and restart or re<i>load</i> your game).";
+                    resultString += "<br>You're still trapped!<br>You'll either need to <i>wait</i> for help, find an ingenious way out of here, or give up, curl up, and die.<br>(Or of course you can <i>quit</i> and restart or re<i>load</i> your game).";
                 } else if (_timeTrapped > 100) {
                     //check here if *any* creatures have this place as a destination / cleared destination on a loop.
                     if (creaturesComingSooner == 0) {
