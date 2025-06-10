@@ -1307,10 +1307,123 @@ test('can look in direction and see destination', () => {
 
 test('can get recommended direction for object if in line of sight', () => {
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
+    var location = m0.getObjectLocationName("coffee machine", false, 2.5, false);
+    console.debug("Location found: "+location);
     var expectedResult = "From a quick peer around it looks like you'll need to head to the <i>West</i> from here.";
     var actualResult = p0.goObject("go", "to", "coffee machine", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('player.where finds what we are looking for in line of sight', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var location = m0.getObjectLocationName("coffee machine", false, 2.5, false);
+    console.debug("Location found: "+location);
+    var expectedResult = "You peer toward the kitchen but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading to the <i>West</i>.";
+    var actualResult = p0.where("coffee machine", "examine");
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player.where cannot find beans', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "";
+    var actualResult = p0.where("beans", "examine");
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player.hunt called when asking "where" can find things in line of sight', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "You peer toward the kitchen but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading to the <i>West</i>.";
+    var actualResult = p0.hunt("where", "coffee machine", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player.hunt for a creature rejects without hunting skills', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    var expectedResult = "Nice try $player. It was worth a shot...<br>You don't have the skills needed to instantly find everything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
+    var actualResult = p0.hunt("where", "Angelina", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('player.hunt for a creature that has not been near reports lack of trail.', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("atrium-seating");
+    p0.setLocation(restArea);
+    p0.setHunt(10); //epic hunting skills
+    var expectedResult = "There's no sign that Angelina has been near here recently.";
+    var actualResult = p0.hunt("where", "Angel", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('player.hunt for a creature in current location says where they are.', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("is-area");
+    p0.setLocation(restArea);
+
+    var expectedResult = "She's right here.";
+    var actualResult = p0.hunt("where", "Angel", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('player.hunt for a creature in line of sight reports where to find them.', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("ground-floor-kitchen");
+    p0.setLocation(restArea);
+
+    var expectedResult = "It looks like She's in the reception. Head <i>East</i> if you want to catch up with her.";
+    var actualResult = p0.hunt("where", "Violet", m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('player.hunt for a creature that has been near reports where to find them.', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
+    var restArea = m0.getLocation("east-bike-racks");
+    p0.setHunt(10); //epic hunting skills
+
+    var peter = m0.getCreature("Peter Jacobs");
+    peter.tick(25, m0, p0);  //get him to move about - he follows a path from the waste area to the servery.
+    //only put player on path *after* NPC has moved on, otherwise they may hang around.
+    p0.setLocation(restArea);
+    var expectedResult = "After thorough investigation, you determine your best bet is to try";
+    var actualResult = p0.hunt("where", "Peter Jacobs", m0).substr(0,expectedResult.length);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
@@ -1323,7 +1436,7 @@ test('can look at remote location if it is in line of sight', () => {
     p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
-    var expectedResult = "You peer toward the kitchen but can't quite make any clear details out. You'll need to find your way there to take a proper look.";
+    var expectedResult = "You peer toward the kitchen but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading to the <i>West</i>.";
     var actualResult = p0.examine("examine", "kitchen", null, m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -1332,6 +1445,7 @@ test('can look at remote location if it is in line of sight', () => {
 
 test('can get recommended direction if in line of sight', () => {
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "From a quick peer around it looks like you'll need to head to the <i>West</i> from here.";
@@ -1392,7 +1506,7 @@ test('can look at location mentioned in description (if nearby)', () => {
     var restArea = m0.getLocation("first-floor-fire-escape");
     p0.setLocation(restArea);
     console.debug("Loc: "+m0.getClosestMatchingLocation("smoking area", restArea, p0.getInventoryObject()));
-    var expectedResult = "You peer toward the smoking area but can't quite make any clear details out. You'll need to find your way there to take a proper look.";
+    var expectedResult = "You peer toward the smoking area but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading <i>down</i>.";
     var actualResult = p0.examine("examine", "smoking area", null, m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -1402,6 +1516,7 @@ test('can look at location mentioned in description (if nearby)', () => {
 test('can get recommended direction if not in line of sight but mentioned in description', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb); //for some reason this test needs a new player
     var restArea = m0.getLocation("first-floor-fire-escape");
     p0.setLocation(restArea);
     var locationName = "smoking-area";

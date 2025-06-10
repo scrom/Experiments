@@ -479,10 +479,9 @@ exports.Action = function Action(player, map, fileManager) {
                             return player.say("say", "find " + objectToFind, _inConversationWith, _map);
                         } else { 
                             _ticks = _baseTickSize * 2;
-                            if (!(_object0)) {_object0 = _object1};                                     
-                            description = _player.hunt(_verb, _object0, map);
-                            //"find" is a cheat - disable it for now
                             //if player enters "search for x", we'll have an object 1 (but no object 0).
+                            if (!(_object0)) {_object0 = _object1};                                     
+                            description = _player.hunt(_verb, _object0, map);                            
                         };
                         break;
                     case 'follow':

@@ -235,6 +235,66 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return "<br>You manage to gather up "+artefact.getPossessiveSuffix()+" "+remaining+""+contents+"."
         };
 
+        self.where = function(objectName, action) {
+          //is a location or distant object mentioned in the description?
+                //can player see artefact/location from where they're standing?
+                //try object first, then plain location name, then location display name, then syns            
+                var desiredLocationName = _map.getObjectLocationName(objectName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
+                var desiredLocation;
+                if (desiredLocationName) {desiredLocation = _map.getLocation(desiredLocationName, true);};
+                if (!desiredLocationName) {
+                    desiredLocation = _map.getLocation(objectName, true);
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (!desiredLocationName) {
+                    desiredLocation = _map.getClosestMatchingLocation(objectName, _currentLocation, _inventory)
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (desiredLocationName) {
+                    var path = _map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
+                    if (!path) {
+                        let LocationIsMentioned = _currentLocation.getDescription().includes(desiredLocationName);
+                        let ObjectIsMentioned = _currentLocation.getDescription().includes(objectName);
+                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
+                        if (LocationIsMentioned || ObjectIsMentioned) {
+                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
+                            path = _map.findBestPath(desiredLocationName, 5, _currentLocation, _inventory);
+                            path.reverse(); //reverse the path so that the first direction is the first in the list.
+                        };
+                    };
+                    if (path) {
+                        //path found - we can see it.
+                        var direction = tools.directions[tools.directions.indexOf(path[0]) + 1];
+                        var toThe = "";
+                        if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
+                        if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
+                        if (action == "go") {
+                            return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
+                        };
+
+                        //tweak wordiung depening on what we're looking for...
+                        let desiredObject = desiredLocation.getObject(objectName); //will fail if requested item is a location
+                        if (desiredObject) {
+                            if (desiredObject.getType() == "creature") {
+                                return "It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
+                            };
+                        };
+                        return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading "+toThe+"<i>"+direction+"</i>."
+                    };
+                };
+            
+            if (action == "go") {
+                return "You'll need to explore and find your way there yourself I'm afraid.";
+            };
+                
+            //return empty string if not found.
+            return "";
+        };
+
         var notFoundMessage = function(objectName, container) {
             //last few checks - is there a spilled liquid we're trying to get?
             if (_currentLocation.spilledLiquidExists(objectName) || _inventory.hasLiquid(objectName)) {
@@ -324,36 +384,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
 
             //is is a location or distant object mentioned in the description?
-                //can player see artefact/location from where they're standing?
-                //try object first, then plain location name, then location display name, then syns            
-                var desiredLocationName = _map.getObjectLocationName(objectName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
-                if (!desiredLocationName) {
-                    var desiredLocation = _map.getLocation(objectName, true);
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
-                    };
-                };
-                if (!desiredLocationName) {
-                    desiredLocation = _map.getClosestMatchingLocation(objectName, _currentLocation, _inventory)
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
-                    };
-                };
-                if (desiredLocationName) {
-                    var path = _map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
-                    if (!path) {
-                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
-                        if (_currentLocation.getDescription().includes(desiredLocationName) || _currentLocation.getDescription().includes(objectName)) {
-                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
-                            path = _map.findBestPath(desiredLocationName, 5, _currentLocation, _inventory);
-                            path.reverse(); //reverse the path so that the first direction is the first in the list.
-                        };
-                    };
-                    if (path) {
-                        //path found - we can see it.
-                        return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out. You'll need to find your way there to take a proper look."
-                    };
-                };
+            let whereIsIt = self.where(objectName, "action");
+            if (whereIsIt.length >0) {return whereIsIt};
             
             var randomReplies;
             if (container) {
@@ -367,7 +399,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             
             if (!randomReplies) {
-                randomReplies = ["There's no " + objectName + " here and you're not carrying any either.", "You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no " + objectName + " available here at the moment."];
+                randomReplies = ["You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no " + objectName + " available here at the moment."];
             };
             
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
@@ -3920,16 +3952,17 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         };
 
-        self.hunt = function (verb, creatureName, map) {
-            if (verb = "where") { verb = "find"; };
+        self.hunt = function (verb, objectName, map) {
+            var action = verb;
+            if (verb = "where") { action = "find"; };
             if (!(self.canSee())) { return "It's too dark to see anything here."; };
             
             //are we handling this case explicitly?
-            var tempResult = self.customAction(verb, creatureName);
+            var tempResult = self.customAction(action, objectName);
             if (tempResult) { return tempResult; };
             
             //are they right here?
-            var creature = _currentLocation.getObject(creatureName);
+            var creature = _currentLocation.getObject(objectName);
             if (creature) {
                 if (creature.getType() != "creature") {
                     creature = null;
@@ -3937,18 +3970,23 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
             if (creature) {
                 return tools.initCap(creature.getDescriptivePrefix()) + " right here."
-            };                      
-
-            if (_hunt <1) {
-                return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to instantly "+verb+" everything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
             };
-            if (tools.stringIsEmpty(creatureName)){ return verb+" who?"};
-            var creature = map.getObject(creatureName);
+            
+            //line of sight support...
+            let whereIsIt = self.where(objectName, verb);
+            if (whereIsIt.length > 0) {return whereIsIt;};
+
+            //not in line of sight
+            if (_hunt <1) {
+                return "Nice try $player. It was worth a shot...<br>You don't have the skills needed to instantly "+action+" everything that easily.<br>You could <i>ask</i> someone else to <i>find</i> out for you though.";
+            };
+            if (tools.stringIsEmpty(objectName)){ return action+" who?"};
+            var creature = map.getObject(objectName);
             var found = false;
             if (creature) {
                 if (creature.getType() == "creature") {
                     found = true;
-                    creatureName = creature.getName();
+                    objectName = creature.getName();
                 }; 
             };
 
@@ -3958,7 +3996,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             var exit;
             if (_hunt >= 1) {
-                exit = _currentLocation.getExitWithBestTrace(creatureName,map, _inventory);
+                exit = _currentLocation.getExitWithBestTrace(objectName,map, _inventory);
             };
 
             if (!(exit)) { return "There's no sign that " + creature.getFirstName() + " has been near here recently."; };
@@ -4362,9 +4400,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };                
 
         self.goObject = function (verb, splitWord, artefactName, map) {
-            if (verb == "head") {
-                verb = "go";
-            };
+            if (verb == "head") {verb = "go";};
             if (tools.stringIsEmpty(artefactName)){ return verb+" where?";};
 
             var artefact = getObjectFromLocation(artefactName);
@@ -4378,40 +4414,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(artefact)) {
                 //can player see artefact/location from where they're standing?
-                //try object first, then plain location name, then location display name, then syns            
-                var desiredLocationName = map.getObjectLocationName(artefactName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
-                if (!desiredLocationName) {
-                    var desiredLocation = map.getLocation(artefactName, true);
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
-                    };
-                };
-                if (!desiredLocationName) {
-                    desiredLocation = map.getClosestMatchingLocation(artefactName, _currentLocation, _inventory)
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
-                    };
-                };
-                if (desiredLocationName) {
-                    var path = map.lineOfSightPathToDestination(desiredLocationName, _currentLocation, _currentLocation);
-                    if (!path) {
-                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
-                        if (_currentLocation.getDescription().includes(desiredLocationName) || _currentLocation.getDescription().includes(artefactName)) {
-                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
-                            path = map.findBestPath(desiredLocationName, 5, _currentLocation, _inventory);
-                            path.reverse(); //reverse the path so that the first direction is the first in the list.
-                        };
-                    };
-                    if (path) {
-                        //path found
-                        var direction = tools.directions[tools.directions.indexOf(path[0]) + 1];
-                        var toThe = "";
-                        if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
-                        if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
-                        return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
-                    };
-                };
-                return "You'll need to explore and find your way there yourself I'm afraid.";
+                let whereIsIt = self.where(artefactName, "go");
+                if (whereIsIt.length >0) {return whereIsIt};
             };
             
             //custom action support here...

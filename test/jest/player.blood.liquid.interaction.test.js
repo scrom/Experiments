@@ -124,7 +124,7 @@ describe('Player Blood Liquid Interaction', () => {
         l0.addLiquid("liquid10");
 
         let expectedResult = "<br>As you enter, you slip on the mess on the floor and injure yourself.<br>You feel weaker. ";
-        const alternateResult = " is a single exit to the South.<br><br>You might want to mind out, the floor's slippery here;";
+        const alternateResult = " is a single exit to the South.<br><br>You might want to mind out, the floor's slippery here."
         const actualResult = p0.go("n", "n", m1).substr(-93);
         console.debug("Expected: " + expectedResult);
         console.debug("Actual  : " + actualResult);
