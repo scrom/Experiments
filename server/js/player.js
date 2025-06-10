@@ -5898,7 +5898,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     //check here if *any* creatures have this place as a destination / cleared destination on a loop.
                     if (creaturesComingSooner == 0) {
                         //no help due soon
-                        resultString += "<br>Your chances of rescue are looking very slim from here. It's probably time to <i>quit</i> or re<i>load</i> a previous saved game).<br>You're wlecome to keep trying but I felt it only fair to let you know my assessment of your situation.";
+                        resultString += "<br>Your chances of rescue are looking very slim from here. It's probably time to <i>quit</i> or re<i>load</i> a previous saved game).<br>You're welcome to keep trying but I felt it only fair to let you know my assessment of your situation.";
                     };
                 } else {
                     //is there help nearby?
