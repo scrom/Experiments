@@ -229,7 +229,7 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                 return ('Command: "' + command + '" in request "' + aRequestUrl + '" not recognised by Interpreter');
                         }
                 } catch (error) {
-                    reject(error);
+                    throw(error);
                 };
         };
 

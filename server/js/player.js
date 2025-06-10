@@ -4658,10 +4658,25 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return self.ride("enter", vehicle.getName());
                     };
                 };
-
+                
                 if (direct == "continue") {direct = "that way";};
+
+                if (direct == "out") {
+                    //is there only one exit?
+                    let possibleExits = _currentLocation.getAvailableExits(true, _inventory, true);
+                    if (possibleExits){
+                        if (possibleExits.length == 1) {
+                            exit = possibleExits[0]
+                            direct = possibleExits[0].getLongName().toLowerCase();
+                            direction = direct.substring(0,1);
+                        };
+                    };
+                };
+            };
+            if (!(exit)) {
                 return "There's no exit "+direct+" from here.";
             };
+
             if (!(exit.isVisible())) {return "Your way '"+direct+"' is blocked.";}; //this might be too obvious;
 
             var requiredAction = exit.getRequiredAction();
@@ -5870,6 +5885,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             creaturesComingSooner++;
                             //are they just outside?
                             if (allCreatures[c].getCurrentLocationName == currentLocationName) {
+                                //this is wrong. - need to see if they are *outside* current location!
                                 creatureArrivedOutside = true;
                             };
                         } else if (allCreatures[c].getPreviousDestination() == currentLocationName) {

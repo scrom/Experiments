@@ -1551,8 +1551,8 @@ exports.Action = function Action(player, map, fileManager) {
                 //catch-all
                 return "";
             } catch (err) {
-                description = "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
                 console.error('Error: During Player Navigation: "' + _actionString + '". Error message/stack: ' + err.stack);
+                return "Something bad happened on the server. If this happens again, you've probably found a bug. (Thanks for finding it!)";
             };	
         };
 
