@@ -3562,12 +3562,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var hiddenExits = artefact.revealHiddenExits(_currentLocation.getName());
             };
             if (hiddenExits.length > 0) {
+                hiddenExits = " "+hiddenExits;
                 //if we have hidden exits, don't say "nothing new" see #592
-                if (!(hiddenObjectsList.endsWith("nothing new"))) {
-                    resultString+=hiddenObjectsList;
+                if (hiddenObjectsList.endsWith("nothing new")) {
+                    hiddenObjectsList = "";
                 };
             };      
-            resultString+=". "+hiddenExits; //if there are no hidden exits this will still be ok.
+            resultString+= hiddenObjectsList+"."+hiddenExits; //if there are no hidden exits this will still be ok.
 
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
             if (foundItems.length == 0) {return resultString;}; //exit early if nothing found.
