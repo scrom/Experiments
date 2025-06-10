@@ -5877,22 +5877,29 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var creaturesComingLater = 0;
                 var allCreatures = map.getAllCreatures();
                 var currentLocationName = _currentLocation.getName()
-                
+
+                var outsideLocationNames = [];
+                var doors = _currentLocation.getInventoryObject().getAllObjectsOfType("door");
+                for (let d=0; d<doors.length;d++) {
+                    outsideLocationNames.push(doors[d].getLinkedDestinationForSource(currentLocationName));
+                };
+
                 for (var c=0;c<allCreatures.length; c++) {
                     if (allCreatures[c].checkDestinationAndHistory(currentLocationName)) {
                         //creature is either due here or has been here
                         if (allCreatures[c].getNextDestination() == currentLocationName) {
                             creaturesComingSooner++;
                             //are they just outside?
-                            if (allCreatures[c].getCurrentLocationName == currentLocationName) {
-                                //this is wrong. - need to see if they are *outside* current location!
+                            if (outsideLocationNames.includes(allCreatures[c].getCurrentLocationName)) {
                                 creatureArrivedOutside = true;
+                                break;
                             };
                         } else if (allCreatures[c].getPreviousDestination() == currentLocationName) {
                             creaturesRecentlyLeft++;
                             //are they still outside?
                             if (allCreatures[c].getCurrentLocationName == currentLocationName) {
                                 creatureStillOutside = true;
+                                break;
                             };
                         } else {
                             creaturesComingLater++;
@@ -5910,6 +5917,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 } else if (_timeTrapped == 10) {                    
                     resultString += "<br>You're still trapped!<br>You'll either need to <i>wait</i> for help, find an ingenious way out of here, or give up, curl up, and die.<br>(Or of course you can <i>quit</i> and restart or re<i>load</i> your game).";
+                }  else if (_timeTrapped == 25) {                    
+                    resultString += "<br>I <i>really</i> hope you're not trapped in here until you die of thirst or starvation.<br>Just think, in decades time they may find your dried, withered, mummified husk and ask 'What kind of fool gets themselves trapped up here?!'";
                 } else if (_timeTrapped > 100) {
                     //check here if *any* creatures have this place as a destination / cleared destination on a loop.
                     if (creaturesComingSooner == 0) {
