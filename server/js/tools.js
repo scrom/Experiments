@@ -97,7 +97,7 @@ var self = module.exports= {
             //console.debug("LiteralConversion for "+key+": "+typeof(obj)+":"+obj.toString());
         
             if (typeof (obj) == 'object') {
-                if (Object.prototype.toString.call(obj) === '[object Array]') {
+                if (Array.isArray(obj)) {
                     //console.debug("Extracting Array...");
                     resultString += '[';
                     for (var j = 0; j < obj.length; j++) {

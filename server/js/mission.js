@@ -714,7 +714,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //check sub-attributes
             for (var attr in attributes) {
                 if (typeof(attributes[attr]) == 'object') {
-                    if (Object.prototype.toString.call(attributes[attr]) === '[object Array]') { 
+                    if (Array.isArray(attributes[attr])) { 
                         //do nothing for now - we aim for an absolute match on these later
                     } else {
                         //how many child keys do we have that we want to match on?
@@ -745,7 +745,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                             return 1;
                         };
                     };
-                } else if (Object.prototype.toString.call(conditionAttribute) === '[object Array]') { 
+                } else if (Array.isArray(conditionAttribute)) { 
                     var requiredElements = conditionAttribute.length;
                     var matchedElements = 0;
                     //we assume the array can also have other values, we're just looking for a full set of matches
@@ -894,7 +894,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     var keycheckName = attr;
                     //console.debug("checking "+attr+": required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
                     if (typeof(attributesToCheck[attr]) == 'object') {
-                        if (Object.prototype.toString.call(attributesToCheck[attr]) === '[object Array]') { 
+                        if (Array.isArray(attributesToCheck[attr])) { 
                             checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
                         } else {
                             //we have an object we need to figure out more about...

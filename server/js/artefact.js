@@ -1019,7 +1019,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         };
                         break;
                     case "object":
-                        if (Object.prototype.toString.call(keepAttributes[attr]) === '[object Array]') {
+                        if (Array.isArray(keepAttributes[attr])) {
                             newAttributes[attr] = keepAttributes[attr].concat(consumeAttributes[attr]);
                         } else {
                             newAttributes[attr] = keepAttributes[attr]; //just keep the original (@todo - handle this better)
@@ -1766,7 +1766,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             var combinesWithResultArray = self.getCombinesWith();
             var combinesWithResult;
 
-            if (Object.prototype.toString.call(combinesWithResultArray) === '[object Array]') {
+            if (Array.isArray(combinesWithResultArray)) {
                     var index = combinesWithResultArray.indexOf(anObject.getName());
                     if (index >-1) {
                         combinesWithResult = combinesWithResultArray[index];

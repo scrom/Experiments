@@ -2700,7 +2700,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var combinesWithResult = artefact.getCombinesWith();
                 var newReceiver;
                 //do we have one or more combinesWith items?
-                if (Object.prototype.toString.call(combinesWithResult) === '[object Array]') {
+                if (Array.isArray(combinesWithResult)) {
                     for (var i=0;i<combinesWithResult.length;i++) {
                         newReceiver = receiver.getObject(combinesWithResult[i]);
                         if (newReceiver) {break;};

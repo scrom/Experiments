@@ -315,7 +315,7 @@ exports.Map = function Map() {
                     creatures[c].updateCash(modification.money);
                 };
                 if (modification.repairSkills) {
-                    if (Object.prototype.toString.call(modification.repairSkills) === '[object Array]') {
+                    if (Array.isArray(modification.repairSkills)) {
                         for (var r = 0; r < modification.repairSkills.length; r++) {
                             creatures[c].addSkill(modification.repairSkills[r]);
                         };
@@ -335,7 +335,7 @@ exports.Map = function Map() {
                     };
                 };
                 if (modification.contagion) {
-                    if (Object.prototype.toString.call(modification.contagion) === '[object Array]') {
+                    if (Array.isArray(modification.contagion)) {
                         for (var co = 0; co < modification.contagion.length; co++) {
                             creatures[c].setContagion(modification.contagion[co]);
                         };
