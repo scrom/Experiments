@@ -4676,7 +4676,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(exit.requiredAction(verb))) {               
                 if (requiredAction == "crawl") {
-                    return "It looks like you're too big to <i>"+verb+"</i> in there!";
+                    return "It looks like you're too tall to "+verb+" in there. Try <i>crawl</i>ing maybe?";
                 } else if (requiredAction == "climb") {
                     return "You'll need to <i>climb</i> "+direct+" from here.";
                 } else if (requiredAction == "run") {
