@@ -626,11 +626,11 @@ describe('Sweet Coffee Combination Tests', () =>
         const coffeeMachine = l0.getObject("coffee machine", true, true);
         coffeeMachine.forceRepair();
         //ensure beans are in machine
-        let beansJSON = fm.readFile("beans.json");
+        let beansJSON = fm.readFile("artefacts/beans.json");
         let beans = mb.buildArtefact(beansJSON);
         coffeeMachine.receive(beans);
 
-        let milkJSON = fm.readFile("milk.json");
+        let milkJSON = fm.readFile("artefacts/milk.json");
         let milk = mb.buildArtefact(milkJSON);
         coffeeMachine.receive(milk);
 
@@ -660,11 +660,11 @@ describe('Sweet Coffee Combination Tests', () =>
         const coffeeMachine = l0.getObject("coffee machine", true, true);
         coffeeMachine.forceRepair();
         //ensure beans are in machine
-        let beansJSON = fm.readFile("beans.json");
+        let beansJSON = fm.readFile("artefacts/beans.json");
         let beans = mb.buildArtefact(beansJSON);
         coffeeMachine.receive(beans);
 
-        let milkJSON = fm.readFile("milk.json");
+        let milkJSON = fm.readFile("artefacts/milk.json");
         let milk = mb.buildArtefact(milkJSON);
         coffeeMachine.receive(milk);
 
@@ -703,11 +703,11 @@ describe('Sweet Coffee Combination Tests', () =>
         const coffeeMachine = l0.getObject("coffee machine", true, true);
         coffeeMachine.forceRepair();
         //ensure beans are in machine
-        let beansJSON = fm.readFile("beans.json");
+        let beansJSON = fm.readFile("artefacts/beans.json");
         let beans = mb.buildArtefact(beansJSON);
         coffeeMachine.receive(beans);
 
-        let milkJSON = fm.readFile("milk.json");
+        let milkJSON = fm.readFile("artefacts/milk.json");
         let milk = mb.buildArtefact(milkJSON);
         coffeeMachine.receive(milk);
 
@@ -747,11 +747,11 @@ describe('Sweet Coffee Combination Tests', () =>
         const coffeeMachine = l0.getObject("coffee machine", true, true);
         coffeeMachine.forceRepair();
         //ensure beans are in machine
-        let beansJSON = fm.readFile("beans.json");
+        let beansJSON = fm.readFile("artefacts/beans.json");
         let beans = mb.buildArtefact(beansJSON);
         coffeeMachine.receive(beans);
 
-        let milkJSON = fm.readFile("milk.json");
+        let milkJSON = fm.readFile("artefacts/milk.json");
         let milk = mb.buildArtefact(milkJSON);
         coffeeMachine.receive(milk);
 
@@ -765,7 +765,7 @@ describe('Sweet Coffee Combination Tests', () =>
         console.debug(m0.updateMissions(5, p0)); //first time it will catch fixing the coffee machine
 
         //need another cup!
-        let cupJSON = fm.readFile("cup.json");
+        let cupJSON = fm.readFile("artefacts/cup.json");
         let cup = mb.buildArtefact(cupJSON);
         p0.acceptItem(cup);
 

@@ -66,7 +66,7 @@ test ('canFindPathToMeetingRoom', () => {
     const imageDir = '../../images/';
     const fm = new fileManager.FileManager(true, dataDir, imageDir);
 
-    let fobJSON = fm.readFile("keyfob.json");
+    let fobJSON = fm.readFile("artefacts/keyfob.json");
     let keyfob = mb.buildArtefact(fobJSON);
     p0.acceptItem(keyfob);
 
@@ -82,7 +82,7 @@ test ('canFindDistanceToMeetingRoom', () => {
     const imageDir = '../../images/';
     const fm = new fileManager.FileManager(true, dataDir, imageDir);
 
-    let fobJSON = fm.readFile("keyfob.json");
+    let fobJSON = fm.readFile("artefacts/keyfob.json");
     let keyfob = mb.buildArtefact(fobJSON);
     p0.acceptItem(keyfob);
 
@@ -101,7 +101,7 @@ test('getClosestMatchingLocation', () => {
     const referenceLocation = m0.getLocation("east-corridor-ground-floor-north-east");
     expect(referenceLocation).toBeDefined();
 
-    let fobJSON = fm.readFile("keyfob.json");
+    let fobJSON = fm.readFile("artefacts/keyfob.json");
     let keyfob = mb.buildArtefact(fobJSON);
     p0.acceptItem(keyfob);
 
