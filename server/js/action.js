@@ -1302,14 +1302,17 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'who':
                         //if we have met the character, return what their job/role is.
+                        //if we are in conversation and the character likes or dislikes the one we mention, return an appropriate response (along with their job/role)
                     case 'what':
                     case 'whats':
                         // handle "what's wrong with x" "or what is up with X" etc. - identify if broken, missing something, switched off
                         // handle "what does character do", "what is their job" -  return what their job/role is
+                        // handle "what is X doing" - return their destination and whether or not they are waiting for you do do anything for them.
                     case 'why':
                     case 'whys':
                         //handle "why is the coffee machine broken/not working" - identify if broken, missing something, switched off
                     case 'when':
+                        //if there's something with an active timer that player is "aware" of, return a time.
                     case 'how':
                         if (_verb.substr(_verb.length - 1) == "s") {
                             _verb = _verb.substr(0, _verb.length - 1);
