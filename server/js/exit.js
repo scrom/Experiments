@@ -90,6 +90,10 @@ module.exports.Exit = function Exit(aDirection, aSourceName, aDestinationName, a
                 return true;
             };
 
+            if (_requiredAction == "crawl" && verb == "climb") {
+                return true; //special case for climbing into something small
+            };
+
             return false;
         };
 

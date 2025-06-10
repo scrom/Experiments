@@ -3555,10 +3555,19 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };  
             };     
 
-            var resultString =  "You "+verb+" "+artefact.getDisplayName()+" and discover "+artefact.listHiddenObjects(positionName, _currentLocation)+".";
+            var resultString =  "You "+verb+" "+artefact.getDisplayName();
+            var hiddenObjectsList = " and discover " + artefact.listHiddenObjects(positionName, _currentLocation);
+
             if (position != "on") {
-                resultString += artefact.revealHiddenExits(_currentLocation.getName());
+                var hiddenExits = artefact.revealHiddenExits(_currentLocation.getName());
             };
+            if (hiddenExits.length > 0) {
+                //if we have hidden exits, don't say "nothing new" see #592
+                if (!(hiddenObjectsList.endsWith("nothing new"))) {
+                    resultString+=hiddenObjectsList;
+                };
+            };      
+            resultString+=". "+hiddenExits; //if there are no hidden exits this will still be ok.
 
             var foundItems = artefact.getHiddenObjects(positionName, _currentLocation);
             if (foundItems.length == 0) {return resultString;}; //exit early if nothing found.
@@ -4667,7 +4676,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             if (!(exit.requiredAction(verb))) {               
                 if (requiredAction == "crawl") {
-                    return "It looks like you're too big to fit!";
+                    return "It looks like you're too big to <i>"+verb+"</i> in there!";
                 } else if (requiredAction == "climb") {
                     return "You'll need to <i>climb</i> "+direct+" from here.";
                 } else if (requiredAction == "run") {
