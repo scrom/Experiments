@@ -15,9 +15,8 @@ exports.Server = function Server(anInterpreter) {
         const app = express();
 
         const config = require('./config');
-
         const sanitiseString = function(aString) {
-            return aString.replace(/[^a-zA-Z0-9 +-/%]+/g,"").toLowerCase().substring(0,255); //same as used for client but includes "/" and "%" as well
+            return aString.toLowerCase().substring(0,255).replace(/[^a-z0-9 +-/%]+/g,""); //same as used for client but includes "/" and "%" as well
         };
 
         //Array of responses awaiting replies

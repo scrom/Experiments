@@ -1,14 +1,15 @@
 ﻿"use strict";
 //FileManager object - manage JSON, game data and image files
 module.exports.FileManager = function FileManager(useFiles, usergamePath, imagePath) {
+    const  _objectName = "filemanager";
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
-        var jf = require('jsonfile');
-        var fs = require('fs');   
+        const jf = require('jsonfile');
+        const fs = require('fs');   
         //var async = require('async');  
-        var redis;   //will only load if configured   
-        var path = require('path');
-        var encoding = "utf8";
+        let redis;   //will only load if configured   
+        const path = require('path');
+        const encoding = "utf8";
 
         var filePath = path.resolve(path.join(__dirname, usergamePath || "../../data/usergames/"));
         var imagePath = path.resolve(path.join(__dirname, imagePath || "../../data/images/"));
@@ -16,14 +17,14 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         console.info("FileManager: filePath = "+filePath);
         console.info("FileManager: imagePath = "+imagePath);
 
-        var pwd = process.env.REDISPWD;
-        var redisServer = process.env.REDISSERVER;
-        var redisPort = process.env.REDISPORT;
+        let pwd = process.env.REDISPWD;
+        let redisServer = process.env.REDISSERVER;
+        let redisPort = process.env.REDISPORT;
         //var redisURL = process.env.REDISCLOUD_URL;
 
-        var useFilesForGameData = true;
-        var client = {};
-        var monitor = {};
+        let useFilesForGameData = true;
+        let client = {};
+        let monitor = {};
         //if redis is configured...
         if ((redisServer) && (!(useFiles))) {
             redis = require('redis');
@@ -91,8 +92,11 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             console.info("REDIS available for game data.");
         };
 
+        //internal methods
+        const sanitiseString = function(aString) {
+            return aString.toLowerCase().substring(0,255).replace(/[^a-z0-9 +-/%]+/g,""); //same as used for client but includes "/" and "%" as well
+        };
 
-	    var _objectName = "filemanager";
 
         ////public methods
         self.testRedisConnection = async() => {
@@ -114,6 +118,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             return true;
         };
 
+
         self.readAllJsonFiles = function(dataPath) {
         // Recursively reads all JSON files from a directory tree (synchronously).
             
@@ -134,6 +139,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                 // Filter out excluded directories from entries
                 entries = entries.filter(entry => !(entry.isDirectory() && excludedDirs.includes(entry.name)));
                 for (const entry of entries) {
+                    entry.name = sanitiseString(entry.name);
                     const fullPath = path.join(currentPath, entry.name);
                 
                     if (entry.isDirectory()) {
@@ -162,6 +168,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.readFile = function(fileName) {
+            fileName = sanitiseString(fileName);
             var file = path.join(filePath,fileName);
             
             console.info("reading file "+file);
@@ -171,12 +178,14 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.deleteFile = function(fileName) {
+            fileName = sanitiseString(fileName);
             var file = path.join(filePath,fileName);
             fs.unlinkSync(file);
             console.info("file "+fileName+" deleted.");
         };
 
         self.removeGameDataAsync = async function(fileName) {
+            fileName = sanitiseString(fileName);
             if (useFilesForGameData || !(redisServer)) {
                 self.deleteFile(fileName+".json");
                 return null;
@@ -187,6 +196,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.readGameDataAsync = async function(fileName) {
+            fileName = sanitiseString(fileName);
             console.debug("readGameDataAsync Key:"+fileName); 
 
             var dataExists = await self.gameDataExistsAsync(fileName);
@@ -231,6 +241,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
         self.writeGameDataAsync = async(fileName, data, overwrite) => {
             console.info("writeGameData Key:"+fileName);
+            fileName = sanitiseString(fileName); //prevet stores xss
             if (useFilesForGameData) {
                 var JSONGameData = [];
                 for (var i=0;i<data.length;i++) {
@@ -276,6 +287,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
         self.gameDataExistsAsync = async function(fileName) {
             //console.debug("gameDataExistsAsync? Key:"+fileName);
+            fileName = sanitiseString(fileName);
             if (useFilesForGameData) {
                 //console.debug("Using Files");
                 return (self.fileExists(fileName+".json"));
@@ -291,6 +303,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.fileExists = function(fileName) {
+            fileName = sanitiseString(fileName);
             var file = path.join(filePath,fileName);
 
             if (fs.existsSync(file)) {
@@ -301,6 +314,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.imageExists = function(fileName) {
+            fileName = sanitiseString(fileName);
             var file = path.join(imagePath,fileName);
 
             if (fs.existsSync(file)) {
@@ -311,10 +325,12 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         };
 
         self.getImagePath = function(fileName) {
+            fileName = sanitiseString(fileName);
             return path.join(imagePath,fileName);
         };
 
         self.writeFile = function(fileName, data, overwrite) {
+            fileName = sanitiseString(fileName);
             var file = path.join(filePath,fileName);
             if (self.fileExists(fileName)) {
                 if (overwrite) {
@@ -331,7 +347,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         ////end public methods
     }
     catch(err) {
-	    console.error('Unable to create FileManager object: '+err);
+	    console.error('Unable to create '+_objectName+' object: '+err);
         throw err;
     };	
 };
