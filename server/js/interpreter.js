@@ -160,19 +160,18 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
 
                                 var aGame = _gameController.getGame(username, gameId);
                                 if (aGame == "" || aGame == null || aGame == undefined || aGame == "undefined" || (!(aGame))) {
-                                    return(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));
                                     console.debug("game for "+username+", "+gameId+" not found in controller");
+                                    return(assembleResponse(commandJson,'{"description":"Cannot retrieve game ID \''+gameId+'\' for user \''+username+'\'"}'));
                                 } else {
-                                    console.debug("game found in controller");
-                                    console.debug("game: "+aGame);
+                                    console.debug("game found in controller: "+aGame);
                                 };
                                 try {
                                     var saved = await aGame.saveAsync();
                                     return(assembleResponse(commandJson,saved));
 
                                 } catch (err) {
-                                    return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));
                                     console.error('Error: data: "'+actionString+'". Error message/stack: '+err.stack);
+                                    return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to save your game right now.<br>It looks like we have a storage problem.<br>If this problem persists, we\'ll investigate and resolve as soon as we can."}'));
                                 };
                                 
                                 break;
@@ -199,8 +198,8 @@ exports.Interpreter = function Interpreter(aGameController, fileManager) {
                                         return(response);   
 
                                     } catch (err) {
+                                        console.error('Error: data: "'+actionString+'". Error message/stack: '+err.stack);
                                         return(assembleResponse(commandJson,'{"description":"Sorry. I\'m unable to load saved game \''+actionString+'\'.<br>The stored game data is either corrupted or incompatible with this release of MVTA."}'));  
-	                                    console.error('Error: data: "'+actionString+'". Error message/stack: '+err.stack);
                                     };
                                 
                                 break;

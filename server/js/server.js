@@ -63,19 +63,20 @@ exports.Server = function Server(anInterpreter) {
         //serve static files from project root *client* folder - not actual root
         app.use(express.static(_root + '../../client/'));
 
+        //this will log config details to the server log and notify user rather than anything more.
         app.get('/config', async function (request, response) {
-            request.socket.setTimeout(120);
+            request.socket.setTimeout(20);
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
-
+            console.info("Config requested by client: "+result);
             response.writeHead(200, {'Content-type':'text/plain'});
-            response.write(result);
+            response.write('{"config":"REDACTED", "message": "config request logged"}');
             response.end();
         });
 
         ///^\/api/
         app.get(/^\/new/, async function (request, response) {
-            request.socket.setTimeout(5);
+            request.socket.setTimeout(90);
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
 
@@ -96,7 +97,7 @@ exports.Server = function Server(anInterpreter) {
         });
 
         app.get(/^\/action/, async function (request, response) {
-            request.socket.setTimeout(5);
+            request.socket.setTimeout(90);
             //console.debug('Action request: '+request.url);
             //console.debug('Action request: '+request.method);
             //console.debug('Action request: '+request.headers.host);
@@ -132,7 +133,7 @@ exports.Server = function Server(anInterpreter) {
         });
         
     app.get(/^\/quit/, async function (request, response) {           
-            request.socket.setTimeout(5);
+            request.socket.setTimeout(90);
             var sanitisedRequestURL = sanitiseString(request.url);
             var result = await _interpreter.translateAsync(sanitisedRequestURL,config);
 
