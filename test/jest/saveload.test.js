@@ -128,7 +128,7 @@ describe('SaveLoad Tests', () => {
 
             //read data
             var gameData = await redisfm.readGameDataAsync(filename);
-            expect(gameData.length).toBe(156); // full length of saved and loaded game data = 156 elements
+            expect(gameData.length).toBe(142); // full length of saved and loaded game data = 142 elements - all locations plus player object
             expect(gameData[0]).toHaveProperty("username");
 
             //remove data

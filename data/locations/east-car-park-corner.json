@@ -13,14 +13,6 @@
   "exits": [
     {
       "object": "exit",
-      "longname": "North",
-      "direction": "n",
-      "source": "east-car-park-corner",
-      "destination": "access-road-east",
-      "requiredAction": "drive"
-    },
-    {
-      "object": "exit",
       "longname": "South",
       "direction": "s",
       "source": "east-car-park-corner",

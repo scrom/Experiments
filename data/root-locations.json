@@ -139,19 +139,5 @@
   {"file": "west-car-park"},
   {"file": "west-corridor-ground-floor"},
   {"file": "west-end-south-corridor-ground-floor"},
-  {"file": "windows-meeting-room"},
-  {"file": "access-road-east"},
-  {"file": "access-road-central"},
-  {"file": "access-road-west"},
-  {"file": "access-road-junction"},
-  {"file": "a14-roundabout-entrance"},
-  {"file": "a14-roundabout"},
-  {"file": "a14-roundabout-north-east"},
-  {"file": "a14-roundabout-east"},
-  {"file": "a14-roundabout-south"},
-  {"file": "a14-roundabout-south-west"},
-  {"file": "milton-road-north-end"},
-  {"file": "a14-westbound"},
-  {"file": "a14-eastbound"},
-  {"file": "milton-road"}
+  {"file": "windows-meeting-room"}
 ]

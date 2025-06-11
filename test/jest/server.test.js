@@ -153,7 +153,7 @@ describe('Server', () => {
 
             var response = await serverInstance.fetchCall(request.url);
             console.debug(JSON.stringify(response));
-            expect(response.length).toBe(155);
+            expect(response.length).toBe(141);
         });
 
         test('Fetch (GET) /data/locations.json matches canonical data', async () => {

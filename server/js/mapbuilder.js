@@ -21,7 +21,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         validator.parseJSON();
 
         //console.debug(Object.keys(_data));
-        const fm = new fileManagerModule.FileManager();
+        const fm = new fileManagerModule.FileManager(true); //force use file-based mode for what we're wanting to do here
         var _data = fm.readAllJsonFiles(mapDataPath);
         var _rootLocationsJSON = _data[mapDataFile];
  
