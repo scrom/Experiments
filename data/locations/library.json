@@ -3,6 +3,9 @@
   "name": "library",
   "displayName": "Library",
   "description": "You're in the atrium library.<br>This is a comfortable area to browse our bookshelves full of the wonders of working with software.",
+  "attributes": {
+    "imageName": "library.jpg"
+  },
   "exits": [
     {
       "object": "exit",

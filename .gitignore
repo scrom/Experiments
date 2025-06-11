@@ -226,6 +226,7 @@ node_modules/
 
 #other
 data/usergames/
+data/images/greyscale/
 /
 /.ntvs_analysis.dat
 /.vs/config/applicationhost.config
