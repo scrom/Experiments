@@ -1261,7 +1261,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_switched) {
                 if (!(self.hasPower())) {
                     resultString = resultString.replace(_detailedDescription, "");
-                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.<br>There's no sign of life. Is "+_itemSuffix+" <i>switch</i>ed <i>on</i>?.";
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.<br>Try <i>switch</i>ing "+_itemSuffix+" <i>on</i>.";
                 } else {
                     if (!(self.isPoweredOn())) {
                         resultString = resultString.replace(_detailedDescription, "");

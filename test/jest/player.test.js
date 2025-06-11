@@ -741,46 +741,6 @@ test('player is warned they are tired, thirsty and hungry', () => {
     console.debug("Actual  : " + actualResult);
     expect(actualResult).toBe(expectedResult);
 });
-test('can inject a vaccine into self', () => {
-    m0 = new map.Map();
-    var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
-    var reward = supportFromAileen.success();
-    var syringe = reward.delivers;
-    var venomData = {file: "venom" };
-    var venom = mb.buildArtefact(venomData);
-    l0.addObject(venom);
-    l0.addObject(syringe);
-    p0.get('get', syringe.getName());
-    console.debug(p0.examine("examine", "syringe", null, m0));
-    console.debug(p0.get('get', venom.getName()));
-    var expectedResult = "You inject yourself with the zombie antibodies. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
-    var actualResult = p0.inject('venom', 'self');
-    console.debug("Expected: " + expectedResult);
-    console.debug("Actual  : " + actualResult);
-    expect(actualResult).toBe(expectedResult);
-});
-
-test('injecting a vaccine provides antibodies', () => {
-    m0 = new map.Map();
-    var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
-    var reward = supportFromAileen.success();
-    var syringe = reward.delivers;
-    var venomData = { file: "venom" };
-    var venom = mb.buildArtefact(venomData);
-    l0.addObject(venom);
-    l0.addObject(syringe);
-    p0.get('get', syringe.getName());
-    console.debug(p0.examine("examine", "syringe", null, m0));
-    console.debug(p0.get('get', venom.getName()));
-    console.debug(p0.inject('venom', 'self'));
-    console.debug(p0.inject('venom', 'self'));
-    console.debug(p0.inject('venom', 'self')); //often fails to take on first attempt.
-    var expectedResult = true;
-    var actualResult = p0.hasAntibodies("zombie");
-    console.debug("Expected: " + expectedResult);
-    console.debug("Actual  : " + actualResult);
-    expect(actualResult).toBe(expectedResult);
-});
 
 test('punchingArtefactWhenUnarmedDamagesPlayer', () => {
     l0.addObject(a1);

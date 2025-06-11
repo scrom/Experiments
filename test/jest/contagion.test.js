@@ -31,7 +31,7 @@ describe('Contagion', () => {
             symptoms: [{ action: "bite", frequency: 0.3, escalation: 0 }],
             duration: -1
         });
-        const a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 5, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
+        const a = new artefact.Artefact("venom", "venom", "venom", { defaultAction: "drink", canCollect: true, charges: 10, isLiquid: true, isEdible: true, antibodies: ["zombie"] });
         const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
         const playerAttributes = { username: "player" };
         const m0 = new map.Map();
@@ -39,17 +39,21 @@ describe('Contagion', () => {
         const inv = p0.getInventoryObject();
         inv.add(a);
 
-        // try 5 times as it randomly doesn't take (deliberate)
-        p0.drink("drink", "venom");
-        p0.drink("drink", "venom");
-        p0.drink("drink", "venom");
-        p0.drink("drink", "venom");
-        p0.drink("drink", "venom");
-
         p0.setContagion(c);
 
+        // try 10 times as it randomly doesn't take (deliberate)
+        var attempts = 0;
+        var actualResult = true;
         const expectedResult = false;
-        const actualResult = p0.hasContagion("zombie");
+        //randomly happens roughly 1 in 3 times
+        while (actualResult != expectedResult && attempts < 10) {
+            p0.drink("drink", "venom");
+            actualResult = p0.hasContagion("zombie");
+            console.debug(actualResult);
+            attempts++;
+        };
+        console.debug("Attempts taken before result: "+attempts);
+
         expect(actualResult).toBe(expectedResult);
     });
 
@@ -88,6 +92,58 @@ describe('Contagion', () => {
 
         const expectedResult = false;
         const actualResult = p0.hasContagion("zombie");
+        expect(actualResult).toBe(expectedResult);
+    });
+
+    
+    test('can inject a vaccine into self', () => {
+        const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+        let m0 = new map.Map();
+        var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
+        var reward = supportFromAileen.success();
+        var syringe = reward.delivers;
+        var venomData = {file: "venom" };
+        var venom = mb.buildArtefact(venomData);
+        let l0 = new location.Location('home', 'home', 'a home location');
+        let p0 = new player.Player({"username":"tester"}, m0, mb);
+        p0.setStartLocation(l0);
+        p0.setLocation(l0);
+        l0.addObject(venom);
+        l0.addObject(syringe);
+        p0.get('get', syringe.getName());
+        console.debug(p0.examine("examine", "syringe", null, m0));
+        console.debug(p0.get('get', venom.getName()));
+        var expectedResult = "You inject yourself with the zombie antibodies. It's probably worth checking your <i>status</i> just to be sure it worked properly.";
+        var actualResult = p0.inject('venom', 'self');
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
+        expect(actualResult).toBe(expectedResult);
+    });
+
+    test('injecting a vaccine provides antibodies', () => {
+        const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+        let m0 = new map.Map();
+        var supportFromAileen = mb.buildMission({ "file": "mission-supportfromaileen" });
+        var reward = supportFromAileen.success();
+        var syringe = reward.delivers;
+        var venomData = { file: "venom" };
+        var venom = mb.buildArtefact(venomData);
+        let l0 = new location.Location('home', 'home', 'a home location');
+        let p0 = new player.Player({"username":"tester"}, m0, mb);
+        p0.setStartLocation(l0);
+        p0.setLocation(l0);
+        l0.addObject(venom);
+        l0.addObject(syringe);
+        p0.get('get', syringe.getName());
+        console.debug(p0.examine("examine", "syringe", null, m0));
+        console.debug(p0.get('get', venom.getName()));
+        console.debug(p0.inject('venom', 'self'));
+        console.debug(p0.inject('venom', 'self'));
+        console.debug(p0.inject('venom', 'self')); //often fails to take on first attempt.
+        var expectedResult = true;
+        var actualResult = p0.hasAntibodies("zombie");
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
         expect(actualResult).toBe(expectedResult);
     });
 

@@ -113,7 +113,7 @@ describe("Player Powered Items", () => {
         p0.acceptItem(torch);
         torch.consumeComponents(100);
         
-        let expectedResult = "It contains some torch batteries.<br>It's not working.$imagetorch.jpg/$image";
+        let expectedResult = "It contains some torch batteries.<br>It's not working.<br>Try <i>switch</i>ing it <i>on</i>.$imagetorch.jpg/$image";
         expect(p0.examine("check", "torch", null, m0)).toBe(expectedResult);
 
         expectedResult = "They're pretty chunky but fairly old-looking.<br>They're all used up.$imagebatteries.jpg/$image";

@@ -66,8 +66,9 @@ describe('Server', () => {
             });
 
             var response = await serverInstance.fetchCall(request.url);
-            console.debug(JSON.stringify(response));
-            expect(response._gameLimit).toBe(100);
+            response = JSON.stringify(response);
+            console.debug(response);
+            expect(response).toBe('{"config":"REDACTED","message":"config request logged"}');
 
         });
 

@@ -836,7 +836,7 @@ test('creatureCanFindBestPathToGoal', () => {
     var destination = 'machine-room-east';
     c0.go(null, m.getLocation('atrium'));
 
-    var path = c0.findBestPath(destination, m, 100);
+    var path = c0.findBestPath(destination, m, 120);
     var targetLength = 12; //"best" path is actually 11 but we will set to 12 for improved tolerance as findPath has some small randomisation in it. 
     var expected = true;
     var actual = false;

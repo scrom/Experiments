@@ -3442,6 +3442,8 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         if (remainderString == "you" || remainderString == "things" || remainderString == "goes") {
                             return tools.initCap(self.getFirstName()) + " says 'I'm doing OK, all things considered.'";
                         };
+
+                        //fall through
                     case 'would': 
                     case 'have':
                     case 'do'://you/i think/know/want ??
