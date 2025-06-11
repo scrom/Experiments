@@ -1261,14 +1261,15 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_switched) {
                 if (!(self.hasPower())) {
                     resultString = resultString.replace(_detailedDescription, "");
-                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.";
+                    resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " not working.<br>There's no sign of life. Is "+_itemSuffix+" <i>switch</i>ed <i>on</i>?.";
                 } else {
                     if (!(self.isPoweredOn())) {
                         resultString = resultString.replace(_detailedDescription, "");
                         resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " switched off.";
                     };
                 };
-            } else if (self.isBroken()) {
+            } else
+            if (self.isBroken()) {
                 resultString = resultString.replace(_detailedDescription, "");
                 resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " broken.";           
             } else if (!(self.checkComponentsExist())) {
@@ -1276,7 +1277,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 resultString += "<br>" + tools.initCap(_itemDescriptivePrefix) + " missing something.";
             } else if (!(self.checkComponents())) {
                 resultString = resultString.replace(_detailedDescription, "");
-                resultString += "<br>It looks like everything's there but there's still something wrong with "+_itemSuffix+".";
+                resultString += "<br>It <i>looks</i> like everything's there but there's still something wrong with "+_itemSuffix+".";
             } else {
                 if (_delivers.length > 0 && (!_hideDeliveryDescription)) {
                     //split "deliver"s items into what can currently be delivered and what can't
