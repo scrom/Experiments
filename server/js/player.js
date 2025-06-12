@@ -1328,6 +1328,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.use = function(verb, artefactName) {
+            console.debug("Use: "+verb+":"+artefactName);
             var artefact = getObjectFromPlayerOrLocation(artefactName);
             if (!(artefact)) {
                 var goInOrOut = _currentLocation.getExitInOrOutByDestinationName(artefactName);

@@ -274,6 +274,12 @@ module.exports.MissionController = function MissionController() {
             var playerLocation = player.getCurrentLocation();
             var playerInventory = player.getInventoryObject();
             var playerDestroyedObjects = player.getDestroyedObjects();
+
+            if (!playerLocation) {
+                //we can't do much without a location - this should only happen during testing but catchg for safety.
+                console.warn("Player Location not set")
+                return ""
+            }; 
             
             //check player mission status
             for (var i = 0; i < playerMissions.length; i++) {

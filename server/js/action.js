@@ -1499,10 +1499,6 @@ exports.Action = function Action(player, map, fileManager) {
                 if (description.indexOf("$action") > -1) {
                     var newVerb = description.replace("$action","").trim();
                     //replace verb but keep original object
-                    if (_verb == newVerb) {
-                        return "What do you want to do with '"+ _object0+ "'?<br>You'll need to be a little clearer."
-                        //this could trigger an infinite loop - e.g. verb = use and action is also use
-                    };
                     self.setActionString(_actionString.replace(_verb,newVerb));
 
                     //if default action is more than just a single word verb, overwrite the entire original action.
@@ -1923,13 +1919,15 @@ exports.Action = function Action(player, map, fileManager) {
             //get an image path if not already set
             if (!(imageName)) {
                 var location = _player.getCurrentLocation();
-                try {
-                    //if this fails, it's not the end of the world. Log it but continue
-                    //check getImageNameFunction exists (test stub support)
-                    if (location.getImageName) {
-                        imageName = location.getImageName();
-                    };
-                } catch (err) {console.error(err.stack);};
+                if (location) {
+                    try {
+                        //if this fails, it's not the end of the world. Log it but continue
+                        //check getImageNameFunction exists (test stub support)
+                        if (location.getImageName) {
+                            imageName = location.getImageName();
+                        };
+                    } catch (err) {console.error(err.stack);};
+                };
             };
 
 
