@@ -34,9 +34,11 @@ var self = module.exports = {
                 return false;
             },
 
-            performCustomAction: function (verb, map, player) {
+            performCustomAction: function (verb, map, player, object) {
 
                 _customAction = object.getCustomAction();
+                _defaultAction = object.getDefaultAction();
+                _defaultResult = object.getDefaultResult();
                 let customActionIncludesVerb = false;
                 if (_customAction) {
                     if (_customAction.includes(verb)) {
@@ -53,7 +55,7 @@ var self = module.exports = {
                         if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
                             if (_customAction[a].verbs) {
                                 if (_customAction[a].verbs.includes(verb)) {
-                                    let result = processCustomAction(map, _customAction[a], player);
+                                    let result = self.processCustomAction(map, _customAction[a], player);
                                     if (!(result.includes("$action") || result.includes("$result"))) {
                                         result += "$result";
                                     }
@@ -65,7 +67,7 @@ var self = module.exports = {
                 };
 
                 if (customActionIncludesVerb || _defaultAction == verb) {
-                    result = self.getDefaultResult();
+                    result = _defaultResult;
                     if (typeof (result) == "string") {
                         if (result.includes("$action")) {return result;}; //we're redirecting to an alternate verb
 
