@@ -1499,13 +1499,18 @@ exports.Action = function Action(player, map, fileManager) {
                 if (description.indexOf("$action") > -1) {
                     var newVerb = description.replace("$action","").trim();
                     //replace verb but keep original object
+                    if (_verb == newVerb) {
+                        return "What do you want to do with '"+ _object0+ "'?<br>You'll need to be a little clearer."
+                        //this could trigger an infinite loop - e.g. verb = use and action is also use
+                    };
                     self.setActionString(_actionString.replace(_verb,newVerb));
 
                     //if default action is more than just a single word verb, overwrite the entire original action.
                     if (newVerb.indexOf(' ') > 0) {
                         self.setActionString(newVerb);  
                     };                     
-                        
+                    
+                    
                     return self.processAction(_actionString);
 
                 } else { 
