@@ -1264,7 +1264,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         };
 
         self.addSkill = function (skill) {
-            if (_repairSkills.indexOf(skill) < 0) {
+            if (_repairSkills.indexOf(skill) ==-1) {
                 _repairSkills.push(skill);
             };
         };

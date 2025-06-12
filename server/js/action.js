@@ -1260,10 +1260,22 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'use':
                         var newVerb = _player.use(_verb, _object0);
-                        if (newVerb.indexOf("$result") > 0) {
+                        if (newVerb) {
+                            newVerb = newVerb.trim();
+                        }
+                        else {
+                            //just in case it comes back undefined.
+                            newVerb = "";
+                        };
+                        if (newVerb.indexOf("$result") > -1) {
                             //we got a custom result back
                             description = newVerb.replace("$result","");
                         } else {
+                            if (newVerb.indexOf("$action") > -1) {
+                                //strip out any instances of $action
+                                //we already don't have $result so has to be an action already
+                                newVerb = newVerb.replace("$action","");
+                            };
 
                             if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
                         
@@ -1271,7 +1283,7 @@ exports.Action = function Action(player, map, fileManager) {
                             self.setActionString(_actionString.replace('use',newVerb));
 
                             //if default action is more than just a single word verb, overwrite the entire original action.
-                            if (newVerb.indexOf(' ') > 0) {
+                            if (newVerb.indexOf(' ') >-1) {
                                 self.setActionString(newVerb);  
                             };                     
                         
@@ -1502,7 +1514,7 @@ exports.Action = function Action(player, map, fileManager) {
                     self.setActionString(_actionString.replace(_verb,newVerb));
 
                     //if default action is more than just a single word verb, overwrite the entire original action.
-                    if (newVerb.indexOf(' ') > 0) {
+                    if (newVerb.indexOf(' ') > -1) {
                         self.setActionString(newVerb);  
                     };                     
                     

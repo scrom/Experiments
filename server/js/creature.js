@@ -942,6 +942,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //ensure we have syns array
             if (!(_synonyms)) {
                 _synonyms = [];
+                return false;
             };
             if (_synonyms.indexOf(synonym) > -1) { 
                 return true; 
@@ -1689,7 +1690,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
         
         self.addSkill = function (skill) {
-            if (_repairSkills.indexOf(skill) < 0) {
+            if (_repairSkills.indexOf(skill) ==-1) {
                 _repairSkills.push(skill);
             };
         };
@@ -4599,10 +4600,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.checkDestinationAndHistory = function (destinationName) {
-            if (_destinations.indexOf(destinationName) >= 0) {
+            if (_destinations.indexOf(destinationName) >-1) {
                 return true;
             };
-            if (_clearedDestinations.indexOf(destinationName) >= 0) {
+            if (_clearedDestinations.indexOf(destinationName) >-1) {
                 return true;
             };
             return false;

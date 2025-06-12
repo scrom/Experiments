@@ -862,6 +862,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //ensure we have syns array
             if (!(_synonyms)) {
                 _synonyms = [];
+                return false;
             };
             if (_synonyms.indexOf(synonym) > -1) { 
                 return true; 
