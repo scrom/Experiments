@@ -1,0 +1,20 @@
+{
+  "object": "artefact",
+  "name": "bad",
+  "description": "has bad data",
+  "detailedDescription": "Default Action and Result are both *USE* - we shouldn't ever have this but need to handle bad data",
+  "attributes": {
+    "defaultAction": "use",
+    "defaultResult": "$action use",
+    "weight": 0.4,
+    "type": "tool",
+    "subType": "fire",
+    "canCollect": true,
+    "isBreakable": true
+  },
+  "synonyms": [
+    "bad object",
+    "object",
+    "artefact"
+  ]
+}

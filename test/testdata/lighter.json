@@ -5,6 +5,7 @@
   "detailedDescription": "It's quite a nice old cigarette lighter. Someone must have lost or forgotten it.",
   "attributes": {
     "weight": 0.4,
+    "defaultAction": "light",
     "type": "tool",
     "subType": "fire",
     "position": "on",

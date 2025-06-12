@@ -419,4 +419,43 @@ describe('Artefact Tests', () => {
         actualResult = initialCharge - torch.consumeComponents(0);
         expect(actualResult.toString()).toBe(expectedResult);
     });
+
+    
+    test('Using an item with a bad default/action does not cause an infinite loop', () => {
+        const testmb = new mapBuilder.MapBuilder('../../test/testdata/');
+        let m = mb.buildMap();
+        const bad = testmb.buildArtefact({ "file": "bad-artefact" });
+        const p0 = new player.Player({username: "player", carryWeight:25},m,testmb);
+        loc = m.getLocation('atrium');
+        p0.setLocation(loc);
+
+        const action = require('../../server/js/action.js');
+        let a = new action.Action(p0, m);
+
+        const inv = p0.getInventoryObject();
+        inv.add(bad);
+
+        const expectedResult = "xxx";
+        const actualResult = a.act("use bad"); // this is the main action call when a player performs an action
+        expect(actualResult).toBe(expectedResult);
+    });
+
+    test('Can "Use" an item with a default action/result', () => {
+        const testmb = new mapBuilder.MapBuilder('../../test/testdata/');
+        let m = mb.buildMap();
+        const lighter = testmb.buildArtefact({ "file": "lighter" });
+        const p0 = new player.Player({username: "player", carryWeight:25},m,testmb);
+        loc = m.getLocation('atrium');
+        p0.setLocation(loc);
+
+        const action = require('../../server/js/action.js');
+        let a = new action.Action(p0, m);
+
+        const inv = p0.getInventoryObject();
+        inv.add(lighter);
+
+        const expectedResult = "{\"verb\":\"use\",\"object0\":\"lighter\",\"object1\":\"\",\"description\":\"You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty.\",\"attributes\":{\"username\":\"player\",\"location\":\"Atrium\",\"money\":5,\"score\":0,\"injuriesReceived\":0,\"bleeding\":false,\"aggression\":0,\"health\":100,\"hp\":100,\"fed\":29,\"watered\":99,\"rested\":99,\"time\": \"09:00\"}}";
+        const actualResult = a.act("use lighter"); // this is the main action call when a player performs an action
+        expect(actualResult).toBe(expectedResult);
+    });
 });
