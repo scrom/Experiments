@@ -1274,7 +1274,7 @@ exports.Action = function Action(player, map, fileManager) {
                             if (newVerb.indexOf("$action") > -1) {
                                 //strip out any instances of $action
                                 //we already don't have $result so has to be an action already
-                                newVerb = newVerb.replace("$action","");
+                                newVerb = newVerb.replace("$action","").trim();
                             };
 
                             if (newVerb == 'use') {newVerb = 'examine'}; //avoid infinite loop
