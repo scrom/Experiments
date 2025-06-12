@@ -567,31 +567,62 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.checkCustomAction = function(verb) {
             //console.debug("custom action: "+_customAction+" verb:"+verb);
-            if (_customAction == verb) { 
+            if ((!_customAction) || _customAction == null ) {return false};
+
+            if (_customAction == verb || _customAction.includes(verb)) {
                 return true; 
             };
-            if (_customAction) {
-                if (_customAction.indexOf(verb) >-1) {
-                    return true;
+
+            if (Array.isArray(_customAction)) {
+                //for each element, we need to check for verbs if it's an object.
+                for (let a=0; a < _customAction.length; a++) {
+                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
+                        if (_customAction[a].verbs) {
+                            if (_customAction[a].verbs.includes(verb)) {
+                                return true;
+                                break;
+                            };
+                    };
                 };
             };
+
             return false;
         };
         
         self.performCustomAction = function (verb) {
-            //at the moment we only suppport "defaultResult" - so we don't use "verb"
-            var resultString = self.getDefaultResult();
-            if (resultString) {
-                if (typeof (resultString) == "string") {
-                    if (!(resultString.indexOf("$action") > -1)) {
-                        //if we're *not* redirecting to an alternate verb
-                        resultString += "$result";
+            let customActionIncludesVerb = false;
+            if (_customAction) {
+                if (_customAction.includes(verb)) {
+                    customActionIncludesVerb = true;
+                }
+            };
+
+            var result = "";
+
+            if (customActionIncludesVerb || _defaultAction == verb) {
+                result = self.getDefaultResult();
+                if (typeof (result) == "string") {
+                    if (result.includes("$action")) {return result;}; //we're redirecting to an alternate verb
+
+                    //if we're *not* redirecting to an alternate verb
+                    return result + "$result";
+                } else {return result}; //returning object
+            };
+
+            if (Array.isArray(_customAction)) {
+                //for each element, we need to check for verbs if it's an object.
+                for (let a=0; a < _customAction.length; a++) {
+                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
+                        if (_customAction[a].verbs) {
+                            if (_customAction[a].verbs.includes(verb)) {
+                                return _customAction[a];
+                                break;
+                            };
                     };
                 };
-            } else {
-                resultString = ""; 
             };
-            return resultString;
+
+            return result;
 
         };
         
@@ -3024,13 +3055,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
             if (!(objectToGive.isCollectable())) {
                 if (objectToGive.checkCustomAction("get")) {
-                    var resultString = objectToGive.performCustomAction("get");
-                    
-                    if (!(resultString.indexOf("$action") > -1)) {
-                        //if we're *not* redirecting to an alternate verb
-                        resultString += "$result";
-                    };
-                    return resultString;
+                    return objectToGive.performCustomAction("get");
                 };
                 return "I'm not quite sure what you're trying to do with "+self.getDisplayName() + ". Whatever it is, it's not going to happen.";
             };

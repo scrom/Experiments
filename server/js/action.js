@@ -1491,7 +1491,6 @@ exports.Action = function Action(player, map, fileManager) {
                     };
                 };
 
-                var tempDescription = "";
                 //clean up fails
                 if (description.indexOf("$fail$") > -1) {
                     description = description.replace("$fail$", "");
@@ -1508,7 +1507,6 @@ exports.Action = function Action(player, map, fileManager) {
                     };                     
                         
                     return self.processAction(_actionString);
-                    description = null;
 
                 } else { 
                     description = description.replace("$result", ""); 

@@ -655,21 +655,32 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.checkCustomAction = function (verb) {
+             if ((!_customAction) || _customAction == null ) {return false};
+
             if (verb == "get" || verb == "catch") {
                 //custom actions for "get" only apply when alive - for now
                 if (self.isDead()) {
                     return false;
                 };
             };
-            //console.debug("custom action: "+_customAction+" verb:"+verb);
-            if (_customAction == verb) {
-                return true;
+
+            if (_customAction == verb || _customAction.includes(verb)) {
+                return true; 
             };
-            if (_customAction) {
-                if (_customAction.indexOf(verb) > -1) {
-                    return true;
+
+            if (Array.isArray(_customAction)) {
+                //for each element, we need to check for verbs if it's an object.
+                for (let a=0; a < _customAction.length; a++) {
+                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
+                        if (_customAction[a].verbs) {
+                            if (_customAction[a].verbs.includes(verb)) {
+                                return true;
+                                break;
+                            };
+                    };
                 };
             };
+
             return false;
         };
         
@@ -682,20 +693,39 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         };
 
         self.performCustomAction = function (verb) {
-            //at the moment we only suppport "defaultResult" - so we don't use "verb"
-            var resultString = self.getDefaultResult();
-            if (resultString) {
-                if (typeof (resultString) == "string") {
-                    if (!(resultString.indexOf("$action") > -1)) {
-                        //if we're *not* redirecting to an alternate verb
-                        resultString += "$result";
+            let customActionIncludesVerb = false;
+            if (_customAction) {
+                if (_customAction.includes(verb)) {
+                    customActionIncludesVerb = true;
+                }
+            };
+
+            var result = "";
+
+            if (customActionIncludesVerb || _defaultAction == verb) {
+                result = self.getDefaultResult();
+                if (typeof (result) == "string") {
+                    if (result.includes("$action")) {return result;}; //we're redirecting to an alternate verb
+
+                    //if we're *not* redirecting to an alternate verb
+                    return result + "$result";
+                } else {return result}; //returning object
+            };
+
+            if (Array.isArray(_customAction)) {
+                //for each element, we need to check for verbs if it's an object.
+                for (let a=0; a < _customAction.length; a++) {
+                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
+                        if (_customAction[a].verbs) {
+                            if (_customAction[a].verbs.includes(verb)) {
+                                return _customAction[a];
+                                break;
+                            };
                     };
                 };
-            } else {
-                resultString = "";
             };
-            return resultString;
 
+            return result;
         };
 
         self.getReturnDirection = function() {
