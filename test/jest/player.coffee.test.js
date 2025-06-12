@@ -271,7 +271,7 @@ describe('Sweet Coffee Combination Tests', () =>
         coffeeMachine.unlock(key);
         coffeeMachine.receive(coffeeBeans);
         const expectedResult = 'You now have a cup of coffee.';
-        const actualResult = coffeeMachine.relinquish('coffee', p0);
+        const actualResult = coffeeMachine.relinquish('coffee', null, p0);
         expect(actualResult).toBe(expectedResult);
     });
   
@@ -533,7 +533,7 @@ describe('Sweet Coffee Combination Tests', () =>
         _inventory.add(cup);
         coffeeMachine.unlock(key);
         coffeeMachine.receive(coffeeBeans);
-        coffeeMachine.relinquish('coffee', p0);
+        coffeeMachine.relinquish('coffee', null, p0);
         const newCoffee = coffee.combineWith(sugar);
         const expectedResult = "sweet coffee";
         const actualResult = newCoffee.getName();

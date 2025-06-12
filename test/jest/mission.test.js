@@ -323,7 +323,7 @@ test('endofDayEndsGame', () => {
     const endofDay = m0.getNamedMission("endofday");
     const reward = endofDay.event();
 
-    const expectedResult = "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
+    const expectedResult = "<br>It's 5pm. Your first (eventful) day in the office is over.<br>Even if you're part-way through battling a particularly nasty bug we have a strict policy on sending new recruits home on time in their fist week so that's all for today. Off you go.<br><br><br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
     const actualResult = endofDay.processReward(m0, reward, p0);
     expect(actualResult).toBe(expectedResult);
 });

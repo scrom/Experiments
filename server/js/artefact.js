@@ -8,6 +8,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         var inventoryObjectModule = require('./inventory');    
         var missionObjectModule = require('./mission.js');
         var contagionObjectModule = require('./contagion.js');
+        var customAction = require('./customaction.js');
 
         //attributes
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -565,70 +566,21 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             _imageName = imageName;
         };
 
+        self.getCustomAction = function() {
+            return _customAction;
+        };
+
         self.checkCustomAction = function(verb) {
-            //console.debug("custom action: "+_customAction+" verb:"+verb);
-            if ((!_customAction) || _customAction == null ) {return false};
-
-            if (_customAction == verb || _customAction.includes(verb)) {
-                return true; 
-            };
-
-            if (Array.isArray(_customAction)) {
-                //for each element, we need to check for verbs if it's an object.
-                for (let a=0; a < _customAction.length; a++) {
-                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
-                        if (_customAction[a].verbs) {
-                            if (_customAction[a].verbs.includes(verb)) {
-                                return true;
-                                break;
-                            };
-                    };
-                };
-            };
-
-            return false;
+            return customAction.checkCustomAction(verb, self);
         };
         
-        self.performCustomAction = function (verb) {
-            let customActionIncludesVerb = false;
-            if (_customAction) {
-                if (_customAction.includes(verb)) {
-                    customActionIncludesVerb = true;
-                }
-            };
-
-            var result = "";
-
-            if (customActionIncludesVerb || _defaultAction == verb) {
-                result = self.getDefaultResult();
-                if (typeof (result) == "string") {
-                    if (result.includes("$action")) {return result;}; //we're redirecting to an alternate verb
-
-                    //if we're *not* redirecting to an alternate verb
-                    return result + "$result";
-                } else {return result}; //returning object
-            };
-
-            if (Array.isArray(_customAction)) {
-                //for each element, we need to check for verbs if it's an object.
-                for (let a=0; a < _customAction.length; a++) {
-                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
-                        if (_customAction[a].verbs) {
-                            if (_customAction[a].verbs.includes(verb)) {
-                                return _customAction[a];
-                                break;
-                            };
-                    };
-                };
-            };
-
-            return result;
-
+        self.performCustomAction = function (verb, map, player) {
+            return customAction.performCustomAction(verb, map, player, self);
         };
         
-        self.play = function (verb, player, artefact) {
+        self.play = function (verb, map, player, artefact) {
             if (self.checkCustomAction(verb)) {
-                return self.performCustomAction(verb);
+                return self.performCustomAction(verb, map, player);
             };
 
             return "Try as you might, you just don't find playing with " + self.descriptionWithCorrectPrefix() + " as entertaining as you'd hoped.";
@@ -2067,11 +2019,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "Nothing happens.";
         };
         
-        self.shake = function (verb, player) {
+        self.shake = function (verb, map, player) {
             if (self.isDestroyed()) { return "There's nothing left of " + _itemSuffix + "."; };
             
             if (self.checkCustomAction(verb)) {
-                return self.performCustomAction(verb);
+                return self.performCustomAction(verb, map, player);
             };
             
             var liquidOrPowder = _inventory.getLiquidOrPowder();
@@ -2645,11 +2597,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return "";
         };
 
-        self.moveOpenOrClose = function(verb, locationName) {
+        self.moveOpenOrClose = function(verb, locationName, map, player) {
             if (self.isOpen() && self.opens()) {
                 return self.close(verb, locationName);
             } else {
-                return self.moveOrOpen(verb, locationName);
+                return self.moveOrOpen(verb, locationName, map, player);
             };
         };
 
@@ -2699,7 +2651,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.moveOrOpen = function(verb, locationName) {
+        self.moveOrOpen = function(verb, locationName, map, player) {
             if (self.isDestroyed()) {return "There's nothing viable left to work with.";};
             if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked."};
             if (_opens && (!(_open))){
@@ -2762,7 +2714,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return tools.initCap(_itemDescriptivePrefix) + " already open.";
                 };
                 if (self.checkCustomAction(verb)) {
-                    return self.performCustomAction(verb);
+                    return self.performCustomAction(verb, map, player);
                 } else {
                     return _itemPrefix + " " + doesPlural() + " open.";
                 };
@@ -2848,12 +2800,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return resultString;
         };
 
-        self.consumeEdible = function(action, consumer) {
+        self.consumeEdible = function(action, consumer, map, player) {
             const drinkVerbs = ["drink", "gulp", "quaff", "neck"]
             if (_liquid && (!drinkVerbs.includes(action))) {action = "drink"};
             let s = consumer.getType() != "player" ? "s" : "";
             if (self.checkCustomAction(action)) {
-                return self.performCustomAction(action);
+                return self.performCustomAction(action, map, player);
             }
             if (self.getSubType() == "intangible") {
                 if (drinkVerbs.includes(action) ) {
@@ -2945,12 +2897,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
         };
 
-        self.drink = function (consumer) {
-            return self.consumeEdible("drink", consumer);
+        self.drink = function (consumer, map, player) {
+            return self.consumeEdible("drink", consumer, map, player);
         };
 
-        self.eat = function (verb, consumer) {
-            return self.consumeEdible(verb, consumer)
+        self.eat = function (verb, consumer, map, player) {
+            return self.consumeEdible(verb, consumer, map, player)
         };
 
         self.canDeliver = function (anObjectName) {
@@ -3011,7 +2963,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return true;
         };
 
-        self.relinquish = function(anObjectName, player, locationInventory) {
+        self.relinquish = function(anObjectName, map, player, locationInventory) {
             if (self.getSubType() == "intangible") {return self.getDisplayName()+" can't give you anything.";};
             var playerInventory = player.getInventoryObject();
 
@@ -3056,7 +3008,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
             if (!(objectToGive.isCollectable())) {
                 if (objectToGive.checkCustomAction("get")) {
-                    return objectToGive.performCustomAction("get");
+                    return objectToGive.performCustomAction("get", map, player);
                 };
                 return "I'm not quite sure what you're trying to do with "+self.getDisplayName() + ". Whatever it is, it's not going to happen.";
             };
@@ -3091,7 +3043,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             //add to suitable container or to player inventory
             //if container is required, we _know_ we have a suitable container by this point.
             if (requiresContainer) {
-                var resultString = suitableContainer.receive(objectToGive, player);
+                var resultString = suitableContainer.receive(objectToGive, map, player, false);
                 //return "You now have a "+suitableContainer.getName()+" of "+objectToGive.getName()+".";
 
                 if (playerInventory.check(suitableContainer.getName())) {
@@ -3181,7 +3133,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return self.getDisplayName()+" now has "+anObject.getDescription()+" "+position+" "+self.getSuffix()+".";
         };
 
-        self.receive = function(anObject) {
+        self.receive = function(anObject, map, player, playerisAsking) {
             if (self.getType() == "container" && self.isBroken()) {return tools.initCap(_itemDescriptivePrefix)+" broken. You'll need to fix "+_itemSuffix+" first.";};
             if (self.isDestroyed()) {return tools.initCap(_itemDescriptivePrefix)+" damaged beyond repair, there's no hope of "+_itemSuffix+" carrying anything.";};
             if (_locked) {return tools.initCap(_itemDescriptivePrefix)+" locked.";};
@@ -3247,7 +3199,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             //item didn't combine - add it to inventory
-            if(anObject.willDivide(2)) {self.add}
+            // if(anObject.willDivide(2)) {self.add} @todo #bug - need a git blame to work out what this was meant to do
             _inventory.add(anObject);
             return "";
         };
@@ -3314,7 +3266,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return tools.initCap(_itemDescriptivePrefix)+" already locked.";
         };
 
-        self.unlock = function(aKey, locationName) {
+        self.unlock = function(aKey, locationName, map, player) {
             if (self.isDestroyed() || _broken) {
                 if (self.isDestroyed()) {
                     _locked = false;
@@ -3329,7 +3281,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (aKey.keyTo(self)) {
                     _locked = false;
                     if (self.getType() == "property" || self.getType() == "vehicle") {_collectable = true;};
-                    var resultString = self.moveOrOpen('unlock',locationName);
+                    var resultString = self.moveOrOpen('unlock',locationName, map, player);
                     //unlocking with a breakable item will damage it
                     var bashResult = "";
                     if (aKey.isBreakable()) {

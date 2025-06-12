@@ -1426,7 +1426,7 @@ test('receivingFoodWhenFriendlyCreatureIsHungryConsumesFood', () => {
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He eats the slab of sugary";
-    var actual = c0.receive(food, p0).substr(0,26);
+    var actual = c0.receive(food, m, p0).substr(0,26);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
     expect(actual).toBe(expected);
@@ -1443,7 +1443,7 @@ test('receivingFoodWithChargesWhenFriendlyCreatureIsHungryConsumesFood', () => {
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
     var expected = "He eats some slab of sugar";
-    var actual = c0.receive(food, p0).substr(0,26);
+    var actual = c0.receive(food, m, p0).substr(0,26);
     console.debug("expected:"+expected);
     console.debug("actual:"+actual);
     expect(actual).toBe(expected);
@@ -1459,7 +1459,7 @@ test('receivingMultipleChargeFoodWhenFriendlyCreatureIsHungryConsumesSomeFood', 
     p0.setLocation(l);
     c0.go(null,l); 
     c0.tick(6, m, p0); //increase time since eating
-    var resultString = c0.receive(food, p0);
+    var resultString = c0.receive(food, m, p0);
     var expected = "He eats some slab of sugary He holds onto the remainder for later.";
     var actual = resultString.substr(0,28)+resultString.substr(-38);
     console.debug("expected:"+expected);
@@ -1775,7 +1775,7 @@ test('derekWontEatMissionChocolateEvenWhenHungry', () => {
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
 
     var expected = "Derek takes a chocolate.";
-    var actual = c0.receive(chocolate, p0);
+    var actual = c0.receive(chocolate, m, p0);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
     expect(actual).toBe(expected);
@@ -1791,7 +1791,7 @@ test('otherCreatureWillStillEatChocolate', () => {
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
 
     var expected = "He eats some chocolate"; // items with multiple charges and no charge unit need to be plural in order to be "some"
-    var actual = c0.receive(chocolate, p0).substr(0,22);
+    var actual = c0.receive(chocolate, m, p0).substr(0,22);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
     expect(actual).toBe(expected);
@@ -1808,7 +1808,7 @@ test('otherCreatureWillEatAPieceOfChocolate', () => {
     var chocolate = new artefact.Artefact('chocolate', 'chocolate', 'nom nom nom',foodAttributes, null);
 
     var expected = "He eats a piece of chocolate"; // items with multiple charges and no charge unit need to be plural in order to be "some"
-    var actual = c0.receive(chocolate, p0).substr(0,28);
+    var actual = c0.receive(chocolate, m, p0).substr(0,28);
     console.debug("expected:" + expected);
     console.debug("actual:" + actual);
     expect(actual).toBe(expected);

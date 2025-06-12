@@ -16,15 +16,9 @@
     "chargesDescription": "Annoyingly, it's impossible to tell how much gas there is left in it.",
     "imageName": "lighter.jpg", 
     "customAction": [
-      "press",
-      "light",
-      "ignite",
-      "strike",
-      "refill",
-      "fill"
-    ],
-    "defaultResult": "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty."
-
+      {"verbs": ["press","light","ignite","strike"], "message": "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty."},
+      {"verbs": ["refill", "fill"], "message": "Unfortunately it's just a disposable. You're not able to refill it."}
+    ]
   },
   "synonyms": [
     "old lighter",

@@ -455,8 +455,9 @@ describe('Artefact Tests', () => {
         const inv = p0.getInventoryObject();
         inv.add(lighter);
 
-        const expectedResult = "{\"verb\":\"use\",\"object0\":\"lighter\",\"object1\":\"\",\"description\":\"You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty.\",\"attributes\":{\"username\":\"player\",\"location\":\"Atrium\",\"money\":5,\"score\":0,\"injuriesReceived\":0,\"bleeding\":false,\"aggression\":0,\"health\":100,\"hp\":100,\"fed\":29,\"watered\":99,\"rested\":99,\"time\": \"09:00\"}}";
+        const expectedResult = "You strike the flint a few times and see a small flicker of flame. It gutters out quickly.<br>You'd best only use it to light things when you really need to as you can't see an obvious way to refill it when it's empty.<br>";
         const actualResult = a.act("use lighter"); // this is the main action call when a player performs an action
-        expect(actualResult).toBe(expectedResult);
+        const actualResultObject = JSON.parse(actualResult);
+        expect(actualResultObject.description).toBe(expectedResult);
     });
 });

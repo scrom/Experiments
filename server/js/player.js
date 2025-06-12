@@ -1318,11 +1318,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     return notFoundMessage(receiverName);
                 };
 
-                return receiver.play(verb, self, artefact);
+                return receiver.play(verb, _map, self, artefact);
             };
                       
             if (!receiverName) {
-                return artefact.play(verb, self);
+                return artefact.play(verb, _map, self);
             };
 
         };
@@ -1426,7 +1426,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
 
                     var locationInventory = _currentLocation.getInventoryObject();                                            
-                    var tempResultString = allLocationObjects[i].relinquish(artefactName, self, locationInventory);
+                    var tempResultString = allLocationObjects[i].relinquish(artefactName, _map, self, locationInventory);
                     if (_inventory.check(artefactName)||locationInventory.check(artefactName)) {
                         //we got the requested object back!
                         return tempResultString;
@@ -1445,7 +1445,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (!(creatures[c].isDead())) {
                             return "I think "+creatures[c].getDisplayName()+" has what you're after." +tools.imgTag(creatures[c]) ;
                         };
-                        return creatures[c].relinquish(artefactName,self,_currentLocation.getInventoryObject())
+                        return creatures[c].relinquish(artefactName, _map, self,_currentLocation.getInventoryObject())
                     };
                 };
                 
@@ -1941,7 +1941,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //build return string
             resultString += " " + artefact.getDisplayName()+ ". ";
             
-            var shakeResult = artefact.shake(verb, self);
+            var shakeResult = artefact.shake(verb, _map, self);
             if (shakeResult == "") {
                 resultString += "<br>Your arms get tired and you feel slightly awkward.";
             };
@@ -2141,10 +2141,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //find a key
             var artefactIsLockedBefore = artefact.isLocked();
             var key = artefact.getMatchingKey(verb, _inventory);
-            var resultString = artefact.unlock(key, _currentLocation.getName());
+            var resultString = artefact.unlock(key, _currentLocation.getName(), _map, self);
             var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
             for (var l=0;l<linkedDoors.length;l++) {
-                linkedDoors[l].unlock(key, _currentLocation.getName());
+                linkedDoors[l].unlock(key, _currentLocation.getName(), _map, self);
             };
             if (key) {
                 if (key.isDestroyed()) {_inventory.remove(key.getName());};
@@ -2258,7 +2258,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString = "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName();
             if (container) {
 
-                container.receive(newObject, self);
+                container.receive(newObject, _map, self, false);
 
                 if (containerIsInLocation) {
                     console.debug(originalObjectIsInContainer);
@@ -2896,7 +2896,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             resultString += receiverDisplayNameString+".<br>";
             
             var collectedArtefactWeight = collectedArtefact.getWeight();
-            var receiveResult = receiver.receive(collectedArtefact, self);
+            var receiveResult = receiver.receive(collectedArtefact, _map, self, false);
 
             //if receiving failed (or combined with something else)...
             if (!(receiver.getInventoryObject().check(collectedArtefact.getName()))) {
@@ -2989,7 +2989,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var tempString;
             if (!(sourceObject.isOpen())) {
                 if (sourceObject.isLocked()) {
-                    tempString = self.unlock("dismantle", artefactName);
+                    tempString = self.unlock("dismantle", artefactName, _map, self);
                 };
                 //still locked? - fail.
                 if (sourceObject.isLocked()) {
@@ -3008,7 +3008,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var locationInventory = _currentLocation.getInventoryObject();
             var collectedItemNames = [];
             for (var c=0;c<components.length;c++) {
-                sourceObject.relinquish(components[c].getName(), self, locationInventory);
+                sourceObject.relinquish(components[c].getName(), _map, self, locationInventory);
                 if (_inventory.check(components[c].getName(), true, false)) {
                     collectedItemNames.push(components[c].getDescription());
                 };
@@ -3058,7 +3058,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
 
             var locationInventory = _currentLocation.getInventoryObject();
-            return receiver.relinquish(artefactName, self, locationInventory);
+            return receiver.relinquish(artefactName, _map, self, locationInventory);
         };
 
 //above this line - artefact interactions
@@ -3124,7 +3124,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             //treat this as a kind act (if successful)
             self.decreaseAggression(1);
-            return receiver.receive(collectedArtefact, self);
+            return receiver.receive(collectedArtefact, _map, self, false);
 
         };
 
@@ -3280,7 +3280,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var locationInventory = _currentLocation.getInventoryObject();
                 self.increaseAggression(1); //we're stealing!  
                 _currentLocation.reduceLocalFriendlyCreatureAffinity(1, giver.getName()); 
-                return giver.relinquish(artefactName, self, locationInventory);
+                return giver.relinquish(artefactName, _map, self, locationInventory);
             };
                     
         };
@@ -3376,11 +3376,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!(artefact.isCollectable())) {return  tools.initCap(givers[0].getPrefix())+" can't pick "+artefact.getSuffix()+" up.";};
                 if (!(givers[0].canCarry(artefact))) { return tools.initCap(givers[0].getPrefix())+" can't carry "+artefact.getSuffix()+".";};
                 removeObjectFromLocation(artefactName);
-                resultString = givers[0].receive(artefact, self, true)+"<br>";
+                resultString = givers[0].receive(artefact, _map, self, true)+"<br>";
             };
             
             var locationInventory = _currentLocation.getInventoryObject();
-            return resultString+givers[0].relinquish(artefactName, self, locationInventory);
+            return resultString+givers[0].relinquish(artefactName, _map, self, locationInventory);
         };
 
         self.say = function(verb, speech, receiverName, map) {
@@ -4181,7 +4181,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
         self.openOrClose = function(verb, artefact) {
             var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
             for (var l=0;l<linkedDoors.length;l++) {
-                linkedDoors[l].moveOpenOrClose(verb, _currentLocation.getName());
+                linkedDoors[l].moveOpenOrClose(verb, _currentLocation.getName(), _map, self);
             };
 
             var resultString = artefact.moveOpenOrClose(verb, _currentLocation.getName());
@@ -4233,7 +4233,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.getSubType() == "intangible") {return "There's nothing to "+verb+" in "+artefact.getDisplayName()+".";};
 
             if (artefact.isLocked()) {
-                resultString +=self.unlock("open", artefact.getName())+"<br>";
+                resultString +=self.unlock("open", artefact.getName(), _map, self)+"<br>";
             } else {
 
                 var linkedDoors = artefact.getLinkedDoors(_map, _currentLocation.getName());
@@ -4251,11 +4251,11 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             }
                         };
                         var skeletonKey = _mapBuilder.buildArtefact(skeletonKeyJSON);
-                        linkedDoors[l].unlock(skeletonKey, _currentLocation.getName())
+                        linkedDoors[l].unlock(skeletonKey, _currentLocation.getName(), _map, self)
                     };
-                    linkedDoors[l].moveOrOpen(verb, _currentLocation.getName());
+                    linkedDoors[l].moveOrOpen(verb, _currentLocation.getName(), _map, self);
                 };
-                resultString += artefact.moveOrOpen(verb, _currentLocation.getName());
+                resultString += artefact.moveOrOpen(verb, _currentLocation.getName(), _map, self);
 
                 if (artefact.getType() == "door") {
                     if (artefact.getInventoryObject().hasPositionedObjects()) {
@@ -5432,7 +5432,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             self.transmit(artefact, "bite");
 
             //EAT IT
-            var resultString = artefact.eat(verb, self); //trying to eat some things give interesting results.
+            var resultString = artefact.eat(verb, self, map, self); //trying to eat some things give interesting results.
             if (artefact.isEdible()) {
                 //consume it
                 if (artefact.chargesRemaining() == 0) {
@@ -5546,7 +5546,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return notFoundMessage(artefactName);
             };
             
-            var result = artefact.drink(self); //trying to eat some things give interesting results.
+            var result = artefact.drink(self, map, self); //trying to eat some things give interesting results.
             if (artefact.isEdible() && artefact.isLiquid()) {
                 
                 if (_consumedObjects.length > 0) {

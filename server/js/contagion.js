@@ -299,7 +299,7 @@ exports.Contagion = function Contagion(name, displayName, attributes) {
                                 };
                                 //bite a random creature (just one)
                                 randomIndex = Math.floor(Math.random() * victims.length);
-                                resultString += " " + carrier.eat("bite", victims[randomIndex].getName());
+                                resultString += " " + carrier.eat("bite", victims[randomIndex].getName(), null, null); //customAction won't work for much without map and player
                             } else {
                                 for (var c = 0; c < victims.length; c++) {
                                     var randomAttack = Math.floor(Math.random() * (Math.ceil(c / 2) * frequency));

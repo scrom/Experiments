@@ -9,6 +9,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         var missionObjectModule = require('./mission.js');
         var contagionObjectModule = require('./contagion.js');
         var artefactObjectModule = require('./artefact.js');
+        var customAction = require('./customaction.js');
 
 	    var self=this; //closure so we don't lose reference in callbacks
         var _name = name.toLowerCase();
@@ -454,7 +455,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             _imageName = imageName;
         };
         
-        self.play = function (verb, player, artefact) {
+        self.play = function (verb, map, player, artefact) {
             var playerAggression = player.getAggression()
             if (playerAggression > 0) {
                 return "Nobody's going to want to " + verb + " with you until you calm down a little.";
@@ -469,7 +470,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (self.checkCustomAction(verb)) {
-                return self.performCustomAction(verb);
+                return self.performCustomAction(verb, map, player);
             };
 
             return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
@@ -654,34 +655,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        self.checkCustomAction = function (verb) {
-             if ((!_customAction) || _customAction == null ) {return false};
+        self.getCustomAction = function() {
+            return _customAction;
+        };
 
-            if (verb == "get" || verb == "catch") {
-                //custom actions for "get" only apply when alive - for now
-                if (self.isDead()) {
-                    return false;
-                };
-            };
-
-            if (_customAction == verb || _customAction.includes(verb)) {
-                return true; 
-            };
-
-            if (Array.isArray(_customAction)) {
-                //for each element, we need to check for verbs if it's an object.
-                for (let a=0; a < _customAction.length; a++) {
-                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
-                        if (_customAction[a].verbs) {
-                            if (_customAction[a].verbs.includes(verb)) {
-                                return true;
-                                break;
-                            };
-                    };
-                };
-            };
-
-            return false;
+        self.checkCustomAction = function(verb) {
+            return customAction.checkCustomAction(verb, self);
+        };
+        
+        self.performCustomAction = function (verb, map, player) {
+            return customAction.performCustomAction(verb, map, player, self);
         };
         
         self.getDefaultAction = function () {
@@ -690,42 +673,6 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         
         self.getDefaultResult = function () {
             return _defaultResult;
-        };
-
-        self.performCustomAction = function (verb) {
-            let customActionIncludesVerb = false;
-            if (_customAction) {
-                if (_customAction.includes(verb)) {
-                    customActionIncludesVerb = true;
-                }
-            };
-
-            var result = "";
-
-            if (customActionIncludesVerb || _defaultAction == verb) {
-                result = self.getDefaultResult();
-                if (typeof (result) == "string") {
-                    if (result.includes("$action")) {return result;}; //we're redirecting to an alternate verb
-
-                    //if we're *not* redirecting to an alternate verb
-                    return result + "$result";
-                } else {return result}; //returning object
-            };
-
-            if (Array.isArray(_customAction)) {
-                //for each element, we need to check for verbs if it's an object.
-                for (let a=0; a < _customAction.length; a++) {
-                    if (typeof _customAction[a] === 'object' && !Array.isArray(_customAction[a]))
-                        if (_customAction[a].verbs) {
-                            if (_customAction[a].verbs.includes(verb)) {
-                                return _customAction[a];
-                                break;
-                            };
-                    };
-                };
-            };
-
-            return result;
         };
 
         self.getReturnDirection = function() {
@@ -1635,10 +1582,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         };
         
-        self.shake = function (verb, player) {
+        self.shake = function (verb, map, player) {
             if (self.isDead()) { return _genderDescriptivePrefix + " dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
             if (self.checkCustomAction(verb)) {
-                return self.performCustomAction(verb);
+                return self.performCustomAction(verb, map, player);
             };
 
             if (self.getSubType() != "animal") {
@@ -1786,7 +1733,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return self.getFirstName()+" now has "+anObject.getDescription()+" "+position+" "+self.getSuffix()+".";
         };
 
-        self.receive = function(anObject, player, playerisAsking) {
+        self.receive = function(anObject, map, player, playerisAsking) {
             if (self.isDead()) {return _genderDescriptivePrefix+" dead. Save your kindness for someone who'll appreciate it."};
             if (self.getSubType() == "animal") {
                 if (anObject.getType() == "food" || anObject.getType() == "creature") {
@@ -1794,7 +1741,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (nutrition > 0 && self.isHungry()) {
                         self.increaseAffinity(anObject.getAffinityModifier());
                         var originalObjectWeight = anObject.getWeight();
-                        anObject.eat("eat", self);
+                        anObject.eat("eat", self, map, player);
                         _timeSinceEating = 0;
                         if (originalObjectWeight <= self.getWeight()) {
                             //@todo improve for they/them
@@ -1839,7 +1786,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 };   
                 
                 if (!(isMissionObject)) {                        
-                    var eat = anObject.eat("eat", self);
+                    var eat = anObject.eat("eat", self, map, player);
                     _timeSinceEating = 0;    
                     var leftovers = ""; 
                     if (anObject.chargesRemaining() != 0) {
@@ -2069,7 +2016,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return true;
         };
 
-        self.relinquish = function(anObjectName,player,locationInventory) {
+        self.relinquish = function(anObjectName, map, player, locationInventory) {            
             //note we throw away locationInventory
 
             var playerInventory = player.getInventoryObject();
@@ -2089,6 +2036,13 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
             if (!(playerInventory.canCarry(objectToGive))) { return "Sorry. You can't carry "+anObjectName+" at the moment.";};
             if (objectToGive.isLiquid()) {return  "You'll need the container "+self.getDescriptivePrefix().toLowerCase()+" carrying "+objectToGive.getSuffix()+" in. Otherwise "+objectToGive.getSuffix()+"'ll all go to waste.";};
+
+            if (!(objectToGive.isCollectable())) {
+                if (objectToGive.checkCustomAction("get")) {
+                    return objectToGive.performCustomAction("get", map, player);
+                };
+                return "I'm not quite sure what you're trying to do with "+objectToGive.getDisplayName() + ". Whatever it is, it's not going to happen.";
+            };
 
             playerInventory.add(objectToGive);
             _inventory.remove(anObjectName);
@@ -2629,9 +2583,9 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return "Interesting idea but "+_genderDescriptivePrefix + " not really designed for personal medical use."
         };
 
-        self.drink = function (consumer) {          
+        self.drink = function (consumer, map, player) {          
             if (self.checkCustomAction("drink")) {
-                return self.performCustomAction("drink");
+                return self.performCustomAction("drink", map, player);
             };            
             return _genderPrefix+"'d get stuck in your throat if you tried."
         };
@@ -2653,10 +2607,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return resultString+"<br>";
         };
 
-        self.eat = function (verb, consumer) {
+        self.eat = function (verb, consumer, map, player) {
             //@todo - although consumer is passed in, all the responses assume consumer is "you" (the player)
             if (self.checkCustomAction(verb)) {
-                return self.performCustomAction(verb);
+                return self.performCustomAction(verb, map, player);
             };
             
             if (verb == "lick" || verb == "taste") {
@@ -2905,7 +2859,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return [];
         };
 
-        self.moveOrOpen = function(verb) {
+        self.moveOrOpen = function(verb, locationName, map, player) {
             if (self.isDead()) {return "You're a bit sick aren't you.<br>You pull and tear at "+ _genderPossessiveSuffix+" corpse but other than getting a gory mess on your hands there's no obvious benefit to your actions."};
             self.decreaseAffinity(1);
             //@todo improve for they/them
@@ -3957,18 +3911,18 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             //open door (and related linked doors).
             //if locked, we unlock both sides to go through if the key matches - and re-lock it on both sides afterward.
             if (key) {
-                selectedDoor.unlock(key, _currentLocation.getName()); //unlock autmatically calls "moveOrOpen" when successful
+                selectedDoor.unlock(key, _currentLocation.getName(), map, self); //unlock autmatically calls "moveOrOpen" when successful
             } else {
-                selectedDoor.moveOrOpen("open", _currentLocation.getName());
+                selectedDoor.moveOrOpen("open", _currentLocation.getName(), map, self);
             };
 
             //open linked doors
             var linkedDoors = selectedDoor.getLinkedDoors(map, _currentLocation.getName());
             for (var l = 0; l < linkedDoors.length; l++) {
                 if (key) {
-                    linkedDoors[l].unlock(key, _currentLocation.getName()); //unlock autmatically calls "moveOrOpen" when successful
+                    linkedDoors[l].unlock(key, _currentLocation.getName(), map, self); //unlock autmatically calls "moveOrOpen" when successful
                 } else {
-                    linkedDoors[l].moveOrOpen("open", _currentLocation.getName());
+                    linkedDoors[l].moveOrOpen("open", _currentLocation.getName(), map, self);
                 };
                                                     
             };
