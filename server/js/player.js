@@ -1299,7 +1299,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             var artefact = getObjectFromPlayerOrLocation(artefactName, verb);
             if (!(artefact)) {return null;}; //treat this as not understood too
             if (artefact.checkCustomAction(verb)) {
-                return artefact.getCustomActionResult(verb);
+                return artefact.performCustomAction(verb);
             };
 
             return null;              
@@ -1341,7 +1341,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //if we define a custom result, return that. Otherwise perform default action.
             var action = artefact.getDefaultAction();
             if (action !="read") { //@todo hack - this needs a proper test to decide what order default actions and results are handled when both are set.
-                var result = artefact.getCustomActionResult(action);
+                var result = artefact.performCustomAction(action);
                 if (result) {return result;};
             };            
             return artefact.getDefaultAction();
@@ -4101,7 +4101,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (artefact.getType() != "book" && noteCount == 0) {
                 var result;
                 if (artefact.getDefaultAction() == "read") {
-                    result = artefact.getCustomActionResult("read");
+                    result = artefact.performCustomAction("read");
                     if (result) {return result;};
                 };
                 return "There's nothing interesting to "+verb+" from "+artefact.getDisplayName()+"." +tools.imgTag(artefact);
@@ -4127,7 +4127,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 var result;
                 //@todo - this is an odd combo related to custom/default actions being related
                 if (artefact.getDefaultAction() == "read") {
-                    result = artefact.getCustomActionResult("read");
+                    result = artefact.performCustomAction("read");
                     if (result) {resultString += "<br>"+result;};
                 };
                 if (!result && newMissions.length == 0 && noteCount == 0) {

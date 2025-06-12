@@ -469,7 +469,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
 
             if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
+                return self.performCustomAction(verb);
             };
 
             return tools.initCap(self.getPrefix()) + " says 'It might be fun but we don't have time for that right now $player.'"
@@ -681,7 +681,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             return _defaultResult;
         };
 
-        self.getCustomActionResult = function (verb) {
+        self.performCustomAction = function (verb) {
             //at the moment we only suppport "defaultResult" - so we don't use "verb"
             var resultString = self.getDefaultResult();
             if (resultString) {
@@ -1607,7 +1607,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.shake = function (verb, player) {
             if (self.isDead()) { return _genderDescriptivePrefix + " dead. All the shaking in the world won't rouse " + _genderSuffix + "." };
             if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
+                return self.performCustomAction(verb);
             };
 
             if (self.getSubType() != "animal") {
@@ -2600,7 +2600,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
 
         self.drink = function (consumer) {          
             if (self.checkCustomAction("drink")) {
-                return self.getCustomActionResult("drink");
+                return self.performCustomAction("drink");
             };            
             return _genderPrefix+"'d get stuck in your throat if you tried."
         };
@@ -2625,7 +2625,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.eat = function (verb, consumer) {
             //@todo - although consumer is passed in, all the responses assume consumer is "you" (the player)
             if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
+                return self.performCustomAction(verb);
             };
             
             if (verb == "lick" || verb == "taste") {

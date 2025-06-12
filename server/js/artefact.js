@@ -578,7 +578,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             return false;
         };
         
-        self.getCustomActionResult = function (verb) {
+        self.performCustomAction = function (verb) {
             //at the moment we only suppport "defaultResult" - so we don't use "verb"
             var resultString = self.getDefaultResult();
             if (resultString) {
@@ -597,7 +597,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         
         self.play = function (verb, player, artefact) {
             if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
+                return self.performCustomAction(verb);
             };
 
             return "Try as you might, you just don't find playing with " + self.descriptionWithCorrectPrefix() + " as entertaining as you'd hoped.";
@@ -2039,7 +2039,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (self.isDestroyed()) { return "There's nothing left of " + _itemSuffix + "."; };
             
             if (self.checkCustomAction(verb)) {
-                return self.getCustomActionResult(verb);
+                return self.performCustomAction(verb);
             };
             
             var liquidOrPowder = _inventory.getLiquidOrPowder();
@@ -2730,7 +2730,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                     return tools.initCap(_itemDescriptivePrefix) + " already open.";
                 };
                 if (self.checkCustomAction(verb)) {
-                    return self.getCustomActionResult(verb);
+                    return self.performCustomAction(verb);
                 } else {
                     return _itemPrefix + " " + doesPlural() + " open.";
                 };
@@ -2821,7 +2821,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (_liquid && (!drinkVerbs.includes(action))) {action = "drink"};
             let s = consumer.getType() != "player" ? "s" : "";
             if (self.checkCustomAction(action)) {
-                return self.getCustomActionResult(action);
+                return self.performCustomAction(action);
             }
             if (self.getSubType() == "intangible") {
                 if (drinkVerbs.includes(action) ) {
