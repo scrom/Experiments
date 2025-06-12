@@ -3024,7 +3024,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             
             if (!(objectToGive.isCollectable())) {
                 if (objectToGive.checkCustomAction("get")) {
-                    var resultString = objectToGive.getDefaultResult();
+                    var resultString = objectToGive.performCustomAction("get");
                     
                     if (!(resultString.indexOf("$action") > -1)) {
                         //if we're *not* redirecting to an alternate verb
