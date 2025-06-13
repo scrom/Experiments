@@ -4,7 +4,7 @@ var self = module.exports = {
 
             checkCustomAction: function (verb, object) {
             
-                _customAction = object.getCustomAction();
+                var _customAction = object.getCustomAction();
                 if ((!_customAction) || _customAction == null ) {return false};
 
                 if (verb == "get" || verb == "catch") {
@@ -36,9 +36,9 @@ var self = module.exports = {
 
             performCustomAction: function (verb, map, player, object) {
 
-                _customAction = object.getCustomAction();
-                _defaultAction = object.getDefaultAction();
-                _defaultResult = object.getDefaultResult();
+                var _customAction = object.getCustomAction();
+                var _defaultAction = object.getDefaultAction();
+                var _defaultResult = object.getDefaultResult();
                 let customActionIncludesVerb = false;
                 if (_customAction) {
                     if (_customAction.includes(verb)) {
