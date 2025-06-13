@@ -10,11 +10,19 @@
     "isBreakable": true,
     "price": 10,
     "requiredComponentCount": 1,
+    "defaultAction": "play",
     "customAction": [
-      "play",
-      "strum"
+      {"verbs": ["play", "strum"], "message": "You attempt to strum a few notes but virtual music doesn't seem to be your forte."},
+      {"verbs": ["break", "smash", "destroy", "force", "pry", "crack", "damage"], "message": "I don't think anyone will be be playing it any more.",     
+        "modifyObject": {
+        "name": "guitar",
+        "attributes": {
+          "flammable": true,
+          "detailedDescription": "It's not in any shape to play after <i>somebody</i> abused it.",
+          "customAction": [{"verbs": ["play", "strum"], "message": "I think the only fun anyone is likely to have with this now is <i>burn</i>ing or <i>throw</i>ing what's left of it."}]
+        }
+      }}
     ],
-    "defaultResult": "You attempt to strum a few notes but virtual music doesn't seem to be your forte.",
     "imageName": "guitar.jpg"
   },
   "inventory": [

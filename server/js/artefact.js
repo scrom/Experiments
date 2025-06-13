@@ -2446,7 +2446,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         };
 
-        self.break = function(verb, deliberateAction) {
+        self.break = function(verb, deliberateAction, map, player) {
             if (_broken && deliberateAction) {return self.destroy(deliberateAction);};
             var wasAlreadyDamaged = _damaged;
             _damaged = true;
@@ -2463,7 +2463,11 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_viewDestination) {
                     self.revealHiddenExits();
                 };
-                return "You broke "+_itemSuffix+opened+"!";
+                var customActionResult = "";
+                if (self.checkCustomAction(verb)) {
+                    customActionResult = "<br>"+self.performCustomAction(verb, map, player);
+                };
+                return "You broke "+_itemSuffix+opened+"!"+customActionResult;
             };
 
             if (!wasAlreadyDamaged) {

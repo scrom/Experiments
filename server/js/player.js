@@ -1702,7 +1702,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             };
                 
             if (verb=='break'||verb=='force') {
-                resultString += artefact.break(verb, true);
+                resultString += artefact.break(verb, true, _map, self);
             } else {
                 resultString += artefact.destroy(true);
             };
@@ -1837,7 +1837,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (verb != "put down") {
                 //should be careful dropping things
                 if (verb == "throw") {
-                    artefactDamage = artefact.break(verb, true);
+                    artefactDamage = artefact.break(verb, true, _map, self);
                     self.increaseAggression(1); //grrrr
                     _currentLocation.reduceLocalFriendlyCreatureAffinity(1, artefact.getName());
                 }
@@ -3030,7 +3030,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             //50% chance of damaging...
             var randomInt = Math.floor(Math.random() * 2);            
             if (randomInt == 0) {
-                sourceObject.break(verb, false);
+                sourceObject.break(verb, false, _map, self);
                 if (sourceObject.isBroken()) {
                     resultString += "<br>Unfortunately you were a little ham-fisted with your dismantling skills and broke "+sourceObject.getDisplayName()+" as you were working.";
                 };
@@ -4452,8 +4452,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         //50% chance of serious injury
                         var randomInt = Math.floor(Math.random() * 2);
                         if (randomInt != 0) {
-                            artefact.break();
-                            return "You take a short run up, leap into the air and catch your ankle on "+artefact.getDisplayName()+".<br>You fall heavily face-down on the floor. "+ self.hurt(65);
+                            var broken = "<br>"+artefact.break(verb, false, _map, self)+"<br>";
+                            return "You take a short run up, leap into the air and catch your ankle on "+artefact.getDisplayName()+".<br>You fall heavily face-down on the floor. "+ broken + self.hurt(65);
                         };
                         return "You take a short run up, prepare to leap into the air and then decide it's not such a wise thing to do."
                     };
@@ -4469,8 +4469,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return "You "+verb+" up onto "+artefact.getDisplayName()+" and peer around.<br>Other than a mild rush of vertigo, being up here offers no benefit so you climb back down again."
                     } else {
                         var resultString = "You clamber onto "+artefact.getDisplayName()+" but "+ artefact.getPrefix().toLowerCase()+" can't hold your weight. ";
-                        resultString += artefact.break();
-                        resultString += "<br>You tumble to the floor and twist your ankle.<br>";
+                        var broken = "<br>"+artefact.break(verb, false, _map, self)+"<br>";
+                        resultString += broken+"You tumble to the floor and twist your ankle.<br>";
                         resultString += self.hurt(8);
                         return resultString;
                     };
@@ -5091,7 +5091,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     var newRandomInt = Math.floor(Math.random() * 10);
                     if (newRandomInt == 0 && weapon.isBreakable()) { //further 10% chance of worse!
                         resultString +="<br>In attempting to clear the jam, it looks like you've damaged the firing mechanism.<br>You'll need to get "+ weapon.getPrefix().toLowerCase()+" fixed if you want to use it again.";
-                        weapon.break();
+                        weapon.break(verb, false, _map, self);
                     } else {
                         resultString +="<br>You manage to clear the jam but lost valuable time in doing so.";
                     };

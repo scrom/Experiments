@@ -1660,7 +1660,7 @@ test('player can play guitar', () => {
 
     p0.get("get", "guitar");
 
-    var expectedResult = "You attempt to strum a few notes but virtual music doesn't seem to be your forte.$result"; 
+    var expectedResult = "You attempt to strum a few notes but virtual music doesn't seem to be your forte.<br>$result"; 
     var actualResult = p0.play("play", "guitar");
     console.debug("Expected: "+expectedResult);
     console.debug("Actual  : "+actualResult);
@@ -1678,7 +1678,7 @@ test('player cannot play broken guitar', () => {
     p0.get("get", "guitar");
     p0.breakOrDestroy("break", "guitar");
 
-    var expectedResult = "You should fail"; 
+    var expectedResult = "I think the only fun anyone is likely to have with this now is <i>burn</i>ing or <i>throw</i>ing what's left of it.<br>$result"; 
     var actualResult = p0.play("play", "guitar");
     console.debug("Expected: "+expectedResult);
     console.debug("Actual  : "+actualResult);

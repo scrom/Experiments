@@ -2747,7 +2747,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             if (_bleeding) {resultString += "<br>It looks like "+_genderDescriptivePrefix+" bleeding. "+_genderDescriptivePrefix+" likely to die without some first aid.";};
         };
 
-        self.break = function(verb, deliberateAction) {
+        self.break = function(verb, deliberateAction, map, player) {
             self.decreaseAffinity(1);  
             if (verb == "force" || verb == "smash" || verb == "bash") {
                 return "That's not a reasonable thing to do to "+_genderSuffix+" is it?";
