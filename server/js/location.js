@@ -31,8 +31,9 @@ exports.Location = function Location(name, displayName, description, attributes)
         var _missions = [];
         var _imageName;
 
-        var _defaultIndoorScenery = ["floor", "ground", "wall", "ceiling", "air"];
-        var _defaultOutdoorScenery = ["floor", "ground", "sky", "air"];
+        var _defaultScenery = ["floor", "ground", "air", "blood"]
+        var _defaultIndoorScenery = ["wall", "ceiling", "plant", "picture", "art", "artwork", "pic"];
+        var _defaultOutdoorScenery = ["sky"];
 
 	    var _objectName = "location";
         
@@ -191,7 +192,7 @@ exports.Location = function Location(name, displayName, description, attributes)
         };
 
         self.defaultScenery = function() {
-            return _defaultIndoorScenery.concat(_defaultOutdoorScenery);
+            return _defaultIndoorScenery.concat(_defaultOutdoorScenery).concat(_defaultScenery);
         };
 
         self.isDestroyed = function() {
@@ -570,8 +571,11 @@ exports.Location = function Location(name, displayName, description, attributes)
                     "chargesDescription": " ",
                     "customAction": null,
                     "defaultResult": "",
+                    "synonyms": ["blood", "bloody", "bloods", "mess", "splatter", "stains", "drops", "drips"],
                     "smell": "It smells metallic and fresh. You fight your gag-reflex at the thought of recent death here.",
-                    "taste": "It's slightly sticky and tangy with a burned metallic aftertaste.<br>Hey, hang on. Why are you tasting blood?"
+                    "taste": "It's tangy with a burned metallic aftertaste.<br>Hey, hang on. I'm worried about Why you're tasting blood!",
+                    "texture": "It's slightly sticky. Fairly fresh I'd say.",
+                    "sound": "Errrm. It's blood. It's no longer whooshing through anybody's veins."
                 };
 
                 if (_blood <8) {
@@ -585,10 +589,16 @@ exports.Location = function Location(name, displayName, description, attributes)
                     bloodAttributes.customAction = ["get"];
                     bloodAttributes.defaultResult = "There's not enough here to do anything useful with.";
                     bloodAttributes.smell = "It smells somewhat disturbing but not quite fresh.";
+                    bloodAttributes.taste = "Tastes like scabs. Nice (not)."
+                    bloodAttributes.texture = "It's drying up rapidly. Looks like it's been here a little while."
+
                 };
 
                 if (_blood <=1) {
                     bloodAttributes.smell = "There's just a tang of iron and salt in the air, nothing more."
+                    bloodAttributes.taste = "You barely taste anything."
+                    bloodAttributes.texture = "There's only a trace left."
+                    bloodAttributes.sound = "The silence of mortality."
                 };
 
                 return new artefactObjectModule.Artefact("blood", "blood", "It's hard to tell where or who it came from.", bloodAttributes, null, null);
@@ -618,36 +628,88 @@ exports.Location = function Location(name, displayName, description, attributes)
             };
 
             //autogenerate missing default scenery
-            if (((self.getType() == "indoor") && _defaultIndoorScenery.indexOf(anObjectName) >-1) || ((self.getType() != "indoor") && _defaultOutdoorScenery.indexOf(anObjectName) >-1)) {
-                var canDrawOn = false;
-                var subType = "";
-                if (anObjectName == "air" || anObjectName == "sky") {
-                    //it's not a physical thing
-                    subType = "intangible";
-                } else if (_defaultIndoorScenery.indexOf(anObjectName) >-1) {
-                    //it's a physical thing.
-                    canDrawOn = true;
+            if  (_defaultScenery.includes(anObjectName) || ((self.getType() == "indoor") && _defaultIndoorScenery.includes(anObjectName)) || ((self.getType() != "indoor") && _defaultOutdoorScenery.includes(anObjectName))) {
+
+                var description = "Just scenery. At least from where you are right now."
+                var sceneryAttributes = {"type": "scenery", "subType": "intangible", "canDrawOn": false, "synonyms": []};
+
+                switch (anObjectName) {
+                    case "blood":
+                    case "stains":
+                    case "splatter":
+                        var sceneryBlood = self.createBloodObject();
+                        if (sceneryBlood) {
+                            _inventory.add(sceneryBlood);
+                        };
+                        return sceneryBlood; // even if none.
+                        break;
+                    case "air":
+                    case "sky":
+                    case "airs":
+                    case "skies":
+                        anObjectName = "air"
+                        sceneryAttributes.subType = "intangible";
+                        sceneryAttributes.synonyms = ["air", "sky", "airs", "skies"];
+                        description = "Ahhh. The air. Sigh."
+                        break;
+                    case "floor":
+                    case "floors":
+                    case "ground":
+                    case "grounds":
+                        anObjectName = "floor"
+                        sceneryAttributes.subType = "floor";
+                        sceneryAttributes.synonyms = ["floor", "ground", "floors", "grounds", "feet"];
+                        description = "You look down. Yep, that's the ground beneath your feet."
+                        sceneryAttributes.canDrawOn = true;
+                        break;
+                    case "wall":
+                    case "walls":
+                        anObjectName = "wall"
+                        sceneryAttributes.subType = "wall";
+                        sceneryAttributes.synonyms = ["wall", "walls"];
+                        description = "Hmm. Walls. Interesting."
+                        sceneryAttributes.canDrawOn = true;
+                        break;
+                    case "picture":
+                    case "pictures":
+                    case "pic":
+                    case "pics":
+                    case "art":
+                    case "arts":
+                    case "artwork":
+                    case "artworks":
+                        anObjectName = "picture"
+                        sceneryAttributes.subType = "art";
+                        sceneryAttributes.synonyms = ["picture", "pictures", "art", "arts", "pic", "pics", "artwork", "artworks"];
+                        description = "Very generic artwork. Just think, somebody somewhere might actually make a living producing stuff like this."
+                        sceneryAttributes.canDrawOn = true;
+                        break;
+                                        case "picture":
+                    case "plant":
+                    case "plants":
+                        anObjectName = "plant"
+                        sceneryAttributes.subType = "plant";
+                        sceneryAttributes.synonyms = ["plant", "plants", "vegetation", "tree", "trees"];
+                        if (self.getType() == "indoor") {
+                            description = "A few plants always brighten up the space. Fairly generic, but pleasant enough.";
+                            sceneryAttributes.synonyms = sceneryAttributes.synonyms.concat(["indoor plant", "potted plant", "pot plant", "leaves", "greenery"]);
+                        } else {
+                            description = "We realy should make more of our outdoor spaces and add a little greenery where we can.";
+                            sceneryAttributes.synonyms = sceneryAttributes.synonyms.concat(["hedge", "border", "flower bed", "garden", "shrubs", "shrubbery", "greenery"]);
+                        };
+                        sceneryAttributes.canDrawOn = true;
+                        break;
+
+                    default:
+                        sceneryAttributes.subType = "intangible";
                 };
 
-                if (anObjectName == "ground") {anObjectName = "floor";};
-
-                var sceneryAttributes = {"type": "scenery", "subType": subType, "canDrawOn": canDrawOn};
-                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, "", sceneryAttributes, null, null);
-                sceneryObject.addSyns([anObjectName+"s", anObjectName+"es"]);
-                if (anObjectName == "floor") {
-                    sceneryObject.addSyns("ground");
-                };
+                var sceneryObject = new artefactObjectModule.Artefact(anObjectName, anObjectName, description, sceneryAttributes, null, null);
                 _inventory.add(sceneryObject);
                 return sceneryObject;
             };
 
-            if (anObjectName == "blood") {
-                var sceneryBlood = self.createBloodObject();
-                if (sceneryBlood) {
-                    _inventory.add(sceneryBlood);
-                    return sceneryBlood;
-                };
-            };
+            return false; //return nothing
         };
 
         self.getObjectByType = function(anObjectType) {

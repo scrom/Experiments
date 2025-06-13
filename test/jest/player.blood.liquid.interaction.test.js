@@ -96,7 +96,7 @@ describe('Player Blood Liquid Interaction', () => {
         l0.addLiquid("blood");
         l0.addLiquid("custard");
 
-        const expectedResult = "Someone has spilled blood and custard on it.";
+        const expectedResult = "You look down. Yep, that's the ground beneath your feet.<br>Someone has spilled blood and custard on it.";
         const actualResult = p0.examine("examine", "floor");
         console.debug("Expected: " + expectedResult);
         console.debug("Actual  : " + actualResult);
@@ -141,7 +141,7 @@ describe('Player Blood Liquid Interaction', () => {
         l0.addLiquid("blood");
         l0.addLiquid("custard");
 
-        const expectedResult = "Someone has spilled blood and custard on it.";
+        const expectedResult = "You look down. Yep, that's the ground beneath your feet.<br>Someone has spilled blood and custard on it.";
         const actualResult = p0.examine("examine", "floor");
         console.debug("Expected: " + expectedResult);
         console.debug("Actual  : " + actualResult);

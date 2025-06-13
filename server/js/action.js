@@ -48,9 +48,11 @@ exports.Action = function Action(player, map, fileManager) {
                               '","description":"'+resultDescription+
                               '","attributes":'+_player.getClientAttributesString();
             if (imageName) {
-                //check image exists and only add to response if it does
-                if (_fm.imageExists(imageName)) {
-                    _resultJson += ',"image":"'+imageName+'"';
+                if (_fm){
+                    //check image exists and only add to response if it does
+                    if (_fm.imageExists(imageName)) {
+                        _resultJson += ',"image":"'+imageName+'"';
+                    };
                 };
             };
             _resultJson += '}';

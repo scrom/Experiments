@@ -3547,15 +3547,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 if (artefactName) {
                     if (_currentLocation.objectExists(artefactName, false, false, true)) {
                         var object = _currentLocation.getObject(artefactName, false, false);
-                        if (object.getType() == "creature") {
-                            if (object.getSubType() == "friendly") {
-                                if (object.getDisplayName() != self.getDisplayName()) {
-                                    return tools.initCap(self.getFirstName()) + " says 'Hey, " + object.getFirstName() + ".'<br>'$player here wants to talk to you when you've got a minute.'";
+                        if (object) {
+                            if (object.getType() == "creature") {
+                                if (object.getSubType() == "friendly") {
+                                    if (object.getDisplayName() != self.getDisplayName()) {
+                                        return tools.initCap(self.getFirstName()) + " says 'Hey, " + object.getFirstName() + ".'<br>'$player here wants to talk to you when you've got a minute.'";
+                                    };
                                 };
                             };
+                            //@todo improve for they/them
+                            return tools.initCap(self.getPrefix()) + " says 'I'm sure " + object.getDescriptivePrefix() + " around here somewhere.'";
                         };
-                        //@todo improve for they/them
-                        return tools.initCap(self.getPrefix()) + " says 'I'm sure " + object.getDescriptivePrefix() + " around here somewhere.'";
                     };
                     if (map.checkExists(artefactName)) {
                         return "You ask " + self.getFirstName() + " for " + artefactName + ".<br>" + player.ask("find", self.getName(), artefactName, map);
