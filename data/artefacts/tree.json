@@ -2,7 +2,7 @@
   "object": "artefact",
   "name": "tree",
   "description": "large tree",
-  "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunks spiral up about 25 feet into a carefully manicured crown of green.",
+  "detailedDescription": "It's an ornamental evergreen variety.<br>The twisted trunk spirals up about 35 feet into a carefully manicured crown of green.",
   "attributes": {
     "weight": 300,
     "type": "scenery",
