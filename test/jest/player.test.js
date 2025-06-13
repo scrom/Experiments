@@ -1650,6 +1650,41 @@ test('duplicate items are collated in player inventory description', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+
+test('player can play guitar', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
+    var currentLocationName = "library"
+    var currentLocation = m0.getLocation(currentLocationName);
+    p0.setLocation(currentLocation);
+
+    p0.get("get", "guitar");
+
+    var expectedResult = "You attempt to strum a few notes but virtual music doesn't seem to be your forte.$result"; 
+    var actualResult = p0.play("play", "guitar");
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('player cannot play broken guitar', () => {
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
+    var currentLocationName = "library"
+    var currentLocation = m0.getLocation(currentLocationName);
+    p0.setLocation(currentLocation);
+
+    p0.get("get", "guitar");
+    p0.breakOrDestroy("break", "guitar");
+
+    var expectedResult = "You should fail"; 
+    var actualResult = p0.play("play", "guitar");
+    console.debug("Expected: "+expectedResult);
+    console.debug("Actual  : "+actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('end game triggers correct message', () => {
     var expectedResult = "<br>That's it, game over. Thanks for playing!<br>How did you do?<br>Take a look at your <i>stats</i> to evaluate your performance.<br><br>If you'd like to play again you can either <i>quit</i> and start a new game or <i>load</i> a previously saved game.";
     var actualResult = p0.endGame();
