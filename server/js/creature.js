@@ -2950,7 +2950,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     return _genderPrefix + " says 'Sorry $player. I don't know where it is either.'" + returnImage;
                 };
             };
-            return _genderPrefix + " says '" + map.find(objectName, willFindArtefacts) + "'" + returnImage;
+            return _genderPrefix + " says '" + map.find(objectName, willFindArtefacts, null, self) + "'" + returnImage;
         };
 
         self.initialReplyString = function(playerAggression) {

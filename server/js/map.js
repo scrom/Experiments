@@ -766,9 +766,9 @@ exports.Map = function Map() {
             return randomReplies[randomIndex];
         };
 
-        self.find = function(objectName, includeArtefacts,returnInternalLocationName) {
+        self.find = function(objectName, includeArtefacts,returnInternalLocationName, caller) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
-            //it also deliberately does not find intangibles/scenery
+            //it also deliberately does not find intangibles/scenery - unless caller is passed in as we move to fallback finding
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
@@ -791,15 +791,12 @@ exports.Map = function Map() {
                 };
             };
 
-            //notfound replies
-            var randomReplies = ["Sorry $player, I can't help you there.","Nope, sorry."];
-            if (includeArtefacts) {
-                randomReplies.push("I'm sorry, I'm not aware of any '"+objectName+"' here.");
-                randomReplies.push("Nope, I've not seen any " + objectName + " around.", "I'm afraid you'll need to hunt " + objectName + " down yourself.");
-            } else {
-                randomReplies.push("I'm sorry, there's nobody who answers to the name '"+objectName+"' here.");    
+            if (includeArtefacts && caller) {
+                return self.notFoundFallback(objectName, null, caller);
             };
 
+            //notfound replies
+            var randomReplies = ["Sorry $player, I can't help you there.","Nope, sorry.", "I'm sorry, there's nobody who answers to the name '"+objectName+"' here."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
             
