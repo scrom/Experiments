@@ -612,7 +612,7 @@ exports.Map = function Map() {
                             if (desiredObject.getType() == "creature") {
                                 return "It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
                             };
-                            if (desiredObject.getWeight() >= 200) { //200 is a good size threshold for large items from a distance
+                            if (desiredObject.getWeight() >= 200 && caller.getType() == "player") { //200 is a good size threshold for large items from a distance
                                 return desiredObject.getDetailedDescription(aggression, self, 200);
                             };
                         };
