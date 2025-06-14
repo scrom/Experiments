@@ -1430,7 +1430,7 @@ test('cannot get recommended direction if not accessible', () => {
 });
 
 
-test('can see details of large objects in line of sight', () => {
+test('can examine details of large objects in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
@@ -1444,7 +1444,22 @@ test('can see details of large objects in line of sight', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('cannot see details of large objects if not in line of sight', () => {
+test('cannot examine details of smaller objects in line of sight', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
+    var restArea = m0.getLocation("atrium");
+    var restArea = m0.getLocation("atrium");
+    p0.setLocation(restArea);
+
+    const objectName = "coffee machine"
+    const expectedResult = "You peer toward the kitchen but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading to the <i>West</i>.";
+    var actualResult = p0.examine("examine", objectName, null, m0);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('cannot examine details of large objects if not in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
     p0 = new player.Player(playerAttributes, m0, mb);
