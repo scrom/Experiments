@@ -3,6 +3,9 @@
   "name": "reception",
   "displayName": "Reception",
   "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+  "attributes": {
+    "imageName": "reception.jpg"
+  },
   "exits": [
     {
       "object": "exit",
