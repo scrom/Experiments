@@ -766,9 +766,6 @@ exports.Map = function Map() {
         self.find = function(objectName, includeArtefacts,returnInternalLocationName, caller) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it also deliberately does not find intangibles/scenery - unless caller is passed in as we move to fallback finding
-            if (caller) {
-                return self.notFoundFallback(objectName, null, caller);
-            };
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
@@ -779,16 +776,25 @@ exports.Map = function Map() {
                     if (returnInternalLocationName) {
                         foundLocationName = _locations[i].getName();
                     } else {
-                        foundLocationName = _locations[i].getDisplayName();
+                        foundLocationName = _locations[i].getDisplayName().toLowerCase();
                     };
                     var foundObject = _locations[i].getObject(objectName);
                     if (foundObject.getType() == "creature") {
-                        return foundObject.getDisplayName()+" is currently at '"+foundLocationName+"'.";
+                        let s = "s";
+                        let prefix = foundObject.getPrefix();
+                        if (prefix == "They") {
+                            s = "re"
+                        };
+                        return foundObject.getPrefix()+"'"+s+" somewhere around the "+foundLocationName+" area at the moment.";
                     };
                     if (includeArtefacts) {
-                        return "I believe you'll find something like that at '"+foundLocationName+"'.";
+                        return "I believe you'll find something like that around the "+foundLocationName+" area.";
                     };
                 };
+            };
+
+            if (caller) {
+                return self.notFoundFallback(objectName, null, caller);
             };
 
             //notfound replies

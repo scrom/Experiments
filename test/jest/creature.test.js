@@ -481,7 +481,7 @@ test('friendlyCreatureWillFindForPlayer', () => {
     var m = mb.buildMap();
     var creatureName = 'creature';
     var c0 = new creature.Creature(creatureName,'beastie', 'a big beastie with teeth',{weight:120, attackStrength:50, gender:'unknown', type:'creature', carryWeight:50, health:150, affinity:1});
-    var expected = "It says 'Stephen Goodwin is currently at 'Poppy meeting room'.'";
+    var expected = "It says 'He's somewhere around the poppy meeting room area at the moment.'";
     var playerAggression = 1; //1 point of aggression should be acceptable
     var actual = c0.find("stephen g", playerAggression, m);
     console.debug("expected: "+expected);
