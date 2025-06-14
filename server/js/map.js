@@ -769,10 +769,11 @@ exports.Map = function Map() {
             //loop through each location and location inventory. 
             //Get object (by synonym)
             //return when found
+            //
             for (var i = 0; i < _locations.length; i++) {
                 var object = _locations[i].getObject(objectName, false, searchCreatures);
                 if (object) {
-                    if ((!object.isHidden()) || includeHiddenObjects) {
+                    if ((!object.isHidden()) || includeHiddenObjects || object.getType() == "scenery") {
                         if (object.getWeight() >= minObjectSize) {
                             return _locations[i].getName()
                         };
