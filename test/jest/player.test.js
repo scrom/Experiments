@@ -1429,6 +1429,30 @@ test('cannot get recommended direction if not accessible', () => {
 });
 
 
+test('can see details of large objects in line of sight', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("atrium");
+    p0.setLocation(restArea);
+    var expectedResult = "xxx";
+    var actualResult = p0.examine("examine", "tree", null, m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('cannot see details of large objects if not in line of sight', () => {
+    //should have a path but not a direct visible one
+    m0 = mb.buildMap();
+    var restArea = m0.getLocation("office-front"); // close but out of direct line
+    p0.setLocation(restArea);
+    var expectedResult = "xxx";
+    var actualResult = p0.examine("examine", "tree", null, m0);
+    console.debug("Expected: " + expectedResult);
+    console.debug("Actual  : " + actualResult);
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('cannot get recommended direction if not in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
