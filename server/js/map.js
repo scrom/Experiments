@@ -631,17 +631,14 @@ exports.Map = function Map() {
         self.notFoundFallback = function(objectName, container, caller) {
             var currentLocation = caller.getCurrentLocation();
             var inventory = caller.getInventoryObject();
-
-            var quote = "'";
             var you = "I";
             if (caller.getType() == "player") {
-                quote = "";
                 you = "You";
             };
 
             //last few checks - is there a spilled liquid we're trying to get?
             if (currentLocation.spilledLiquidExists(objectName) || inventory.hasLiquid(objectName)) {
-                return quote+"There's not enough left to do anything useful with."+quote;
+                return "There's not enough left to do anything useful with.";
             };
 
             // - are they looking thru a window or similar?
@@ -653,7 +650,7 @@ exports.Map = function Map() {
                         var artefact = destination.getObject(objectName);
                         if (artefact) {
                             if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
-                                return quote+you+" can't reach "+artefact.getSuffix()+" from here."+quote;
+                                return you+" can't reach "+artefact.getSuffix()+" from here.";
                             };
                         };
                     };
@@ -667,7 +664,7 @@ exports.Map = function Map() {
             };
 
             if (isPlayerArt) {
-                return quote+"It's just some idle scrawl. Nothing anyone can do much with."+quote;
+                return "It's just some idle scrawl. Nothing anyone can do much with.";
             };
 
             if (objectName == currentLocation.getName().toLowerCase() || objectName == currentLocation.getDisplayName().toLowerCase()) {
@@ -676,7 +673,7 @@ exports.Map = function Map() {
                 if (caller.getType() == "player") {
                     maybe = " <i>(Or maybe you do.)</i>"
                 };
-                return quote+you+" don't have all day to root around everywhere."+maybe+"<br>Either way, you'll need to be more specific."+quote;
+                return you+" don't have all day to root around everywhere."+maybe+"<br>Either way, you'll need to be more specific.";
             };
           
             //#566 is a creature carrying it?
@@ -685,12 +682,12 @@ exports.Map = function Map() {
                         var creaturesObject = creatures[c].getObject(objectName); //this will also handle synonyms
 
                         if (creaturesObject) {
-                            return quote+"It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+"."+quote;
+                            return "It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+".";
                         };
 
                         //do they sell it?
                         if (creatures[c].sells(objectName)) {
-                            return quote+"I think "+creatures[c].getFirstName()+" may have some for sale."+quote;
+                            return "I think "+creatures[c].getFirstName()+" may have some for sale.";
                         };
 
                         //see if any of their active (or inactive without parent) missions deliver it...
@@ -700,7 +697,7 @@ exports.Map = function Map() {
                                 let reward = creatureMissions[m].getRewardObject();
                                 if (reward) {
                                     if (reward.syn(objectName)) {
-                                        return quote+tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for."+quote;
+                                        return tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for.";
                                     };
                                 };
                             };
@@ -718,13 +715,13 @@ exports.Map = function Map() {
                     for (var a=0; a<allArtefacts.length;a++) {
                         if (allArtefacts[a].getType() != 'creature') {
                             //do they sell it?
-                            if (allArtefacts[a].sells(objectName)) {quote+"I think "+allArtefacts[a].getName()+" may have some for sale."+quote};
+                            if (allArtefacts[a].sells(objectName)) {"I think "+allArtefacts[a].getName()+" may have some for sale."};
 
                             deliveryItems = allArtefacts[a].getDeliveryItems();
                             //if (deliveryItems.length > 0) {console.debug(deliveryItems)};
                             for (var d=0; d<deliveryItems.length;d++) {
                                 if (deliveryItems[d].syn(objectName))  {
-                                    return quote+"There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for."+quote;
+                                    return "There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for.";
                                 };
                             };
                         };                       
@@ -737,10 +734,10 @@ exports.Map = function Map() {
                 {
                     //reword one of the responses.
                     if (whereIsIt.includes("You peer toward")) {
-                        whereIsiIt = whereIsIt.slice(whereIsIt.indexOf("<br>")+5);
+                        whereIsIt = whereIsIt.slice(whereIsIt.indexOf("<br>")+4);
                     };
                 }
-                return quote+whereIsIt+quote;
+                return whereIsIt;
             };
             
             var randomReplies;
@@ -769,6 +766,9 @@ exports.Map = function Map() {
         self.find = function(objectName, includeArtefacts,returnInternalLocationName, caller) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it also deliberately does not find intangibles/scenery - unless caller is passed in as we move to fallback finding
+            if (caller) {
+                return self.notFoundFallback(objectName, null, caller);
+            };
 
             //loop through each location and location inventory. 
             //Get object (by synonym)
@@ -791,12 +791,8 @@ exports.Map = function Map() {
                 };
             };
 
-            if (includeArtefacts && caller) {
-                return self.notFoundFallback(objectName, null, caller);
-            };
-
             //notfound replies
-            var randomReplies = ["Sorry $player, I can't help you there.","Nope, sorry.", "I'm sorry, there's nobody who answers to the name '"+objectName+"' here."];
+            var randomReplies = ["Sorry $player, I can't help you there."];
             var randomIndex = Math.floor(Math.random() * randomReplies.length);
             return randomReplies[randomIndex];
             
