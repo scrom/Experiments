@@ -1569,8 +1569,12 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
         self.transmitAntibodies = function(receiver, transmissionMethod) {
             for (var a=0;a<_antibodies.length;a++) {
                 if (!(receiver.hasAntibodies(_antibodies[a]))) {
-                    var randomInt = Math.floor(Math.random() * 4); 
-                    if (randomInt > 0) { //75% chance of success
+                    var chanceModifier = 4 //75% chance of success by default
+                    if (transmissionMethod == "inject") {
+                        chanceModifier = 8 //much more likely to succeed with inject
+                    };
+                    var randomInt = Math.floor(Math.random() * chanceModifier); 
+                    if (randomInt > 0) { //% chance of success
                         receiver.setAntibody(_antibodies[a])
                         //console.debug("antibodies passed to "+receiver.getType());
                     };
@@ -1580,7 +1584,8 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
         self.transmitContagion = function(receiver, transmissionMethod) {
             for (var c=0;c<_contagion.length;c++) {
-                _contagion[c].transmit(self, receiver, transmissionMethod);
+                //note, contagion objects are their own thing, not artefacts
+                _contagion[c].transmit(self, receiver, transmissionMethod); 
             };
         };
 
