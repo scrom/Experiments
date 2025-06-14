@@ -584,10 +584,13 @@ module.exports.Inventory = function Inventory(maxCarryingWeight, openingCashBala
                 
                 ////
                 //search creatures and unlocked artefacts...
-                //only confirm items from open, unlocked containers - this way we know the player has discovered them
+                //only confirm items from open, unlocked containers or things that don't open - this way we know the player has discovered them
                 //@bug ? @todo -@see issue#356 positioned items will only be revealed to "locked" and "open" objects - this seems odd.
-                if (_items[index].isOpen()) {
+                if (_items[index].isOpen()) { //if it doesn't open, we may still want to retrieve nested scenery items.
                     //console.debug(_items[index].getDisplayName()+" open? "+_items[index].isOpen());
+                    if (_items[index].getName() == "balcony") {
+                        console.debug("Found Balcony");
+                    };
                     var itemInventory = _items[index].getInventoryObject();
                     var heldObject = itemInventory.getObject(anObjectName, ignoreSynonyms, searchCreatures, customAction, ignoreScenery);
                     if (heldObject) {                        

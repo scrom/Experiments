@@ -31,6 +31,18 @@
     }
   ],
   "inventory": [
+        {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "These vast full-height windows run all around the ouside edge of the atrium area letting in light and giving a feeling of openness to the space.",
+      "attributes": {
+        "weight":300
+      },
+      "synonyms": ["outside", "large window", "tall Window", "outside window", "out", "glass", "openness"]
+    },
+    {
+      "file": "balcony"
+    },
     {
       "file": "reception-desk"
     },
@@ -59,6 +71,8 @@
     }
   ],
   "synonyms": [
-    "reception"
+    "reception",
+    "office",
+    "space"
   ]
 }

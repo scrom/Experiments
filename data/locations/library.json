@@ -17,6 +17,15 @@
   ],
   "inventory": [
     {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "You peer outside at the world. Not much to see from here though.",
+      "attributes": {
+        "weight":200
+      },
+      "synonyms": ["outside", "outside window", "out"]
+    },
+    {
       "file": "table-library"
     },
     {

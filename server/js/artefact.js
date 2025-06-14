@@ -1186,6 +1186,10 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             if (!minSize) { minSize = -999; };
             //note we can change description based on player aggression - better for creatures but supported here too.
             var resultString = _detailedDescription; //original description
+            if (minSize >= 200 && (self.getWeight() >= minSize) && (!_destroyed) ) {
+                //we're looking from a distance;
+                return _detailedDescription;
+            };
             if (_destroyed) {
                 resultString += self.describeView(_viewDestination, map);
                 return resultString;

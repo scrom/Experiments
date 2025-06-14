@@ -4,7 +4,7 @@
 "description": "toilet",
 "detailedDescription": "Pretty much your standard office porcelain.",
 "attributes": {
-    "weight": 100,
+    "weight": 250,
     "type": "scenery",
     "imageName": "toilet.jpg", 
     "customAction": [

@@ -276,11 +276,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                             return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
                         };
 
-                        //tweak wordiung depening on what we're looking for...
+                        //tweak wording depending on what we're looking for...
                         let desiredObject = desiredLocation.getObject(objectName); //will fail if requested item is a location
                         if (desiredObject) {
                             if (desiredObject.getType() == "creature") {
                                 return "It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
+                            };
+                            if (desiredObject.getWeight() >= 200) { //200 is a good size threshold for large items from a distance
+                                return desiredObject.getDetailedDescription(_aggression, map, 200);
                             };
                         };
                         return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading "+toThe+"<i>"+direction+"</i>."

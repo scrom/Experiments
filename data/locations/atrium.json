@@ -2,7 +2,7 @@
   "object": "location",
   "name": "atrium",
   "displayName": "Atrium",
-  "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
+  "description": "You're standing in a large open-space atrium on the ground floor of the Porta Rossa offices.<br>The smell of coffee and smart people hangs in the air.<br><br>The space is overlooked by open glass balconies from the floors above.<br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
   "attributes": {
     "start": true,
     "imageName": "atrium.jpg"
@@ -46,9 +46,21 @@
     }
   ],
   "inventory": [
+      {
+      "object": "artefact",
+      "template": "window",
+      "detailedDescription": "These vast full-height windows run all around the ouside edge of the atrium area letting in light and giving a feeling of openness to the space.",
+      "attributes": {
+        "weight":300
+      },
+      "synonyms": ["outside", "large window", "tall Window", "outside window", "out", "glass", "openness"]
+    },
     {
       "file": "violet"
     },
+    {
+      "file": "balcony"
+    },    
     {
       "file": "smell-of-coffee"
     },
@@ -164,6 +176,8 @@
     }
   ],
   "synonyms": [
-    "atrium"
+    "atrium",
+    "space",
+    "office"
   ]
 }

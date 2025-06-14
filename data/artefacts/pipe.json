@@ -4,7 +4,7 @@
   "description": "big pipes",
   "detailedDescription": "They're painted bright yellow and blue.<br>They look pretty much indestructible (which I'm sure you'll agree is a good thing).",
   "attributes": {
-    "weight": 180,
+    "weight": 250,
     "type": "scenery",
     "plural": true,
     "imageName": "pipe.jpg",

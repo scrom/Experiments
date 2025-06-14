@@ -2,11 +2,12 @@
 "object": "artefact",
 "name": "window",
 "description": "window",
+"detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
 "attributes": {
     "weight": 280,
     "type": "scenery",
     "canDrawOn": true,
-	"isBreakable": true
+	"isBreakable": false
 },
 "synonyms": [
     "glass",

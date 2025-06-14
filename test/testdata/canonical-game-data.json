@@ -3,13 +3,15 @@
         "object": "location",
         "name": "atrium",
         "displayName": "Atrium",
-        "description": "You're standing in a large open-space atrium on the ground floor of the Red Gate offices.<br>The smell of coffee and smart people hangs in the air.<br><br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
+        "description": "You're standing in a large open-space atrium on the ground floor of the Porta Rossa offices.<br>The smell of coffee and smart people hangs in the air.<br><br>The space is overlooked by open glass balconies from the floors above.<br>Looking around you, the area extends to the East and West with a reception area, seating, a library and a kitchen. North leads out of the office whilst toilets are to the south.<br>Lifts to other office floors also depart from here.",
         "attributes": {
             "start": true,
             "imageName": "atrium.jpg"
         },
         "synonyms": [
-            "atrium"
+            "atrium",
+            "space",
+            "office"
         ],
         "exits": [
             {
@@ -52,6 +54,26 @@
         "inventory": [
             {
                 "object": "artefact",
+                "name": "window",
+                "description": "window",
+                "detailedDescription": "These vast full-height windows run all around the ouside edge of the atrium area letting in light and giving a feeling of openness to the space.",
+                "attributes": {
+                    "weight": 300,
+                    "type": "scenery",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "outside",
+                    "large window",
+                    "tall Window",
+                    "outside window",
+                    "out",
+                    "glass",
+                    "openness"
+                ]
+            },
+            {
+                "object": "artefact",
                 "name": "violet",
                 "description": "violet",
                 "detailedDescription": "She's usually at reception.",
@@ -73,6 +95,24 @@
                     "reception",
                     "violet",
                     "voilet"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "balcony",
+                "description": "balcony",
+                "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
+                "attributes": {
+                    "weight": 280,
+                    "type": "scenery",
+                    "imageName": "balcony.jpg"
+                },
+                "synonyms": [
+                    "ledge",
+                    "edge",
+                    "balconies",
+                    "glass balconies",
+                    "glass balcony"
                 ]
             },
             {
@@ -1024,7 +1064,7 @@
         "object": "location",
         "name": "atrium-seating",
         "displayName": "Atrium seating area",
-        "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a dining table and a very large potted tree.",
+        "description": "You're in the atrium seating area.<br>People occasionally wander in and out of here, sit, chat, play chess, work etc.<br>It's quite a pleasant space dominated by a dining table and a very large potted tree.<br>Above you are the ever-present glass balconies that hang from the walls.",
         "attributes": {
             "imageName": "atrium-seating-area.jpg"
         },
@@ -1034,7 +1074,9 @@
             "atrium seating",
             "atrium seating area",
             "atrium-seating",
-            "seating"
+            "seating",
+            "office",
+            "space"
         ],
         "exits": [
             {
@@ -1054,6 +1096,24 @@
             }
         ],
         "inventory": [
+            {
+                "object": "artefact",
+                "name": "balcony",
+                "description": "balcony",
+                "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
+                "attributes": {
+                    "weight": 280,
+                    "type": "scenery",
+                    "imageName": "balcony.jpg"
+                },
+                "synonyms": [
+                    "ledge",
+                    "edge",
+                    "balconies",
+                    "glass balconies",
+                    "glass balcony"
+                ]
+            },
             {
                 "object": "artefact",
                 "name": "diningroomtable",
@@ -1170,16 +1230,35 @@
                 "description": "window",
                 "detailedDescription": "Are you spying on the lawyers?",
                 "attributes": {
-                    "weight": 280,
+                    "weight": 180,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "lawyer-lobby"
                 },
                 "synonyms": [
-                    "glass",
-                    "windows",
+                    "small window",
+                    "lawyer Window",
                     "outside"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "window",
+                "description": "window",
+                "detailedDescription": "These vast full-height windows run all around the ouside edge of the atrium area letting in light and giving a feeling of openness to the space.",
+                "attributes": {
+                    "weight": 300,
+                    "type": "scenery",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "outside",
+                    "large window",
+                    "tall Window",
+                    "outside window",
+                    "out",
+                    "glass",
+                    "openness"
                 ]
             },
             {
@@ -1587,7 +1666,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "customAction": [
                         "get"
                     ],
@@ -4254,7 +4332,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "west-car-park"
                 },
@@ -4626,7 +4703,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -5179,7 +5255,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -5872,7 +5947,7 @@
                 "description": "toilet",
                 "detailedDescription": "Pretty much your standard office porcelain.",
                 "attributes": {
-                    "weight": 100,
+                    "weight": 250,
                     "type": "scenery",
                     "customAction": [
                         "flush",
@@ -6118,7 +6193,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "sales-seating"
                 },
@@ -6213,7 +6287,10 @@
                 },
                 "synonyms": [
                     "ledge",
-                    "edge"
+                    "edge",
+                    "balconies",
+                    "glass balconies",
+                    "glass balcony"
                 ]
             }
         ]
@@ -6501,7 +6578,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "facilities-area"
                 },
@@ -6917,7 +6993,7 @@
                 "description": "toilet",
                 "detailedDescription": "It looks like it's in lovely clean, working order!",
                 "attributes": {
-                    "weight": 100,
+                    "weight": 250,
                     "type": "scenery",
                     "customAction": [
                         "flush",
@@ -7040,7 +7116,7 @@
                 "description": "big pipes",
                 "detailedDescription": "They're painted bright yellow and blue.<br>They look pretty much indestructible (which I'm sure you'll agree is a good thing).",
                 "attributes": {
-                    "weight": 180,
+                    "weight": 250,
                     "type": "scenery",
                     "plural": true,
                     "imageName": "pipe.jpg",
@@ -7646,7 +7722,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "stairs-first-floor"
                 },
@@ -12243,6 +12318,22 @@
         "inventory": [
             {
                 "object": "artefact",
+                "name": "window",
+                "description": "window",
+                "detailedDescription": "You peer outside at the world. Not much to see from here though.",
+                "attributes": {
+                    "weight": 200,
+                    "type": "scenery",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "outside",
+                    "outside window",
+                    "out"
+                ]
+            },
+            {
+                "object": "artefact",
                 "name": "table",
                 "description": "glass table",
                 "detailedDescription": "It's custom-made with a fake rock underneath and a sword-sized slot in the top.<br>A plaque on it says something about a billion dollars.",
@@ -14347,7 +14438,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "west-car-park"
                 },
@@ -14493,7 +14583,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -15428,7 +15517,9 @@
             "imageName": "reception.jpg"
         },
         "synonyms": [
-            "reception"
+            "reception",
+            "office",
+            "space"
         ],
         "exits": [
             {
@@ -15455,6 +15546,44 @@
             }
         ],
         "inventory": [
+            {
+                "object": "artefact",
+                "name": "window",
+                "description": "window",
+                "detailedDescription": "These vast full-height windows run all around the ouside edge of the atrium area letting in light and giving a feeling of openness to the space.",
+                "attributes": {
+                    "weight": 300,
+                    "type": "scenery",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "outside",
+                    "large window",
+                    "tall Window",
+                    "outside window",
+                    "out",
+                    "glass",
+                    "openness"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "balcony",
+                "description": "balcony",
+                "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
+                "attributes": {
+                    "weight": 280,
+                    "type": "scenery",
+                    "imageName": "balcony.jpg"
+                },
+                "synonyms": [
+                    "ledge",
+                    "edge",
+                    "balconies",
+                    "glass balconies",
+                    "glass balcony"
+                ]
+            },
             {
                 "object": "artefact",
                 "name": "reception desk",
@@ -16664,7 +16793,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "reception"
                 },
@@ -16904,7 +17032,7 @@
                 "description": "toilet",
                 "detailedDescription": "It looks like the maintenance team have been working on this one.",
                 "attributes": {
-                    "weight": 100,
+                    "weight": 250,
                     "type": "scenery",
                     "customAction": [
                         "flush",
@@ -17298,7 +17426,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "facilities-area"
                 },
@@ -17393,7 +17520,10 @@
                 },
                 "synonyms": [
                     "ledge",
-                    "edge"
+                    "edge",
+                    "balconies",
+                    "glass balconies",
+                    "glass balcony"
                 ]
             }
         ]
@@ -20011,7 +20141,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -20130,7 +20259,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -20417,7 +20545,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "customAction": [
                         "get"
                     ],
@@ -20630,7 +20757,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
@@ -21161,7 +21287,6 @@
                 "attributes": {
                     "weight": 280,
                     "type": "scenery",
-                    "isBreakable": true,
                     "canDrawOn": true,
                     "viewDestination": "office-front"
                 },
