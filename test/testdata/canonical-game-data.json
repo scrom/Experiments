@@ -177,7 +177,7 @@
                     {
                         "object": "mission",
                         "name": "destroyscreen",
-                        "displayName": "destroy the screen",
+                        "displayName": "destroy the atrium TV screen",
                         "description": "<br>It screams 'destroy me' (or perhaps that's just a hidden violent streak you have) but you'd better be quick about it before anyone sees you.",
                         "attributes": {
                             "missionObject": "screen",
@@ -190,7 +190,7 @@
                             "time": 35
                         },
                         "reward": {
-                            "message": "<br>You forgot to destroy the screen in the Atrium.<br>To be honest, it's probably better that you left it alone anyway."
+                            "message": "<br>Did you forget to trash the screen in the Atrium?<br>Looks like you missed your chance now things are a little busier around here.<br>To be honest, it's probably better that you left it alone anyway."
                         },
                         "fail": {
                             "score": -25,
@@ -15424,6 +15424,9 @@
         "name": "reception",
         "displayName": "Reception",
         "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+        "attributes": {
+            "imageName": "reception.jpg"
+        },
         "synonyms": [
             "reception"
         ],
