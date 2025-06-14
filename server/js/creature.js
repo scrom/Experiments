@@ -1700,7 +1700,7 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             
             if (!localArtefact) {
                 if (_affinity > 1 && repairCost == 0) {
-                    var destination = map.getObjectLocationName(artefact.getName(), false, 0, false);
+                    var destination = map.getObjectLocationName(artefact.getName(), false, 0, false, _currentLocation, _inventory);
                     if (destination) {
                         self.setDestination(destination, true);
                         _autoRepair = artefact.getName();

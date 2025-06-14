@@ -239,7 +239,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
           //is a location or distant object mentioned in the description?
                 //can player see artefact/location from where they're standing?
                 //try object first, then plain location name, then location display name, then syns            
-                var desiredLocationName = _map.getObjectLocationName(objectName, false, 2.5, false); //min visible size is "2.5" to be slightly more realistic.
+                var desiredLocationName = _map.getObjectLocationName(objectName, false, 2.5, false, _currentLocation, _inventory); //min visible size is "2.5" to be slightly more realistic.
                 var desiredLocation;
                 if (desiredLocationName) {desiredLocation = _map.getLocation(desiredLocationName, true);};
                 if (!desiredLocationName) {

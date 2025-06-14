@@ -758,7 +758,7 @@ exports.Map = function Map() {
             };
         };
 
-        self.getObjectLocationName = function (objectName, includeHiddenObjects, minObjectSize, searchCreatures) {
+        self.getObjectLocationName = function (objectName, includeHiddenObjects, minObjectSize, searchCreatures, currentLocation, inventory) {
             //note, this *won't* find objects delivered by a mission or delivered by another object.
             //it *will* retrieve creatures
             
@@ -768,19 +768,37 @@ exports.Map = function Map() {
             
             //loop through each location and location inventory. 
             //Get object (by synonym)
-            //return when found
-            //
+            //we may get duplicates so find the *closest*
+            var matchingLocationNames = [];
             for (var i = 0; i < _locations.length; i++) {
                 var object = _locations[i].getObject(objectName, false, searchCreatures);
                 if (object) {
                     if ((!object.isHidden()) || includeHiddenObjects || object.getType() == "scenery") {
                         if (object.getWeight() >= minObjectSize) {
-                            return _locations[i].getName()
+                            matchingLocationNames.push(_locations[i].getName());
                         };
                     };
                 };
             };
-            return null;
+
+            if (matchingLocationNames.length == 0 ) {
+                //notfound
+                return null;
+            } else if (matchingLocationNames.length == 1 ) {
+                //only one match
+                return matchingLocationNames[0]; 
+            };
+
+            var closestLocation = {name:"", distance: 9999};
+            for (var l=0; l < matchingLocationNames.length; l++) {
+                let distance = self.getDistanceToLocation(matchingLocationNames[l], currentLocation, inventory);
+                if (distance < closestLocation.distance) {
+                    closestLocation.name = matchingLocationNames[l];
+                    closestLocation.distance = distance;
+                };
+            };
+
+            return closestLocation.name;
         };
 
         self.globalAffinityChange = function() {
