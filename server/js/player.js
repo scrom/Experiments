@@ -2207,7 +2207,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (artefact.chargesRemaining() == 0) {
                     removeObjectFromPlayerOrLocation(artefact.getName());
                 };
-                return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+".";
+                return "You add "+artefact.getDisplayName()+" to "+receiver.getDisplayName()+"." +tools.imgTag(receiver);
             };
 
             var requiresContainer = newObject.requiresContainer();
@@ -2764,6 +2764,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         if (putResult.includes("$fail$")) {
                             //strip out "fail" placeholder and return as-is.
                             putResult = putResult.replace("$fail$", "");
+                        } else {
+                            putResult+=tools.imgTag(receiver); // show image if successful
                         };
                         return putResult;
                     };

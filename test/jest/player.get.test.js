@@ -356,7 +356,7 @@ test("Test that a player can get *one* bowl of coco pops.", () => {
 
     console.debug("Location: "+kitchen)
 
-    const expectedResult = "You collect some coco pops into a nearby bowl.<br>";
+    const expectedResult = "You collect some coco pops into a nearby bowl.<br>$imagebowl.jpg/$image";
     const actualResult = p0.get('get', 'coco pops');
     expect(actualResult).toBe(expectedResult);
 });
@@ -368,7 +368,7 @@ test("Test that a player can get *two* bowls of coco pops.", () => {
     p0.setLocation(kitchen);
 
     p0.get('get', 'coco pops');
-    const expectedResult = "You collect some coco pops into a nearby drinking glass.<br>";
+    const expectedResult = "You collect some coco pops into a nearby drinking glass.<br>$imagedrinkingglass.jpg/$image";
     const actualResult = p0.get('get', 'coco pops');
     expect(actualResult).toBe(expectedResult);
 });
