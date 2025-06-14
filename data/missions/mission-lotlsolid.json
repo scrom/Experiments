@@ -2,10 +2,11 @@
   "object": "mission",
   "name": "lotlsolid",
   "displayName": "read the lotl SOLID article",
-  "description": "<a href=http://dev.porta-rossa.com/lotlsolid/ target=_blank>It's available online.</a>",
+  "description": "'Do Me a SOLID'.  What a <i>great</i> name for an article on the back of a toilet cubicle door.<br>You admit it <i>does</i> bring you a little smile.<br>It goes on to describe SOLID design principles in software development. It finishes with a reference to <a href=https://en.wikipedia.org/wiki/SOLID target=_blank>Wikipedia</a> online.<br><i>(Seriously, don't ever read the source code for this game!)</i>",
   "attributes": {
     "missionObject": "article on solid design principles",
-    "static": true
+    "static": true,
+    "imageName": "solid.jpg"
   },
   "conditionAttributes": {
     "isDestroyed": false,

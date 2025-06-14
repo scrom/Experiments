@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "lotlboyscout",
   "displayName": "read LOTL boy scout article",
-  "description": "<a href=http://dev.porta-rossa.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+  "description": "'Leave the campground cleaner than you found it'<br><br>The article goes on to describe some of the fundamentals of good coding practice. In particular; it focuses on leaving the code cleaner than you found it. Clean as you go, and pick up that one extra little piece of litter that was already there before you walk away.<br>If everyone on your team did that, on <i>every</i> check-in you'd be amazed how fast things improve.<br><i>Imagine!</i> Your code actually <i>improves</i> over time rather than degrades!<br><br>You think back to other jobs you've had where people didn't clean up after themselves and feel a little sad.<br><br><i>(Imagine if the authors of this game did that all the time! But no... they're in the zone, coding away at 3am. Just one more commit before bed. Sure, it'll be fine without tests... Just this once.)</i>",
   "attributes": {
     "missionObject": "article on the boy scout principle",
     "static": true

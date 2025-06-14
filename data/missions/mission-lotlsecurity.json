@@ -2,10 +2,11 @@
   "object": "mission",
   "name": "lotlsecurity",
   "displayName": "read the lotl security article",
-  "description": "<a href=http://dev.porta-rossa.com/take-security-stride/ target=_blank>It's available online.</a>",
+  "description": "The article describes in human-friendly detail some of the most common insecure practices and vulnerabilities in modern software development.<br>The one you always remember first is 'sanitise your inputs'. Anywhere you don't have control of data coming in, make sure it can't do anything malicious.<br><a href=https://owasp.org/www-project-top-ten/ target=_blank>There's a more detailed (if somewhat dry) reference online.</a>",
   "attributes": {
     "missionObject": "article on software security",
-    "static": true
+    "static": true,
+    "imageName": "owasp.jpg"
   },
   "conditionAttributes": {
     "isDestroyed": false,
