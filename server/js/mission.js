@@ -369,7 +369,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             else {
                 switch (failReason) {
                     case "time":
-                        message += "<br>You failed to "+self.getDisplayName()+" quickly enough.<br>";
+                        message += "<br>You missed your opportunity to "+self.getDisplayName()+". Next time you might want to be a bit quicker about things.<br>";
                         break;
                     case "destroyedObject":
                         message += "<br>You failed to "+self.getDisplayName()+". "+tools.initCap(failObject.getOriginalDisplayName())+" has been destroyed.";
