@@ -1419,6 +1419,7 @@ test('can get recommended direction if in line of sight', () => {
 test('cannot get recommended direction if not accessible', () => {
     //need to pass through a locked door
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You'll need to explore and find your way there yourself I'm afraid."; 
@@ -1432,9 +1433,11 @@ test('cannot get recommended direction if not accessible', () => {
 test('can see details of large objects in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
+    var restArea = m0.getLocation("atrium");
     var restArea = m0.getLocation("atrium");
     p0.setLocation(restArea);
-    var expectedResult = "xxx";
+    var expectedResult = "It's an ornamental evergreen variety.<br>The twisted trunk spirals up about 35 feet into a carefully manicured crown of green.";
     var actualResult = p0.examine("examine", "tree", null, m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);
@@ -1444,18 +1447,27 @@ test('can see details of large objects in line of sight', () => {
 test('cannot see details of large objects if not in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var restArea = m0.getLocation("office-front"); // close but out of direct line
     p0.setLocation(restArea);
-    var expectedResult = "xxx";
-    var actualResult = p0.examine("examine", "tree", null, m0);
-    console.debug("Expected: " + expectedResult);
+
+    const objectName = "tree"
+    const expectedResults = [
+        "There's no "+objectName+" here and you're not carrying any either.",
+        "You can't see any "+objectName+" around here.",
+        "There's no sign of any "+objectName+" nearby. You'll probably need to look elsewhere.",
+        "You'll need to try somewhere (or someone) else for that.",
+        "There's no "+objectName+" available here at the moment."
+    ];
+    var actualResult = p0.examine("examine", objectName, null, m0);
     console.debug("Actual  : " + actualResult);
-    expect(actualResult).toBe(expectedResult);
+    expect(expectedResults).toContain(actualResult);
 });
 
 test('cannot get recommended direction if not in line of sight', () => {
     //should have a path but not a direct visible one
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var restArea = m0.getLocation("room-404");
     p0.setLocation(restArea);
     var expectedResult = "You'll need to explore and find your way there yourself I'm afraid.";
@@ -1526,6 +1538,7 @@ test('can look in direction with no exit and see nothing', () => {
 
 test('can look in direction with closed door with window and see through door', () => {
     m0 = mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
     var restArea = m0.getLocation("atrium-seating");
     p0.setLocation(restArea);
     var expectedResult = "You see a door leading south.<br>Peering through the window you see serious people in suits looking busy and important.<br>It's locked.";

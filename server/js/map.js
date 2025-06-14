@@ -789,7 +789,7 @@ exports.Map = function Map() {
                 return matchingLocationNames[0]; 
             };
 
-            var closestLocation = {name:"", distance: 9999};
+            var closestLocation = {name:"", distance: 99999};
             for (var l=0; l < matchingLocationNames.length; l++) {
                 let distance = self.getDistanceToLocation(matchingLocationNames[l], currentLocation, inventory);
                 if (distance < closestLocation.distance) {
