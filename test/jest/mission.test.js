@@ -995,3 +995,44 @@ test('clearingBothParentsForMissionWith2AndParentsWillSuccessfullyActivateMissio
         const actualResult = playerreachescrashsite.isFailedOrComplete();
         expect(actualResult).toBe(expectedResult);
     });
+
+    
+test('canSucceedCounterIntuitiveDestroyScreenMission', () => {
+    const screen = m0.getObject("screen");
+    const atrium = m0.getLocation("atrium")
+
+    p0.setLocation(atrium);
+    var examine = p0.examine("examine", "screen", null, m0);
+    console.debug(examine);
+
+    const mc = new missionController.MissionController();
+    var activated = mc.activateNamedMission("destroyscreen", [atrium], p0);
+    console.debug(activated);
+    m0.updateMissions(40, p0);
+
+    const resultString = m0.updateMissions(1, p0);
+    const expectedResult = "<br><br>Did you forget to trash the screen in the Atrium?<br>Looks like you missed your chance now things are a little busier around here.<br>To be honest, it's probably better that you left it alone anyway.<br>";
+    const actualResult = resultString;
+    expect(actualResult).toBe(expectedResult);
+});
+
+    
+test('canFailCounterIntuitiveDestroyScreenMission', () => {
+    const screen = m0.getObject("screen");
+    const atrium = m0.getLocation("atrium")
+
+    p0.setLocation(atrium);
+    var examine = p0.examine("examine", "screen", null, m0);
+    console.debug(examine);
+
+    const mc = new missionController.MissionController();
+    var activated = mc.activateNamedMission("destroyscreen", [atrium], p0);
+    console.debug(activated);
+    var destroy = p0.breakOrDestroy("destroy", "screen"); 
+    console.debug(destroy);
+
+    const resultString = m0.updateMissions(1, p0);
+    const expectedResult = "<br><br>Bad you! Sometimes you just have to resist your violent urges.<br>Just to make things worse you manage to cut yourself on the splintered screen.<br>";
+    const actualResult = resultString;
+    expect(actualResult).toBe(expectedResult);
+});
