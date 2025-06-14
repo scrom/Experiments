@@ -645,7 +645,7 @@ test('canCompleteReadArticleMission', () => {
     inv.add(book);
 
     const resultString = p0.read("read", "article", m0);
-    const expectedResult = "You read 'Learn on the Loo' article.<br>'Do Me a SOLID'.  What a <i>great</i> name for an article on the back of a toilet cubicle door.<br>You admit it <i>does</i> bring you a little smile.<br>It goes on to describe SOLID design principles in software development. It finishes with a reference to <a href=https://en.wikipedia.org/wiki/SOLID target=_blank>Wikipedia</a> online.<br><i>(seriously, don't ever read the source code for this game!)</i><br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
+    const expectedResult = "You read 'Learn on the Loo' article.<br>'Do Me a SOLID'.  What a <i>great</i> name for an article on the back of a toilet cubicle door.<br>You admit it <i>does</i> bring you a little smile.<br>It goes on to describe SOLID design principles in software development. It finishes with a reference to <a href=https://en.wikipedia.org/wiki/SOLID target=_blank>Wikipedia</a> online.<br><i>(Seriously, don't ever read the source code for this game!)</i><br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });

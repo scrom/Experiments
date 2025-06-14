@@ -6011,7 +6011,7 @@
                         "object": "mission",
                         "name": "lotlsecurity",
                         "displayName": "read the lotl security article",
-                        "description": "<a href=http://dev.porta-rossa.com/take-security-stride/ target=_blank>It's available online.</a>",
+                        "description": "The article describes in human-friendly detail some of the most common insecure practices and vulnerabilities in modern software development.<br>The one you always remember first is 'sanitise your inputs'. Anywhere you don't have control of data coming in, make sure it can't do anything malicious.<br><a href=https://owasp.org/www-project-top-ten/ target=_blank>There's a more detailed (if somewhat dry) reference online.</a>",
                         "attributes": {
                             "missionObject": "article on software security",
                             "static": true
@@ -7057,7 +7057,7 @@
                         "object": "mission",
                         "name": "lotlsolid",
                         "displayName": "read the lotl SOLID article",
-                        "description": "<a href=http://dev.porta-rossa.com/lotlsolid/ target=_blank>It's available online.</a>",
+                        "description": "'Do Me a SOLID'.  What a <i>great</i> name for an article on the back of a toilet cubicle door.<br>You admit it <i>does</i> bring you a little smile.<br>It goes on to describe SOLID design principles in software development. It finishes with a reference to <a href=https://en.wikipedia.org/wiki/SOLID target=_blank>Wikipedia</a> online.<br><i>(Seriously, don't ever read the source code for this game!)</i>",
                         "attributes": {
                             "missionObject": "article on solid design principles",
                             "static": true
@@ -17120,7 +17120,7 @@
                         "object": "mission",
                         "name": "lotlboyscout",
                         "displayName": "read LOTL boy scout article",
-                        "description": "<a href=http://dev.porta-rossa.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+                        "description": "'Leave the campground cleaner than you found it'<br><br>The article goes on to describe some of the fundamentals of good coding practice. In particular; it focuses on leaving the code cleaner than you found it. Clean as you go, and pick up that one extra little piece of litter that was already there before you walk away.<br>If everyone on your team did that, on <i>every</i> check-in you'd be amazed how fast things improve.<br><i>Imagine!</i> Your code actually <i>improves</i> over time rather than degrades!<br><br>You think back to other jobs you've had where people didn't clean up after themselves and feel a little sad.<br><br><i>(Imagine if the authors of this game did that all the time! But no... they're in the zone, coding away at 3am. Just one more commit before bed. Sure, it'll be fine without tests... Just this once.)</i>",
                         "attributes": {
                             "missionObject": "article on the boy scout principle",
                             "static": true
