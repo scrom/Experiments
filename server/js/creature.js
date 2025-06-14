@@ -91,6 +91,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
         self.updateAttributes = function (newAttributes) {
             processAttributes(newAttributes);
         };
+
+        self.getAggression = function() {
+            //creature aggression not implemented yet
+            //we could use affinity *-1 though.
+            return 0;
+        };
         
         self.healthPercent = function () {
             //avoid dividebyzero
@@ -348,26 +354,12 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             };
         };
 
-        var notFoundMessage = function(objectName, map) {
-            // - are they looking thru a window or similar?
-            var viewObjects = _currentLocation.getAllObjectsWithViewLocation();
-            if (viewObjects.length > 0 && map) {
-                for (var i=0;i<viewObjects.length;i++) {
-                    var destination = map.getLocation(viewObjects[i].getViewLocation());
-                    if (destination) {
-                        var artefact = destination.getObject(objectName);
-                        if (artefact) {
-                            if (artefact.getWeight() >= 2) {
-                                return "I can't reach "+artefact.getPrefix().toLowerCase()+" from here.";
-                            };
-                        };
-                    };
-                };
-            };
+        self.where = function(objectName, action, map) {
+            return map.where(objectName, action, _currentLocation, _inventory, 0);
+        };
 
-            var randomReplies = ["Sorry $player, I can't help you there.", "Nope, I've not seen any "+objectName+" around.", "I'm afraid you'll need to hunt that down yourself.", "Nope, sorry."];
-            var randomIndex = Math.floor(Math.random() * randomReplies.length);
-            return randomReplies[randomIndex];
+        var notFoundMessage = function(objectName, map) {
+            return map.notFoundFallback(objectName, null, self);
         };
 
         var getObjectFromSelfPlayerOrLocation = function(objectName, player) {

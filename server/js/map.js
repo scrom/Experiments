@@ -281,7 +281,7 @@ exports.Map = function Map() {
 
             var newLocation;
             if (modification.teleport) {
-                var newLocation = map.getLocation(modification.teleport);
+                var newLocation = self.getLocation(modification.teleport);
             };
 
             for (var c = 0; c < creatures.length; c++) {
@@ -560,6 +560,210 @@ exports.Map = function Map() {
 
             //no matching door found
             return null;
+        };
+
+        self.where = function(objectName, action, caller) {
+            var currentLocation = caller.getCurrentLocation();
+            var inventory = caller.getInventoryObject();
+            var aggression = caller.getAggression();
+                //is a location or distant object mentioned in the description?
+                //can player see artefact/location from where they're standing?
+                //try object first, then plain location name, then location display name, then syns            
+                var desiredLocationName = self.getObjectLocationName(objectName, false, 2.5, false, currentLocation, inventory); //min visible size is "2.5" to be slightly more realistic.
+                var desiredLocation;
+                if (desiredLocationName) {desiredLocation = self.getLocation(desiredLocationName, true);};
+                if (!desiredLocationName) {
+                    desiredLocation = self.getLocation(objectName, true);
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (!desiredLocationName) {
+                    desiredLocation = self.getClosestMatchingLocation(objectName, currentLocation, inventory)
+                    if (desiredLocation) {
+                        desiredLocationName = desiredLocation.getName();
+                    };
+                };
+                if (desiredLocationName) {
+                    var path = self.lineOfSightPathToDestination(desiredLocationName, currentLocation, currentLocation);
+                    if (!path) {
+                        let LocationIsMentioned = currentLocation.getDescription().includes(desiredLocationName);
+                        let ObjectIsMentioned = currentLocation.getDescription().includes(objectName);
+                        //only do this if the location name whatever the player is looking for is mentioned in the current location description;
+                        if (LocationIsMentioned || ObjectIsMentioned) {
+                            //note, this comes out with the first direction to take being the last on the list! (as it's used as a navigation stack)
+                            path = self.findBestPath(desiredLocationName, 5, currentLocation, inventory);
+                            path.reverse(); //reverse the path so that the first direction is the first in the list.
+                        };
+                    };
+                    if (path) {
+                        //path found - we can see it.
+                        var direction = tools.directions[tools.directions.indexOf(path[0]) + 1];
+                        var toThe = "";
+                        if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
+                        if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
+                        if (action == "go") {
+                            return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
+                        };
+
+                        //tweak wording depending on what we're looking for...
+                        let desiredObject = desiredLocation.getObject(objectName); //will fail if requested item is a location
+                        if (desiredObject) {
+                            if (desiredObject.getType() == "creature") {
+                                return "It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
+                            };
+                            if (desiredObject.getWeight() >= 200) { //200 is a good size threshold for large items from a distance
+                                return desiredObject.getDetailedDescription(aggression, self, 200);
+                            };
+                        };
+                        return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading "+toThe+"<i>"+direction+"</i>."
+                    };
+                };
+            
+            if (action == "go") {
+                return "You'll need to explore and find your way there yourself I'm afraid.";
+            };
+                
+            //return empty string if not found.
+            return "";
+        };
+
+        self.notFoundFallback = function(objectName, container, caller) {
+            var currentLocation = caller.getCurrentLocation();
+            var inventory = caller.getInventoryObject();
+
+            var quote = "'";
+            var you = "I";
+            if (caller.getType() == "player") {
+                quote = "";
+                you = "You";
+            };
+
+            //last few checks - is there a spilled liquid we're trying to get?
+            if (currentLocation.spilledLiquidExists(objectName) || inventory.hasLiquid(objectName)) {
+                return quote+"There's not enough left to do anything useful with."+quote;
+            };
+
+            // - are they looking thru a window or similar?
+            var viewObjects = currentLocation.getAllObjectsWithViewLocation();
+            if (viewObjects.length > 0) {
+                for (var i=0;i<viewObjects.length;i++) {
+                    var destination = self.getLocation(viewObjects[i].getViewLocation());
+                    if (destination) {
+                        var artefact = destination.getObject(objectName);
+                        if (artefact) {
+                            if (artefact.getWeight() >= tools.minimumSizeForDistanceViewing) {
+                                return quote+you+" can't reach "+artefact.getSuffix()+" from here."+quote;
+                            };
+                        };
+                    };
+                };
+            };
+
+            //is it a drawing?
+            var isPlayerArt = currentLocation.checkWritingOrDrawing(objectName);
+            if (!isPlayerArt) {
+                isPlayerArt = inventory.checkWritingOrDrawing(objectName);
+            };
+
+            if (isPlayerArt) {
+                return quote+"It's just some idle scrawl. Nothing anyone can do much with."+quote;
+            };
+
+            if (objectName == currentLocation.getName().toLowerCase() || objectName == currentLocation.getDisplayName().toLowerCase()) {
+                //trying to search whole location...
+                let maybe = "";
+                if (caller.getType() == "player") {
+                    maybe = " <i>(Or maybe you do.)</i>"
+                };
+                return quote+you+" don't have all day to root around everywhere."+maybe+"<br>Either way, you'll need to be more specific."+quote;
+            };
+          
+            //#566 is a creature carrying it?
+                    let creatures = currentLocation.getCreatures()
+                    for (var c=0; c< creatures.length;c++) {
+                        var creaturesObject = creatures[c].getObject(objectName); //this will also handle synonyms
+
+                        if (creaturesObject) {
+                            return quote+"It looks like "+creaturesObject.getSuffix()+" belongs to "+creatures[c].getFirstName()+"."+quote;
+                        };
+
+                        //do they sell it?
+                        if (creatures[c].sells(objectName)) {
+                            return quote+"I think "+creatures[c].getFirstName()+" may have some for sale."+quote;
+                        };
+
+                        //see if any of their active (or inactive without parent) missions deliver it...
+                        let creatureMissions = creatures[c].getMissions();
+                        for (var m=0; m < creatureMissions.length; m++) {
+                            if (creatureMissions[m].isActive() || (!creatureMissions[m].hasParents())) {
+                                let reward = creatureMissions[m].getRewardObject();
+                                if (reward) {
+                                    if (reward.syn(objectName)) {
+                                        return quote+tools.initCap(creatures[c].getFirstName())+" <i>might</i> have what you're looking for."+quote;
+                                    };
+                                };
+                            };
+                        };
+                    };
+
+                    //#566 add handling in here for delivered items from artefacts. (creatures can't deliver items but their missions might - see just above)
+                    //there are more efficient ways of handling this but we want to try normal routes first.
+                    //get all artefacts from inventory, then location, then creatures.
+                    //find out if any "deliver" what we're looking for.
+                    let allArtefacts = inventory.getAllObjectsAndChildren(false); //not inaccessible things
+                    allArtefacts = allArtefacts.concat(currentLocation.getAllObjectsAndChildren(false));
+                    //console.debug(allArtefacts);
+                    let deliveryItems = [];
+                    for (var a=0; a<allArtefacts.length;a++) {
+                        if (allArtefacts[a].getType() != 'creature') {
+                            //do they sell it?
+                            if (allArtefacts[a].sells(objectName)) {quote+"I think "+allArtefacts[a].getName()+" may have some for sale."+quote};
+
+                            deliveryItems = allArtefacts[a].getDeliveryItems();
+                            //if (deliveryItems.length > 0) {console.debug(deliveryItems)};
+                            for (var d=0; d<deliveryItems.length;d++) {
+                                if (deliveryItems[d].syn(objectName))  {
+                                    return quote+"There's "+allArtefacts[a].descriptionWithCorrectPrefix()+" nearby that might have what you're looking for."+quote;
+                                };
+                            };
+                        };                       
+                    };
+
+            //is is a location or distant object mentioned in the description?
+            let whereIsIt = self.where(objectName, "action", caller);
+            if (whereIsIt.length >0) {
+                if (caller.getType() != "player")
+                {
+                    //reword one of the responses.
+                    if (whereIsIt.includes("You peer toward")) {
+                        whereIsiIt = whereIsIt.slice(whereIsIt.indexOf("<br>")+5);
+                    };
+                }
+                return quote+whereIsIt+quote;
+            };
+            
+            var randomReplies;
+            if (caller.getType() == "player") {
+                if (container) {
+                    if (container == "inventory") {
+                        randomReplies = ["You're not carrying any " + objectName + ".", "You'll need to try somewhere (or someone) else for that.", "You don't have any " + objectName + " to hand right now."];
+                    } else if (container == "location") {
+                        randomReplies = ["You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that."];
+                    } else if (typeof container == "object"){
+                        randomReplies = ["There's no " + objectName + " in " + container.getDisplayName() + ".", "You can't see any " + objectName + " in " + container.getDisplayName() + ".", "There's no sign of any " + objectName + " in " + container.getDisplayName() + ". You'll probably need to look elsewhere.", "There's no " + objectName + " in " + container.getDisplayName() + " at the moment."];
+                    };
+                };
+                
+                if (!randomReplies) {
+                    randomReplies = ["You can't see any " + objectName + " around here.", "There's no sign of any " + objectName + " nearby. You'll probably need to look elsewhere.", "You'll need to try somewhere (or someone) else for that.", "There's no " + objectName + " available here at the moment."];
+                };
+            } else {
+                randomReplies = ["'Sorry $player, I can't help you there.'", "'Nope, I've not seen any "+objectName+" around'.'", "'I'm afraid you'll need to hunt that down yourself.'", "'Nope, sorry.'"];
+            }
+            
+            var randomIndex = Math.floor(Math.random() * randomReplies.length);
+            return randomReplies[randomIndex];
         };
 
         self.find = function(objectName, includeArtefacts,returnInternalLocationName) {
