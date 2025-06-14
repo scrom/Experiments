@@ -342,7 +342,7 @@ test("Test that a player can get a single slice of cake.", () => {
 
     l0.addObject(cake);
 
-    const expectedResult = "You get a slice of victoria sponge cake.";
+    const expectedResult = "You get a slice of victoria sponge cake.$imagecake.jpg/$image";
     const actualResult = p0.get('get', "cake");
     expect(actualResult).toBe(expectedResult);
 });

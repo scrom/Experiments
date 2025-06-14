@@ -1506,7 +1506,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     customVerb = "get";
             };
             if (artefact.checkCustomAction(customVerb)) {
-                return self.customAction(customVerb, artefactName);
+                return self.customAction(customVerb, artefactName)+tools.imgTag(artefact);
             };
             if (!(artefact.isCollectable())) {
                 
@@ -1564,7 +1564,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if (!(collectedArtefact)) { return  "Sorry, "+artefact.getPrefix().toLowerCase()+" can't be picked up.";}; //just in case it fails for any other reason.
         
             _inventory.add(collectedArtefact);
-            return "You "+verb+" "+collectedArtefact.descriptionWithCorrectPrefix()+".";
+            return "You "+verb+" "+collectedArtefact.descriptionWithCorrectPrefix()+"."+tools.imgTag(collectedArtefact);
         };
 
         /*Allow player to get all available objects from a location or container*/
@@ -3044,7 +3044,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         /*Allow player to remove something from an object */
         self.remove = function(verb, artefactName, receiverName){
-            if (artefactName == "all") { return self.getAll(verb, receiverName); }            ;
+            if (artefactName == "all") { return self.getAll(verb, receiverName); };
 
             if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?";};
             if (tools.stringIsEmpty(receiverName)){ return tools.initCap(verb)+" "+artefactName+" from what?";};

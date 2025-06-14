@@ -2830,7 +2830,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (taste) { return taste;}
                 if (self.getType() == "food") {
                     if (_nutrition < 0) {return "Not so good. I'd avoid that if I were you."};
-                    return "Tastes like " + self.getName()+".";
+                    return "Tastes like " + self.getName()+"."+tools.imgTag(self);
                 };
             }
 
@@ -2882,7 +2882,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 }
                 let transmissionMethod = _liquid ? "drink" : "bite";
                 resultString += self.transmit(consumer, transmissionMethod);
-                return resultString;
+                return resultString+tools.imgTag(self);
             }
             else if (drinkVerbs.includes(action) ) {
                 //we should only get here if it's an inedible liquid
@@ -3160,7 +3160,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
                         resultString = "You add the " + anObject.getName() + " to " + self.getDisplayName() + ".<br>";
-                        return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.descriptionWithCorrectPrefix() + ".";
+                        return resultString + tools.initCap(self.getDisplayName()) + " now contains " + newObject.descriptionWithCorrectPrefix() + "."+tools.imgTag(self);
                     } else {
                         resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getDisplayName() + " to " + newReceiver.getDisplayName();
                         resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"
@@ -3170,7 +3170,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                         _inventory.remove(newReceiver.getName());
                         _inventory.add(newObject);
                         resultString = "You add the " + anObject.getName() + " to " + self.getDisplayName() + ".<br>";
-                        return resultString + self.getDisplayName() + " now contains " + newObject.getDescription() + ".";
+                        return resultString + self.getDisplayName() + " now contains " + newObject.getDescription() + "."+tools.imgTag(self);
                     } else {
                         resultString = "You attempt to make " + newObject.getDescription() + " by adding " + anObject.getName() + " to " + newReceiver.getDisplayName();
                         resultString += " in " + self.getDisplayName() + " but you need something else to put " + newObject.getPrefix().toLowerCase() + " in.<br>"
@@ -3179,7 +3179,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 };
                 
                 //return result
-                return resultString + tools.initCap(self.getDisplayName()) + " now contains " + anObject.getDescription() + ".";
+                return resultString + tools.initCap(self.getDisplayName()) + " now contains " + anObject.getDescription() + "."+tools.imgTag(self);
             //handle liquids or powders here
             } else if (anObject.isLiquid() || anObject.isPowder()) {
                 //console.debug("liquid handling");
@@ -3196,7 +3196,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                             _inventory.remove(inventoryLiquidOrPowder.getName());
                             _inventory.add(combinedLiquidOrPowder);
                             //increase attributes of existing inventory object from attributes of the one we're adding
-                            return resultString + self.getPrefix() + " now contains more " + combinedLiquidOrPowder.getName() + ".";
+                            return resultString + self.getPrefix() + " now contains more " + combinedLiquidOrPowder.getName() + "."+tools.imgTag(self);
                         };
                     };
                 };

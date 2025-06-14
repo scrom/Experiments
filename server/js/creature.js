@@ -1745,11 +1745,11 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                         _timeSinceEating = 0;
                         if (originalObjectWeight <= self.getWeight()) {
                             //@todo improve for they/them
-                            return tools.initCap(_genderPrefix)+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did "+anObject.getPrefix().toLowerCase()+" all go?";
+                            return tools.initCap(_genderPrefix)+" grabs "+anObject.getDisplayName()+" with "+_genderPossessiveSuffix+" teeth, scurries into a corner and rapidly devours your entire offering.<br>Wow! Where did "+anObject.getPrefix().toLowerCase()+" all go?"+tools.imgTag(self);
                         } else if (originalObjectWeight < 5) {
                             if (anObject.chargesRemaining() >0) {_currentLocation.addObject(anObject);};
                             //@todo improve for they/them
-                            return tools.initCap(_genderPrefix)+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at " + anObject.getSuffix()+ ".";
+                            return tools.initCap(_genderPrefix)+" takes "+anObject.getDisplayName()+" in "+_genderPossessiveSuffix+" mouth, makes a small, happy noise, sneaks into a corner and nibbles away at " + anObject.getSuffix()+ "."+tools.imgTag(self);
 
                         } else {
                             //food is bigger than "5" and bigger than them...
@@ -1759,14 +1759,14 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                                 leftovers = ", chews a small piece off to eat and leaves the remainder on the floor for later."
                             };
                             //@todo improve for they/them
-                            return tools.initCap(_genderPrefix)+" pulls at "+anObject.getDisplayName()+leftovers;
+                            return tools.initCap(_genderPrefix)+" pulls at "+anObject.getDisplayName()+leftovers+tools.imgTag(self);
                         };
                     };
                 };
                                     
                 _currentLocation.addObject(anObject);
                 //@todo improve for they/them
-                return tools.initCap(_genderPrefix)+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getPrefix().toLowerCase()+" comes back later.";
+                return tools.initCap(_genderPrefix)+" sniffs at "+anObject.getDisplayName()+", makes a disgruntled snort and turns away.<br>You leave "+anObject.getSuffix()+" on the ground in case "+self.getPrefix().toLowerCase()+" comes back later."+tools.imgTag(anObject);
             };
             if (!(self.canCarry(anObject))) {return '';};    
             
