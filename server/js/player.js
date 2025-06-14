@@ -4288,7 +4288,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
 
             };
-            return resultString;
+            return resultString + tools.imgTag(artefact);
         };
 
         self.close = function(verb, artefactName) {
