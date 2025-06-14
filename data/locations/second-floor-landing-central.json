@@ -2,7 +2,7 @@
   "object": "location",
   "name": "second-floor-landing-central",
   "displayName": "Second floor landing",
-  "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+  "description": "You're in the middle of the second floor landing. From here you have a great view of the Aliotomy Ant Farm over the road.",
   "exits": [
     {
       "object": "exit",
@@ -28,7 +28,7 @@
   ],
   "inventory": [
     {
-      "file": "autonomy"
+      "file": "aliotomy"
     }
   ],
   "synonyms": [

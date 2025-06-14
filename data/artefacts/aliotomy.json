@@ -1,23 +1,24 @@
 {
   "object": "artefact",
-  "name": "autonomy",
-  "description": "autonomy",
+  "name": "aliotomy",
+  "description": "aliotomy",
   "detailedDescription": "You see little people in suits scurrying back and forth.",
   "attributes": {
     "type": "scenery",
     "subType": "intangible",
+    "imageName": "aliotomy.jpg",
     "customAction": [
       "find",
       "where is",
       "where"
     ],
-    "defaultResult": "It's the big office building over the road."
+    "defaultResult": "It's the big depressing office building over the road."
   },
   "synonyms": [
     "ant",
     "farm",
     "ant farm",
-    "autonomy ant farm",
+    "aliotomy ant farm",
     "road",
     "office",
     "office building",

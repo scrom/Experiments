@@ -17299,7 +17299,7 @@
         "object": "location",
         "name": "second-floor-landing-central",
         "displayName": "Second floor landing",
-        "description": "You're in the middle of the second floor landing. From here you have a great view of the Autonomy Ant Farm over the road.",
+        "description": "You're in the middle of the second floor landing. From here you have a great view of the Aliotomy Ant Farm over the road.",
         "synonyms": [
             "central",
             "floor",
@@ -17335,8 +17335,8 @@
         "inventory": [
             {
                 "object": "artefact",
-                "name": "autonomy",
-                "description": "autonomy",
+                "name": "aliotomy",
+                "description": "aliotomy",
                 "detailedDescription": "You see little people in suits scurrying back and forth.",
                 "attributes": {
                     "type": "scenery",
@@ -17352,7 +17352,7 @@
                     "ant",
                     "farm",
                     "ant farm",
-                    "autonomy ant farm",
+                    "aliotomy ant farm",
                     "road",
                     "office",
                     "office building",
