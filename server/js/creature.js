@@ -1666,6 +1666,16 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var resultString = "";
 
             if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?"};
+
+            //if we've come in via dialogue we may need to clean up artefact name...
+            var firstWord = artefactName.split(" ")[0];
+            var stopWords = ["the", "some", "a", "an", "this", "my", "your"];
+            if (stopWords.includes(firstWord)) {
+                artefactName = artefactName.substring(firstWord.length).trim(); //will aso remove the space as zero indexed
+            };
+
+            //do this again - just in case!
+            if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?"};
             
             var localArtefact = false;
             var artefact = getObjectFromSelfPlayerOrLocation(artefactName, player);
@@ -1699,15 +1709,17 @@ exports.Creature = function Creature(name, description, detailedDescription, att
             var repairCost = artefact.getRepairCost();
             
             if (!localArtefact) {
-                if (_affinity > 1 && repairCost == 0) {
-                    var destination = map.getObjectLocationName(artefact.getName(), false, 0, false, _currentLocation, _inventory);
-                    if (destination) {
+                var destination = map.getObjectLocationName(artefact.getName(), false, 0, false, _currentLocation, _inventory);
+                if (destination) {
+                    if (_affinity > 0 && repairCost == 0) {
                         self.setDestination(destination, true);
                         _autoRepair = artefact.getName();
                         return "'I'll wander over and take a look shortly.'<br>'I'll need your help over there though.'"
+                    } else {
+                        return "'I'm a little busy at the moment, sorry $player.'<br><br>You're pretty certain "+self.getPrefix().toLowerCase()+" <i>could</i> if "+self.getPrefix().toLowerCase()+" really wanted to.<br><i>(Maybe "+self.getPrefix().toLowerCase()+" doesn't think that much of you right now.)</i>";
                     };
                 };
-                return "'" + notFoundMessage(artefactName) + "'";
+                return "'" + notFoundMessage(artefactName) + "'";             
             };
             
             //it's nearby and they can repair it...
