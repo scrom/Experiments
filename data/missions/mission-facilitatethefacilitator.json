@@ -4,7 +4,7 @@
   "displayName": "find some post-its for Chris.",
   "description": "Chris is due to run a workshop but needs some fresh stickies.",
   "attributes": {
-    "parent": "saveredgate",
+    "parent": "saveportarossa",
     "missionObject": "post-it pad",
     "destination": "chris sanders",
     "static": true,

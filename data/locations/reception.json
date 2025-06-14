@@ -2,7 +2,7 @@
   "object": "location",
   "name": "reception",
   "displayName": "Reception",
-  "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+  "description": "You're standing by the big red reception desk in the Porta Rossa office atrium.",
   "attributes": {
     "imageName": "reception.jpg"
   },

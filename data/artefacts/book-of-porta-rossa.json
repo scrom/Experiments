@@ -1,7 +1,7 @@
 {
   "object": "artefact",
-  "name": "book of red gate",
-  "description": "'The Book of Red Gate'",
+  "name": "book of porta rossa",
+  "description": "'The Book of Porta Rossa'",
   "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
   "attributes": {
     "defaultAction": "read",
@@ -14,10 +14,10 @@
   "synonyms": [
     "book",
     "red book",
-    "red gate book",
-    "book red gate",
-    "book of redgate",
-    "book redgate",
+    "porta rossa book",
+    "book porta rossa",
+    "book of portarossa",
+    "book portarossa",
     "borg"
   ],
   "missions": [

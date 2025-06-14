@@ -19,7 +19,7 @@
     "teleport": "office-front",
     "modifyLocation": {
       "name": "office-front",
-      "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+      "description": "You're standing outside the front of the Porta Rossa offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
       "inventory": [
         {
           "file": "smoke"
@@ -41,7 +41,7 @@
     "teleport": "office-front",
     "modifyLocation": {
       "name": "office-front",
-      "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+      "description": "You're standing outside the front of the Porta Rossa offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
       "inventory": [
         {
           "file": "smoke"

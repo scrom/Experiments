@@ -4,7 +4,7 @@
   "displayName": "read the BoRG, be assimilated",
   "description": "It offers a window into the inner workings of the company.<br>New starters are usually given one before they join. (Did you forget your copy today?)",
   "attributes": {
-    "missionObject": "book of red gate",
+    "missionObject": "book of porta rossa",
     "static": true
   },
   "conditionAttributes": {
@@ -13,6 +13,6 @@
   },
   "reward": {
     "score": 20,
-    "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>There's a complete PDF version <a href=https://www.red-gate.com/assets/our-company/about/assets/book-of-red-gate-2012.pdf target=_blank>online</a> as well.<br><br>I hope you read the whole thing and paid particular attention to page 44."
+    "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>It reads 'Don't be an asshole'.<br>I think we can safely say that's a good human value too.<br><i>(You wonder if there's any significance to the number 13.)</i>"
   }
 }

@@ -552,7 +552,7 @@
                 "reward": {
                     "modifyLocation": {
                         "name": "office-front",
-                        "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+                        "description": "You're standing outside the front of the Porta Rossa offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
                         "inventory": [
                             {
                                 "object": "artefact",
@@ -593,7 +593,7 @@
                 "fail": {
                     "modifyLocation": {
                         "name": "office-front",
-                        "description": "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
+                        "description": "You're standing outside the front of the Porta Rossa offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.",
                         "inventory": [
                             {
                                 "object": "artefact",
@@ -2684,7 +2684,7 @@
                         "attributes": {
                             "parents": {
                                 "allOf": [
-                                    "saveredgate"
+                                    "saveportarossa"
                                 ]
                             },
                             "missionObject": "michael weston",
@@ -3579,7 +3579,7 @@
                         "attributes": {
                             "parents": {
                                 "allOf": [
-                                    "saveredgate"
+                                    "saveportarossa"
                                 ]
                             },
                             "missionObject": "maracas",
@@ -3587,7 +3587,7 @@
                             "huntPlayer": true,
                             "static": true,
                             "dialogue": [
-                                "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, Jim Dobbins won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
+                                "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Porta Rossa day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, Jim Dobbins won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
                                 {
                                     "state": 1,
                                     "keywords": [
@@ -4885,7 +4885,7 @@
         "object": "location",
         "name": "east-car-park",
         "displayName": "Car park",
-        "description": "You're in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+        "description": "You're in the East car park. In the far corner you can see an area used for waste storage.<br>To the South are bike racks and a path running across the back of the Porta Rossa office building.",
         "attributes": {
             "type": "outdoor",
             "vehiclesAllowed": [
@@ -6011,7 +6011,7 @@
                         "object": "mission",
                         "name": "lotlsecurity",
                         "displayName": "read the lotl security article",
-                        "description": "<a href=http://dev.red-gate.com/take-security-stride/ target=_blank>It's available online.</a>",
+                        "description": "<a href=http://dev.porta-rossa.com/take-security-stride/ target=_blank>It's available online.</a>",
                         "attributes": {
                             "missionObject": "article on software security",
                             "static": true
@@ -6350,7 +6350,7 @@
                 "object": "artefact",
                 "name": "mirror",
                 "description": "bathroom mirror",
-                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Porta Rossa diet is getting to you a little.",
                 "attributes": {
                     "type": "scenery",
                     "imageName": "mirror.jpg"
@@ -7057,7 +7057,7 @@
                         "object": "mission",
                         "name": "lotlsolid",
                         "displayName": "read the lotl SOLID article",
-                        "description": "<a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a>",
+                        "description": "<a href=http://dev.porta-rossa.com/lotlsolid/ target=_blank>It's available online.</a>",
                         "attributes": {
                             "missionObject": "article on solid design principles",
                             "static": true
@@ -7226,7 +7226,7 @@
                 "object": "artefact",
                 "name": "mirror",
                 "description": "bathroom mirror",
-                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Porta Rossa diet is getting to you a little.",
                 "attributes": {
                     "type": "scenery",
                     "imageName": "mirror.jpg"
@@ -11188,7 +11188,8 @@
                                 "type": "outdoor",
                                 "vehiclesAllowed": [
                                     "bike"
-                                ]
+                                ],
+                                "imageName": "crashsite.jpg"
                             },
                             "synonyms": [
                                 "crash",
@@ -12428,8 +12429,8 @@
                     },
                     {
                         "object": "artefact",
-                        "name": "book of red gate",
-                        "description": "'The Book of Red Gate'",
+                        "name": "book of porta rossa",
+                        "description": "'The Book of Porta Rossa'",
                         "detailedDescription": "It attempts to describe the essence of what makes ths place tick.",
                         "attributes": {
                             "defaultAction": "read",
@@ -12442,10 +12443,10 @@
                         "synonyms": [
                             "book",
                             "red book",
-                            "red gate book",
-                            "book red gate",
-                            "book of redgate",
-                            "book redgate",
+                            "porta rossa book",
+                            "book porta rossa",
+                            "book of portarossa",
+                            "book portarossa",
                             "borg"
                         ],
                         "missions": [
@@ -12455,7 +12456,7 @@
                                 "displayName": "read the BoRG, be assimilated",
                                 "description": "It offers a window into the inner workings of the company.<br>New starters are usually given one before they join. (Did you forget your copy today?)",
                                 "attributes": {
-                                    "missionObject": "book of red gate",
+                                    "missionObject": "book of porta rossa",
                                     "static": true
                                 },
                                 "conditionAttributes": {
@@ -12464,7 +12465,7 @@
                                 },
                                 "reward": {
                                     "score": 20,
-                                    "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>There's a complete PDF version <a href=https://www.red-gate.com/assets/our-company/about/assets/book-of-red-gate-2012.pdf target=_blank>online</a> as well.<br><br>I hope you read the whole thing and paid particular attention to page 44."
+                                    "message": "<br>Amongst the whimsy and nonsense it describes <i>13</i> company values. Number 4 is generally one of the most popular.<br>It reads 'Don't be an asshole'.<br>I think we can safely say that's a good human value too.<br><i>(You wonder if there's any significance to the number 13.)</i>"
                                 }
                             }
                         ]
@@ -13424,7 +13425,7 @@
         "object": "location",
         "name": "office-front",
         "displayName": "Office front",
-        "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
+        "description": "You're standing outside the front of the Porta Rossa offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
         "attributes": {
             "type": "outdoor",
             "vehiclesAllowed": [
@@ -13895,7 +13896,7 @@
                         "attributes": {
                             "parents": {
                                 "allOf": [
-                                    "saveredgate"
+                                    "saveportarossa"
                                 ]
                             },
                             "missionObject": "post-it pad",
@@ -15314,7 +15315,7 @@
                         "attributes": {
                             "parents": {
                                 "allOf": [
-                                    "saveredgate"
+                                    "saveportarossa"
                                 ]
                             },
                             "missionObject": "hard disk",
@@ -15512,7 +15513,7 @@
         "object": "location",
         "name": "reception",
         "displayName": "Reception",
-        "description": "You're standing by the big red reception desk in the Red Gate office atrium.",
+        "description": "You're standing by the big red reception desk in the Porta Rossa office atrium.",
         "attributes": {
             "imageName": "reception.jpg"
         },
@@ -15628,7 +15629,7 @@
                         "object": "artefact",
                         "name": "biro",
                         "description": "blue biro",
-                        "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
+                        "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Porta Rossa seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
                         "attributes": {
                             "weight": 0.1,
                             "type": "writing",
@@ -16121,7 +16122,7 @@
         "object": "location",
         "name": "rubbish-bins",
         "displayName": "Rubbish bins",
-        "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+        "description": "You're rooting around in the Porta Rossa rubbish bins. What depths have you stooped to?",
         "attributes": {
             "type": "outdoor"
         },
@@ -17119,7 +17120,7 @@
                         "object": "mission",
                         "name": "lotlboyscout",
                         "displayName": "read LOTL boy scout article",
-                        "description": "<a href=http://dev.red-gate.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
+                        "description": "<a href=http://dev.porta-rossa.com/the-boy-scout-rule/ target=_blank>It's available online.</a>",
                         "attributes": {
                             "missionObject": "article on the boy scout principle",
                             "static": true
@@ -17346,7 +17347,8 @@
                         "where is",
                         "where"
                     ],
-                    "defaultResult": "It's the big office building over the road."
+                    "defaultResult": "It's the big depressing office building over the road.",
+                    "imageName": "aliotomy.jpg"
                 },
                 "synonyms": [
                     "ant",
@@ -18273,7 +18275,7 @@
                 "object": "artefact",
                 "name": "mirror",
                 "description": "bathroom mirror",
-                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+                "detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Porta Rossa diet is getting to you a little.",
                 "attributes": {
                     "type": "scenery",
                     "imageName": "mirror.jpg"
@@ -19249,7 +19251,7 @@
                 "name": "will stockton",
                 "displayName": "Will Stockton",
                 "description": "Will Stockton",
-                "detailedDescription": "Chef Will, master of the Red Gate dessert!",
+                "detailedDescription": "Chef Will, master of the Porta Rossa dessert!",
                 "attributes": {
                     "weight": 120,
                     "money": 20,
@@ -19573,7 +19575,7 @@
                     "customAction": [
                         "get"
                     ],
-                    "defaultResult": "These are part of Redgate's 'Memory wall'. They're here to look at and enjoy, not to mess with.",
+                    "defaultResult": "These are part of Porta Rossa's 'Memory wall'. They're here to look at and enjoy, not to mess with.",
                     "canDrawOn": true
                 },
                 "synonyms": [
@@ -21102,7 +21104,7 @@
         "object": "location",
         "name": "west-car-park",
         "displayName": "Car park (West)",
-        "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+        "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Porta Rossa office building.",
         "attributes": {
             "type": "outdoor",
             "vehiclesAllowed": [
@@ -21139,8 +21141,8 @@
         "missions": [
             {
                 "object": "mission",
-                "name": "saveredgate",
-                "displayName": "save Red Gate from the zombie contagion",
+                "name": "saveportarossa",
+                "displayName": "save Porta Rossa from the zombie contagion",
                 "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
                 "attributes": {
                     "parents": {
@@ -21167,7 +21169,7 @@
                     "affinityModifier": 1,
                     "increaseAffinityFor": "jordan marshall",
                     "decreaseAffinityFor": "stephen goodwin",
-                    "message": "<br>Congratulations. You and the rest of Red Gate survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
+                    "message": "<br>Congratulations. You and the rest of Porta Rossa survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
                 },
                 "fail": {
                     "score": -200,

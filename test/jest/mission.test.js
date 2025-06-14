@@ -482,7 +482,7 @@ test('completingPartyBusMissionTeleportsPlayer', () => {
     mission.processReward(m0, reward, p0);
     const resultString = p0.examine("look", "", m0);
 
-    const expectedResult = "You're standing outside the front of the Red Gate offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
+    const expectedResult = "You're standing outside the front of the Porta Rossa offices.<br>The weather has turned grey, damp and miserable.<br>A smell of smoke lingers in the air and the wreckage outside the office seems to be piling up.<br><br>You can't shake the feeling something is deeply wrong here.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });
@@ -645,7 +645,7 @@ test('canCompleteReadArticleMission', () => {
     inv.add(book);
 
     const resultString = p0.read("read", "article", m0);
-    const expectedResult = "You read 'Learn on the Loo' article.<br><a href=http://dev.red-gate.com/lotlsolid/ target=_blank>It's available online.</a><br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
+    const expectedResult = "You read 'Learn on the Loo' article.<br><a href=http://dev.porta-rossa.com/lotlsolid/ target=_blank>It's available online.</a><br>Congratulations. You've learned the basics on how to develop good software architecture.<br>";
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });

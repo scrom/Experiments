@@ -2,7 +2,7 @@
   "object": "location",
   "name": "office-front",
   "displayName": "Office front",
-  "description": "You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
+  "description": "You're standing outside the front of the Porta Rossa offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.",
   "attributes": {
     "type": "outdoor",
     "vehiclesAllowed": [

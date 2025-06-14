@@ -2,7 +2,7 @@
 "object": "artefact",
 "name": "mirror",
 "description": "bathroom mirror",
-"detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Red Gate diet is getting to you a little.",
+"detailedDescription": "You peer closely at yourself in the mirror and wonder if perhaps the Porta Rossa diet is getting to you a little.",
 "attributes": {
     "type": "scenery",
     "imageName": "mirror.jpg"

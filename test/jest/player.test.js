@@ -426,7 +426,7 @@ test('can normally run through a required run exit', () => {
     runExit.setRequiredAction("run"); //make it necessary to "run" out only.
     p0.setLocation(atrium);
     //p0.reduceHitPoints(6);
-    var expectedResult = "You run n...<br><br>Current location: Office front<br>You're standing outside the front of the Red Gate offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
+    var expectedResult = "You run n...<br><br>Current location: Office front<br>You're standing outside the front of the Porta Rossa offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>There are car parks to both the East and West. To the north is the main road that runs through the estate.<br><br>You can see an ice cream man.<br>There are exits to the South, East, and West.<br>";
     var actualResult = p0.go("run", "n", m0);
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);

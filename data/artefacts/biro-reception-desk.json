@@ -2,7 +2,7 @@
   "object": "artefact",
   "name": "biro",
   "description": "blue biro",
-  "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Red Gate seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
+  "detailedDescription": "It's like those pens you get in banks with a chain that's just a little bit too short to write with if you're left-handed.<br>Porta Rossa seems to have more left-handed people than a 'normal' office.<br>Perhaps there's something sinister going on.",
   "attributes": {
     "weight": 0.1,
     "type": "writing",

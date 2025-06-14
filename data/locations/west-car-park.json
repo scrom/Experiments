@@ -2,7 +2,7 @@
   "object": "location",
   "name": "west-car-park",
   "displayName": "Car park (West)",
-  "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Red Gate office building.",
+  "description": "You're in the West car park.<br>To the South are bike racks and a path running across the back of the Porta Rossa office building.",
   "attributes": {
     "type": "outdoor",
     "vehiclesAllowed": [
@@ -29,7 +29,7 @@
   ],
   "missions": [
     {
-      "file": "mission-saveredgate"
+      "file": "mission-saveportarossa"
     }
   ],
   "synonyms": [

@@ -4,7 +4,7 @@
   "displayName": "get the party started",
   "description": "Michael wants to organise a celebration",
   "attributes": {
-    "parent": "saveredgate",
+    "parent": "saveportarossa",
     "missionObject": "michael weston",
     "static": true,
     "dialogue": [

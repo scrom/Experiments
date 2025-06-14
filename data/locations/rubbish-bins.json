@@ -2,7 +2,7 @@
   "object": "location",
   "name": "rubbish-bins",
   "displayName": "Rubbish bins",
-  "description": "You're rooting around in the Red Gate rubbish bins. What depths have you stooped to?",
+  "description": "You're rooting around in the Porta Rossa rubbish bins. What depths have you stooped to?",
   "attributes": {
     "type": "outdoor"
   },

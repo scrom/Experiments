@@ -4,7 +4,7 @@
   "displayName": "retrieve the stolen hard disk",
   "description": "Retrieve a stolen hard drive.",
   "attributes": {
-    "parent": "saveredgate",
+    "parent": "saveportarossa",
     "missionObject": "hard disk",
     "destination": "stephen goodwin",
     "initiateConversation": true,

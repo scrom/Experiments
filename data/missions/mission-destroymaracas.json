@@ -4,13 +4,13 @@
   "displayName": "destroy the maracas",
   "description": "Chris gave Jim something really annoying.",
   "attributes": {
-    "parent": "saveredgate",
+    "parent": "saveportarossa",
     "missionObject": "maracas",
     "initiateConversation": true,
     "huntPlayer": true,
     "static": true,
     "dialogue": [
-      "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Red Gate day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, Jim Dobbins won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
+      "'Hi $player.'<br>'I think I made a terrible mistake.'<br>'After the last Porta Rossa day out I offered a prize to whoever could guess the full list of samples used in one of my tracks.'<br>'Unfortunately for all of us, Jim Dobbins won.'<br>'Now in addition to his boundless positivity he's liable to shake his maracas at people.'<br>'Can you get hold of them and quietly <i>destroy</i> them whilst nobody's looking?'",
       {
         "state": 1,
         "keywords": [
