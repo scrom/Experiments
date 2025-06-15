@@ -17,10 +17,10 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         console.info("FileManager: filePath = "+filePath);
         console.info("FileManager: imagePath = "+imagePath);
 
-        let pwd = process.env.REDISPWD;
-        let redisServer = process.env.REDISSERVER;
-        let redisPort = process.env.REDISPORT;
-        //var redisURL = process.env.REDISCLOUD_URL;
+        let pwd = process.env.REDIS_PWD;
+        let redisServer = process.env.REDIS_HOST;
+        let redisPort = process.env.REDIS_PORT;
+        //var redisURL = process.env.REDIS_CLOUD_URL;
 
         let useFilesForGameData = true;
         let client = {};
@@ -30,7 +30,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             redis = require('redis');
             //redis.debug_mode = true;
 
-            client = redis.createClient(redisPort, redisServer, { password: pwd, no_ready_check: true });
+            client = redis.createClient({url: `redis://${redisServer}:${redisPort}`});
 
             client.on('connect', () =>
             {
@@ -77,19 +77,13 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             });
 
             // Connect to redis server  
-            (async () => {       
+            (async () => {     
                 await client.connect();
-                console.info('REDIS Connected to server: ' + redisServer + ':' + redisPort);
-
-                //await client.auth(pwd, (err) => {
-                //    if (err) {  
-                //        console.error('REDIS Authentication Error: ' + err);
-                //    }
-                //});
+                console.info('REDIS Connected to server: ' + redisServer + ':' + redisPort); 
             })(); //end async
 
             useFilesForGameData = false; //confirm using redis for game data
-            console.info("REDIS available for game data.");
+            console.info("REDIS configured for game data.");
         };
 
         //internal methods

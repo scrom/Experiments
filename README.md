@@ -71,12 +71,12 @@ Server Configuration
 
 2: Set the following server environment variables to configure the application hostname and port
 
-- HOSTNAME (e.g. mvta.herokuapp.com)
-- PORT     (e.g. 1337)
+- MVTA_HOST (e.g. mvta.herokuapp.com)
+- MVTA_PORT     (e.g. 1337)
 
 2a: IF running over HTTPS rather than HTTP, set an additional environment variable
 
-- PROTOCOL "https" (without the quotes)
+- MVTA_PROTOCOL "https" (without the quotes)
 
 Note, if the game is running on port 80, you don't need to explicitly set PORT as an environment variable.
 
@@ -85,18 +85,18 @@ Note, if the game is running on port 80, you don't need to explicitly set PORT a
 If you're running in an environment that doesn't offer filesystem support (such as Heroku), you'll need to set up your own Redis data store (and it'll need to be secure).
 Once you have a store available, set the following environment variables for your Redis data store:
 
-- REDISSERVER (the addressable hostname of your redis server)
-- REDISPWD (the auth password of your redis server **in plain text at the moment - this needs securing better**)
-- REDISPORT (the port number of your redis host)
+- REDIS_HOST (the addressable hostname of your redis server)
+- REDIS_PWD (the auth password of your redis server if used  **in plain text at the moment - this needs securing better**)
+- REDIS_PORT (the port number of your redis host)
 
-*If REDISERVER is _not_ set as an environment variable, the game will default to file-based game save data.*
+*If REDIS_HOST is _not_ set as an environment variable, the game will default to file-based game save data.*
 Note, back in 2014; due to a few bugs in the node_redis javascript parser I had to use the c-based hiredis parser and pull chunks in data streams to load saved games successfully. 
 (A bit more work when developing in a Windows environment but reliable at least) - I wonder if this is now fixed?!
 
 4: Server throttling has been introduced. Whilst sensible default settings are defined in config.js; custom settings can be applied using 2 further environment variables:
 
-- RATELIMITMINUTES  (default value is 5) //the time window used to measure the number of incooming requests (in minutes)
-- RATELIMITREQUESTS (default value is 125 )|| 125, //the maxiumum number of requests allowed from a single IP within a given time window. Slowdown happens at this threshold. Full limiting happens at 2x this.
+- MVTA_RATELIMITMINUTES  (default value is 5) //the time window used to measure the number of incooming requests (in minutes)
+- MVTA_RATELIMITREQUESTS (default value is 125 )|| 125, //the maxiumum number of requests allowed from a single IP within a given time window. Slowdown happens at this threshold. Full limiting happens at 2x this.
 
 5: NodeJS may (still?) have a default limit on the number of active http connections to 5. I've not verified this is accurate.
 In order to support more connections, you'll need to set another environment variable (I think)...

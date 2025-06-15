@@ -1,0 +1,38 @@
+services:
+  mvta:
+    build: .
+    ports:
+      - "1337:1337"
+    depends_on:
+      mvta-redis:
+        condition: service_healthy
+    links:
+      - mvta-redis
+    environment:
+      - REDIS_HOST=mvta-redis
+      - REDIS_PORT=6379
+      - MVTA_RATELIMITMINUTES=0.5
+      - MVTA_RATELIMITREQUESTS=50
+      - MVTA_PORT=1337
+      - MVTA_HOST=simons-a16
+      - NODE_ENV=production
+    volumes:
+      - .:/usr/src/mvta
+    restart: unless-stopped
+
+  mvta-redis:
+    image: redis:latest
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 2s
+      retries: 10
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    restart: unless-stopped
+
+volumes:
+  redis-data:
