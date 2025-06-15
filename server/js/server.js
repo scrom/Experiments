@@ -7,6 +7,9 @@ exports.Server = function Server(anInterpreter) {
 
         //module deps
         const _root = __dirname+'/';
+        const https = require('https');
+        const fs=require('fs');
+        const path=require('path');
         const express = require('express');
         const rateLimit = require("express-rate-limit");
         const slowDown = require("express-slow-down");
@@ -18,6 +21,15 @@ exports.Server = function Server(anInterpreter) {
         const sanitiseString = function(aString) {
             return aString.toLowerCase().substring(0,255).replace(/[^a-z0-9 +-/%]+/g,""); //same as used for client but includes "/" and "%" as well
         };
+
+        const options={
+            key:fs.readFileSync(path.join(__dirname,'../../cert/certificate.key')),
+            cert:fs.readFileSync(path.join(__dirname,'../../cert/certificate.cer'))
+        }
+        const sslServer=https.createServer(options,app);
+        sslServer.listen(443,()=>{
+            console.log('Secure server is listening on port 1339')
+        });
 
         //Array of responses awaiting replies
         let _waitingResponses=[];
