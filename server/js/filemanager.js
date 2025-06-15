@@ -17,7 +17,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         console.info("FileManager: filePath = "+filePath);
         console.info("FileManager: imagePath = "+imagePath);
 
-        let pwd = process.env.REDIS_PWD;
+        let redispwd = process.env.REDIS_PWD;
         let redisServer = process.env.REDIS_HOST;
         let redisPort = process.env.REDIS_PORT;
 
@@ -29,7 +29,15 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             redis = require('redis');
             //redis.debug_mode = true;
 
-            client = redis.createClient({url: `redis://${redisServer}:${redisPort}`});
+            //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
+            client = redis.createClient({
+                socket: {
+                    host: redisServer,
+                    port: Number(redisPort) || 6379,
+                },
+                username: 'mvta', // must match ACL username
+                password: redispwd, //ensure password in end variable does not include quotes!
+            });
 
             client.on('connect', () =>
             {

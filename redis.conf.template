@@ -1,0 +1,18 @@
+bind 0.0.0.0
+protected-mode no
+
+user default off
+user mvta on >${REDIS_PWD} ~* +get +set +del +exists +incr +mget +mset
+
+save 60 1
+appendonly yes
+appendfsync everysec
+
+# Logging
+loglevel warning
+
+#disable dangerous commands
+#rename-command FLUSHALL ""
+#rename-command FLUSHDB ""
+#rename-command CONFIG ""
+#rename-command SHUTDOWN ""
