@@ -2,7 +2,7 @@
 //server side config
 var self = module.exports= {
 	    _gameLimit: 100,
-        port: process.env.MVTA_PORT || 80
+        port: process.env.MVTA_PORT || 80,
 
         hostname: process.env.MVTA_HOST || localhost,
         protocol: process.env.MVTA_PROTOCOL || "http",
