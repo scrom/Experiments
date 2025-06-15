@@ -29,7 +29,6 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         if ((redisServer) && (!(useFiles))) {
             redis = require('redis');
             //redis.debug_mode = true;
-            if (nodeEnv!="production") {redisServer="localhost";};
 
             //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
             client = redis.createClient({

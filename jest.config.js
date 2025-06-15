@@ -3,10 +3,17 @@
  * https://jestjs.io/docs/configuration
  */
 
+  //env variables for test:
+  process.env['REDIS_HOST'] = 'localhost';
+  process.env['NODE_ENV'] = 'test';
+
 /** @type {import('jest').Config} */
 const config = {
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
+
+  // ... other configurations
 
   // Stop running tests after `n` failures
   // bail: 0,
