@@ -16,7 +16,7 @@ COPY ./client ./client
 COPY ./server ./server
 
 # Expose MVTA port
-EXPOSE 1337
+EXPOSE ${MVTA_PORT}
 
 RUN chown -R node /usr/src/mvta
 

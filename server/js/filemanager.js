@@ -20,7 +20,6 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         let pwd = process.env.REDIS_PWD;
         let redisServer = process.env.REDIS_HOST;
         let redisPort = process.env.REDIS_PORT;
-        //var redisURL = process.env.REDIS_CLOUD_URL;
 
         let useFilesForGameData = true;
         let client = {};
