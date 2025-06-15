@@ -22,7 +22,14 @@ services:
       - MVTA_RATELIMITREQUESTS=${MVTA_RATELIMITREQUESTS}
       - MVTA_PORT=${MVTA_PORT}
       - MVTA_HOST=${MVTA_HOST}
+      - MVTA_PROTOCOL=${MVTA_PROTOCOL}
       - NODE_ENV=production
+    user: "node"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "${MVTA_PROTOCOL}://${MVTA_HOST}:${MVTA_PORT}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     volumes:
       - .:/usr/src/mvta
     restart: unless-stopped
@@ -31,7 +38,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.redis
-    image: redis:latest
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 1s
