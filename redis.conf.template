@@ -2,7 +2,7 @@ bind 0.0.0.0
 protected-mode no
 
 user default off
-user mvta on >${REDIS_PWD} ~* +@read +@write +select +scan +multi +exec +discard
+user mvta on >${REDIS_PWD} ~* +@read +@write +@list +select +scan +multi +exec +discard
 
 save 60 1
 appendonly yes
