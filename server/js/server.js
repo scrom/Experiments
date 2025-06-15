@@ -74,6 +74,10 @@ exports.Server = function Server(anInterpreter) {
             response.end();
         });
 
+        app.get('/health', (req, res) => {
+            res.status(200).json({ status: 'ok' });
+        });
+        
         ///^\/api/
         app.get(/^\/new/, async function (request, response) {
             request.socket.setTimeout(90);

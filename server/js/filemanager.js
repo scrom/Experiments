@@ -20,6 +20,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         let redispwd = process.env.REDIS_PWD;
         let redisServer = process.env.REDIS_HOST;
         let redisPort = process.env.REDIS_PORT;
+        let nodeEnv = process.env.NODE_ENV || "development"
 
         let useFilesForGameData = true;
         let client = {};
@@ -28,6 +29,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         if ((redisServer) && (!(useFiles))) {
             redis = require('redis');
             //redis.debug_mode = true;
+            if (nodeEnv!="production") {redisServer="localhost";};
 
             //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
             client = redis.createClient({
@@ -270,19 +272,23 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
                     buffers.push(dataBuffer);     
                 };
 
-                var multi = await client.multi();
-                for (var i = 0; i < buffers.length; i++) {
-                    await multi.rPush(fileName, buffers[i]);
-                };   
-                await multi.exec();
-                //console.debug("all game data written - " + data.length);
-                var dataLength = await client.lLen(fileName);
-                console.info("Original data length: " + data.length + ". Saved data reported length:" + dataLength);
+                try {
+                    var multi = await client.multi();
+                    for (var i = 0; i < buffers.length; i++) {
+                        await multi.rPush(fileName, buffers[i]);
+                    };   
+                    await multi.exec();
+                    //console.debug("all game data written - " + data.length);
+                    var dataLength = await client.lLen(fileName);
+                    console.info("Original data length: " + data.length + ". Saved data reported length:" + dataLength);
 
-                //var list = await client.lRange(fileName, 0, -1);
-                //console.debug(list);
+                    //var list = await client.lRange(fileName, 0, -1);
+                    //console.debug(list);
 
-                return true;
+                    return true;
+                } catch (err) {
+                    throw err;
+                };
             };
         };
 

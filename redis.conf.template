@@ -2,7 +2,7 @@ bind 0.0.0.0
 protected-mode no
 
 user default off
-user mvta on >${REDIS_PWD} ~* +get +set +del +exists +incr +mget +mset
+user mvta on >${REDIS_PWD} ~* +get +set +del +exists +incr +mget +mset +strlen +keys +keys +hgetall +info +select +scan +multi +exec +discard
 
 save 60 1
 appendonly yes

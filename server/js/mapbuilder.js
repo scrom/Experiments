@@ -192,7 +192,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         if (artefactData.missions[j].file) {
                             artefactData.missions[j] = self.buildFromFile(_data[artefactData.missions[j].file]);
                         };
-                        console.debug("Building Mission for "+artefactData.name);
+                        //console.debug("Building Mission for "+artefactData.name);
                         artefact.addMission(self.buildMission(artefactData.missions[j]));
                     };
                 };
@@ -313,7 +313,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                         if (creatureData.missions[j].file) {
                             creatureData.missions[j] = self.buildFromFile(_data[creatureData.missions[j].file]);
                         };
-                        console.debug("Building Mission for "+creatureData.name);
+                        //console.debug("Building Mission for "+creatureData.name);
                         creature.addMission(self.buildMission(creatureData.missions[j]));
                     };
                 };
@@ -416,7 +416,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
             if (modifyLocationData.missions && modifyLocationData.name) {
                 modifyLocation.missions = [];
                 for (var m = 0; m < modifyLocationData.missions.length; m++) {
-                    console.debug("Building Mission for "+modifyLocation.name);
+                    //console.debug("Building Mission for "+modifyLocation.name);
                     modifyLocation.missions.push(self.buildMission(modifyLocationData.missions[m]));
                 };
             }
@@ -480,7 +480,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                     };
                     if (reward.locations[l].missions) {
                         for (var m = 0; m < reward.locations[l].missions.length; m++) {
-                            console.debug("Building Mission for "+rewardLocation.name);
+                            //console.debug("Building Mission for "+rewardLocation.name);
                             rewardLocation.addMission(self.buildMission(reward.locations[l].missions[m]));
                         };
                     };
@@ -533,7 +533,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
         };
 
         self.buildMission = function(missionData) {
-            console.debug("Building mission: "+missionData.name);
+            //console.debug("Building mission: "+missionData.name);
             missionsList.push(missionData.name);
             //name, description, dialogue, parent, missionObject, isStatic, condition, destination, reward, fail
             if (missionData.file) {
@@ -705,7 +705,7 @@ exports.MapBuilder = function MapBuilder(mapDataPath, mapDataFile) {
                                 locationData.missions[l] = self.buildFromFile(_data[locationData.missions[l].file]);
                             };
                             //add mission
-                            console.debug("Building Mission for "+locationData.name);
+                            //console.debug("Building Mission for "+locationData.name);
                             location.addMission(self.buildMission(locationData.missions[l]));
                         };
                     };

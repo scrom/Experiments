@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "description": "A work of interactive fiction in Node",
   "engines": {
-    "node": "^22.15.0"
+    "node": "^24.2.0"
   },
   "main": "server/js/main.js",
+
   "scripts": {
     "start": "node server/js/main.js",
+    "dev": "node server/js/main.js",
     "test": "jest --collectCoverage --coverageDirectory=coverage --coverageReporters=text --coverageReporters=html --coveragePathIgnorePatterns=\"/node_modules/\""
   },
   "author": "simon.cromarty",

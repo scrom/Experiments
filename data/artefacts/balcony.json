@@ -5,6 +5,7 @@
     "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
     "attributes": {
         "weight": 280,
+        "carryWeight": 280,
         "imageName": "balcony.jpg",
         "type": "scenery"
     },

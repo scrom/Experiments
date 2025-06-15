@@ -104,6 +104,7 @@
                 "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
                 "attributes": {
                     "weight": 280,
+                    "carryWeight": 280,
                     "type": "scenery",
                     "imageName": "balcony.jpg"
                 },
@@ -113,6 +114,24 @@
                     "balconies",
                     "glass balconies",
                     "glass balcony"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "window",
+                        "description": "window",
+                        "detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
+                        "attributes": {
+                            "weight": 280,
+                            "type": "scenery",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "glass",
+                            "windows",
+                            "outside"
+                        ]
+                    }
                 ]
             },
             {
@@ -1103,6 +1122,7 @@
                 "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
                 "attributes": {
                     "weight": 280,
+                    "carryWeight": 280,
                     "type": "scenery",
                     "imageName": "balcony.jpg"
                 },
@@ -1112,6 +1132,24 @@
                     "balconies",
                     "glass balconies",
                     "glass balcony"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "window",
+                        "description": "window",
+                        "detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
+                        "attributes": {
+                            "weight": 280,
+                            "type": "scenery",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "glass",
+                            "windows",
+                            "outside"
+                        ]
+                    }
                 ]
             },
             {
@@ -6281,6 +6319,7 @@
                 "detailedDescription": "You peer over the balcony and look down to the atrium below.",
                 "attributes": {
                     "weight": 280,
+                    "carryWeight": 280,
                     "type": "scenery",
                     "imageName": "balcony.jpg",
                     "viewDestination": "atrium"
@@ -6291,6 +6330,24 @@
                     "balconies",
                     "glass balconies",
                     "glass balcony"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "window",
+                        "description": "window",
+                        "detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
+                        "attributes": {
+                            "weight": 280,
+                            "type": "scenery",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "glass",
+                            "windows",
+                            "outside"
+                        ]
+                    }
                 ]
             }
         ]
@@ -15574,6 +15631,7 @@
                 "detailedDescription": "The reinforced glass balconies here run along the inside of the atrium at each level above the ground floor.<br>You're <i>pretty</i> certain they're unbreakable but probably wise not to chance your luck.",
                 "attributes": {
                     "weight": 280,
+                    "carryWeight": 280,
                     "type": "scenery",
                     "imageName": "balcony.jpg"
                 },
@@ -15583,6 +15641,24 @@
                     "balconies",
                     "glass balconies",
                     "glass balcony"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "window",
+                        "description": "window",
+                        "detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
+                        "attributes": {
+                            "weight": 280,
+                            "type": "scenery",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "glass",
+                            "windows",
+                            "outside"
+                        ]
+                    }
                 ]
             },
             {
@@ -17516,6 +17592,7 @@
                 "detailedDescription": "You peer over the balcony and look down to the atrium below.",
                 "attributes": {
                     "weight": 280,
+                    "carryWeight": 280,
                     "type": "scenery",
                     "imageName": "balcony.jpg",
                     "viewDestination": "atrium"
@@ -17526,6 +17603,24 @@
                     "balconies",
                     "glass balconies",
                     "glass balcony"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "window",
+                        "description": "window",
+                        "detailedDescription": "Reinforced glass. As you'd expect in a typical office building.",
+                        "attributes": {
+                            "weight": 280,
+                            "type": "scenery",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "glass",
+                            "windows",
+                            "outside"
+                        ]
+                    }
                 ]
             }
         ]

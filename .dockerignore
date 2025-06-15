@@ -121,10 +121,12 @@ test/testdata/mvta.savedGames.json
 test/testdata/testresult-game-data.json
 /test/coverage
 /coverage
+coverage/
 /test/jest/coverage
 _Chutzpah.coverage.html
 .coverage
 .tox
+*.test.js
 
 #Translations
 *.mo
@@ -137,13 +139,16 @@ node_modules/
 
 #other
 /build/
+dist/
+docs/
+README.md
 data/usergames/
 data/images/greyscale/
 /
 /.ntvs_analysis.dat
 /.vs/config/applicationhost.config
 /.vs
-/package-lock.json
+.vscode/
 /
 /eslint.config.js
 /jest.config.js
@@ -157,13 +162,16 @@ data/images/greyscale/
 # Dependency locks (optional if you want fresh install)
 npm-debug.log
 yarn-error.log
+yarn-debug.log
 
 # Environment files
 .env
+.env*
 .env.local
 
 # Git
 .git
+.git/
 .gitignore
 .gitattributes
 /.github/
@@ -178,3 +186,5 @@ docker-compose.yml
 logs
 *.log
 
+#node modules
+node_modules/

@@ -1,4 +1,4 @@
-# Use official Node.js image
+# Use official redis image
 FROM redis:latest
 
 # Install gettext package for envsubst
