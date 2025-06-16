@@ -31,4 +31,7 @@ function init(body, statusBar, specialReport, state, input, inputArea, interacti
     //start listening
     client.listenForInput();
     client.listenForEvents();
+
+    //prevent accidental navigcation
+    client.blockNavigation();
 };

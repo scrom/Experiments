@@ -190,4 +190,9 @@ function Client(aServerHost, aServerPort, aUi) {
             }, false);
         };
     };
+
+    Client.prototype.blockNavigation = function() {
+        //comes from nav.js
+        preventNavigation();
+    };
 };
