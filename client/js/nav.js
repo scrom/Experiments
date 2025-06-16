@@ -1,7 +1,6 @@
 "use strict";
 function preventNavigation() {
     //clicking back button in browser loses current game - prevent it.
-    //const inputBox = document.getElementById('input');
 
     // Push a dummy state to prevent back navigation
     window.history.pushState(null, null, window.location.href);
@@ -37,4 +36,9 @@ function preventNavigation() {
             e.preventDefault();
         }
     });
+
+    // Remove browser context menu
+    document.body.oncontextmenu = function(e) { e.preventDefault(); };
+    // Remove drag/drop
+    document.body.ondragstart = function(e) { e.preventDefault(); };
 };
