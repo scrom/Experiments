@@ -26,7 +26,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             redis = require('redis');
             //redis.debug_mode = true;
 
-           //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
+           //client = redis.createClient({url: `redis://mvta:${pwd}@${config.redisHost}:${config.redisPort}`});
             client = redis.createClient({
                 socket: {
                     host: config.redisHost,
@@ -83,7 +83,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             // Connect to redis server  
             (async () => {     
                 await client.connect();
-                console.info('REDIS Connected to server: ' + config.redisServer + ':' + config.redisPort); 
+                console.info('REDIS Connected to server: ' + config.redisHost + ':' + config.redisPort); 
             })(); //end async
 
             useFilesForGameData = false; //confirm using redis for game data

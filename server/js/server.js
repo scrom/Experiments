@@ -303,12 +303,10 @@ exports.Server = function Server(anInterpreter) {
             };
 
             function startSSLServer(port) {
-                sslServer.listen(port,()=>{
-                    console.info('SSL server ${config.hostname} listening on port ${port}')
-                });
+                sslServer.listen(port);
 
                 sslServer.on('listening', () => {
-                    console.info(`SSL server  ${config.hostname} listening on port ${port}`);
+                    console.info(`SSL server ${config.hostname} listening on port ${port}`);
                     _activeSSLPort = port;
                 });
 
