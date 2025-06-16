@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "friendlydeath",
+  "displayName": "we have a friendly death",
+  "attributes": {
+  },
+  "conditionAttributes": {
+    "deathToll": {
+      "friendly": ">0"
+    }
+  },
+  "reward": {
+    "score": -10,
+    "message": "<br>That's really <i>not</i> good. We've lost one of the team.<br>Workplace accidents <i>do</i> happen - but not usually in a normal office environment.<br>A fatality on your first day is a <i>bad</i> start to your career here."
+  }
+}

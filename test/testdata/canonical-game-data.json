@@ -536,6 +536,21 @@
             },
             {
                 "object": "mission",
+                "name": "friendlydeath",
+                "displayName": "we have a friendly death",
+                "attributes": {},
+                "conditionAttributes": {
+                    "deathToll": {
+                        "friendly": ">0"
+                    }
+                },
+                "reward": {
+                    "score": -10,
+                    "message": "<br>That's really <i>not</i> good. We've lost one of the team.<br>Workplace accidents <i>do</i> happen - but not usually in a normal office environment.<br>A fatality on your first day is a <i>bad</i> start to your career here."
+                }
+            },
+            {
+                "object": "mission",
                 "name": "bodycount",
                 "displayName": "game reaches 15 friendly deaths",
                 "attributes": {},
@@ -8823,6 +8838,42 @@
                                 ]
                             }
                         ]
+                    }
+                ],
+                "missions": [
+                    {
+                        "object": "mission",
+                        "name": "fridgedoor",
+                        "displayName": "Remember to shut the fridge door after you use it",
+                        "attributes": {
+                            "missionObject": "fridge",
+                            "static": true
+                        },
+                        "initialAttributes": {
+                            "isOpen": true
+                        },
+                        "failAttributes": {
+                            "allOf": [
+                                {
+                                    "isOpen": true
+                                },
+                                {
+                                    "time": 15
+                                }
+                            ]
+                        },
+                        "conditionAttributes": {
+                            "isOpen": false,
+                            "time": 15
+                        },
+                        "reward": {
+                            "score": 5,
+                            "message": "<br>Thanks for remembering to shut the fridge!<br>You wouldn't believe the lack of basic common sense in some people."
+                        },
+                        "fail": {
+                            "score": -15,
+                            "message": "Did you forget something?<br><br>Nobody appreciates the milk going off.<br>Please remember to shut the fridge door in future."
+                        }
                     }
                 ]
             },

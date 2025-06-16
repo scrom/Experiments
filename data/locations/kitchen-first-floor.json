@@ -17,7 +17,9 @@
   ],
   "inventory": [
     {
-      "file": "fridge"
+      "object": "artefact",
+      "template": "fridge",
+      "missions": [ { "file": "mission-fridgedoor" } ]
     },
     {
       "file": "bowl"

@@ -91,6 +91,9 @@
       "file": "event-endofday"
     },
     {
+      "file": "mission-friendlydeath"
+    },
+    {
       "file": "mission-bodycount"
     },
     {
