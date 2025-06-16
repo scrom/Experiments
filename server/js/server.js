@@ -27,13 +27,12 @@ exports.Server = function Server(anInterpreter) {
             cert:fs.readFileSync(path.join(__dirname,'../../cert/certificate.cer'))
         }
         const sslServer=https.createServer(options,app);
-        sslServer.listen(443,()=>{
-            console.log('Secure server is listening on port 1339')
-        });
 
         //Array of responses awaiting replies
         let _waitingResponses=[];
         let listener;
+        let _activePort;
+        let _activeSSLPort;
 
         //slow down requests
         const speedLimiter = slowDown({
@@ -272,17 +271,67 @@ exports.Server = function Server(anInterpreter) {
             
         };
 
+        self.getActivePort = function() {
+           return _activePort;
+        };
+
+        self.getActiveSSLPort = function() {
+            return _activeSSLPort;
+        };
+
        //initiate listening with port from config
-       self.listen = function () {
+        self.listen = function () {
             self = this;
-            listener = app.listen(config.port)
-            console.info(_objectName + ' '+config.hostname+' listening on port ' + config.port);
+
+            function startServer(port) {
+                listener = app.listen(port);
+
+                listener.on('listening', () => {
+                    console.info(`${_objectName} ${config.hostname} listening on port ${port}`);
+                    _activePort = port;
+                });
+
+                listener.on('error', (err) => {
+                if (err.code === 'EADDRINUSE' && port !== config.fallbackport) {
+                    console.warn(`Port ${port} in use, trying fallback port ${config.fallbackport}...`);
+                    startServer(config.fallbackport);
+                } else {
+                    console.error('Server failed to start:', err);
+                    throw(err);
+                }
+                });
+            };
+
+            function startSSLServer(port) {
+                sslServer.listen(port,()=>{
+                    console.info('SSL server ${config.hostname} listening on port ${port}')
+                });
+
+                sslServer.on('listening', () => {
+                    console.info(`SSL server  ${config.hostname} listening on port ${port}`);
+                    _activeSSLPort = port;
+                });
+
+                sslServer.on('error', (err) => {
+                if (err.code === 'EADDRINUSE' && port !== config.fallbackport) {
+                    console.warn(`Port ${port} in use, trying fallback port ${config.sslfallbackport}...`);
+                    startSSLServer(config.sslfallbackport);
+                } else {
+                    console.error('SSL Server failed to start:', err);
+                    throw(err);
+                }
+                });
+            };
+
+            startServer(config.port);
+            startSSLServer(config.sslport);
         };
 
         //close
        self.close = function () {
             self = this;
             listener.close();
+            sslServer.closeAllConnections();
             console.info(_objectName + ' '+config.hostname+' closed.');
         };
 

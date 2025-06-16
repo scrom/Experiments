@@ -4,6 +4,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
     const  _objectName = "filemanager";
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
+        const config = require('./config');
         const jf = require('jsonfile');
         const fs = require('fs');   
         //var async = require('async');  
@@ -17,27 +18,22 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         console.info("FileManager: filePath = "+filePath);
         console.info("FileManager: imagePath = "+imagePath);
 
-        let redispwd = process.env.REDIS_PWD;
-        let redisServer = process.env.REDIS_HOST;
-        let redisPort = process.env.REDIS_PORT;
-        let nodeEnv = process.env.NODE_ENV || "development"
-
-        let useFilesForGameData = true;
+        let useFilesForGameData = true; //we will change to redis if successful
         let client = {};
         let monitor = {};
         //if redis is configured...
-        if ((redisServer) && (!(useFiles))) {
+        if ((config.redisHost) && (!(useFiles))) {
             redis = require('redis');
             //redis.debug_mode = true;
 
-            //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
+           //client = redis.createClient({url: `redis://mvta:${pwd}@${redisServer}:${redisPort}`});
             client = redis.createClient({
                 socket: {
-                    host: redisServer,
-                    port: Number(redisPort) || 6379,
+                    host: config.redisHost,
+                    port: Number(config.redisPort) || 6379,
                 },
                 username: 'mvta', // must match ACL username
-                password: redispwd, //ensure password in end variable does not include quotes!
+                password: config.redispwd, //ensure password in end variable does not include quotes!
             });
 
             client.on('connect', () =>
@@ -87,7 +83,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
             // Connect to redis server  
             (async () => {     
                 await client.connect();
-                console.info('REDIS Connected to server: ' + redisServer + ':' + redisPort); 
+                console.info('REDIS Connected to server: ' + config.redisServer + ':' + config.redisPort); 
             })(); //end async
 
             useFilesForGameData = false; //confirm using redis for game data
@@ -188,7 +184,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
 
         self.removeGameDataAsync = async function(fileName) {
             fileName = sanitiseString(fileName);
-            if (useFilesForGameData || !(redisServer)) {
+            if (useFilesForGameData || !(config.redisHost)) {
                 self.deleteFile(fileName+".json");
                 return null;
             };  

@@ -13,7 +13,7 @@ const httpMocks = require('node-mocks-http');
 const testDataDir = '../../test/testdata/';
 const testImageDir = '../../test/testdata/images/';
 
-const fm = new fileManager.FileManager(false, testDataDir, testImageDir); // keep file paths as backup for when redis is not installed
+const fm = new fileManager.FileManager(true, testDataDir, testImageDir); // use file based mode for these tests. We test redis save/load elsehwere
 
 const testFileName = 'testfile.json';
 const testImageName = 'testimage.jpg';
@@ -209,7 +209,7 @@ describe('Server', () => {
 
             const request = httpMocks.createRequest({
                 method: 'GET',
-                url: config.protocol + "://" + config.hostname + ":" + config.port + "/save/save/player/0",
+                url: config.protocol + "://" + config.hostname + ":" + serverInstance.getActivePort() + "/save/save/player/0",
                 headers: headers
             });
 
@@ -244,7 +244,7 @@ describe('Server', () => {
 
             const saveRequest = httpMocks.createRequest({
                 method: 'GET',
-                url: config.protocol + "://" + config.hostname + ":" + config.port + "/save/save/player/0",
+                url: config.protocol + "://" + config.hostname + ":" + serverInstance.getActivePort() + "/save/save/player/0",
                 headers: headers
             });
 
@@ -254,7 +254,7 @@ describe('Server', () => {
 
             const request = httpMocks.createRequest({
                 method: 'GET',
-                url: config.protocol + "://" + config.hostname + ":" + config.port + "/load/"+saveResponse.response.saveid+"/player/0",
+                url: config.protocol + "://" + config.hostname + ":" + serverInstance.getActivePort() + "/load/"+saveResponse.response.saveid+"/player/0",
                 headers: headers
             });
 
