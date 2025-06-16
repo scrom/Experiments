@@ -225,6 +225,7 @@ _Chutzpah.coverage.html
 node_modules/
 
 #other
+cert/
 data/usergames/
 data/images/greyscale/
 /
