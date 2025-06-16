@@ -1,7 +1,8 @@
 Minimum Viable Text Adventure" ("MVTA")**
 =======================================
-** *Now developed way beyond "minimum viable"*
-*This game was originally live and running at: http://mvta.herokuapp.com/*
+** *Now developed way beyond "minimum viable" **
+*This game was originally live and running at: http://mvta.herokuapp.com/ *
+*It will "shortly" be back up and live at https://mvta.io/  (!!!) *
 
 MVTA: March 2014 to Present day (2025).
 
@@ -50,15 +51,15 @@ Other than *loads* of additional game mechanics, features and sample content, th
  - a means of managing and editing game maps,  documenting all the attributes and placeholder subtleties. The map is currently assembled form a series of json files and the set of attributes available for everything isn't documented. (Hey, that's not bad - for a while it was all in a single file!)
  - enhanced and persistent logging - using modern logging and observability tools.
  - an enhanced UI - *todo*
- - mobile device friendly? - maybe - people are starting to get used to typing more than they were but it's pretty verbose as a game.
+ - mobile device friendly? - done! - people are starting to get used to typing more than they were but it's pretty verbose as a game.
  - eventually I'd like players to choose, extend and reuse maps. Right now, there's just the one.
  - a means of saving and loading game state. If the Node server goes down, a player state is lost, or if a player closes their browser, they can't recover their game. *done* - if the player has achieved enough to save their game*
- - persistence of Redis savegame data if redis goes down - *todo*.
+ - persistence of Redis savegame data if redis goes down - *done*.
  - implementing sensible object composition (1500 to 2000 line god classes prove a point but they're bleeding all over each other and not well-designed and structured. That's hurting now.) - todo
  - implementing server throttling to prevent overloading - *done*
  - limiting the number of saved game files on the server to ensure hosting space isn't consumed. *partially done* - only "real" games can be saved* Need to implement old data cleanup actions and max storage usage. 
  - the game really needs a battery of tests but that's after the legacy code "peak" is reached - *ongoing* (but it's come a long way).
- - finding somewhere simple that I can get this hosted for free that doesn't require mountains of manual config. This was originally "done" using Heroku but I'm looking to try something more interesting with docker and deployments. - *todo*
+ - finding somewhere simple that I can get this hosted for free that doesn't require mountains of manual config. This was originally "done" using Heroku but I'm working on something more interesting with docker and a cloud provider. - *in progress*
 
 *If you're more curious about what work and plans are still hanging about, take a look at the "issues" against this project. There's plenty to explore!*
 
@@ -74,11 +75,17 @@ Server Configuration
 - MVTA_HOST (e.g. mvta.herokuapp.com)
 - MVTA_PORT     (e.g. 1337)
 
-2a: IF running over HTTPS rather than HTTP, set an additional environment variable
+2a: If running over HTTPS rather than HTTP, set additional environment variables
 
-- MVTA_PROTOCOL "https" (without the quotes)
+- MVTA_PROTOCOL "https" (without the quotes) - this is only actually used for some tests. The https server itself is already set up.
+- MVTA_SSL_PORT (e.g. 443)
 
 Note, if the game is running on port 80, you don't need to explicitly set PORT as an environment variable.
+
+2b: The game supports use of "fallback" ports - that is. If existing ports are in use, it will fall back to alternatives.
+The environment variables for these are entirely optional
+- MVTA_FALLBACK_PORT
+- MVTA_FALLBACK_SSL_PORT
 
 3: MVTA is written to use either .json files or Redis (as a non-file data store) to save player game data and timed-out games.
 
@@ -98,18 +105,18 @@ Note, back in 2014; due to a few bugs in the node_redis javascript parser I had 
 - MVTA_RATELIMITMINUTES  (default value is 5) //the time window used to measure the number of incooming requests (in minutes)
 - MVTA_RATELIMITREQUESTS (default value is 125 )|| 125, //the maxiumum number of requests allowed from a single IP within a given time window. Slowdown happens at this threshold. Full limiting happens at 2x this.
 
-5: NodeJS may (still?) have a default limit on the number of active http connections to 5. I've not verified this is accurate.
-In order to support more connections, you'll need to set another environment variable (I think)...
+5: SO that you don't fill the logs with debug noise - remember to also set.
 
 - NODE_ENV: production
 
+6: For info... The full set of environment variables (with their defaults) used by MVTA are captured in /server/js/config.js 
 
 Running the server
 ------------------
-MVTA has a predefined Procfile that should allow easy deployment on Heroku.
+MVTA is now designed to run using docker containers. One for Redis and one for the main node game. (historically it was a procfile and Heroku).
 When running directly from Visual Studio or VSCode, the launch file is defined under /.vscode/launch.json
 
-If you want to run locally on a windows machine outside VS; the simplest is to write a batch file that sets the working directory to:
+If you want to run locally on a windows machine outside VS (and without using Redis for storage); the simplest is to write a batch file that sets the working directory to:
 
 - <your drive>/<your installation location>/server/js/
 
@@ -119,6 +126,8 @@ Once at the working location, the game runs from the file "main.js". E.g.
 
 I generally include a "pause" at the end of a batch file so that should there be a bug or issue that causes the game to crash you can see the diagnostic output before the window quits.
 - pause
+
+If you want to set up your own redis service, feel free. I'll not document that config here although you'll see a fair bit in docker configs if you need some pointers.
 
 Client Configuration
 --------------------
@@ -155,9 +164,11 @@ On the server side, I'm trying to keep the main game engine away from node-speci
 
 Development & deployment platforms
 -----------------------------------
-This game is deliberately developed on Windows and as a result, will avoid any UNIX/LINUX-only Node features or packages.
-Having said that, it will likely be deployed to docker Linux containers. *(in the past it was deployed to Heroku - I'm sure I've already mentioned that)*
-Whilst the game was originally developed in Visual Studio 2012 and can still be developed in VS2022, I've found it best to work on it using VSCode. 
+This game is developed on Windows but is designed to be able to run from docker Linux containers.
+I'l do a full writeup/script on deployment. Once it's ready, I'm hoping to host on AWS. (mostly for the extra learning experience)
+*(in the past it was deployed to Heroku - I'm sure I've already mentioned that)*
+
+Whilst the game was originally developed in Visual Studio 2012 and can still be developed in VS2022, I've found it far better to work on it using VSCode. 
 
 
 Tests
@@ -181,10 +192,10 @@ There are currently only server-side tests. When client development starts up mo
 
 Module Dependencies
 -------------------
-The game was originally designed to run on Node version 0.10.33 but has now been upgraded to run on Node 22.15.0 and upward.
+The game was originally designed to run on Node version 0.10.33 but has now been upgraded to run on Node 24.2.0 and upward.
 
 Node Module dependencies are defined in \package.json
-As of May 2025 they are...
+As of June 2025 they are...
 
 For the server:
 ---
@@ -194,8 +205,7 @@ For the server:
     "express-slow-down": "^2.1.0",
     "jsonfile": "^6.1.0",
     "morgan": "^1.10.0",
-    "redis": "^5.0.1",
-    "require-directory": "^2.1.1"
+    "redis": "^5.0.1"
 ---
 Take a look at the rest of the package.json file for dev dependencies and other config info.
 

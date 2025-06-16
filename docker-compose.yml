@@ -32,7 +32,7 @@ services:
       retries: 3
     volumes:
       - .:/usr/src/mvta
-    restart: unless-stopped
+    restart: always
 
   mvta-redis:
     build:
@@ -52,7 +52,7 @@ services:
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     networks:
       - backend_net
-    restart: unless-stopped
+    restart: always
 
 volumes:
   redis-data:
