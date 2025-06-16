@@ -4,9 +4,12 @@ protected-mode no
 user default off
 user mvta on >${REDIS_PWD} ~* +@read +@write +@list +select +scan +multi +exec +discard
 
+#snapshot frequency -  every 60 seconds if a key has changed
 save 60 1
-appendonly yes
-appendfsync everysec
+
+# the following are for much more robust persistence using AOF. Not really needed for MVTA at the moment - see https://redis.io/docs/latest/operate/oss_and_stack/management/persistence/
+# appendonly yes
+# appendfsync everysec
 
 # Logging
 loglevel warning
