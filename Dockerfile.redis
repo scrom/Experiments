@@ -1,12 +1,19 @@
-# Use official redis image
-FROM redis:latest
+# Use official redis image - avoid latest for breaking changes
+FROM redis:8.0.2-alpine
 
 # Install gettext package for envsubst
-RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
 
-COPY redis.conf.template /usr/local/etc/redis/redis.conf.template
+#commented out line is for debian.
+#RUN apt-get update && apt-get install -y gettext && rm -rf /var/lib/apt/lists/*
+
+#the below is for alpine
+RUN apk add --no-cache gettext
+
+COPY redis.conf.template /usr/local/etc/redis/redis.conf.template 
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+HEALTHCHECK CMD [ "redis-cli", "ping" ]
 
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]

@@ -1,5 +1,5 @@
-# Base stage for shared configurations
-FROM node:latest AS base
+# Base stage for shared configurations - avoid node:latest and go smaller
+FROM node:24.2.0-alpine3.22 AS base
 WORKDIR /usr/src/mvta
 # Set correct permissions for the node user
 RUN chown -R node:node /usr/src/mvta
@@ -26,7 +26,8 @@ CMD [ "npm", "test" ]
 
 # Production dependencies stage
 FROM base AS prod-deps
-RUN npm install --production --silent && mv node_modules ../
+#RUN npm install --production --silent && mv node_modules ../  
+RUN npm ci --omit=dev
 
 # Production stage
 FROM prod-deps AS production
