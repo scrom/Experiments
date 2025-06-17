@@ -180,6 +180,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return _missionObject;
         };
 
+        
+        self.getInitialAttributes = function() {
+            return _initialAttributes;
+        };
+        
+        self.setInitialAttributes = function (newAttributes) {
+            _initialAttributes = newAttributes;
+        };
+
         self.getConditionAttributes = function() {
             return _conditionAttributes;
         };
@@ -925,7 +934,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.checkState = function (player, map, missionOwner) {
-
             //Note: even if not actually ticking (active), we still check state 
             //this avoids the trap of user having to find a way to activate a mission when all the work is done
             //we don't however check state for missions that still have a parent set as these should not yet be accessible
@@ -945,12 +953,24 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var successCount = 0;
             //and how many failed...
             var failCount = 0;
+            //and if we clear initial ones
+            var initialCount = 0;
             
-            //before doing any additional processing, have we timed out?
-            if (_conditionAttributes.hasOwnProperty("time")) {                       
-                if (self.getTimeTaken() >= _conditionAttributes["time"]) {
-                    successCount++;
-                };                           
+            //before doing any additional processing, have we timed out on any attributes?
+            if (_initialAttributes) {
+                if (_initialAttributes.hasOwnProperty("time")) {                       
+                    if (self.getTimeTaken() >= _initialAttributes["time"]) {
+                        initialCount++;
+                    };                           
+                };
+            };
+            if (_conditionAttributes) {
+                //pretty certain condition attributes need to exist but always worth catching
+                if (_conditionAttributes.hasOwnProperty("time")) {                       
+                    if (self.getTimeTaken() >= _conditionAttributes["time"]) {
+                        successCount++;
+                    };                           
+                };
             };
             if (_failAttributes) {
                 if (_failAttributes.hasOwnProperty("time")) {                       
@@ -1093,8 +1113,78 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 };
             };
 
-            //console.debug('mission object retrieved. Checking condition attributes...');
-            //we don't bother to calculate this earlier as even if all success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
+            //console.debug('mission object retrieved. Checking initial and condition attributes...');
+            //we don't bother to calculate this earlier as even if all initial and success attributes are cleared, if any failure attribute is triggered as well, the failure takes precedent.
+
+            //check initial attributes if set - if they all pass then we start the timer (and then immediately go on to check condition)
+            if (_initialAttributes) {
+                var requiredInitialAttrCount = self.calculateAttributeCount(_initialAttributes);
+
+                //checkRequiredContents - these aren't returned as an object attribute (and as an array/object are hard to do a simple compare on)
+                if (_initialAttributes.hasOwnProperty("contains")) {
+                    //console.debug('checking contents...');                        
+                    if (self.checkContents(missionObject, _initialAttributes["contains"])) {
+                        initialCount++;
+                    } else {
+                        //short-circuit here as cannot start yet.
+                        return null; 
+                    };     
+                };
+
+                //checkAntibodies - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+                if (_initialAttributes.hasOwnProperty("antibodies")) {
+                    //console.debug('checking antibodies...');                        
+                    if (self.checkAntibodies(missionObject, _initialAttributes["antibodies"])) {
+                        initialCount++;
+                    } else {
+                        //short-circuit here as cannot be successful
+                        return null; 
+                    };                           
+                };
+
+                //checkContagion - these aren't returned as an object attribute (and as an array are hard to do a simple compare on)
+                if (_initialAttributes.hasOwnProperty("contagion")) {
+                    //console.debug('checking contagion...');                       
+                    if (self.checkContagion(missionObject, _initialAttributes["contagion"])) {
+                        initialCount++;
+                    } else {
+                        //short-circuit here as cannot be successful
+                        return null; 
+                    };                          
+                };
+
+                //checkConversation - has conversation reached required state
+                if (_initialAttributes.hasOwnProperty("conversationState")) {
+                    //console.debug('checking conversationState...');                        
+                    if (_conversationState >= _initialAttributes["conversationState"]) {
+                        initialCount++;
+                    } else {
+                        //short-circuit here as cannot be successful
+                        return null; 
+                    };                          
+                };
+                
+                //console.debug('checking remaining attributes...');  
+                //check the rest of the object attributes if they exist (and if we're not already initialised)
+                if (initialCount < requiredInitialAttrCount) {
+                    initialCount += self.checkAttributes(missionObject, _initialAttributes);
+                };
+
+                //console.debug('condition matches: '+initialCount+" out of "+requiredInitialAttrCount);
+                if (initialCount >= requiredInitialAttrCount) {
+                    //if mission has dialogue, ensure that has been triggered at least once...
+                    if ((self.hasDialogue() && _conversationState > 0) || (!(self.hasDialogue()))) {
+                        _initialAttributes = null; // we don't need them any more.
+                        self.startTimer();  //note, we don't "return" here as we want to proceed onto checking _conditionAttributes for success.
+                    };
+                };
+
+            }; // endif initial attributes. 
+
+            //if we have no condition attributes, none of this is needed.
+            if (!_conditionAttributes) { return null;}
+
+            //check success attributes if we have cleared initial attributes
             var requiredSuccessCount = self.calculateAttributeCount(_conditionAttributes);
 
             //checkRequiredContents - these aren't returned as an object attribute (and as an array/object are hard to do a simple compare on)

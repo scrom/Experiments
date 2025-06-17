@@ -3513,7 +3513,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                     if (_missions[i].isFailedOrComplete()) { 
                         missionsToRemove.push(_missions[i].getName());
                     } else {
-                        _missions[i].startTimer();
+                        //if there are no other prerequisites
+                        if (!_missions[i].getInitialAttributes()) {
+                            _missions[i].startTimer();
+                        };
                         //if (response.length >0) {response+= "<br>"};                        
                         var dialogueResponse = _missions[i].getNextDialogue(someSpeech, keyword);
                         if (dialogueResponse) {

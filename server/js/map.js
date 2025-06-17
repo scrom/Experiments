@@ -1238,6 +1238,7 @@ exports.Map = function Map() {
             var mission = self.getNamedMission(missionName, player);
             if (mission) {
                 mission.clearParent();
+                mission.setInitialAttributes(null);
                 mission.startTimer();
                 mission.setConditionAttributes({ "time": 1 });
                 return "Mission '" + missionName + "' set to complete in 1 tick.";
@@ -1248,6 +1249,7 @@ exports.Map = function Map() {
         self.failNamedMission = function (missionName, player) {
             var mission = self.getNamedMission(missionName, player);
             if (mission) {
+                mission.setInitialAttributes(null);
                 mission.setFailAttributes({ "time": 1 });
                 return "Mission '" + missionName + "' set to fail in 1 tick.";
             };
@@ -1260,8 +1262,7 @@ exports.Map = function Map() {
                 //@todo - should probably re-parse remaining missions and clear parents of any that were dependent or remove those too as they won't be completable if left alone
                 _missionCount--;
             };
-        };
-        
+        };       
         
         self.listAllMissions = function (player) {
             return _missionController.listAllMissions(player, _locations);

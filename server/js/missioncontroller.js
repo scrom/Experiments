@@ -76,6 +76,7 @@ module.exports.MissionController = function MissionController() {
             var mission = self.getNamedMission(missionName, locations, player);
             if (mission) {
                 mission.clearParent();
+                mission.setInitialAttributes(null);
                 mission.startTimer();
                 return "Mission: '" + mission.getName() + "' force-activated.";
             };
@@ -151,7 +152,10 @@ module.exports.MissionController = function MissionController() {
             if (!mission.hasParents()) {
                 if (missionOwner) {
                     if (missionOwner.getName() == "player") {
-                        mission.startTimer(); //something missed starting the timer previously. Try agian now.
+                        //if there are no other prerequisites
+                        if (!mission.getInitialAttributes()) {
+                             mission.startTimer(); //something missed starting the timer previously. Try again now.
+                        };
                     };
                 };
             };
@@ -227,11 +231,16 @@ module.exports.MissionController = function MissionController() {
                     if (missionObjectName == "player" || ((!missionObjectName) && missionOwnerName == "player")) {
                         //initiate any player (missions or events) that we've just cleared the parent of
                         //console.debug("starting mission: " + missionToStart.getName());
-                        missionToStart.startTimer();
+                        //if there are no other prerequisites
+                        if (!missionToStart.getInitialAttributes()) {
+                            missionToStart.startTimer();
+                        };
                     } else if (missionObjectName == missionOwnerName && missionToStart.getType() == "event") {
                         //initiate any creature-only events that we've just cleared the parent of
                         //console.debug("starting mission: " + missionToStart.getName());
-                        missionToStart.startTimer();
+                        if (!missionToStart.getInitialAttributes()) {
+                            missionToStart.startTimer();
+                        };
                     };
                     
                     //duplicated code from location examine - initiate any location-based missions.
@@ -248,7 +257,9 @@ module.exports.MissionController = function MissionController() {
                     if (newMissions.length > 0) { resultString += "<br><br>"; };
                     
                     for (var nm = 0; nm < newMissions.length; nm++) {
-                        newMissions[nm].startTimer();
+                        if (!newMissions[nm].getInitialAttributes()) {
+                            newMissions[nm].startTimer();
+                        };
                         if (!(newMissions[nm].isStatic())) {
                             player.addMission(newMissions[nm]);
                             playerLocation.removeMission(newMissions[nm].getName());

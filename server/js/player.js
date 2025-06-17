@@ -3603,7 +3603,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
                 for (var i = 0; i < newMissions.length; i++) {
                     if (!newMissions[i].hasParents()) {
-                        newMissions[i].startTimer();
+                        if (!newMissions[i].getInitialAttributes()) {
+                            newMissions[i].startTimer();
+                        };
                         
                         var missionDescription = newMissions[i].getDescription();
                         if (missionDescription) {
@@ -3779,7 +3781,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
                 if (newMissions.length>0) {resultString+= "<br>";};
                 for (var i=0; i< newMissions.length;i++) {
-                    newMissions[i].startTimer();
+                    if (!newMissions[i].getInitialAttributes()) {
+                        newMissions[i].startTimer();
+                    };
                     if (!(newMissions[i].isStatic())) {
                         self.addMission(newMissions[i]);
                         artefact.removeMission(newMissions[i].getName());
@@ -3977,7 +3981,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
                 if (newMissions.length>0) {resultString+= "<br>";};
                 for (var i=0; i< newMissions.length;i++) {
-                    newMissions[i].startTimer();
+                    if (!newMissions[i].getInitialAttributes()) {
+                        newMissions[i].startTimer();
+                    };
                     if (!(newMissions[i].isStatic())) {
                         self.addMission(newMissions[i]);
                         artefact.removeMission(newMissions[i].getName());
@@ -4178,7 +4184,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!hideLocationName) {
                     resultString += "Current location: " + _currentLocation.getDisplayName() + "<br>";
                 };
-
                 resultString += _currentLocation.describe();
             };
 
@@ -4196,7 +4201,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             if ((newMissions.length - hiddenMissionCount)>0) {resultString+= "<br><br>";};
             for (var i = 0; i < newMissions.length; i++) {
                 if (!newMissions[i].hasParents()) {
-                    newMissions[i].startTimer();
+                    if (!newMissions[i].getInitialAttributes()) {
+                        newMissions[i].startTimer();
+                    };
              
                     var missionDescription = newMissions[i].getDescription();
                     if (missionDescription) {
