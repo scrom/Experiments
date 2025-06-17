@@ -55,7 +55,7 @@ test('getLocationsBySyn', () => {
 
 test('getSynonymsForLocation', () => {
     const locationName = "kitchen-ground-floor";
-    const expectedResult = ["floor", "ground", "kitchen", "kitchen ground floor", "kitchen-ground-floor"];
+    const expectedResult = ["kitchen", "small kitchen", "kitchen ground floor", "ground floor kitchen", "refreshment", "kitchen area", "refreshment area"];
     const actualResult = m0.getSynonymsForLocation(locationName);
     expect(actualResult).toStrictEqual(expectedResult);
 });

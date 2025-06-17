@@ -19,7 +19,11 @@
     {
       "object": "artefact",
       "template": "fridge",
-      "missions": [ { "file": "mission-fridgedoor" } ]
+      "missions": [
+        {
+          "file": "mission-fridgedoor"
+        }
+      ]
     },
     {
       "file": "bowl"
@@ -56,7 +60,6 @@
   "synonyms": [
     "first",
     "first floor kitchen",
-    "floor",
     "kitchen",
     "kitchen first floor",
     "kitchen-first-floor"

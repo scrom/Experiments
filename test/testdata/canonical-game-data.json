@@ -1965,8 +1965,7 @@
             "core area east",
             "core-area-east",
             "corner",
-            "devops",
-            "east"
+            "devops"
         ],
         "exits": [
             {
@@ -2286,8 +2285,7 @@
             "core area west",
             "core-area-west",
             "pm",
-            "territory",
-            "west"
+            "territory"
         ],
         "exits": [
             {
@@ -3045,8 +3043,7 @@
             "customer delight",
             "customer delight east",
             "customer-delight-east",
-            "delight",
-            "east"
+            "delight"
         ],
         "exits": [
             {
@@ -3419,8 +3416,7 @@
             "customer delight",
             "customer delight north",
             "customer-delight-north",
-            "delight",
-            "north"
+            "delight"
         ],
         "exits": [
             {
@@ -3516,8 +3512,7 @@
             "customer delight",
             "customer delight south",
             "customer-delight-south",
-            "delight",
-            "south"
+            "delight"
         ],
         "exits": [
             {
@@ -3708,9 +3703,7 @@
             "customer delight",
             "customer delight south east",
             "customer-delight-south-east",
-            "delight",
-            "east",
-            "south"
+            "delight"
         ],
         "exits": [
             {
@@ -3770,9 +3763,7 @@
             "customer delight",
             "customer delight south west",
             "customer-delight-south-west",
-            "delight",
-            "south",
-            "west"
+            "delight"
         ],
         "exits": [
             {
@@ -4357,8 +4348,7 @@
             "customer delight",
             "customer delight west",
             "customer-delight-west",
-            "delight",
-            "west"
+            "delight"
         ],
         "exits": [
             {
@@ -4856,7 +4846,6 @@
             "bike",
             "bike racks",
             "bike racks (east side)",
-            "east",
             "east bike racks",
             "east-bike-racks",
             "racks"
@@ -4950,7 +4939,6 @@
         "synonyms": [
             "car",
             "car park",
-            "east",
             "east car park",
             "east-car-park",
             "park"
@@ -5000,11 +4988,8 @@
         "description": "You're in the East corridor of the ground floor.",
         "synonyms": [
             "corridor",
-            "east",
             "east corridor ground floor",
-            "east-corridor-ground-floor",
-            "floor",
-            "ground"
+            "east-corridor-ground-floor"
         ],
         "exits": [
             {
@@ -5037,13 +5022,9 @@
         "description": "You're at the North end of the ground floor East corridor.",
         "synonyms": [
             "corridor",
-            "east",
             "east corridor ground floor",
             "east corridor ground floor north east",
-            "east-corridor-ground-floor-north-east",
-            "floor",
-            "ground",
-            "north"
+            "east-corridor-ground-floor-north-east"
         ],
         "exits": [
             {
@@ -5076,14 +5057,9 @@
         "description": "You're standing in a short corridor just outside the post room.",
         "synonyms": [
             "corridor",
-            "east",
             "east corridor ground floor",
             "east corridor ground floor north west",
-            "east-corridor-ground-floor-north-west",
-            "floor",
-            "ground",
-            "north",
-            "west"
+            "east-corridor-ground-floor-north-west"
         ],
         "exits": [
             {
@@ -5151,13 +5127,9 @@
         "description": "You're near the East end of the South corridor on the ground floor.",
         "synonyms": [
             "corridor",
-            "east",
             "east end south corridor ground floor",
             "east-end-south-corridor-ground-floor",
             "end",
-            "floor",
-            "ground",
-            "south",
             "south corridor ground floor"
         ],
         "exits": [
@@ -5242,14 +5214,10 @@
         "description": "You're near the South end of the East corridor on the ground floor.",
         "synonyms": [
             "corridor",
-            "east",
             "east corridor ground floor",
             "east south end corridor ground floor",
             "east-south-end-corridor-ground-floor",
-            "end",
-            "floor",
-            "ground",
-            "south"
+            "end"
         ],
         "exits": [
             {
@@ -5719,11 +5687,9 @@
             "back",
             "back stairs  - 1st floor",
             "back stairs (east) - 1st floor",
-            "east",
             "first",
             "first floor back stairs east",
             "first-floor-back-stairs-east",
-            "floor",
             "stairs"
         ],
         "exits": [
@@ -5763,9 +5729,7 @@
             "first",
             "first floor back stairs west",
             "first-floor-back-stairs-west",
-            "floor",
-            "stairs",
-            "west"
+            "stairs"
         ],
         "exits": [
             {
@@ -5801,7 +5765,6 @@
             "first",
             "first floor cubby hole",
             "first-floor-cubby-hole",
-            "floor",
             "function",
             "function heads & support cubby hole",
             "heads",
@@ -5906,7 +5869,6 @@
             "first",
             "first floor cubicle",
             "first-floor-cubicle",
-            "floor",
             "toilet",
             "toilet cubicle"
         ],
@@ -6097,8 +6059,7 @@
             "fire escape",
             "first",
             "first floor fire escape",
-            "first-floor-fire-escape",
-            "floor"
+            "first-floor-fire-escape"
         ],
         "exits": [
             {
@@ -6179,7 +6140,6 @@
             "first floor landing",
             "first floor landing central",
             "first-floor-landing-central",
-            "floor",
             "landing"
         ],
         "exits": [
@@ -6212,12 +6172,10 @@
         "displayName": "First floor landing",
         "description": "You're at the East end of the first floor landing.<br>Through the nearby window you can often see some of the sales team relaxing.",
         "synonyms": [
-            "east",
             "first",
             "first floor landing",
             "first floor landing east",
             "first-floor-landing-east",
-            "floor",
             "landing"
         ],
         "exits": [
@@ -6299,9 +6257,7 @@
             "first floor landing",
             "first floor landing west",
             "first-floor-landing-west",
-            "floor",
-            "landing",
-            "west"
+            "landing"
         ],
         "exits": [
             {
@@ -6376,7 +6332,6 @@
             "first",
             "first floor toilet",
             "first-floor-toilet",
-            "floor",
             "toilet"
         ],
         "exits": [
@@ -6885,9 +6840,6 @@
             "back",
             "back stairs  - ground floor",
             "back stairs (east) - ground floor",
-            "east",
-            "floor",
-            "ground",
             "ground floor back stair east",
             "ground-floor-back-stair-east",
             "stair",
@@ -6937,12 +6889,9 @@
             "back",
             "back stairs  - ground floor",
             "back stairs (west) - ground floor",
-            "floor",
-            "ground",
             "ground floor back stairs west",
             "ground-floor-back-stairs-west",
-            "stairs",
-            "west"
+            "stairs"
         ],
         "exits": [
             {
@@ -6968,8 +6917,6 @@
         "description": "You're standing in a nice clean toilet cubicle. Fortunately the previous occupant remembered to flush.",
         "synonyms": [
             "cubicle",
-            "floor",
-            "ground",
             "ground floor cubicle",
             "ground-floor-cubicle",
             "toilet",
@@ -7160,8 +7107,6 @@
             "escape",
             "fire",
             "fire escape",
-            "floor",
-            "ground",
             "ground floor fire escape",
             "ground-floor-fire-escape"
         ],
@@ -7249,8 +7194,6 @@
         "displayName": "Ground floor toilet",
         "description": "You stare at yourself in the bathroom mirror and muse over the form and design of the soap dispensers.<br>It's probably not socially acceptable to hang around in here all day though.",
         "synonyms": [
-            "floor",
-            "ground",
             "ground floor toilet",
             "ground-floor-toilet",
             "toilet"
@@ -7853,7 +7796,6 @@
         "synonyms": [
             "first",
             "first floor kitchen",
-            "floor",
             "kitchen",
             "kitchen first floor",
             "kitchen-first-floor"
@@ -9305,11 +9247,13 @@
             "imageName": "kitchen-ground-floor.jpg"
         },
         "synonyms": [
-            "floor",
-            "ground",
             "kitchen",
+            "small kitchen",
             "kitchen ground floor",
-            "kitchen-ground-floor"
+            "ground floor kitchen",
+            "refreshment",
+            "kitchen area",
+            "refreshment area"
         ],
         "exits": [
             {
@@ -12030,7 +11974,6 @@
                                                             "car park",
                                                             "car park (east)",
                                                             "corner",
-                                                            "east",
                                                             "east car park corner",
                                                             "east-car-park-corner",
                                                             "park"
@@ -12274,7 +12217,6 @@
             "imageName": "kitchen-second-floor.jpg"
         },
         "synonyms": [
-            "floor",
             "kitchen",
             "kitchen second floor",
             "kitchen-second-floor",
@@ -12795,7 +12737,6 @@
         },
         "synonyms": [
             "first",
-            "floor",
             "lift",
             "lift first floor",
             "lift-first-floor"
@@ -12911,8 +12852,6 @@
             "imageName": "liftdoor.jpg"
         },
         "synonyms": [
-            "floor",
-            "ground",
             "lift",
             "lift ground floor",
             "lift-ground-floor"
@@ -13040,7 +12979,6 @@
             "imageName": "liftdoor-2.jpg"
         },
         "synonyms": [
-            "floor",
             "lift",
             "lift second floor",
             "lift-second-floor",
@@ -13161,7 +13099,6 @@
         "displayName": "Machine room",
         "description": "Now you're definitely in a sensitive area. Racks of servers hum away. Fortunately most of them are just for testing, we use the cloud you know!",
         "synonyms": [
-            "east",
             "machine",
             "machine room",
             "machine room east",
@@ -13284,8 +13221,7 @@
             "machine room",
             "machine room west",
             "machine-room-west",
-            "room",
-            "west"
+            "room"
         ],
         "exits": [
             {
@@ -13455,12 +13391,9 @@
         "description": "You're in the West corridor of the ground floor.",
         "synonyms": [
             "corridor",
-            "floor",
-            "ground",
             "northwest",
             "northwest corridor ground floor",
             "northwest-corridor-ground-floor",
-            "west",
             "west corridor ground floor"
         ],
         "exits": [
@@ -13932,7 +13865,6 @@
         "displayName": "Opportunities",
         "description": "You're in a tucked-away East corner of the opportunities and ventures area. This is the home of the SQL Lighthouse team.",
         "synonyms": [
-            "east",
             "opportunities",
             "opportunities east",
             "opportunities-east"
@@ -14095,7 +14027,6 @@
         "displayName": "Opportunities",
         "description": "You're in north end of the opportunities and ventures area.",
         "synonyms": [
-            "north",
             "opportunities",
             "opportunities north",
             "opportunities-north"
@@ -14187,7 +14118,6 @@
         "description": "You're in a corridor at the north end of the opportunities and ventures area.",
         "synonyms": [
             "corridor",
-            "north",
             "opportunities",
             "opportunities north corridor",
             "opportunities-north-corridor"
@@ -14223,8 +14153,6 @@
         "description": "You're at the end of a corridor in the northern part of the opportunities and ventures area.",
         "synonyms": [
             "corridor",
-            "east",
-            "north",
             "opportunities",
             "opportunities north east corridor",
             "opportunities-north-east-corridor"
@@ -14254,8 +14182,7 @@
         "synonyms": [
             "opportunities",
             "opportunities south",
-            "opportunities-south",
-            "south"
+            "opportunities-south"
         ],
         "exits": [
             {
@@ -14490,9 +14417,7 @@
         "synonyms": [
             "opportunities",
             "opportunities south west",
-            "opportunities-south-west",
-            "south",
-            "west"
+            "opportunities-south-west"
         ],
         "exits": [
             {
@@ -14519,8 +14444,7 @@
         "synonyms": [
             "opportunities",
             "opportunities west",
-            "opportunities-west",
-            "west"
+            "opportunities-west"
         ],
         "exits": [
             {
@@ -14797,7 +14721,6 @@
         "description": "You're on the Northern edge of the People Team area.",
         "synonyms": [
             "area",
-            "north",
             "people",
             "people team area",
             "people team north",
@@ -14835,13 +14758,11 @@
         "description": "You're in the North-West corner of the People Team area.",
         "synonyms": [
             "area",
-            "north",
             "people",
             "people team area",
             "people team north west",
             "people-team-north-west",
-            "team",
-            "west"
+            "team"
         ],
         "exits": [
             {
@@ -15988,8 +15909,6 @@
         "description": "You're in the ground floor rest area.",
         "synonyms": [
             "area",
-            "floor",
-            "ground",
             "rest",
             "rest area",
             "rest area ground floor",
@@ -16846,7 +16765,6 @@
         "description": "You're at the North end of the sales and marketing area.<br>To the North is a door. East is the marketing area and West are some recreational spaces.",
         "synonyms": [
             "area",
-            "north",
             "sales",
             "sales area",
             "sales north",
@@ -16965,8 +16883,7 @@
             "sales",
             "sales area",
             "sales south",
-            "sales-south",
-            "south"
+            "sales-south"
         ],
         "exits": [
             {
@@ -16995,8 +16912,6 @@
             "back",
             "back stairs  - 2nd floor",
             "back stairs (east) - 2nd floor",
-            "east",
-            "floor",
             "second",
             "second floor back stairs east",
             "second-floor-back-stairs-east",
@@ -17029,12 +16944,10 @@
             "back",
             "back stairs  - 2nd floor",
             "back stairs (west) - 2nd floor",
-            "floor",
             "second",
             "second floor back stairs west",
             "second-floor-back-stairs-west",
-            "stairs",
-            "west"
+            "stairs"
         ],
         "exits": [
             {
@@ -17063,7 +16976,6 @@
         },
         "synonyms": [
             "cubicle",
-            "floor",
             "second",
             "second floor cubicle",
             "second-floor-cubicle",
@@ -17273,8 +17185,6 @@
         "description": "You're in the East corridor on the second floor. Domain of all things IS.",
         "synonyms": [
             "corridor",
-            "east",
-            "floor",
             "second",
             "second floor east corridor",
             "second-floor-east-corridor"
@@ -17350,7 +17260,6 @@
             "escape",
             "fire",
             "fire escape",
-            "floor",
             "second",
             "second floor fire escape",
             "second-floor-fire-escape"
@@ -17430,7 +17339,6 @@
         "description": "You're in the middle of the second floor landing. From here you have a great view of the Aliotomy Ant Farm over the road.",
         "synonyms": [
             "central",
-            "floor",
             "landing",
             "second",
             "second floor landing",
@@ -17521,8 +17429,6 @@
         "displayName": "Second floor landing",
         "description": "You're at the east end of the second floor landing. Peering through the window to the East, you can just about make out the facilities team on the other side of the glass.",
         "synonyms": [
-            "east",
-            "floor",
             "landing",
             "second",
             "second floor landing",
@@ -17604,13 +17510,11 @@
         "displayName": "Second floor landing",
         "description": "You're at the West end of the second floor landing. Peering over the balcony you consider throwing something down. If only there was a slide here.",
         "synonyms": [
-            "floor",
             "landing",
             "second",
             "second floor landing",
             "second floor landing west",
-            "second-floor-landing-west",
-            "west"
+            "second-floor-landing-west"
         ],
         "exits": [
             {
@@ -17684,13 +17588,10 @@
         "synonyms": [
             "central",
             "corridor",
-            "floor",
-            "north",
             "second",
             "second floor north west corridor central",
             "second floor west corridor",
-            "second-floor-north-west-corridor-central",
-            "west"
+            "second-floor-north-west-corridor-central"
         ],
         "exits": [
             {
@@ -17724,13 +17625,10 @@
         "synonyms": [
             "central",
             "corridor",
-            "floor",
-            "north",
             "second",
             "second floor north west corridor north central",
             "second floor west corridor",
-            "second-floor-north-west-corridor-north-central",
-            "west"
+            "second-floor-north-west-corridor-north-central"
         ],
         "exits": [
             {
@@ -17763,14 +17661,10 @@
         "description": "You're at a bend in a roughly North-South running corridor in the North-West corner of the second floor. There are meeting rooms to the North and East.",
         "synonyms": [
             "corridor",
-            "east",
-            "floor",
-            "north",
             "second",
             "second floor north west corridor north east",
             "second floor west corridor",
-            "second-floor-north-west-corridor-north-east",
-            "west"
+            "second-floor-north-west-corridor-north-east"
         ],
         "exits": [
             {
@@ -17811,13 +17705,10 @@
         "synonyms": [
             "corridor",
             "end",
-            "floor",
-            "north",
             "second",
             "second floor north west corridor north end",
             "second floor west corridor",
-            "second-floor-north-west-corridor-north-end",
-            "west"
+            "second-floor-north-west-corridor-north-end"
         ],
         "exits": [
             {
@@ -17850,14 +17741,10 @@
         "description": "You're at the South end of a roughly North-South running corridor in the North-West corner of the second floor.<br>There's meeting room to the West. To the east is a curved glass partition behind which are printers and a stationery cupboard.",
         "synonyms": [
             "corridor",
-            "floor",
-            "north",
             "second",
             "second floor north west corridor south",
             "second floor west corridor",
-            "second-floor-north-west-corridor-south",
-            "south",
-            "west"
+            "second-floor-north-west-corridor-south"
         ],
         "exits": [
             {
@@ -17890,7 +17777,6 @@
         "description": "You're in a small glass-walled corner bounded by corridors.",
         "synonyms": [
             "area",
-            "floor",
             "printer",
             "printer area",
             "second",
@@ -18056,7 +17942,6 @@
         "displayName": "Former reception",
         "description": "You're standing in the former reception area on the second floor. A CCTV camera looms over the desk area.",
         "synonyms": [
-            "floor",
             "former",
             "former reception",
             "reception",
@@ -18130,8 +18015,6 @@
         "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>The whole of one wall is taken up by a mural of giant post-it notes. You could stand here for hours reading them trying to spot the duplicates.",
         "synonyms": [
             "area",
-            "east",
-            "floor",
             "rest",
             "rest area",
             "seating",
@@ -18286,14 +18169,12 @@
         "description": "You're in a comfortable - if somewhat high-traffic - seating area.<br>Teams from the second floor tend to use this area for reading and relaxing.",
         "synonyms": [
             "area",
-            "floor",
             "rest",
             "rest area",
             "seating",
             "second",
             "second floor seating area west",
-            "second-floor-seating-area-west",
-            "west"
+            "second-floor-seating-area-west"
         ],
         "exits": [
             {
@@ -18372,7 +18253,6 @@
         "displayName": "Second floor toilet",
         "description": "You're in a bathroom. You can't quite remember what floor you're on.<br>Do those soap dispensers look different to you?<br>There's a tatty-looking sign on the toilet cubicle door.",
         "synonyms": [
-            "floor",
             "second",
             "second floor toilet",
             "second-floor-toilet",
@@ -18647,13 +18527,10 @@
         "description": "You're in a short corridor that runs East-West. To the East is the second floor reception area. <br>To the north is a printer area that also houses a stationary cupboard. To the west lies the People team (and more winding corridors).",
         "synonyms": [
             "corridor",
-            "floor",
             "second",
             "second floor south corridor",
             "second floor west corridor",
-            "second-floor-west-corridor",
-            "south",
-            "west"
+            "second-floor-west-corridor"
         ],
         "exits": [
             {
@@ -19615,11 +19492,9 @@
         "displayName": "Servery",
         "description": "You're standing at the North-West corner of the servery. The walls here are decorated with postcards and photos.<br>This is the main thoroughfare for staff heading to and from the servery at lunchtimes.",
         "synonyms": [
-            "north",
             "servery",
             "servery north west",
-            "servery-north-west",
-            "west"
+            "servery-north-west"
         ],
         "exits": [
             {
@@ -19764,9 +19639,7 @@
         "synonyms": [
             "servery",
             "servery south west",
-            "servery-south-west",
-            "south",
-            "west"
+            "servery-south-west"
         ],
         "exits": [
             {
@@ -19820,8 +19693,6 @@
         "displayName": "Shower",
         "description": "You're in the ground floor showers. There's a lingering smell of deodorant, damp and cyclist sweat.",
         "synonyms": [
-            "floor",
-            "ground",
             "shower",
             "shower ground floor",
             "shower-ground-floor"
@@ -20307,9 +20178,6 @@
         "description": "You're at the South-East intersection of two corridors on the ground floor.",
         "synonyms": [
             "corridor",
-            "floor",
-            "ground",
-            "south",
             "south corridor ground floor",
             "southeast",
             "southeast corridor ground floor",
@@ -20346,9 +20214,6 @@
         "description": "You're in the South-West corner intersection of two corridors of the ground floor. There is a meeting room to the West.",
         "synonyms": [
             "corridor",
-            "floor",
-            "ground",
-            "south",
             "south corridor ground floor",
             "southwest",
             "southwest corridor ground floor",
@@ -20426,7 +20291,6 @@
         "synonyms": [
             "1st",
             "first",
-            "floor",
             "stairs",
             "stairs - 1st floor",
             "stairs first floor",
@@ -20502,14 +20366,17 @@
         "object": "location",
         "name": "stairs-ground-floor",
         "displayName": "Stairs - Ground floor",
-        "description": "You're standing at the foot of the stairs.",
+        "description": "You're standing at the foot of the stairs.<br>Looking up at the glass marvel you can't help noticing that something seems slightly <i>off</i> about it.<br>(Like maybe it was designed by a slightly shifty rogue AI.)<br><br>To the West lies a small kitchen and refreshement area. The rest of the atrium and reception are to the East.",
+        "attributes": {
+            "imageName": "atriumstair.jpg"
+        },
         "synonyms": [
-            "floor",
-            "ground",
             "stairs",
-            "stairs - ground floor",
-            "stairs ground floor",
-            "stairs-ground-floor"
+            "glass",
+            "marvel",
+            "stair",
+            "ground floor",
+            "ground floor stair"
         ],
         "exits": [
             {
@@ -20591,7 +20458,6 @@
         "description": "You're standing at the top of the main staircase The view's great from up here.",
         "synonyms": [
             "2nd",
-            "floor",
             "second",
             "stairs",
             "stairs - 2nd floor",
@@ -20663,7 +20529,6 @@
         "displayName": "Support",
         "description": "You're in support area.<br>From here you can make rude gestures and wave through the window at passers-by on the stairs.",
         "synonyms": [
-            "east",
             "support",
             "support east",
             "support-east"
@@ -20738,8 +20603,7 @@
         "synonyms": [
             "support",
             "support west",
-            "support-west",
-            "west"
+            "support-west"
         ],
         "exits": [
             {
@@ -21166,7 +21030,6 @@
             "bike racks",
             "bike racks (west)",
             "racks",
-            "west",
             "west bike racks",
             "west-bike-racks"
         ],
@@ -21264,7 +21127,6 @@
             "car park",
             "car park (west)",
             "park",
-            "west",
             "west car park",
             "west-car-park"
         ],
@@ -21335,9 +21197,6 @@
         "description": "You're near the South end of the West corridor of the ground floor.",
         "synonyms": [
             "corridor",
-            "floor",
-            "ground",
-            "west",
             "west corridor ground floor",
             "west-corridor-ground-floor"
         ],
@@ -21373,11 +21232,7 @@
         "synonyms": [
             "corridor",
             "end",
-            "floor",
-            "ground",
-            "south",
             "south corridor ground floor",
-            "west",
             "west end south corridor ground floor",
             "west-end-south-corridor-ground-floor"
         ],
