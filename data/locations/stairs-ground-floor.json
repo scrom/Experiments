@@ -2,7 +2,10 @@
   "object": "location",
   "name": "stairs-ground-floor",
   "displayName": "Stairs - Ground floor",
-  "description": "You're standing at the foot of the stairs.",
+  "description": "You're standing at the foot of the stairs.<br>Looking up at the glass marvel you can't help noticing that something seems slightly <i>off</i> about it.<br>(Like maybe it was designed by a slightly shifty rogue AI.)<br><br>To the West lies a small kitchen and refreshement area. The rest of the atrium and reception are to the East.",
+  "attributes": {
+    "imageName": "atriumstair.jpg"
+  },
   "exits": [
     {
       "object": "exit",
@@ -59,11 +62,11 @@
     }
   ],
   "synonyms": [
-    "floor",
-    "ground",
     "stairs",
-    "stairs - ground floor",
-    "stairs ground floor",
-    "stairs-ground-floor"
+    "glass",
+    "marvel",
+    "stair",
+    "ground floor",
+    "ground floor stair"
   ]
 }
