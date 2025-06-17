@@ -1,8 +1,6 @@
 ﻿"use strict";
 const artefact = require('../../server/js/artefact.js');
-const location = require('../../server/js/location.js');
 const player = require('../../server/js/player.js');
-const map = require('../../server/js/map.js');
 const mapBuilder = require('../../server/js/mapbuilder.js');
 const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
 

@@ -1,6 +1,5 @@
 "use strict";
 const contagion = require('../../server/js/contagion.js');
-const stubFactory = require('../stubs/stubFactory.js');
 const player = require('../../server/js/player.js');
 const map = require('../../server/js/map.js');
 const location = require('../../server/js/location.js');

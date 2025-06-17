@@ -3,7 +3,6 @@ const mission = require('../../server/js/mission.js');
 const missionController = require('../../server/js/missioncontroller.js');
 const customAction = require('../../server/js/customaction.js');
 const artefact = require('../../server/js/artefact.js');
-const inventory = require('../../server/js/inventory.js');
 const mapBuilder = require('../../server/js/mapbuilder.js');
 const tools = require('../../server/js/tools.js');
 const player = require('../../server/js/player.js');
@@ -1015,8 +1014,7 @@ test('canSucceedCounterIntuitiveDestroyScreenMission', () => {
     const actualResult = resultString;
     expect(actualResult).toBe(expectedResult);
 });
-
-    
+  
 test('canFailCounterIntuitiveDestroyScreenMission', () => {
     const screen = m0.getObject("screen");
     const atrium = m0.getLocation("atrium")

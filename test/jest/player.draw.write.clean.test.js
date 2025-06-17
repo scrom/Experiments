@@ -3,7 +3,6 @@ const player = require('../../server/js/player.js');
 const creature = require('../../server/js/creature.js');
 const location = require('../../server/js/location.js');
 const artefact = require('../../server/js/artefact.js');
-const contagion = require('../../server/js/contagion.js');
 const mapBuilder = require('../../server/js/mapbuilder.js');
 const map = require('../../server/js/map.js');
 const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');

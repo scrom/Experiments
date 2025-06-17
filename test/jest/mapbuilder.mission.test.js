@@ -1,19 +1,8 @@
 ﻿"use strict";
 const validatorModule = require('../../server/js/validator');   
-const mission = require('../../server/js/mission.js');
-const missionController = require('../../server/js/missioncontroller.js');
-const customAction = require('../../server/js/customaction.js');
-const artefact = require('../../server/js/artefact.js');
-const inventory = require('../../server/js/inventory.js');
 const mapBuilder = require('../../server/js/mapbuilder.js');
-const tools = require('../../server/js/tools.js');
-const player = require('../../server/js/player.js');
 
-let playerName;
-let playerAttributes;
-let p0;
 let mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
-let m0;
 
 const testDataDir = '../../test/testdata/';
 const validator = new validatorModule.Validator(testDataDir);

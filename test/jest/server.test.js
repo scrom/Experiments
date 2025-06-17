@@ -1,5 +1,4 @@
 "use strict";
-const stubFactory = require('../stubs/stubFactory.js');
 //const config = require('../../server/js/config.js');
 const mapbuilder = require('../../server/js/mapbuilder.js');
 const gamecontroller = require('../../server/js/gamecontroller.js');

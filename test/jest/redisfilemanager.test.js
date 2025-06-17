@@ -1,8 +1,5 @@
 ﻿"use strict";
 const fileManager = require('../../server/js/filemanager.js');
-const fs = require('fs');
-const path = require('path');
-const jf = require('jsonfile');
 
 const testDataDir = '../../test/testdata/';
 const testImageDir = '../../test/testdata/images/';
