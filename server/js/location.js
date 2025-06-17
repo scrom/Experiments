@@ -783,8 +783,17 @@ exports.Location = function Location(name, displayName, description, attributes)
             };            
         };
 
-        self.describe = function() {
+        self.describe = function(shortenIfVisited) {
             var resultString = _description;
+            if (shortenIfVisited) {
+                if (self.getVisits() > 1) {
+                    let breakString = ".";
+                    if (_description.includes("<br>")) {
+                        breakString = "<br>"
+                    };
+                    resultString = _description.substring(0, _description.indexOf(breakString));
+                };
+            };
 
             if (_inventory.size(false, true) > 0) {
                 //clean up grammar here (there is/there are)

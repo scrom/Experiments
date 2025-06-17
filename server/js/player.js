@@ -4184,7 +4184,7 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 if (!hideLocationName) {
                     resultString += "Current location: " + _currentLocation.getDisplayName() + "<br>";
                 };
-                resultString += _currentLocation.describe();
+                resultString += _currentLocation.describe(true); //true here means shorten if previously visited.
             };
 
             //retrieve missions from location including those that are inactive and non-static:
