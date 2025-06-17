@@ -215,6 +215,21 @@ exports.Action = function Action(player, map, fileManager) {
         self.performPlayerAction = function () {
             _skipPlayerTick = false;  //assume player will tick unless set otherwise.
             var description = "";
+            var actionWords = _actionString.split(" ");
+
+            var defaultCaseAction = function() {
+                //check for a custom verb and response here.
+                _ticks = 0;
+                if (_object0) {
+                    description = _player.customAction(_verb, _object0);
+                } else {
+                    description = _player.customAction(_verb, _object1);
+                };
+
+                if (description) {_ticks = _baseTickSize*1;};
+                //console.debug("Custom result:"+description);
+                //console.debug('verb: '+_verb+' default response');
+            };
 
             var lastVerbUsed = _player.getLastVerbUsed();
             if (lastVerbUsed == "say"||lastVerbUsed == "ask"||lastVerbUsed == "talk" || lastVerbUsed == "chat" || lastVerbUsed == "speak") {
@@ -240,15 +255,24 @@ exports.Action = function Action(player, map, fileManager) {
                         break;
                     case 'try':
                     case 'attempt':
-                        //rephrase with new verb - all present participles in English end with "-ing"
-                        let actionWords = _actionString.split(" ");
-                        if (actionWords.length > 1) {
-                            if (actionWords[1].endsWith("ing")) {
-                                actionWords[1] = actionWords[1].substring(-3);
-                            };          
+                        if (actionWords.length == 1) {description = tools.initCap(_Verb)+" what?"};
+                        
+                        if (actionWords.length > 1 && actionWords[0] == _verb) {
+                            if (actionWords[1] == "to" || actionWords[1] == "and") {
+                                //shift an extra word
+                                actionWords.shift();
+                            };
+                            actionWords.shift();
                         };
-                        let newAction = actionWords.shift().join(" ");
-                        self.act(newAction);
+
+                        //now we should be starting with a new verb...
+                        if (actionWords[0].endsWith("ing")) {
+                            //all present participle verbs in English end with "-ing"
+                            actionWords[0] = actionWords[0].substring(-3);
+                        };
+
+                        _actionString = actionWords.join(" ");
+                        description = self.processAction(_actionString);
                         break;
                     case 'i':
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
@@ -379,8 +403,15 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                         break;
                     case 'please':
+                        if (actionWords.length > 1 && actionWords[0] == _verb) {
+                            actionWords.shift();
+                            _actionString = actionWords.join(" ");
+                            description = self.processAction(_actionString);
+                            break;
+                        };
+
                         description = "I like it when you beg.";
-                        break;
+                         break;
                     case 'cheat':
                         description = "Hmmm. I'm sure I heard about some cheat codes somewhere...<br><br>...Nope, I must have imagined it.<br>Looks like it's just you and your brain for now.";
                         break;
@@ -1502,17 +1533,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'summon': //see #18
                     case 'test':
                     default:
-                        //check for a custom verb and response here.
-                        _ticks = 0;
-                        if (_object0) {
-                            description = _player.customAction(_verb, _object0);
-                        } else {
-                            description = _player.customAction(_verb, _object1);
-                        };
-
-                        if (description) {_ticks = _baseTickSize*1;};
-                        //console.debug("Custom result:"+description);
-                        //console.debug('verb: '+_verb+' default response');
+                        defaultCaseAction();
                         //allow fall-through
                 };
             }
