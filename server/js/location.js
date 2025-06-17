@@ -792,7 +792,10 @@ exports.Location = function Location(name, displayName, description, attributes)
                         if (_description.includes("<br>")) {
                             breakString = "<br>"
                         };
-                        resultString = _description.substring(0, _description.indexOf(breakString));
+                        let stringIndex = _description.indexOf(breakString);
+                        if (stringIndex >0) {
+                            resultString = _description.substring(0, stringIndex);
+                        };
                     };
                 };
             };
