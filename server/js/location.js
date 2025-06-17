@@ -788,10 +788,12 @@ exports.Location = function Location(name, displayName, description, attributes)
             if (shortenIfVisited) {
                 if (self.getVisits() > 1) {
                     let breakString = ".";
-                    if (_description.includes("<br>")) {
-                        breakString = "<br>"
+                    if (_description) {
+                        if (_description.includes("<br>")) {
+                            breakString = "<br>"
+                        };
+                        resultString = _description.substring(0, _description.indexOf(breakString));
                     };
-                    resultString = _description.substring(0, _description.indexOf(breakString));
                 };
             };
 
