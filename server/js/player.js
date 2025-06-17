@@ -1141,6 +1141,31 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
             return null;              
         };
+
+        self.think = function (verb, artefactName, splitword, receiverName, originalAction) {
+            if (artefactName.length > 0) {
+                var artefact = getObjectFromPlayerOrLocation(artefactName);
+            };
+            
+            var receiver;
+            if (receiverName) {
+                receiver = getObjectFromPlayerOrLocation(receiverName);
+                if (receiver) {
+                    if (receiver.checkCustomAction(verb)) {
+                        return receiver.performCustomAction(verb, map, self);
+                    };
+                };
+            };
+                      
+            if (receiverName.length == 0 && artefact) {
+                if (artefact.checkCustomAction(verb)) {
+                    return artefact.performCustomAction(verb, map, self);
+                };
+            };
+
+            return "You close your eyes and quietly try to "+originalAction+"...<br>It doesn't really do anything for you."
+
+        };
         
         self.play = function (verb, artefactName, receiverName) {
             var artefact = getObjectFromPlayerOrLocation(artefactName);
@@ -1537,8 +1562,8 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 else {resultString += "bare hands and sheer malicious ingenuity"};
                 resultString += " in a bid to cause damage.<br>";
             };
-                
-            if (verb=='break'||verb=='force') {
+
+            if (verb=='break'||verb=='force'||verb=='pry'||verb=='crack'||verb=='damage') {
                 resultString += artefact.break(verb, true, _map, self);
             } else {
                 resultString += artefact.destroy(true);
@@ -1550,6 +1575,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 removeObjectFromPlayerOrLocation(artefact.getName());
             } else if (artefact.isBroken()) {
                 resultString += artefact.drain(_currentLocation);   
+            };
+
+            if (artefact.checkCustomAction(verb)) {
+                resultString +=  "<br>"+self.customAction(verb, artefact.getName());
             };
             return resultString;
         };
@@ -4785,7 +4814,13 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 return notFoundMessage(receiverName);
             };
 
-            if (receiver.getSubType() == "intangible") {return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";}; 
+            if (receiver.getSubType() == "intangible") {
+                //check for custom action just in case.
+                if (receiver.checkCustomAction(verb)) {
+                    return self.customAction(verb, receiver.getName());
+                };
+                return "You lash frantically at the air around you before realising how foolish you look.<br>It's ok, I don't think anyone was watching.";
+            }; 
 
             //just check it's not *already* destroyed...
             if (receiver.isDestroyed()) {
@@ -4870,9 +4905,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                         return resultString;
                 };
 
+                //do we have a custom action for this (either creature or artefact)
+                if (receiver.checkCustomAction(verb)) {
+                    return self.customAction(verb, receiver.getName());
+                };
 
                 if (receiver.getType() == "creature") {
-
                     if (receiver.getSubType() == "friendly") {
                         return receiver.hurt(0, self); //could alter this to support unarmed fighting as a skill later
                     } else {

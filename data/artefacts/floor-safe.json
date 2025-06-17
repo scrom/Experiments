@@ -1,0 +1,25 @@
+{
+    "object": "artefact",
+    "name": "floor safe",
+    "description": "floor safe",
+    "detailedDescription": "It's a small heavy-duty floor safe.",
+    "attributes": {
+        "defaultAction": "crack",
+        "customAction": [
+        {"verbs": ["break", "smash", "destroy", "force", "pry", "crack", "damage"], "message": "It's pretty much indestructable. You'll just have to <i>imagine</i> what's in there for now."},
+        {"verbs": ["imagine"], "message": "You briefly close your eyes and picture a door to a magical world full of love, rainbows, unicorns, and daisies.<br>Then you snap back to reality <i>('Oop there goes gravity')</i>.<br>You waver for a moment before remembering that you're still stuck in this office with a job and need to pay your rent."}    
+        ],        
+        "weight": 151,
+        "carryWeight": 25,
+        "canOpen": true,
+        "lockable": true,
+        "locked": true,
+        "imageName": "floorsafe.jpg",
+        "canDrawOn": true
+    },
+    "synonyms": [
+        "safe",
+        "floorsafe",
+        "floor safe"
+    ]
+}

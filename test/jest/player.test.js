@@ -129,7 +129,7 @@ test('can get and drop object', () => {
 test('can get and throw object', () => {
     var artefactDescription = 'an artefact of little consequence';
     p0.get('get', a0.getName());
-    var expectedResult = "You throw the artefact of little consequence. You do a little damage but try as you might, you can't seem to destroy it.";
+    var expectedResult = "You throw the artefact of little consequence. You do some minor damage but fail to do any <i>real</i> harm to it.";
     var actualResult = p0.drop('throw', a0.getName());
     console.debug("Expected: " + expectedResult);
     console.debug("Actual  : " + actualResult);

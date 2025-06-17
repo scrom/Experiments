@@ -238,6 +238,18 @@ exports.Action = function Action(player, map, fileManager) {
                         var randomIndex = Math.floor(Math.random() * randomReplies.length);
                         return description + randomReplies[randomIndex];
                         break;
+                    case 'try':
+                    case 'attempt':
+                        //rephrase with new verb - all present participles in English end with "-ing"
+                        let actionWords = _actionString.split(" ");
+                        if (actionWords.length > 1) {
+                            if (actionWords[1].endsWith("ing")) {
+                                actionWords[1] = actionWords[1].substring(-3);
+                            };          
+                        };
+                        let newAction = actionWords.shift().join(" ");
+                        self.act(newAction);
+                        break;
                     case 'i':
                         //need to ensure navigation still works with this one so only respond if there's words other than "i".
                         if (_object0 || _object1) {
@@ -1051,6 +1063,18 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'smooth':
                         description = _player.rub(_verb, _splitWord, _object0, _object1);
                         break;
+                    case 'think':
+                    case 'imagine':
+                    case 'dream':
+                    case 'visualise':
+                    case 'visualize':
+                    case 'conceptualise':
+                    case 'conceptualize':
+                    case 'envision':
+                    case 'envisage':          
+                    case 'picture':
+                        description = _player.think(_verb, _splitWord, _object0, _object1, _actionString);
+                        break;
                     case 'talk':
                     case 'tal':
                     case 'tak':
@@ -1181,7 +1205,6 @@ exports.Action = function Action(player, map, fileManager) {
                         description = _player.unlock(_verb, _object0);
                         break;
                     case 'lock':
-
                         description = _player.lock(_verb, _object0);
                         break;
                     case 'destry': //common user typo
@@ -1462,6 +1485,7 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.play(_verb, _object0, _object1);
                         };
                         break;
+                    //verbs below this line are ones I'd like to support eventually
                     case 'delete': //similar to "clean" or "clear" but specifically tech/data related.                                                
                     case 'call':  //see #243
                     case 'phone': //see #243
@@ -1476,6 +1500,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'tighten': //may also need to support "do up"? 
                     case 'cast': //see #18
                     case 'summon': //see #18
+                    case 'test':
                     default:
                         //check for a custom verb and response here.
                         _ticks = 0;
@@ -1796,6 +1821,8 @@ exports.Action = function Action(player, map, fileManager) {
                     description = "Sorry. Although I'm reasonably smart I'm not able to deal with multiples of objects yet.";
                     return description;
                 };
+
+                //@todo - would be good to enhance this to handle/strip out verbs with "ing"/adverbs/adjectives etc to get down to the intended objects. 
 
                 //handle cash actions crudely (for now)
                 if ((_object0 == "cash" || _object0 == "money") && _verb != "give" && _verb != "offer" && _verb != "hand") {

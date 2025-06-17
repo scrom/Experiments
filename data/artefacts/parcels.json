@@ -22,5 +22,17 @@
     "christmas parcels",
     "christmas",
     "amazon"
+  ],
+    "inventory": [
+    {
+        "object": "artefact",
+        "name": "post room first aid kit",
+        "template": "first-aid-kit",
+        "detailedDescription": "This is meant to be kept in the post room for emergencies.",
+        "attributes": {
+            "hidden": true,
+            "position": "under"
+        }
+    }
   ]
 }

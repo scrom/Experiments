@@ -15435,8 +15435,12 @@
         "name": "post-room",
         "displayName": "Post room",
         "description": "You're in the post room.<br>Dotted around the shelves and floor are parcels of all sizes.<br>One of the great things about this place is that the reception staff are willing to take deliveries for all staff.<br>It means most stuff in the post room is from Amazon or similar and Christmas is a bit crazy but it beats waiting at home for a delivery.",
+        "attributes": {
+            "imageName": "postroom.jpg"
+        },
         "synonyms": [
             "post",
+            "postroom",
             "post room",
             "post-room",
             "room"
@@ -15475,6 +15479,88 @@
                     "christmas parcels",
                     "christmas",
                     "amazon"
+                ],
+                "inventory": [
+                    {
+                        "object": "artefact",
+                        "name": "post room first aid kit",
+                        "description": "first aid kit",
+                        "detailedDescription": "This is meant to be kept in the post room for emergencies.",
+                        "attributes": {
+                            "defaultAction": "heal",
+                            "weight": 1,
+                            "type": "medical",
+                            "canCollect": true,
+                            "isBreakable": true,
+                            "charges": 5,
+                            "hidden": true,
+                            "position": "under",
+                            "imageName": "firstaidkit.jpg",
+                            "canDrawOn": true
+                        },
+                        "synonyms": [
+                            "first aid",
+                            "kit",
+                            "firstaid kit",
+                            "first-aid kit",
+                            "first-aid"
+                        ]
+                    }
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "floor safe",
+                "description": "floor safe",
+                "detailedDescription": "It's a small heavy-duty floor safe.",
+                "attributes": {
+                    "defaultAction": "crack",
+                    "weight": 151,
+                    "carryWeight": 25,
+                    "canOpen": true,
+                    "lockable": true,
+                    "locked": true,
+                    "customAction": [
+                        {
+                            "verbs": [
+                                "break",
+                                "smash",
+                                "destroy",
+                                "force",
+                                "pry",
+                                "crack",
+                                "damage"
+                            ],
+                            "message": "It's pretty much indestructable. You'll just have to <i>imagine</i> what's in there for now."
+                        },
+                        {
+                            "verbs": [
+                                "imagine"
+                            ],
+                            "message": "You briefly close your eyes and picture a door to a magical world full of love, rainbows, unicorns, and daisies.<br>Then you snap back to reality <i>('Oop there goes gravity')</i>.<br>You waver for a moment before remembering that you're still stuck in this office with a job and need to pay your rent."
+                        }
+                    ],
+                    "imageName": "floorsafe.jpg",
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "safe",
+                    "floorsafe",
+                    "floor safe"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "table",
+                "description": "plain rectangular table",
+                "detailedDescription": "It's a standard wood-effect office desk/table.",
+                "attributes": {
+                    "weight": 120,
+                    "isBreakable": true,
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "desk"
                 ]
             },
             {
@@ -15513,6 +15599,34 @@
                     "melamine shelves",
                     "parcel shelf",
                     "parcel shelves"
+                ]
+            },
+            {
+                "object": "artefact",
+                "name": "wall",
+                "description": "post-room-walls",
+                "detailedDescription": "The walls are as cluttered as the floor.<br>Assorted notes, framed insurance and health and safety certificates etc.<br>There's nothing of particular interest among them for you though.",
+                "attributes": {
+                    "type": "scenery",
+                    "plural": true,
+                    "canDrawOn": true
+                },
+                "synonyms": [
+                    "walls",
+                    "pictures",
+                    "picture",
+                    "frames",
+                    "framed",
+                    "health and safety",
+                    "insurance",
+                    "insurance certificates",
+                    "health certificates",
+                    "safety certificates",
+                    "health and safety certificates",
+                    "notes",
+                    "note",
+                    "wall",
+                    "clutter"
                 ]
             }
         ]

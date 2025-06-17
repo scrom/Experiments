@@ -2481,7 +2481,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (!wasAlreadyDamaged) {
                 _detailedDescription += "<br>"+_itemPrefix+" "+self.showsPlural()+" signs of abuse.";
-                if (deliberateAction) {return "You do a little damage but try as you might, you can't seem to destroy "+_itemSuffix+".";};
+                if (deliberateAction) {return "You do some minor damage but fail to do any <i>real</i> harm to "+_itemSuffix+".";};
             } else {
                 if (deliberateAction) {return "Try as you might, you can't seem to do any more harm to "+_itemSuffix+".";};
             };

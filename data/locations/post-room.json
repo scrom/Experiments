@@ -3,6 +3,9 @@
   "name": "post-room",
   "displayName": "Post room",
   "description": "You're in the post room.<br>Dotted around the shelves and floor are parcels of all sizes.<br>One of the great things about this place is that the reception staff are willing to take deliveries for all staff.<br>It means most stuff in the post room is from Amazon or similar and Christmas is a bit crazy but it beats waiting at home for a delivery.",
+  "attributes": {
+    "imageName": "postroom.jpg"
+  },
   "exits": [
     {
       "object": "exit",
@@ -17,14 +20,24 @@
       "file": "parcels"
     },
     {
+      "file": "floor-safe"
+    },   
+    {
+      "file": "table"
+    },
+    {
       "file": "post"
     },
     {
       "file": "shelves"
+    },
+    {
+      "file": "post-room-walls"
     }
   ],
   "synonyms": [
     "post",
+    "postroom",
     "post room",
     "post-room",
     "room"

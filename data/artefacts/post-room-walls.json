@@ -1,0 +1,28 @@
+{
+  "object": "artefact",
+  "name": "wall",
+  "description": "post-room-walls",
+  "detailedDescription": "The walls are as cluttered as the floor.<br>Assorted notes, framed insurance and health and safety certificates etc.<br>There's nothing of particular interest among them for you though.",
+  "attributes": {
+    "type": "scenery",
+    "plural": true,
+    "canDrawOn": true
+  },
+  "synonyms": [
+    "walls",
+    "pictures",
+    "picture",
+    "frames",
+    "framed",
+    "health and safety",
+    "insurance",
+    "insurance certificates",
+    "health certificates",
+    "safety certificates",
+    "health and safety certificates",
+    "notes",
+    "note",
+    "wall",
+    "clutter"
+  ]
+}
