@@ -158,7 +158,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_destination && (_destination != _missionObject)) {currentAttributes.destination = _destination;};
             if (_timeTaken > 0) {currentAttributes.timeTaken = _timeTaken;};
             if (_ticking) {currentAttributes.ticking = _ticking;};
-            if (_conversationState > 0) {currentAttributes.conversationState = _conversationState;};
+            if (_conversationState != 0) {currentAttributes.conversationState = _conversationState;};
             if (_conversationHistory.length > 0) {currentAttributes.conversationHistory = _conversationHistory;};
             if (_initiateConversation) {currentAttributes.initiateConversation = _initiateConversation;};
             if (_huntPlayer) {currentAttributes.huntPlayer = _huntPlayer;};           
@@ -568,6 +568,84 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             return response;
         };
 
+        self.getMissionFocusObject = function(map, player, missionOwner) {
+            
+            //we use player location to reduce the need for checking all locations as much as possible
+            var location = player.getCurrentLocation();
+
+            //obtain mission object
+            var missionObject = self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature(map, player, location);
+            if (!(missionObject)) {
+                missionObject = self.obtainMissionObjectWhereDestinationIsAnArtefactOrCreature(map, player, location);
+            };
+
+            if (missionObject) {return missionObject;}; //success
+
+            //our last attempt only works for events where we have a usable owner avaialble...  
+            if (self.getType() != "event" || !(missionOwner)) {return null;};
+            if (!missionOwner.getName) {return null;}; //does the object we have support the "getName" method?
+            if (missionOwner.getName() != _missionObject) {return null;};
+              
+            if (!_destination) {return missionOwner;};
+
+            //does owner support "getCurrentLocation" method?
+            if (!missionOwner.getCurrentLocation) {return null;};
+            
+            var ownerLocation = missionOwner.getCurrentLocation();
+            if (!ownerLocation) { return null;};
+                //can we get the name of the retrieved object?
+            if (!ownerLocation.getName) { return null;};
+                   
+            if (_destination == ownerLocation.getName()) { return missionOwner;};  //if object is in destination, return object...
+
+            return null;
+        };
+
+        self.criticalDeathFail = function(player, map, conditionAttributes, failAttributes) {
+            
+            var failIfDead = false;
+
+            if (!(conditionAttributes) && !(failAttributes)) {return false;}; //nothing to process
+
+            //need to think more about how initial attributes work with this logic. see #640
+            if (conditionAttributes) {
+                if (conditionAttributes.hasOwnProperty("dead")) {
+                    if (conditionAttributes["dead"] != true) { 
+                        failIfDead = true;
+                    };
+                };
+                if (conditionAttributes.hasOwnProperty("alive")) {
+                    if (conditionAttributes["alive"] == true) {
+                        failIfDead = true;
+                    };
+                };
+            };
+
+            if (failAttributes) {
+                if (failAttributes.hasOwnProperty("dead")) {
+                    if (failAttributes["dead"] == true) {
+                        failIfDead = true;
+                    };
+                };
+                if (failAttributes.hasOwnProperty("alive")) {
+                    if (failAttributes["alive"] == false) {
+                        failIfDead = true;
+                    };
+                };
+            };
+
+            if (!failIfDead) {return false;}; // we're good to continue
+
+            var deadCreature = self.getDeadCreature(player, map, _missionObject);
+            if (deadCreature) {return true;}; //fail!
+
+            //if something critical needs to be alive, check if it's dead somewhere else.
+            if (_missionObject != _destination) {
+                deadCreature = self.getDeadCreature(player, map, _destination);
+            };
+            if (deadCreature) {return true;}; //fail!
+        };
+
         self.checkContents = function(missionObject, contentsAttribute) {
             console.debug("Checking for contents: "+contentsAttribute);
 
@@ -774,7 +852,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature = function(map, player, location) {
-            var missionObject;
 
             switch(true) {
             case (!(_destination) && (!(_missionObject))):
@@ -891,7 +968,11 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         };
 
         self.checkAttributes = function (missionObject, attributesToCheck) {
+            if (!attributesToCheck) {return 0;};
+
             var objectAttributes = missionObject.getCurrentAttributes();
+            if (!objectAttributes) {return 0;};
+
             var checkCount = 0;
             for (var attr in attributesToCheck) {
                 if (attr == "contains" || attr == "contagion" || attr == "antibodies") {
@@ -900,7 +981,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     continue; 
                 };
                 if (objectAttributes.hasOwnProperty(attr)) {
-                    var keycheckName = attr;
+                    var keycheckName = attr; 
                     //console.debug("checking "+attr+": required condition: "+attributesToCheck[attr]+" actual condition: "+objectAttributes[attr]);  
                     if (typeof(attributesToCheck[attr]) == 'object') {
                         if (Array.isArray(attributesToCheck[attr])) { 
@@ -969,37 +1050,58 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
             
             //check timers first...
+            //have we already failed on time
+            if (checkTime(_failAttributes) > 0) { return self.timeExpired(); };
+
             initialCount += checkTime(_initialAttributes);
             successCount += checkTime(_conditionAttributes);
-            failCount += checkTime(_failAttributes);
 
-            //we already failed on time
-            if (failCount > 0) {
-                return self.timeExpired();
-            };
-
-            //and have we failed on conversation...
-            if (_failAttributes) {
-                if (_failAttributes.hasOwnProperty("conversationState")) {    
-                    //have we got to a *specific* state?                   
-                    if (_conversationState == _failAttributes["conversationState"]) {
-                        return self.fail("conversationState");
-                    };                          
+            //check conversations
+            var checkFailedConversation = function(attributes) {
+                if (attributes) {
+                    if (attributes.hasOwnProperty("conversationState")) {    
+                        //have we got to a *specific* state?                   
+                        if ((_conversationState < 0) && _conversationState <= attributes["conversationState"]) {
+                            //this is a straight fail;
+                            return true;
+                        };      
+                    };
                 };
+                return false;
             };
-            
-            //we use player location to reduce the need for checking all locations as much as possible
-            var location = player.getCurrentLocation();
 
-            //obtain mission object
-            var missionObject = self.obtainMissionObjectWhereDestinationIsNotAnArtefactOrCreature(map, player, location);
+            //have we failed on coonversation
+            if (checkFailedConversation(_failAttributes))  {return self.fail("conversationState");};
+
+            var checkPassedConversation = function(attributes) {
+                if (attributes) {
+                    if (attributes.hasOwnProperty("conversationState")) {    
+                        //checkConversation - has conversation reached required state                   
+                        if (_conversationState >= attributes["conversationState"]) {
+                                return 1;
+                        } else {
+                                //short-circuit here as cannot be successful yet
+                                return -1; 
+                        };                          
+                    };
+                };
+                return 0;
+            };
+
+            //are we far enough in coonversation
+            let initialConversation = checkPassedConversation(_initialAttributes);
+            if (initialConversation <0) {return null;}; //we cannot progress further
+            initialCount += initialConversation; //0 or 1
+
+            let conditionConversation = checkPassedConversation(_conditionAttributes);
+            if (conditionConversation <0) {return null;}; //we cannot progress further
+            successCount += conditionConversation; //0 or 1
+
+            /* From here onward we need the missionObject to progress - missionObject is the "focus" object (artefact, creature, player, location, map) of the mission*/
+            var missionObject = self.getMissionFocusObject(map, player, missionOwner);
+
             if (!(missionObject)) {
-                missionObject = self.obtainMissionObjectWhereDestinationIsAnArtefactOrCreature(map, player, location);
-            };
-
-            //if we don't have a mission object by this point, have we destroyed the source?
-            
-            if (!(missionObject)) {  
+                //did we destroy the source?
                 var source = self.getDeliverySourceFromDestroyedObject(player, _destination);
                 if (!(source)) {
                     source = self.getDeliverySourceFromDestroyedObject(player, _missionObject);
@@ -1011,38 +1113,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     return self.fail("destroyedSource", source);
                 };
 
-                //if not, one last check...
-                //if this is a player or creature-owned event, use the supplied mission owner - if available.
-                if (self.getType() == "event" && missionOwner) {
-                    //does the object we have support the "getName" method?
-                    if (missionOwner.getName) {
-                        if (missionOwner.getName() == _missionObject) {
-                            if (!_destination) {
-                                missionObject = missionOwner;
-                            } else
-                            //does owner support "getCurrentLocation" method?
-                            if (missionOwner.getCurrentLocation) {
-                                var ownerLocation = missionOwner.getCurrentLocation();
-                                if (ownerLocation) {
-                                    //can we get the name of the retrieved object?
-                                    if (ownerLocation.getName) {
-                                        //if object is in destination, return object...
-                                        if (_destination == ownerLocation.getName()) {
-                                            missionObject = missionOwner;
-                                        };
-                                    };
-                                };
-                            };
-                        };
-                    };
-                };
-                
-                if (!(missionObject)) {
-                    //there's nothing else we can do for now.
-                    //console.debug("mission not yet complete");
-                    return null;
-                };
-            };   
+                //no object - there's nothing else we can do for now.
+                //console.debug("mission not yet complete");
+                return null;
+            };
                        
             //check/fail if the mission object shouldn't be destroyed!
             if (missionObject.isDestroyed()) {
@@ -1052,55 +1126,14 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //is something critical dead?
-            var failIfDead = false;
-            if (_conditionAttributes) {
-                if (_conditionAttributes.hasOwnProperty("dead")) {
-                    if (_conditionAttributes["dead"] != true) { 
-                        failIfDead = true;
-                    };
-                };
-                if (_conditionAttributes.hasOwnProperty("alive")) {
-                    if (_conditionAttributes["alive"] == true) {
-                        failIfDead = true;
-                    };
-                };
-            };
-            if (_failAttributes) {
-                if (_failAttributes.hasOwnProperty("dead")) {
-                    if (_failAttributes["dead"] == true) {
-                        failIfDead = true;
-                    };
-                };
-                if (_failAttributes.hasOwnProperty("alive")) {
-                    if (_failAttributes["alive"] == false) {
-                        failIfDead = true;
-                    };
-                };
-            };
-            //
+            //this assumes we cannot resuurect creatures!!
+            if (self.criticalDeathFail(player, map, _conditionAttributes, _failAttributes)) {return self.fail("killedObject",deadCreature); }; //fail
 
-            var deadCreature;
-            if (failIfDead) {
-                //if something critical needs to be alive, check if it's dead somewhere.
-                deadCreature = self.getDeadCreature(player, map, _missionObject);
-
-                if (!(deadCreature)) {
-                    if (_missionObject != _destination) {
-                        deadCreature = self.getDeadCreature(player, map, _destination);
-                    };
-                };
-            };
-
-            if (deadCreature) {
-                return self.fail("killedObject",deadCreature);
-            };
-
-            //have we failed anything?
+            //have we failed anything else? - check other attribs
             failCount += self.checkAttributes(missionObject, _failAttributes);
-            if (failCount > 0) {
-                return self.fail("failAttributes");
-            };
+            if (failCount > 0) { return self.fail("failAttributes"); };
 
+            //let's handle "contains" failure before moving onto more "initial" and "success" cases...
             if (_failAttributes) {
                 //do we have a more complex "contains" fail condition?
                 if (_failAttributes.hasOwnProperty("contains")) {
@@ -1144,17 +1177,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 if (_initialAttributes.hasOwnProperty("contagion")) {
                     //console.debug('checking contagion...');                       
                     if (self.checkContagion(missionObject, _initialAttributes["contagion"])) {
-                        initialCount++;
-                    } else {
-                        //short-circuit here as cannot be successful
-                        return null; 
-                    };                          
-                };
-
-                //checkConversation - has conversation reached required state
-                if (_initialAttributes.hasOwnProperty("conversationState")) {
-                    //console.debug('checking conversationState...');                        
-                    if (_conversationState >= _initialAttributes["conversationState"]) {
                         initialCount++;
                     } else {
                         //short-circuit here as cannot be successful
@@ -1211,17 +1233,6 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (_conditionAttributes.hasOwnProperty("contagion")) {
                 //console.debug('checking contagion...');                       
                 if (self.checkContagion(missionObject, _conditionAttributes["contagion"])) {
-                    successCount++;
-                } else {
-                    //short-circuit here as cannot be successful
-                    return null; 
-                };                          
-            };
-
-            //checkConversation - has conversation reached required state
-            if (_conditionAttributes.hasOwnProperty("conversationState")) {
-                //console.debug('checking conversationState...');                        
-                if (_conversationState >= _conditionAttributes["conversationState"]) {
                     successCount++;
                 } else {
                     //short-circuit here as cannot be successful
