@@ -151,7 +151,7 @@ test('testMissionDialogue', () => {
                 "not yet"
             ],
             "response": "'Never mind, your loss. You won't get another chance",
-            "nextState": 999
+            "nextState": -999
         },
         {
             "state": 1,
@@ -208,7 +208,7 @@ test('testMissionDialogue', () => {
         "dialogue": dialogue
     }
 
-    failAttributes = { "isDestroyed": true, "conversationState": 999 };
+    failAttributes = { "isDestroyed": true, "conversationState": -999 };
     conditionAttributes = { "isDestroyed": false };
     reward = {
         "affinityModifier": 2, "decreaseAffinityFor": "stephen goodwin", "increaseAffinityFor": "jordan marshall",

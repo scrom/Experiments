@@ -29,7 +29,7 @@
           "not yet"
         ],
         "response": "'Never mind, your loss. You won't get another chance",
-        "nextState": 999
+        "nextState": -999
       },
       {
         "state": 1,
@@ -80,7 +80,7 @@
   },
   "failAttributes": {
     "isDestroyed": true,
-    "conversationState": 999
+    "conversationState": -999
   },
   "conditionAttributes": {
     "isDestroyed": false

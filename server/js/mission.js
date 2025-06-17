@@ -504,7 +504,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
         self.nextDialogueContainsKeyWord = function(keyword) {
             if (_dialogue.length == 0) {return false;};
-            if (_conversationState < _dialogue.length) {
+            if ((_conversationState < _dialogue.length) && (_conversationState >=0)) {
                 if (typeof _dialogue[_conversationState] == "object") {
                     //find objects with matching conversation state index
                     //check keywords - return true if match
@@ -529,7 +529,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //console.debug("Conversation state: "+_conversationState+" Dialogue length: "+_dialogue.length);
             //move conversation forward
             //if we reach the end of the array, stop there.             
-            if (_conversationState < _dialogue.length) {
+            if ((_conversationState < _dialogue.length) && (_conversationState >=0)) {
                 if (typeof _dialogue[_conversationState] == "object") {
                     //find objects with matching conversation state index
                     //check keywords 
@@ -956,7 +956,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             //and if we clear initial ones
             var initialCount = 0;
 
-            //local functions for reuse
+            //functions for reuse
             var checkTime = function(attributes) {
                 if (attributes) {
                     if (attributes.hasOwnProperty("time")) {                       
@@ -968,6 +968,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 return 0;
             };
             
+            //check timers first...
             initialCount += checkTime(_initialAttributes);
             successCount += checkTime(_conditionAttributes);
             failCount += checkTime(_failAttributes);

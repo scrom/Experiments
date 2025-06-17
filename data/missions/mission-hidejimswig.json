@@ -29,7 +29,7 @@
           "not yet"
         ],
         "response": "'Meh. Just remember who keeps us in business here.'",
-        "nextState": 999
+        "nextState": -999
       },
       {
         "state": 1,
@@ -61,7 +61,7 @@
           "not yet"
         ],
         "response": "'Fine, forget I asked.'",
-        "nextState": 999
+        "nextState": -999
       },
       {
         "state": 3,
@@ -71,7 +71,7 @@
     ]
   },
   "failAttributes": {
-    "conversationState": 999
+    "conversationState": -999
   },
   "conditionAttributes": {
     "hidden": true

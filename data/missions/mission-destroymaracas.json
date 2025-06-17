@@ -32,7 +32,7 @@
           "not yet"
         ],
         "response": "'Fine. Forget I asked.'",
-        "nextState": 999
+        "nextState": -999
       },
       {
         "state": 1,
@@ -46,7 +46,7 @@
     ]
   },
   "failAttributes": {
-    "conversationState": 999
+    "conversationState": -999
   },
   "conditionAttributes": {
     "isDestroyed": true
