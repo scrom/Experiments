@@ -16,6 +16,8 @@ About:
 A classic 80s style text adventure (and engine) with a few twists. 
 A work of Interactive Fiction (IF) wrtiten using Node and Javascript.
 
+(See also https://ifdb.org/viewgame?id=ek1sc6yxwgp1kr9 from around when when this was first published)
+
 "MVTA" was originally developed with the idea of being a "minimum viable text adventure" as a means of getting back into coding. 
 The beast has taken on a life of its own.
 
