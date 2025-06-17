@@ -30,7 +30,7 @@
           "not yet"
         ],
         "response": "'Well, you're not very helpful are you.'",
-        "nextState": 99
+        "nextState": 999
       },
       {
         "state": 1,

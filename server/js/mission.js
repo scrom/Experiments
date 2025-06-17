@@ -955,29 +955,26 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var failCount = 0;
             //and if we clear initial ones
             var initialCount = 0;
+
+            //local functions for reuse
+            var checkTime = function(attributes) {
+                if (attributes) {
+                    if (attributes.hasOwnProperty("time")) {                       
+                        if (self.getTimeTaken() >= attributes["time"]) {
+                            return 1;
+                        };                           
+                    };
+                };
+                return 0;
+            };
             
-            //before doing any additional processing, have we timed out on any attributes?
-            if (_initialAttributes) {
-                if (_initialAttributes.hasOwnProperty("time")) {                       
-                    if (self.getTimeTaken() >= _initialAttributes["time"]) {
-                        initialCount++;
-                    };                           
-                };
-            };
-            if (_conditionAttributes) {
-                //pretty certain condition attributes need to exist but always worth catching
-                if (_conditionAttributes.hasOwnProperty("time")) {                       
-                    if (self.getTimeTaken() >= _conditionAttributes["time"]) {
-                        successCount++;
-                    };                           
-                };
-            };
-            if (_failAttributes) {
-                if (_failAttributes.hasOwnProperty("time")) {                       
-                    if (self.getTimeTaken() >= _failAttributes["time"]) {
-                        return self.timeExpired();
-                    };                           
-                };
+            initialCount += checkTime(_initialAttributes);
+            successCount += checkTime(_conditionAttributes);
+            failCount += checkTime(_failAttributes);
+
+            //we already failed on time
+            if (failCount > 0) {
+                return self.timeExpired();
             };
 
             //and have we failed on conversation...

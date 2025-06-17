@@ -29,7 +29,7 @@
           "not yet"
         ],
         "response": "'Thanks for nothing then.'",
-        "nextState": 99
+        "nextState": 999
       },
       {
         "state": 1,
@@ -37,7 +37,7 @@
         "nextState": 3
       },
       {
-        "state": 99,
+        "state": 999,
         "response": "'I know who my friends are, don't worry about me.'"
       },
       {
@@ -62,7 +62,7 @@
     ]
   },
   "failAttributes": {
-    "conversationState": 99
+    "conversationState": 999
   },
   "conditionAttributes": {
     "isDestroyed": false

@@ -29,7 +29,7 @@
           "not yet"
         ],
         "response": "'Thanks for nothing.'<br>'Let's hope you don't need anything from me in future.'",
-        "nextState": 99
+        "nextState": 999
       },
       {
         "state": 1,
@@ -44,7 +44,7 @@
     ]
   },
   "failAttributes": {
-    "conversationState": 99
+    "conversationState": 999
   },
   "conditionAttributes": {
     "alive": true,

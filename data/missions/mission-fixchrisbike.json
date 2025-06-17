@@ -29,7 +29,7 @@
           "not yet"
         ],
         "response": "'Well, thanks for nothing then.'",
-        "nextState": 99
+        "nextState": 999
       },
       {
         "state": 1,
@@ -85,7 +85,7 @@
     ]
   },
   "failAttributes": {
-    "conversationState": 99
+    "conversationState": 999
   },
   "conditionAttributes": {
     "alive": true,
