@@ -1299,6 +1299,16 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     if ((self.hasDialogue() && _conversationState > 0) || (!(self.hasDialogue()))) {
                         _initialAttributes = null; // we don't need them any more.
                         self.startTimer();  //note, we don't "return" here as we want to proceed onto checking _conditionAttributes for success.
+                        //attempt to assign mission to player if not static
+                        if (missionOwner) { //we should be able to get MissionOwner when we call getAllMissions with a little extra work.
+                            if (missionOwner.getName() != "player") {
+                                if (!(self.isStatic())) {
+                                player.addMission(self);
+                                missionOwner.removeMission(self.getName());
+                                };
+                            };
+                        };
+
                     };
                 };
 

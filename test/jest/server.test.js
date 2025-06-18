@@ -168,7 +168,7 @@ describe('Server', () => {
 
             const testDataDir = '../testdata/';
             const testFileName = 'canonical-game-data.json';
-            const resultFileName = 'testresult-game-data.json';
+            const resultFileName = 'canonical-game-data-result.json';
             const testFilePath = path.join(__dirname, testDataDir, testFileName); // Full path to test file
             const resultFilePath = path.join(__dirname, testDataDir, resultFileName); // Full path to test file
 

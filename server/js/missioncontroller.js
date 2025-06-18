@@ -148,6 +148,10 @@ module.exports.MissionController = function MissionController() {
             var resultString = "";
             var initialScore = player.getScore();
             var missionName = mission.getName();
+
+            if (!missionOwner) {
+                missionOwner = map.getMissionOwner(mission.getName());
+            };
             
             if (!mission.hasParents()) {
                 if (missionOwner) {
@@ -169,8 +173,7 @@ module.exports.MissionController = function MissionController() {
             if (rewardString.length > 0) {
                 resultString += "<br>" + rewardString
             };
-                
-                
+                         
             if (missionReward.hasOwnProperty("fail")) {
                 player.addFailedMission(mission.getName());
             } else {
@@ -182,10 +185,8 @@ module.exports.MissionController = function MissionController() {
                     player.addCompletedEvent(mission.getName());
                 };
             };
-                
-            if (!missionOwner) {
-                missionOwner = map.getMissionOwner(mission.getName());
-            };
+
+            //as it's completed or failed, we can remove it from owner.
             if (missionOwner) {
                 missionOwner.removeMission(mission.getName());
             };
