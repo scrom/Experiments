@@ -1,0 +1,30 @@
+{
+    "object": "mission",
+    "name": "fridgedoor",
+    "displayName": "Remember to shut the fridge door after you use it",
+    "attributes": {
+        "missionObject": "fridge",
+        "static": true
+    },
+    "initialAttributes": {
+        "isOpen": true
+    },
+    "failAttributes": {
+        "allOf": [
+            {"isOpen": true},
+            {"time": 15}
+        ]
+    },
+    "conditionAttributes": {
+            "isOpen": false,
+            "time": 15
+    },
+    "fail": {
+        "score": -15,
+        "message": "Did you forget something?<br><br>Nobody appreciates the milk going off.<br>Please remember to shut the fridge door in future."
+    },
+    "reward": {
+        "score": 5,
+        "message": "<br>Thanks for remembering to shut the fridge!<br>You wouldn't believe the lack of basic common sense in some people."
+    }
+}

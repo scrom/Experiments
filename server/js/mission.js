@@ -196,6 +196,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.setConditionAttributes = function (newAttributes) {
             _conditionAttributes = newAttributes;
         };
+
+        self.getFailAttributes = function() {
+            return _failAttributes;
+        };
         
         self.setFailAttributes = function (newAttributes) {
             _failAttributes = newAttributes;
@@ -974,10 +978,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (!objectAttributes) {return 0;};
 
             var checkCount = 0;
+            var ignoreList = ["contains", "contagion", "antibodies", "allOF", "anyOf", "noneOf"]; // ignore attributes with these names
             for (var attr in attributesToCheck) {
-                if (attr == "contains" || attr == "contagion" || attr == "antibodies") {
-                    //skip re-checking this attribute if already handled outside.
-                    //otherwise we'd double-count a success here that has special handling elsewhere.
+                if (ignoreList.includes(attr)) { 
+                    //skip re-checking this attribute - already handled as special case outside. otherwise we'd double-count a success.
                     continue; 
                 };
                 if (objectAttributes.hasOwnProperty(attr)) {
