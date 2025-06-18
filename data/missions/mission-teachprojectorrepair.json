@@ -2,23 +2,26 @@
   "object": "mission",
   "name": "teachprojectorrepair",
   "displayName": "learn projector repair from Angelina",
-  "description": "Angelina knows how to fix stuff.",
+  "description": "Angelina knows how to fix stuff. Get her help to learn how to fix a porojector",
   "attributes": {
     "parent": "keyfob",
     "missionObject": "angelina morrison",
-    "static": true,
     "dialogue": [
-      "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
+      "'Hi $player.'<br>'Would you be willing to help me out with a quick (but fairly urgent) maintenance job?'",
       {
         "state": 1,
         "keywords": [
           "yes",
           "ok",
           "yup",
-          "y"
+          "y",
+          "sure",
+          "okay",
+          "okey",
+          "no problem"
         ],
-        "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
-        "nextState": 3
+        "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in <i>Poppy</i> for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
+        "nextState": 100
       },
       {
         "state": 1,
@@ -26,7 +29,8 @@
           "n",
           "no",
           "not",
-          "not yet"
+          "not yet",
+          "sorry no"
         ],
         "response": "'Thanks for nothing.'<br>'Let's hope you don't need anything from me in future.'",
         "nextState": -999
@@ -48,7 +52,7 @@
   },
   "conditionAttributes": {
     "alive": true,
-    "conversationState": 3
+    "conversationState": 100
   },
   "reward": {
     "delivers": {

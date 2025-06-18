@@ -4,6 +4,7 @@
   "displayName": "get a free ice cream",
   "description": "The Ice cream man wants to give you a free sample.",
   "attributes": {
+    "parent": "endoflunch",
     "missionObject": "ice cream man",
     "static": true,
     "dialogue": [
@@ -14,10 +15,13 @@
           "yes",
           "ok",
           "yup",
-          "y"
+          "y",
+          "sure",
+          "okay",
+          "okey"
         ],
         "response": "'Here you go!'",
-        "nextState": 3
+        "nextState": 100
       },
       {
         "state": 1,
@@ -25,27 +29,64 @@
           "n",
           "no"
         ],
-        "response": "'Never mind.'",
+        "response": "'No strings attached, honest!'<br>'Are you <i>sure</i>?'",
         "nextState": 4
       },
       {
         "state": 1,
-        "response": "'Maybe later then?'",
+        "response": "'Maybe later then.'",
         "nextState": 2
       },
       {
         "state": 2,
         "response": "'How about that ice cream now?'",
         "nextState": 1
+      },
+      {
+        "state": 4,
+        "keywords": [
+          "y",
+          "yes",
+          "yep",
+          "yup"
+        ],
+        "response": "'You people amaze me.'<br>'Maybe you have trust issues or something.'<br>'Nevermind... Your loss.' ",
+        "nextState": -9999
+      },
+      {
+        "state": 4,
+        "keywords": [
+          "n",
+          "no",
+          "okay",
+          "ok",
+          "ok then"
+        ],
+        "response": "'Hah! I thought you might change your mind.'<br>'Here you are.'<br>He smiles broadly as he hands you over an ice cream.",
+        "nextState": 100
+      },
+      {
+        "state": 4,
+        "response": "'No worries. Maybe later if I'm still about.'",
+        "nextState": 2
+      },
+      {
+        "state": 1,
+        "keywords": [
+          "n",
+          "no"
+        ],
+        "response": "<br>Fair enough I guess.'<br>'Never mind'... ...'it's your loss.'",
+        "nextState": -9999
       }
     ]
   },
   "failAttributes": {
-    "conversationState": 4
+    "conversationState": -999
   },
   "conditionAttributes": {
     "alive": true,
-    "conversationState": 3
+    "conversationState": 100
   },
   "reward": {
     "delivers": {
@@ -58,7 +99,7 @@
     "score": 5,
     "affinityModifier": 2,
     "increaseAffinityFor": "ice cream man",
-    "message": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
+    "message": "'Enjoy!'<br>You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
   },
   "fail": {
     "message": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."

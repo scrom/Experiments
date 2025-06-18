@@ -2,12 +2,11 @@
   "object": "mission",
   "name": "findbrandonsguardian",
   "displayName": "find The Gaurdian for Brandon",
-  "description": "Brandon wants to do the crossword.",
+  "description": "Brandon wants to do the crossword. Find a copy of 'The Guardian' for him.",
   "attributes": {
     "parent": "latte",
     "missionObject": "guardian newspaper",
     "destination": "brandon hamilton",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I seem to have mislaid my copy of The Guardian.'<br>'I've not done my daily cryptic crossword and feel like I'm getting withdrawal symptoms.'<br>'If you see one around can you bring me a copy?'",
       {

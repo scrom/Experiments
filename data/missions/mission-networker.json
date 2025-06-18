@@ -3,7 +3,7 @@
   "name": "networker",
   "displayName": "talk to every character possible",
   "attributes": {
-    "parent": "chatterbox",
+    "parent": "socialite",
     "missionObject": "player"
   },
   "conditionAttributes": {

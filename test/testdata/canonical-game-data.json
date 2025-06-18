@@ -265,7 +265,7 @@
                 "object": "mission",
                 "name": "latte",
                 "displayName": "get yourself a coffee",
-                "description": "<br>It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with some sort of <i>coffee</i>.",
+                "description": "It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with some sort of <i>coffee</i>.",
                 "attributes": {
                     "missionObject": "player"
                 },
@@ -836,11 +836,31 @@
                     "missionObject": "player"
                 },
                 "conditionAttributes": {
-                    "creaturesToSpeakTo": 15
+                    "creaturesSpokenTo": 15
                 },
                 "reward": {
                     "score": 25,
                     "message": "<br>You're quite a chatterbox. We like people who talk and collaborate."
+                }
+            },
+            {
+                "object": "mission",
+                "name": "socialite",
+                "displayName": "talk to more people - only 15 left to go until you've met them all",
+                "attributes": {
+                    "parents": {
+                        "allOf": [
+                            "chatterbox"
+                        ]
+                    },
+                    "missionObject": "player"
+                },
+                "conditionAttributes": {
+                    "creaturesToSpeakTo": 15
+                },
+                "reward": {
+                    "score": 25,
+                    "message": "<br>You really are getting about and meeting so many of the teams. Great job!"
                 }
             },
             {
@@ -850,7 +870,7 @@
                 "attributes": {
                     "parents": {
                         "allOf": [
-                            "chatterbox"
+                            "socialite"
                         ]
                     },
                     "missionObject": "player"
@@ -1466,8 +1486,7 @@
                                 ]
                             },
                             "missionObject": "bike",
-                            "destination": "russell",
-                            "static": true
+                            "destination": "russell"
                         },
                         "conditionAttributes": {
                             "isDestroyed": false
@@ -2202,7 +2221,7 @@
                         "object": "mission",
                         "name": "getchocolateforderek",
                         "displayName": "get Derek's chocolate",
-                        "description": "Derek's wants to warm up some chocolate.",
+                        "description": "Derek wants you to find him some chocolate.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -2753,7 +2772,7 @@
                                         "y"
                                     ],
                                     "response": "'Right, let's get this party sorted!'<br>'Give me one last shout when you're ready and in the meantime I'll get something organised.'",
-                                    "nextState": 3
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 2,
@@ -2770,7 +2789,7 @@
                         },
                         "conditionAttributes": {
                             "alive": true,
-                            "conversationState": 3
+                            "conversationState": 100
                         },
                         "reward": {
                             "message": "<br>Stop back in with Michael in a little while to find out what he's got arranged."
@@ -3182,7 +3201,7 @@
                         "object": "mission",
                         "name": "findbrandonsguardian",
                         "displayName": "find The Gaurdian for Brandon",
-                        "description": "Brandon wants to do the crossword.",
+                        "description": "Brandon wants to do the crossword. Find a copy of 'The Guardian' for him.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -3623,7 +3642,7 @@
                         "object": "mission",
                         "name": "destroymaracas",
                         "displayName": "destroy the maracas",
-                        "description": "Chris gave Jim something really annoying.",
+                        "description": "Chris gave Jim something really annoying. Deal with it.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -3996,7 +4015,7 @@
                                 "object": "mission",
                                 "name": "survivezombies",
                                 "displayName": "learn how to survive a zombie apocalypse",
-                                "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of zombieism antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of zombie antibodies who is subsequently bitten may transfer those antibodies to their attacker.<br>Thus speed is of the essence, it is important to rapidly identify patient zero and all who have come into contact with them in order to pass on immunity and limit the contagion.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies and under no circumstances should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.<br><br>I'm sure you'll never need to know any of this, right?",
+                                "description": "Most zombie contagion is spread through <i>biting</i>. Those afflicted with zombieism are likely to lose control of their normal behaviours however there is hope.<br>If you are able to find and consume a source of antibodies it is possible to develop some level of immunity.<br><br>Furthermore, any carrier of antibodies who is subsequently bitten <i>may</i> transfer them to their attacker.<br>Thus speed is of the essence. In order to pass on immunity and limit the contagion, it is important to rapidly identify patient zero and all who have come into contact with them.<br>Be warned though that this approach is not guaranteed. Ensure you have sufficient food and medical supplies.<br><b>under NO circumstances</b> should you engage in direct combat as you risk working the afflicted into a dangerous frenzy.<br><br>I'm sure you'll never need to know any of this, right?",
                                 "attributes": {
                                     "missionObject": "survival book",
                                     "static": true
@@ -4148,7 +4167,7 @@
                                 "destinationDelay": 5
                             },
                             "aggression": 3,
-                            "message": "Aileen hastily hands you a hypodermic syringe.<br>She turns to run and pauses. 'You need to stop them.' 'Fast.'<br>You feel your adrenaline rising as you rack your brains trying to figure out what the hell she means."
+                            "message": "Aileen hastily hands you a hypodermic syringe.<br>She turns to run and pauses. 'You need to stop them.' 'Fast!'<br>You feel your adrenaline rising as you rack your brains trying to figure out what the hell she means."
                         }
                     }
                 ]
@@ -4214,7 +4233,7 @@
                         "object": "mission",
                         "name": "fixchrisbike",
                         "displayName": "fix Chris' bike",
-                        "description": "Chris wants his bike fixed.",
+                        "description": "Chris wants his new bike serviced. Luckily there should be someone around that can do that for us.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -4263,7 +4282,7 @@
                                     "keywords": [
                                         "key"
                                     ],
-                                    "nextState": 5
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 3,
@@ -4291,7 +4310,7 @@
                                         "key"
                                     ],
                                     "response": "'Oops. You'll need the key. Here you go.'",
-                                    "nextState": 5
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 4,
@@ -4305,7 +4324,7 @@
                         },
                         "conditionAttributes": {
                             "alive": true,
-                            "conversationState": 5
+                            "conversationState": 100
                         },
                         "reward": {
                             "delivers": {
@@ -4636,7 +4655,7 @@
                         "object": "mission",
                         "name": "findadamstrainers",
                         "displayName": "find Aaron's trainers",
-                        "description": "Aaron soaked his feet.",
+                        "description": "Aaron soaked his feet on his way in. Help find his trainers",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -5473,7 +5492,7 @@
                         "object": "mission",
                         "name": "beansinthepostroom",
                         "displayName": "Joseph's got beans for the coffee machine",
-                        "description": "Joseph has a coffee bean delivery.",
+                        "description": "Joseph left a parcel in the <i>post room</i> for you to investigate.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -7574,7 +7593,7 @@
                         "object": "mission",
                         "name": "teachprojectorrepair",
                         "displayName": "learn projector repair from Angelina",
-                        "description": "Angelina knows how to fix stuff.",
+                        "description": "Angelina knows how to fix stuff. Get her help to learn how to fix a porojector",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -7584,17 +7603,21 @@
                             "missionObject": "angelina morrison",
                             "static": true,
                             "dialogue": [
-                                "'Hi $player.'<br>'Would you be willing to help me out with a simple maintenance job?'",
+                                "'Hi $player.'<br>'Would you be willing to help me out with a quick (but fairly urgent) maintenance job?'",
                                 {
                                     "state": 1,
                                     "keywords": [
                                         "yes",
                                         "ok",
                                         "yup",
-                                        "y"
+                                        "y",
+                                        "sure",
+                                        "okay",
+                                        "okey",
+                                        "no problem"
                                     ],
-                                    "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in Poppy for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
-                                    "nextState": 3
+                                    "response": "'Thankyou!'<br>'It's pretty simple, I need someone to fix the projector in <i>Poppy</i> for me.'<br>'I think someone knocked it off of the table'<br>'Here's a bulb. You might need to do a bit of a <i>repair</i> on it as well though.'",
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 1,
@@ -7602,7 +7625,8 @@
                                         "n",
                                         "no",
                                         "not",
-                                        "not yet"
+                                        "not yet",
+                                        "sorry no"
                                     ],
                                     "response": "'Thanks for nothing.'<br>'Let's hope you don't need anything from me in future.'",
                                     "nextState": -999
@@ -7624,7 +7648,7 @@
                         },
                         "conditionAttributes": {
                             "alive": true,
-                            "conversationState": 3
+                            "conversationState": 100
                         },
                         "reward": {
                             "delivers": {
@@ -11155,8 +11179,7 @@
                         "name": "repaircoffeemachine",
                         "displayName": "repair the coffee machine",
                         "attributes": {
-                            "missionObject": "coffee machine",
-                            "static": true
+                            "missionObject": "coffee machine"
                         },
                         "conditionAttributes": {
                             "isDestroyed": false,
@@ -11165,7 +11188,7 @@
                         },
                         "reward": {
                             "score": 25,
-                            "message": "That's a start at least. You still need to get your coffee though."
+                            "message": "That's a start at least. You still need to get <i>your</i> coffee though."
                         }
                     },
                     {
@@ -11189,10 +11212,9 @@
                     {
                         "object": "mission",
                         "name": "beans",
-                        "displayName": "get the coffee machine working",
+                        "displayName": "Get the coffee machine working",
                         "attributes": {
-                            "missionObject": "coffee machine",
-                            "static": true
+                            "missionObject": "coffee machine"
                         },
                         "conditionAttributes": {
                             "isDestroyed": false,
@@ -13152,8 +13174,7 @@
                         "displayName": "install a hard disk in the machine room server",
                         "attributes": {
                             "missionObject": "hard disk",
-                            "destination": "server",
-                            "static": true
+                            "destination": "server"
                         },
                         "failAttributes": {
                             "isDestroyed": true
@@ -13561,6 +13582,11 @@
                         "displayName": "get a free ice cream",
                         "description": "The Ice cream man wants to give you a free sample.",
                         "attributes": {
+                            "parents": {
+                                "allOf": [
+                                    "endoflunch"
+                                ]
+                            },
                             "missionObject": "ice cream man",
                             "static": true,
                             "dialogue": [
@@ -13571,10 +13597,13 @@
                                         "yes",
                                         "ok",
                                         "yup",
-                                        "y"
+                                        "y",
+                                        "sure",
+                                        "okay",
+                                        "okey"
                                     ],
                                     "response": "'Here you go!'",
-                                    "nextState": 3
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 1,
@@ -13582,27 +13611,64 @@
                                         "n",
                                         "no"
                                     ],
-                                    "response": "'Never mind.'",
+                                    "response": "'No strings attached, honest!'<br>'Are you <i>sure</i>?'",
                                     "nextState": 4
                                 },
                                 {
                                     "state": 1,
-                                    "response": "'Maybe later then?'",
+                                    "response": "'Maybe later then.'",
                                     "nextState": 2
                                 },
                                 {
                                     "state": 2,
                                     "response": "'How about that ice cream now?'",
                                     "nextState": 1
+                                },
+                                {
+                                    "state": 4,
+                                    "keywords": [
+                                        "y",
+                                        "yes",
+                                        "yep",
+                                        "yup"
+                                    ],
+                                    "response": "'You people amaze me.'<br>'Maybe you have trust issues or something.'<br>'Nevermind... Your loss.' ",
+                                    "nextState": -9999
+                                },
+                                {
+                                    "state": 4,
+                                    "keywords": [
+                                        "n",
+                                        "no",
+                                        "okay",
+                                        "ok",
+                                        "ok then"
+                                    ],
+                                    "response": "'Hah! I thought you might change your mind.'<br>'Here you are.'<br>He smiles broadly as he hands you over an ice cream.",
+                                    "nextState": 100
+                                },
+                                {
+                                    "state": 4,
+                                    "response": "'No worries. Maybe later if I'm still about.'",
+                                    "nextState": 2
+                                },
+                                {
+                                    "state": 1,
+                                    "keywords": [
+                                        "n",
+                                        "no"
+                                    ],
+                                    "response": "<br>Fair enough I guess.'<br>'Never mind'... ...'it's your loss.'",
+                                    "nextState": -9999
                                 }
                             ]
                         },
                         "failAttributes": {
-                            "conversationState": 4
+                            "conversationState": -999
                         },
                         "conditionAttributes": {
                             "alive": true,
-                            "conversationState": 3
+                            "conversationState": 100
                         },
                         "reward": {
                             "delivers": {
@@ -13636,7 +13702,7 @@
                             "score": 5,
                             "affinityModifier": 2,
                             "increaseAffinityFor": "ice cream man",
-                            "message": "You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
+                            "message": "'Enjoy!'<br>You accepted a free ice cream, that was smart.<br>If only everything in life were this easy."
                         },
                         "fail": {
                             "message": "Too bad. A free ice cream might have been useful.<br>Ah well, on with the work."
@@ -14312,18 +14378,18 @@
                                         "y"
                                     ],
                                     "response": "'I hope they're ok. They sounded a bit rough last time I spoke to them.'",
-                                    "nextState": 4
+                                    "nextState": 100
                                 },
                                 {
                                     "state": 1,
                                     "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'<br>'Keep an eye out for them if you can.'",
-                                    "nextState": 4
+                                    "nextState": 100
                                 }
                             ]
                         },
                         "conditionAttributes": {
                             "alive": true,
-                            "conversationState": 3
+                            "conversationState": 100
                         },
                         "reward": {}
                     }
@@ -15216,7 +15282,8 @@
                             "missionObject": "projector"
                         },
                         "failAttributes": {
-                            "isDestroyed": true
+                            "isDestroyed": true,
+                            "time": 75
                         },
                         "conditionAttributes": {
                             "isDestroyed": false,
@@ -15305,7 +15372,7 @@
                                 "object": "mission",
                                 "name": "readstephensplans",
                                 "displayName": "read stephen's sketchbook",
-                                "description": "After thumbing through a few pages of revenue and budget forecasts you stumble onto something odd.<br><br>There's a sketch of the building's floorplan but the rear fire escape area doesn't quite look right.<br>Significantly more disturbing are the annotations.<br>You can easily distinguish a series of ornate pentagrams marked on one location but can't decipher the handwriting alongside them.<br>You manage to make out a few letters at best... 'R_t___ o_ __mmo_in_'.<br><br>This can't be good.",
+                                "description": "After thumbing through a few pages of revenue and budget forecasts you stumble onto something odd.<br><br>There's a sketch of the building's floorplan but the rear fire escape area doesn't quite look right.<br>Significantly more disturbing are the annotations.<br>You can easily distinguish a series of ornate pentagrams marked on one location but can't decipher the handwriting alongside them.<br>You manage to make out a few letters at best... 'R_t___ o_ __mmo_in_', 'D__w_ i_ _h_ b__o_ _f a s__r_f___' .<br><br>This can't be good.",
                                 "attributes": {
                                     "missionObject": "sketchbook",
                                     "static": true
@@ -15316,7 +15383,7 @@
                                 },
                                 "reward": {
                                     "score": 40,
-                                    "message": "It looks like Stephen's company expansion plans aren't within normal company health parameters."
+                                    "message": "It looks like Stephen's company expansion plans aren't within normal company health parameters. Might be wise to <i>dig<i> a little deeper."
                                 }
                             }
                         ]
@@ -15339,7 +15406,7 @@
                         "object": "mission",
                         "name": "retrievedisk",
                         "displayName": "retrieve the stolen hard disk",
-                        "description": "Retrieve a stolen hard drive.",
+                        "description": "Retrieve a stolen hard drive for Stephen the CEO.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -15915,8 +15982,7 @@
                                 ]
                             },
                             "missionObject": "50 shades",
-                            "destination": "violet wilmott",
-                            "static": true
+                            "destination": "violet wilmott"
                         },
                         "conditionAttributes": {
                             "isDestroyed": false,
@@ -16732,7 +16798,7 @@
                         "object": "mission",
                         "name": "hidejimswig",
                         "displayName": "hide Jim' wig",
-                        "description": "Make the wig 'go away'.",
+                        "description": "Make the wig 'go away'. Drag is amazing for some, but not for Jim.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -19308,7 +19374,7 @@
                         "object": "mission",
                         "name": "tomatoesformelanie",
                         "displayName": "get some fresh tomatoes for Melanie",
-                        "description": "Melanie needs some fresh tomatoes.",
+                        "description": "Melanie needs some fresh tomatoes for making lunch.",
                         "attributes": {
                             "parents": {
                                 "allOf": [
@@ -21264,7 +21330,7 @@
                 "object": "mission",
                 "name": "saveportarossa",
                 "displayName": "save Porta Rossa from the zombie contagion",
-                "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
+                "description": "The scene of devastation nearby looks very bad - almost like the zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
                 "attributes": {
                     "parents": {
                         "allOf": [
@@ -21290,7 +21356,7 @@
                     "affinityModifier": 1,
                     "increaseAffinityFor": "jordan marshall",
                     "decreaseAffinityFor": "stephen goodwin",
-                    "message": "<br>Congratulations. You and the rest of Porta Rossa survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
+                    "message": "<br>Congratulations. You and the rest of Porta Rossa survived a potential zombie apocalypse!<br>Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash? Did someone sabotage the flight?"
                 },
                 "fail": {
                     "score": -200,
@@ -21298,7 +21364,7 @@
                     "activateMission": "retrievedisk",
                     "decreaseAffinityFor": "jordan marshall",
                     "increaseAffinityFor": "stephen goodwin",
-                    "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+                    "message": "<br>Oh no! You weren't quick enough to save everyone.<br>Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
                 }
             }
         ]

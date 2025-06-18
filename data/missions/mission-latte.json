@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "latte",
   "displayName": "get yourself a coffee",
-  "description": "<br>It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with some sort of <i>coffee</i>.",
+  "description": "It's your first day in the office. Check in with Violet at reception and then head to the kitchen to get yourself fuelled up for the day with some sort of <i>coffee</i>.",
   "attributes": {
     "missionObject": "player"
   },

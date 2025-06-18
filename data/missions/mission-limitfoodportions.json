@@ -2,7 +2,6 @@
   "object": "mission",
   "name": "limitfoodportions",
   "displayName": "Don't take too much food",
-  "description": "",
   "attributes": {
     "missionObject": "servery-food-bar",
     "static": true

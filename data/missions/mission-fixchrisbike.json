@@ -2,11 +2,10 @@
   "object": "mission",
   "name": "fixchrisbike",
   "displayName": "fix Chris' bike",
-  "description": "Chris wants his bike fixed.",
+  "description": "Chris wants his new bike serviced. Luckily there should be someone around that can do that for us.",
   "attributes": {
     "parent": "beans",
     "missionObject": "chris maddox",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I've just got a new bike but it's not set up properly.'<br>'I've booked it in for repairs but I'm flat-out all day today.'<br>'Could you do me a favour and take it for a service?'",
       {
@@ -47,7 +46,7 @@
         "keywords": [
           "key"
         ],
-        "nextState": 5
+        "nextState": 100
       },
       {
         "state": 3,
@@ -75,7 +74,7 @@
           "key"
         ],
         "response": "'Oops. You'll need the key. Here you go.'",
-        "nextState": 5
+        "nextState": 100
       },
       {
         "state": 4,
@@ -89,7 +88,7 @@
   },
   "conditionAttributes": {
     "alive": true,
-    "conversationState": 5
+    "conversationState": 100
   },
   "reward": {
     "delivers": {

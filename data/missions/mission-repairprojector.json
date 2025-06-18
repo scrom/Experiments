@@ -8,7 +8,8 @@
     "missionObject": "projector"
   },
   "failAttributes": {
-    "isDestroyed": true
+    "isDestroyed": true,
+    "time": 75
   },
   "conditionAttributes": {
     "isDestroyed": false,

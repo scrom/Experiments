@@ -7,7 +7,6 @@
     "parent": "saveportarossa",
     "missionObject": "post-it pad",
     "destination": "chris sanders",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'Can you give me a hand?'<br>'I'm running a workshop later today but I'm running low on post-it notes.'<br>'Could you bring me some from the stationary cupboard when you get a chance?'",
       {

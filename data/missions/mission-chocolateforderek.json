@@ -2,12 +2,11 @@
   "object": "mission",
   "name": "getchocolateforderek",
   "displayName": "get Derek's chocolate",
-  "description": "Derek's wants to warm up some chocolate.",
+  "description": "Derek wants you to find him some chocolate.",
   "attributes": {
     "parent": "latte",
     "missionObject": "chocolate",
     "destination": "derek benson",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I'm flat-out on the Salesforce project and will need to skip lunch.'<br>'You don't have any chocolate you can spare do you?'",
       {

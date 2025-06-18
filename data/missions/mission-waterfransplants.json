@@ -6,7 +6,6 @@
   "attributes": {
     "missionObject": "healthy tomato plants",
     "destination": "customer-delight-west",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I'm running UX calls all day today. Would you be able to help me out and water my tomato plants?'",
       {

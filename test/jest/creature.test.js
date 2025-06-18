@@ -1814,9 +1814,12 @@ test('otherCreatureWillEatAPieceOfChocolate', () => {
     expect(actual).toBe(expected);
 });
 
-test('creatureDescriptionIncludesSalesInventory', () => {
+test('creature Description Includes Sales Inventory and active dialogue request', () => {
     var m0 = new map.Map();
     var seller = mb.buildCreature({ "file": "ice-cream-man" });
+    var missions = seller.getMissions(true);
+    missions[0].clearParent();
+
     var expected = "A random guy who occasionally has ice cream for sale.<br>He has 15 99 flake ice creams (price: &pound;3.50 each) for sale.<br><br>He wants to <i>talk</i> to you about something.$imageicecreamman.jpg/$image";
     var actual = seller.getDetailedDescription(0, m0, 0);
     console.debug("expected:" + expected);

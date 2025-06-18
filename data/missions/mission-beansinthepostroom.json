@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "beansinthepostroom",
   "displayName": "Joseph's got beans for the coffee machine",
-  "description": "Joseph has a coffee bean delivery.",
+  "description": "Joseph left a parcel in the <i>post room</i> for you to investigate.",
   "attributes": {
     "parent": "repaircoffeemachine",
     "missionObject": "joseph baxter",

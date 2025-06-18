@@ -3,8 +3,7 @@
     "name": "repaircoffeemachine",
     "displayName": "repair the coffee machine",
     "attributes": {
-        "missionObject": "coffee machine",
-        "static": true
+        "missionObject": "coffee machine"
     },
     "conditionAttributes": {
       "isDestroyed": false,
@@ -13,6 +12,6 @@
     },
     "reward": {
         "score": 25,
-        "message": "That's a start at least. You still need to get your coffee though."
+        "message": "That's a start at least. You still need to get <i>your</i> coffee though."
     }
 }

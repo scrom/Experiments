@@ -6,8 +6,7 @@
   "attributes": {
     "parent": "keyfob",
     "missionObject": "50 shades",
-    "destination": "violet wilmott",
-    "static": true
+    "destination": "violet wilmott"
   },
   "conditionAttributes": {
     "isDestroyed": false,

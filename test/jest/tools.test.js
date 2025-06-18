@@ -22,6 +22,12 @@ describe('tools.js basic unit tests', () => {
             expect(tools.time(2, 10, 50)).toBe('02:25');
             expect(tools.time()).toBe('00:00');
         });
+
+        test('how many ticks between 9am and 5pm?', ()=> {
+            const time = tools.time(9,0,1600);
+            console.debug("Calculated time is :"+time);
+            expect(time).toBe('17:00');
+        });
     });
 
     describe('String handling', () => {

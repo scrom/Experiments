@@ -6,8 +6,7 @@
   "attributes": {
     "parent": "fixchrisbike",
     "missionObject": "bike",
-    "destination": "russell",
-    "static": true
+    "destination": "russell"
   },
   "conditionAttributes": {
     "isDestroyed": false

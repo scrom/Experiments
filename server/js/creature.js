@@ -3249,6 +3249,10 @@ exports.Creature = function Creature(name, description, detailedDescription, att
                 case "excellent":
                 case "awesome":
                 case "affirmatory":
+                case "sure":
+                case "okay":
+                case "no problem":
+                case "okey":
                     randomReplies = ["Great", "OK $player", "OK"];
                     randomIndex = Math.floor(Math.random() * randomReplies.length);
                     response += tools.initCap(self.getFirstName())+" says '"+randomReplies[randomIndex]+".'";

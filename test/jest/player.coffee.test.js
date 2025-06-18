@@ -644,7 +644,7 @@ describe('Sweet Coffee Combination Tests', () =>
     });
 
 
-    test('playerCanCompleteLatteMission', () =>
+    test('player Can Complete Latte Mission Chain', () =>
     {
         const fileManager = require('../../server/js/filemanager.js');
         const dataDir = '../../data/';
@@ -659,6 +659,12 @@ describe('Sweet Coffee Combination Tests', () =>
         console.debug(p0.setLocation(l0));
         const coffeeMachine = l0.getObject("coffee machine", true, true);
         coffeeMachine.forceRepair();
+        
+        var firstResult = m0.updateMissions(5, p0);    
+        var expectedFirstResult = "<br>That's a start at least. You still need to get <i>your</i> coffee though.<br>";
+        expect(firstResult).toBe(expectedFirstResult);
+
+
         //ensure beans are in machine
         let beansJSON = fm.readFile("artefacts/beans.json");
         let beans = mb.buildArtefact(beansJSON);
@@ -667,13 +673,21 @@ describe('Sweet Coffee Combination Tests', () =>
         let milkJSON = fm.readFile("artefacts/milk.json");
         let milk = mb.buildArtefact(milkJSON);
         coffeeMachine.receive(milk);
+        
+        var secondResult = m0.updateMissions(5, p0);
+        var expectedSecondResult = "<br>Congratulations, you got the coffee machine working!<br>";
+        expect(secondResult).toBe(expectedSecondResult);
 
-        console.debug("Coffee machine description: " + coffeeMachine.getDetailedDescription());
+        var workingCoffeeMachineDescription = coffeeMachine.getDetailedDescription();
+        var expectedDescription = "It's stocked up with some coffee beans and some milk.<br>It's switched off.$imagecoffeemachine.jpg/$image";
+        expect(workingCoffeeMachineDescription).toBe(expectedDescription);
 
+
+        console.debug("Coffee machine description: " + workingCoffeeMachineDescription);
         coffeeMachine.switchOnOrOff("switch", "on");
         p0.get('get', 'latte');
 
-        const expectedResult = "<br><br>Congratulations, you managed to get your coffee. That was somewhat more effort than expected though.<br><br>Still... no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br><br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far.<br><br>That's a start at least. You still need to get your coffee though.<br><br>Congratulations, you got the coffee machine working!<br>";
+        const expectedResult = "<br><br>Congratulations, you managed to get your coffee. That was somewhat more effort than expected though.<br><br>Still... no time to linger. Drink up, wake up and start doing your bit to help your colleagues out.<br>(Or not - it's up to you.)<br><br>If you've not done so already, now might be a good time to <i>save</i> your achievements so far.<br>";
         const actualResult = m0.updateMissions(5, p0);
         expect(actualResult).toBe(expectedResult);
     });

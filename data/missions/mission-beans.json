@@ -1,10 +1,9 @@
 {
     "object": "mission",
     "name": "beans",
-    "displayName": "get the coffee machine working",
+    "displayName": "Get the coffee machine working",
     "attributes": {
-        "missionObject": "coffee machine",
-        "static": true
+        "missionObject": "coffee machine"
     },
     "conditionAttributes": {
         "isDestroyed": false,

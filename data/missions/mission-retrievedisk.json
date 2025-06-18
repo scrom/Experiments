@@ -2,13 +2,12 @@
   "object": "mission",
   "name": "retrievedisk",
   "displayName": "retrieve the stolen hard disk",
-  "description": "Retrieve a stolen hard drive.",
+  "description": "Retrieve a stolen hard drive for Stephen the CEO.",
   "attributes": {
     "parent": "saveportarossa",
     "missionObject": "hard disk",
     "destination": "stephen goodwin",
     "initiateConversation": true,
-    "static": true,
     "dialogue": [
       "'$player, things are getting worse.'<br>'We have another serious problem. In the wake of the crash, someone's been stealing our data.'<br>'I believe the culprit is still in the area and hasn't been able to offload it to anyone.'<br>'Can you track it down and bring it back to me?'",
       {

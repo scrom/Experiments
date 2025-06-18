@@ -2,12 +2,11 @@
   "object": "mission",
   "name": "findadamstrainers",
   "displayName": "find Aaron's trainers",
-  "description": "Aaron soaked his feet.",
+  "description": "Aaron soaked his feet on his way in. Help find his trainers",
   "attributes": {
     "parent": "beans",
     "missionObject": "trainers",
     "destination": "aaron prescott",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I managed to get a soaking cycling into work this morning and can't find my spare trainers.'<br>'They're usually somewhere around my desk but they could be anywhere to be honest.'<br>'Could you do track them down and bring them back to me?'",
       {

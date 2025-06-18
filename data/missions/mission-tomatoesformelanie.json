@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "tomatoesformelanie",
   "displayName": "get some fresh tomatoes for Melanie",
-  "description": "Melanie needs some fresh tomatoes.",
+  "description": "Melanie needs some fresh tomatoes for making lunch.",
   "attributes": {
     "parent": "endofbreakfast",
     "missionObject": "tomatoes",

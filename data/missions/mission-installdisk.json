@@ -5,8 +5,7 @@
   "description": "",
   "attributes": {
     "missionObject": "hard disk",
-    "destination": "server",
-    "static": true
+    "destination": "server"
   },
   "failAttributes": {
     "isDestroyed": true

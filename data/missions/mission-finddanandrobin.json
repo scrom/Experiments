@@ -8,7 +8,6 @@
     "missionObject": "lou boynton",
     "initiateConversation": true,
     "huntPlayer": true,
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'Daniel and Robin are supposed to be flying back from a comic book convention today.'<br>'I don't suppose you've seen them around anywhere have you?'",
       {
@@ -19,18 +18,18 @@
           "y"
         ],
         "response": "'I hope they're ok. They sounded a bit rough last time I spoke to them.'",
-        "nextState": 4
+        "nextState": 100
       },
       {
         "state": 1,
         "response": "'Well. I hope they're ok. They sounded a bit rough last time I spoke to them.'<br>'Keep an eye out for them if you can.'",
-        "nextState": 4
+        "nextState": 100
       }
     ]
   },
   "conditionAttributes": {
     "alive": true,
-    "conversationState": 3
+    "conversationState": 100
   },
   "reward": {}
 }

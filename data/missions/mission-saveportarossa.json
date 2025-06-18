@@ -2,7 +2,7 @@
   "object": "mission",
   "name": "saveportarossa",
   "displayName": "save Porta Rossa from the zombie contagion",
-  "description": "The scene of devastation nearby looks very bad - almost like the Zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
+  "description": "The scene of devastation nearby looks very bad - almost like the zombie apocalypse is starting...<br>You need to ensure everyone survives somehow. Act quickly!",
   "attributes": {
     "parent": "planecrash"
   },
@@ -24,7 +24,7 @@
     "affinityModifier": 1,
     "increaseAffinityFor": "jordan marshall",
     "decreaseAffinityFor": "stephen goodwin",
-    "message": "<br>Congratulations. You and the rest of Porta Rossa survived the zombie apocalypse. Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash, did someone sabotage the flight?"
+    "message": "<br>Congratulations. You and the rest of Porta Rossa survived a potential zombie apocalypse!<br>Now things can return to normal - right? <br>(That could have been <i>very</i> nasty).<br>But...<br>What caused the crash? Did someone sabotage the flight?"
   },
   "fail": {
     "score": -200,
@@ -32,6 +32,6 @@
     "activateMission": "retrievedisk",
     "decreaseAffinityFor": "jordan marshall",
     "increaseAffinityFor": "stephen goodwin",
-    "message": "<br>Oh no!<br>Looks like you weren't quick enough to save everyone. Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
+    "message": "<br>Oh no! You weren't quick enough to save everyone.<br>Even in just the opening hours of the zombie apocalypse our near and dear are falling.<br>You'd best get on with cleaning up the mess and making sure it doesn't get any worse."
   }
 }

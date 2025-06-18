@@ -7,7 +7,6 @@
     "parent": "latte",
     "missionObject": "rum bottle",
     "destination": "stephen cartwright",
-    "static": true,
     "dialogue": [
       "'Hey $player.'<br>'I need a cheeky favour from you, if you're willing.'<br>'My team are just about to ship a new release but I forgot to stock up on the usual celebration supplies.'<br>'Most teams celebrate with champagne but we have a tradition of celebrating with something a bit tastier.'<br>'Could you track me down a decent bottle of rum from somewhere?'<br>'And don't worry, I'll pay you for it.'",
       {

@@ -1,0 +1,16 @@
+{
+  "object": "mission",
+  "name": "socialite",
+  "displayName": "talk to more people - only 15 left to go until you've met them all",
+  "attributes": {
+    "parent": "chatterbox",
+    "missionObject": "player"
+  },
+  "conditionAttributes": {
+    "creaturesToSpeakTo": 15
+  },
+  "reward": {
+    "score": 25,
+    "message": "<br>You really are getting about and meeting so many of the teams. Great job!"
+  }
+}

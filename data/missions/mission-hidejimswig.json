@@ -2,11 +2,10 @@
   "object": "mission",
   "name": "hidejimswig",
   "displayName": "hide Jim' wig",
-  "description": "Make the wig 'go away'.",
+  "description": "Make the wig 'go away'. Drag is amazing for some, but not for Jim.",
   "attributes": {
     "parent": "keyfob",
     "missionObject": "wig",
-    "static": true,
     "dialogue": [
       "'Hi $player.'<br>'I've got a job for you if you're interested.'",
       {

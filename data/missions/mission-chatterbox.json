@@ -7,7 +7,7 @@
     "missionObject": "player"
   },
   "conditionAttributes": {
-    "creaturesToSpeakTo": 15
+    "creaturesSpokenTo": 15
   },
   "reward": {
     "score": 25,
