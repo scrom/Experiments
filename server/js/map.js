@@ -566,26 +566,46 @@ exports.Map = function Map() {
             var currentLocation = caller.getCurrentLocation();
             var inventory = caller.getInventoryObject();
             var aggression = caller.getAggression();
+            
                 //is a location or distant object mentioned in the description?
                 //can player see artefact/location from where they're standing?
                 //try object first, then plain location name, then location display name, then syns            
                 var desiredLocationName = self.getObjectLocationName(objectName, false, 2.5, false, currentLocation, inventory); //min visible size is "2.5" to be slightly more realistic.
                 var desiredLocation;
-                if (desiredLocationName) {desiredLocation = self.getLocation(desiredLocationName, true);};
+                if (desiredLocationName) { 
+                    desiredLocation = self.getLocation(desiredLocationName, true);
+                };
                 if (!desiredLocationName) {
                     desiredLocation = self.getLocation(objectName, true);
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
+                    if (desiredLocation) { 
+                        desiredLocationName = desiredLocation.getName(); 
                     };
                 };
                 if (!desiredLocationName) {
                     desiredLocation = self.getClosestMatchingLocation(objectName, currentLocation, inventory)
-                    if (desiredLocation) {
-                        desiredLocationName = desiredLocation.getName();
+                    if (desiredLocation) { 
+                        desiredLocationName = desiredLocation.getName(); 
                     };
                 };
                 if (desiredLocationName) {
-                    var path = self.lineOfSightPathToDestination(desiredLocationName, currentLocation, currentLocation);
+                    let darkMessage = "";
+                    let desiredObject = desiredLocation.getObject(objectName); //will fail if requested item is a location
+
+                    let path = self.lineOfSightPathToDestination(desiredLocationName, currentLocation, currentLocation);
+                    if (path) {
+                        //we have direct line of sight...  if it's dark in the location and we are looking for an object...
+                        if (desiredObject) {
+                            if (desiredLocation.isDark()) {
+                                //get the actual object so we can use prefixes/suffixes and check its size
+                                if (desiredObject.getWeight() < 10) {
+                                    return "Sorry, it's pretty dark out that way. You'll need to track "+desiredObject.getSuffix+" down yourself for now."
+                                } else {
+                                    //do we still get it if we can only see larger objects?
+                                    darkMessage = "It's pretty dark out that way but... " 
+                                };
+                            };
+                        };
+                    };
                     if (!path) {
                         let LocationIsMentioned = currentLocation.getDescription().includes(desiredLocationName);
                         let ObjectIsMentioned = currentLocation.getDescription().includes(objectName);
@@ -603,20 +623,19 @@ exports.Map = function Map() {
                         if (tools.directions.indexOf(direction) < 12) { toThe = "to the "; };
                         if (tools.directions.indexOf(direction) < 8) { direction = tools.initCap(direction); };
                         if (action == "go") {
-                            return "From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
+                            return darkMessage+"From a quick peer around it looks like you'll need to head "+toThe+"<i>"+direction+"</i> from here."
                         };
 
                         //tweak wording depending on what we're looking for...
-                        let desiredObject = desiredLocation.getObject(objectName); //will fail if requested item is a location
                         if (desiredObject) {
                             if (desiredObject.getType() == "creature") {
-                                return "It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
+                                return darkMessage+"It looks like "+desiredObject.getDescriptivePrefix()+" in the "+desiredLocation.getDisplayName().toLowerCase()+". Head <i>"+direction+"</i> if you want to catch up with "+desiredObject.getSuffix()+"."
                             };
                             if (desiredObject.getWeight() >= 200 && caller.getType() == "player") { //200 is a good size threshold for large items from a distance
                                 return desiredObject.getDetailedDescription(aggression, self, 200);
                             };
                         };
-                        return "You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading "+toThe+"<i>"+direction+"</i>."
+                        return darkMessage+"You peer toward the "+desiredLocation.getDisplayName().toLowerCase()+" but can't quite make any clear details out.<br>You'll need to find your way there to take a proper look. Start by heading "+toThe+"<i>"+direction+"</i>."
                     };
                 };
             
