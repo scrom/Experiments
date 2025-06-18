@@ -1218,6 +1218,10 @@ exports.Map = function Map() {
             return bleedingData;
         };
         
+        self.listAllActiveMissions = function(player) {
+            return _missionController.listAllActiveMissions(player, _locations);
+        };
+
         self.getAllMissions = function () {
             return _missionController.getAllMissions(_locations);
         };

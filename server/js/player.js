@@ -6044,17 +6044,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.status = function(maxScore) {
             var status = "";
-            var missions = _missions.concat(_currentLocation.getMissions());
-            if (missions.length > 0) {status+="<i>Tasks:</i><br>";};
-            for (var i = 0; i < missions.length; i++) {
-                if (!missions[i].hasParents()) {
-                    var missionDescription = missions[i].getDescription();
-                    if (missionDescription) {
-                        status += missionDescription + "<br>";
-                    };
-                };               
+            var missionNames = _map.listAllActiveMissions(self);
+            if (missionNames.length > 0) {
+                status+="<i>Tasks:</i><br>";
+                for (var i = 0; i < missionNames.length; i++) {
+                    status += "- "+missionNames[i] + "<br>";            
+                };
+                status+="<br>";
             };
-            if (missions.length > 0) {status+="<br>";};
 
             //check contagion:
             var contagionReport = map.getContagionReport(self);

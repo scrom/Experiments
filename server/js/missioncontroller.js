@@ -83,6 +83,32 @@ module.exports.MissionController = function MissionController() {
             return "Mission: '" + missionName + "' not found.";
         };
 
+        self.listAllActiveMissions = function(player, locations) {
+            //Get all missions
+            var missions = player.getMissions(false);
+            for (var i = 0; i < locations.length; i++) {
+                missions = missions.concat(locations[i].getMissions(false));
+                var locationInventory = locations[i].getAllObjectsAndChildren(true);
+                for (var j = 0; j < locationInventory.length; j++) {
+                    missions = missions.concat(locationInventory[j].getMissions(false));
+                };
+            };
+            //missions = missions.concat(self.getAllMissions(locations));
+            var missionList = [];
+
+            for (var i = 0; i < missions.length; i++) {
+                if (missions[i].isActive() && missions[i].getType() != "event") {
+                    var missionDescription = missions[i].getDescription();
+                    if (missionDescription) {
+                        if (!missionList.includes(missionDescription)) {
+                            missionList.push(missionDescription);
+                        };
+                    };
+                };
+            };
+            return missionList;
+        };
+
         self.listAllMissions = function (player, locations) {
             //loop through each location, location inventory. 
             //Get all missions
