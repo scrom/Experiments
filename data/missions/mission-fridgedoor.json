@@ -3,8 +3,7 @@
     "name": "fridgedoor",
     "displayName": "Remember to shut the fridge door after you use it",
     "attributes": {
-        "missionObject": "fridge",
-        "static": true
+        "missionObject": "fridge"
     },
     "initialAttributes": {
         "isOpen": true

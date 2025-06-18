@@ -665,48 +665,108 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
         }
 
-        self.checkAllOf = function(contentsAttribute, missionObjectInventory) {
+        self.checkTime = function(attributes) {
+            if (attributes) {
+                if (attributes.hasOwnProperty("time")) {                       
+                    if (self.getTimeTaken() >= attributes["time"]) {
+                        return true;
+                    };                           
+                };
+            };
+            return false;
+        };
+
+        self.checkAllOf = function(contentsAttribute, missionObjectInventory, missionObject) {
             //if we have an "allOf" list, we need to check all items exist and return TRUE if so.
             if (!(contentsAttribute.hasOwnProperty("allOf"))) { return true; }; //nothing to check - we pass.
 
-            var allOf = contentsAttribute.allOf;
+            var elements = contentsAttribute.allOf;
             var contentsCount = 0;
-            for (var i = 0; i < allOf.length; i++) {
-                if (missionObjectInventory.check(allOf[i])) {
-                    contentsCount++;
-                };
+            var requiredContentsCount = elements.length; 
+            for (var i = 0; i < elements.length; i++) {
+
+                //if element is a string
+                if (typeof(elements[i]) == 'string') {
+                    if (missionObjectInventory.check(elements[i], true)) {
+                        contentsCount++;
+                    };
+                } else if (Array.isArray(elements[i])) {
+                    let arrayContentsConfirmed = false;
+                    arrayContentsConfirmed = self.checkArrayContentsMatch(elements[i], missionObjectInventory);
+                    if (arrayContentsConfirmed) {
+                        contentsCount++;
+                    };
+                } else if (typeof(elements[i]) == 'object') {
+                    //if it's an object, we need to check attributes instead
+                    //subtract one from requirements against length before we start - to avoid double-counting.
+                    requiredContentsCount --;
+                    requiredContentsCount += self.calculateAttributeCount(elements[i]);
+                    contentsCount += self.checkAttributes(missionObject, elements[i]);
+                };             
             };
 
-            if (contentsCount == allOf.length) {
+            if (contentsCount >= requiredContentsCount) {
                 return true;
             };
 
             return false;
         };
 
-        self.checkAnyOf = function(contentsAttribute, missionObjectInventory) {
+        self.checkAnyOf = function(contentsAttribute, missionObjectInventory, missionObject) {
             //if we have an "anyOf" list, we need to check if the object name is in there return TRUE if so.
             if (!(contentsAttribute.hasOwnProperty("anyOf"))) {return true; };//nothing to check - we pass.
 
-            var anyOf = contentsAttribute.anyOf;
-            for (var i = 0; i < anyOf.length; i++) {
-                if (missionObjectInventory.check(anyOf[i])) {
-                    return true; //exit early if we found a match
-                };
+            var elements = contentsAttribute.anyOf;
+            for (var i = 0; i < elements.length; i++) {
+
+                //if element is a string
+                if (typeof(elements[i]) == 'string') {
+                    if (missionObjectInventory.check(elements[i])) {
+                        return true; //exit early if we found a match
+                    };
+                } else if (Array.isArray(elements[i])) {
+                    let arrayContentsConfirmed = false;
+                    arrayContentsConfirmed = self.checkArrayContentsMatch(elements[i], missionObjectInventory);
+                    if (arrayContentsConfirmed) {
+                        return true; //exit early if we found a match
+                    };
+                } else if (typeof(elements[i]) == 'object') {
+                    //if it's an object, we need to check attributes instead
+                    var contentsCount = self.checkAttributes(missionObject, elements[i]);
+                    if (contentsCount > 0) {
+                        return true; //exit early if we found a match
+                    };
+                };             
             };
 
             return false;
         };
 
-        self.checkNoneOf = function(contentsAttribute, missionObjectInventory) {
+        self.checkNoneOf = function(contentsAttribute, missionObjectInventory, missionObject) {
             //if we have a "noneOf" list, we need to check if the object name is in there return FALSE if so.
             if (!(contentsAttribute.hasOwnProperty("noneOf"))) { return true; }; //nothing to check - we pass.
 
-            var noneOf = contentsAttribute.noneOf;
-            for (var i = 0; i < noneOf.length; i++) {
-                if (missionObjectInventory.check(noneOf[i])) {
-                    return false;  // exit early if we found a match
-                };
+            var elements = contentsAttribute.noneOf;
+            for (var i = 0; i < elements.length; i++) {
+
+                //if element is a string
+                if (typeof(elements[i]) == 'string') {
+                    if (missionObjectInventory.check(elements[i])) {
+                        return false; //exit early if we found a match
+                    };
+                } else if (Array.isArray(elements[i])) {
+                    let arrayContentsConfirmed = false;
+                    arrayContentsConfirmed = self.checkArrayContentsMatch(elements[i], missionObjectInventory);
+                    if (arrayContentsConfirmed) {
+                        return false; //exit early if we found a match
+                    };
+                } else if (typeof(elements[i]) == 'object') {
+                    //if it's an object, we need to check attributes instead
+                    var contentsCount = self.checkAttributes(missionObject, elements[i]);
+                    if (contentsCount > 0) {
+                        return false; //exit early if we found a match
+                    };
+                };             
             };
             return true; //if we get here, noneOf is confirmed - none found
         };
@@ -746,15 +806,15 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 let noneOfConfirmed = false;
 
                 //we cover this first so we can exit early if we find a match.
-                noneOfConfirmed = self.checkNoneOf(contentsAttribute, missionObjectInventory);
+                noneOfConfirmed = self.checkNoneOf(contentsAttribute, missionObjectInventory, missionObject);
                 if (!noneOfConfirmed) {return false;};
                 
                 //check "allOf" list
-                allOfConfirmed = self.checkAllOf(contentsAttribute, missionObjectInventory);
+                allOfConfirmed = self.checkAllOf(contentsAttribute, missionObjectInventory, missionObject);
                 if (!allOfConfirmed) {return false;};
 
                 //check "anyOf" list
-                anyOfConfirmed = self.checkAnyOf(contentsAttribute, missionObjectInventory);
+                anyOfConfirmed = self.checkAnyOf(contentsAttribute, missionObjectInventory, missionObject);
                 if (!anyOfConfirmed) {return false;};
 
                 if (allOfConfirmed && anyOfConfirmed && noneOfConfirmed) {
@@ -824,7 +884,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var attributeCount = Object.keys(attributes).length;    //this needs to handle subkeys too. 
                 
             //check sub-attributes
-            var ignoreList = ["contains", "contagion", "antibodies", "allOF", "anyOf", "noneOf"]; // ignore *contents* of attributes with these names.
+            var ignoreList = ["contains", "contagion", "antibodies", "allOf", "anyOf", "noneOf"]; // ignore *contents* of attributes with these names.
             for (var attr in attributes) {
                 if (ignoreList.includes(attr)) { 
                     continue;
@@ -1001,7 +1061,7 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (!objectAttributes) {return 0;};
 
             var checkCount = 0;
-            var ignoreList = ["contains", "contagion", "antibodies", "allOF", "anyOf", "noneOf"]; // ignore attributes with these names
+            var ignoreList = ["contains", "contagion", "antibodies", "allOf", "anyOf", "noneOf"]; // ignore attributes with these names
             for (var attr in attributesToCheck) {
                 if (ignoreList.includes(attr)) { 
                     //skip re-checking this attribute - already handled as special case outside. otherwise we'd double-count a success.
@@ -1035,6 +1095,13 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                     } else {                                                                             
                         checkCount += self.checkAttribute(objectAttributes[attr], attributesToCheck[attr]);
                     };
+                } else {
+                    //see #637 - are we checking something mission related instead? - time, conversation, antibodies, contagion, contains,  etc.
+                    if (attr == "time") {
+                        if (self.checkTime(attributesToCheck)) {
+                            checkCount++;
+                        }
+                    };
                 };
             };
 
@@ -1065,23 +1132,12 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var initialCount = 0;
 
             //functions for reuse
-            var checkTime = function(attributes) {
-                if (attributes) {
-                    if (attributes.hasOwnProperty("time")) {                       
-                        if (self.getTimeTaken() >= attributes["time"]) {
-                            return 1;
-                        };                           
-                    };
-                };
-                return 0;
-            };
             
             //check timers first...
             //have we already failed on time
-            if (checkTime(_failAttributes) > 0) { return self.timeExpired(); };
-
-            initialCount += checkTime(_initialAttributes);
-            successCount += checkTime(_conditionAttributes);
+            if (self.checkTime(_failAttributes)) { return self.timeExpired(); };
+            if (self.checkTime(_initialAttributes)) { initialCount++; };
+            if (self.checkTime(_conditionAttributes)) { successCount++; };
 
             //check conversations
             var checkFailedConversation = function(attributes) {
@@ -1169,6 +1225,26 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                         return self.fail("failAttributes");
                     };
                 };
+
+                //check all//any/none
+                var missionObjectInventory = missionObject.getInventoryObject();
+                if (_failAttributes.hasOwnProperty("allOf")) {
+                    if (self.checkAllOf(_failAttributes, missionObjectInventory, missionObject)) {
+                        return self.fail("failAttributes");
+                    };
+                };
+                    
+                if (_failAttributes.hasOwnProperty("anyOf"))  {
+                    if (self.checkAnyOf(_failAttributes, missionObjectInventory, missionObject)) {
+                        return self.fail("failAttributes");
+                    };
+                };      
+                 if (_failAttributes.hasOwnProperty("noneOf"))  {
+                    if (self.checkNoneOf(_failAttributes, missionObjectInventory, missionObject)) {
+                        return self.fail("failAttributes");
+                    };
+                };     
+                    
             };
 
             //console.debug('mission object retrieved. Checking initial and condition attributes...');
