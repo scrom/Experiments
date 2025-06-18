@@ -265,53 +265,51 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             };
 
             //mission name is specified and _parents is a basic array
-            if (typeof (_parents) == 'object') {
-                if (Array.isArray(_parents)) {
-                    //arrays are an "and" list of parents.
-                    for (var p = 0; p < _parents.length; p++) {
-                        if (_parents[p] == missionName) {
-                            _parents.splice(p, 1);
-                            if (_parents.length == 0) {
-                                _parents = null;
-                            };
-                            return true;
+            if (Array.isArray(_parents)) {
+                //arrays are an "and" list of parents.
+                for (var p = 0; p < _parents.length; p++) {
+                    if (_parents[p] == missionName) {
+                        _parents.splice(p, 1);
+                        if (_parents.length == 0) {
+                            _parents = null;
                         };
-                    };
-                } else {
-                    //objects can be either "allOf" or "anyOf"
-                    //remove named mission from _parents. If it's part of an "anyOf" list, remove all "anyOf" parents.
-                    if (_parents.hasOwnProperty(missionName)) {
-                        delete _parents[missionName];
-                    }
-                    //if we have no parents left, clear the parent entirely
-                    if (Object.keys(_parents).length == 0) {
-                        _parents = null;
                         return true;
                     };
-                    //if we have an "allOf" list, we need to check if the missionName is in there, if so, remove it and if it's the last one, clear the "allOf" element entirely
-                    if (_parents.hasOwnProperty("allOf")) {
-                        var allOf = _parents.allOf;
-                        if (allOf.indexOf(missionName) > -1) {
-                            allOf.splice(allOf.indexOf(missionName), 1);
-                            if (allOf.length == 0) {
-                                delete _parents.allOf;
-                            };
+                };
+            } else if (typeof (_parents) == 'object') {
+                //objects can be either "allOf" or "anyOf"
+                //remove named mission from _parents. If it's part of an "anyOf" list, remove all "anyOf" parents.
+                if (_parents.hasOwnProperty(missionName)) {
+                    delete _parents[missionName];
+                };
+                //if we have no parents left, clear the parent entirely
+                if (Object.keys(_parents).length == 0) {
+                    _parents = null;
+                    return true;
+                };
+                //if we have an "allOf" list, we need to check if the missionName is in there, if so, remove it and if it's the last one, clear the "allOf" element entirely
+                if (_parents.hasOwnProperty("allOf")) {
+                    var allOf = _parents.allOf;
+                    if (allOf.indexOf(missionName) > -1) {
+                        allOf.splice(allOf.indexOf(missionName), 1);
+                        if (allOf.length == 0) {
+                            delete _parents.allOf;
                         };
                     };
+                };
                     //if we have an "anyOf" list, we need to check if the missionName is in there and remove the entire "anyOf" element
-                    if (_parents.hasOwnProperty("anyOf")) {
-                        var anyOf = _parents.anyOf;
-                        if (anyOf.indexOf(missionName) > -1) {
-                            delete _parents.anyOf;
-                        };
+                if (_parents.hasOwnProperty("anyOf")) {
+                    var anyOf = _parents.anyOf;
+                    if (anyOf.indexOf(missionName) > -1) {
+                        delete _parents.anyOf;
                     };
+                };
                     
                     //if we have no "allOf" or "anyOf" parents left, clear the parent entirely
-                    if (!(_parents.hasOwnProperty("allOf")) && !(_parents.hasOwnProperty("anyOf"))) {
-                            _parents = null;
-                                return true;
-                    };                    
-                };
+                if (!(_parents.hasOwnProperty("allOf")) && !(_parents.hasOwnProperty("anyOf"))) {
+                    _parents = null;
+                    return true;
+                };                    
             };
 
             return false;
@@ -320,22 +318,22 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
         self.checkParent = function (missionName) {
             if (missionName == _parents) { return true };
             if (!(_parents)) { return false; }
-            if (typeof (_parents) == 'object') {
-                if (Array.isArray(_parents)) {
-                    //arrays are an "and" list of parents.
-                    if (_parents.includes(missionName)) {return true;};
-                } else {
-                    //objects can contain "allOf" or "anyOf"
-                    //check if missionName is in "allOf" or "anyOf" parents
-                    if (_parents.hasOwnProperty("allOf")) {
-                        if (_parents.allOf.includes(missionName)) {
-                            return true;
-                        };
+
+            if (Array.isArray(_parents)) {
+                //arrays are an "and" list of parents.
+                if (_parents.includes(missionName)) {return true;};
+
+            } else if (typeof (_parents) == 'object') {
+                //objects can contain "allOf" or "anyOf"
+                //check if missionName is in "allOf" or "anyOf" parents
+                if (_parents.hasOwnProperty("allOf")) {
+                    if (_parents.allOf.includes(missionName)) {
+                        return true;
                     };
-                    if (_parents.hasOwnProperty("anyOf")) {
-                        if (_parents.anyOf.includes(missionName)) {
-                            return true;
-                        };
+                };
+                if (_parents.hasOwnProperty("anyOf")) {
+                    if (_parents.anyOf.includes(missionName)) {
+                        return true;
                     };
                 };
             };
@@ -650,6 +648,69 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             if (deadCreature) {return true;}; //fail!
         };
 
+        self.checkArrayContentsMatch = function(contentsAttribute, missionObjectInventory) {
+            var contentsCount = 0;
+            var contentsAttributeCount = contentsAttribute.length;
+            if (contentsAttributeCount == 0) {return true; }; //nothing to check
+
+            for (var i = 0; i < contentsAttribute.length; i++) {
+                //console.debug("checking for " + contentsAttribute[i]);
+                if (missionObjectInventory.check(contentsAttribute[i])) { contentsCount++; };
+            };
+
+            //console.debug("required condition: ("+missionObject.getName()+" - contents("+ contentsAttributeCount+")) " + contentsAttribute + " matched: " + contentsCount + " items.");
+        
+            if (contentsCount == contentsAttributeCount) {
+                return true;
+            };
+        }
+
+        self.checkAllOf = function(contentsAttribute, missionObjectInventory) {
+            //if we have an "allOf" list, we need to check all items exist and return TRUE if so.
+            if (!(contentsAttribute.hasOwnProperty("allOf"))) { return true; }; //nothing to check - we pass.
+
+            var allOf = contentsAttribute.allOf;
+            var contentsCount = 0;
+            for (var i = 0; i < allOf.length; i++) {
+                if (missionObjectInventory.check(allOf[i])) {
+                    contentsCount++;
+                };
+            };
+
+            if (contentsCount == allOf.length) {
+                return true;
+            };
+
+            return false;
+        };
+
+        self.checkAnyOf = function(contentsAttribute, missionObjectInventory) {
+            //if we have an "anyOf" list, we need to check if the object name is in there return TRUE if so.
+            if (!(contentsAttribute.hasOwnProperty("anyOf"))) {return true; };//nothing to check - we pass.
+
+            var anyOf = contentsAttribute.anyOf;
+            for (var i = 0; i < anyOf.length; i++) {
+                if (missionObjectInventory.check(anyOf[i])) {
+                    return true; //exit early if we found a match
+                };
+            };
+
+            return false;
+        };
+
+        self.checkNoneOf = function(contentsAttribute, missionObjectInventory) {
+            //if we have a "noneOf" list, we need to check if the object name is in there return FALSE if so.
+            if (!(contentsAttribute.hasOwnProperty("noneOf"))) { return true; }; //nothing to check - we pass.
+
+            var noneOf = contentsAttribute.noneOf;
+            for (var i = 0; i < noneOf.length; i++) {
+                if (missionObjectInventory.check(noneOf[i])) {
+                    return false;  // exit early if we found a match
+                };
+            };
+            return true; //if we get here, noneOf is confirmed - none found
+        };
+
         self.checkContents = function(missionObject, contentsAttribute) {
             console.debug("Checking for contents: "+contentsAttribute);
 
@@ -672,20 +733,10 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
 
             //if required contents is a simple array ...
             if (Array.isArray(contentsAttribute)) {
-                var contentsCount = 0;
-
-                var contentsAttributeCount = contentsAttribute.length;
-                if (contentsAttributeCount > 0) {
-                    for (var i = 0; i < contentsAttribute.length; i++) {
-                        //console.debug("checking for " + contentsAttribute[i]);
-                        if (missionObjectInventory.check(contentsAttribute[i])) { contentsCount++; };
-                    };
-                };
-                //console.debug("required condition: ("+missionObject.getName()+" - contents("+ contentsAttributeCount+")) " + contentsAttribute + " matched: " + contentsCount + " items.");
-        
-                if (contentsCount == contentsAttributeCount) {
-                    return true;
-                };
+                let arrayContentsConfirmed = false;
+                arrayContentsConfirmed = self.checkArrayContentsMatch(contentsAttribute, missionObjectInventory);
+                if (!arrayContentsConfirmed) {return false;};
+                return true;
             };
 
             if (typeof(contentsAttribute) == 'object') {
@@ -694,54 +745,24 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
                 let anyOfConfirmed = false;
                 let noneOfConfirmed = false;
 
-                //if we have a "noneOf" list, we need to check if the object name is in there return FALSE if so!
                 //we cover this first so we can exit early if we find a match.
-                if (contentsAttribute.hasOwnProperty("noneOf")) {
-                        var noneOf = contentsAttribute.noneOf;
-                        for (var i = 0; i < noneOf.length; i++) {
-                            if (missionObjectInventory.check(noneOf[i])) {
-                                return false;  // exit early if we found a match
-                            };
-                        };
-                        noneOfConfirmed = true; //if we get here, noneOf is confirmed - none found
-                } else {
-                    noneOfConfirmed = true; // no noneOf list, so we assume it's confirmed
-                };
+                noneOfConfirmed = self.checkNoneOf(contentsAttribute, missionObjectInventory);
+                if (!noneOfConfirmed) {return false;};
                 
-                //if we have an "allOf" list, we need to check all items exist and return true if so!
-                if (contentsAttribute.hasOwnProperty("allOf")) {
-                        var allOf = contentsAttribute.allOf;
-                        var contentsCount = 0;
-                        for (var i = 0; i < allOf.length; i++) {
-                            if (missionObjectInventory.check(allOf[i])) {
-                                contentsCount++;
-                            };
-                        };
-                        if (contentsCount == allOf.length) {
-                            allOfConfirmed = true;
-                        };
-                } else {
-                    allOfConfirmed = true;
-                };
+                //check "allOf" list
+                allOfConfirmed = self.checkAllOf(contentsAttribute, missionObjectInventory);
+                if (!allOfConfirmed) {return false;};
 
-                //if we have an "anyOf" list, we need to check if the object name is in there return true if so!
-                if (contentsAttribute.hasOwnProperty("anyOf")) {
-                        var anyOf = contentsAttribute.anyOf;
-                        for (var i = 0; i < anyOf.length; i++) {
-                            if (missionObjectInventory.check(anyOf[i])) {
-                                anyOfConfirmed = true;
-                                break; //exit early if we found a match
-                            };
-                        };
-                } else {
-                    anyOfConfirmed = true;
-                };
+                //check "anyOf" list
+                anyOfConfirmed = self.checkAnyOf(contentsAttribute, missionObjectInventory);
+                if (!anyOfConfirmed) {return false;};
 
                 if (allOfConfirmed && anyOfConfirmed && noneOfConfirmed) {
                     return true;
                 };
 
             };
+
             //if we get here, we have no match
             return false;
         };
@@ -803,16 +824,18 @@ module.exports.Mission = function Mission(name, displayName, description, attrib
             var attributeCount = Object.keys(attributes).length;    //this needs to handle subkeys too. 
                 
             //check sub-attributes
+            var ignoreList = ["contains", "contagion", "antibodies", "allOF", "anyOf", "noneOf"]; // ignore *contents* of attributes with these names.
             for (var attr in attributes) {
-                if (typeof(attributes[attr]) == 'object') {
-                    if (Array.isArray(attributes[attr])) { 
-                        //do nothing for now - we aim for an absolute match on these later
-                    } else {
-                        //how many child keys do we have that we want to match on?
-                        var keysToMatch = Object.keys(attributes[attr]).length;
-                        //we've already counted one from the parent - that works if there's no children or only 1
-                        if (keysToMatch>1) {attributeCount+=keysToMatch-1;}
-                    };
+                if (ignoreList.includes(attr)) { 
+                    continue;
+                } else if (Array.isArray(attributes[attr])) { 
+                    //do nothing for now - we aim for an absolute match on these later
+                    continue;                
+                } else if (typeof(attributes[attr]) == 'object') {                       
+                    //how many child keys do we have that we want to match on?
+                    var keysToMatch = Object.keys(attributes[attr]).length;
+                    //we've already counted one from the parent - that works if there's no children or only 1
+                    if (keysToMatch>1) {attributeCount+=keysToMatch-1;}
                 };
             };
 
