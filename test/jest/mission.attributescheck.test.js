@@ -29,7 +29,7 @@ afterEach(done => {
     p0 = null;
     done();
 });
-test('test basic check for fridge door mission', () => {
+test('test fridge door mission Fails with door left open', () => {
 
     //const fm = new fileManager.FileManager(true, dataDir, imageDir);
     //const testDatafm = new fileManager.FileManager(true, testDataDir, imageDir);
@@ -45,9 +45,32 @@ test('test basic check for fridge door mission', () => {
     testMission.addTicks(25);
 
     const resultString = testMission.checkState (p0, m0, fridge);
-    const expectedResult = "this should turn a failed mission result";
+    const expectedResult = {"fail": true, "message": "<br>Did you forget something?<br><br>Nobody appreciates the milk going off.<br>Please remember to shut the fridge door in future.", "score": -15};
     const actualResult = resultString;
-    expect(actualResult).toBe(expectedResult);
+    expect(actualResult).toStrictEqual(expectedResult);
+});
+
+test('test fridge door mission passes with door opened and then closed', () => {
+
+    //const fm = new fileManager.FileManager(true, dataDir, imageDir);
+    //const testDatafm = new fileManager.FileManager(true, testDataDir, imageDir);
+    const kitchen = m0.getLocation("kitchen-ground-floor");
+    p0.setLocation(kitchen);
+    const fridge = kitchen.getObject("fridge");
+    fridge.moveOrOpen("open", kitchen.getName(), m0, p0);
+
+    //const missionJSON = fm.readFile("mission-fridgedoor.json");
+    //const testMission = new mission.Mission(missionJSON.name, missionJSON.displayName, missionJSON.description, missionJSON.attributes, missionJSON.initialAttributes, missionJSON.conditionAttributes, missionJSON.failAttributes, missionJSON.reward, missionJSON.fail);
+    const testMission = m0.getNamedMission("fridgedoor", p0);
+    testMission.startTimer();
+    testMission.addTicks(3);
+    fridge.close("close", "kitchen-ground-floor")
+    testMission.addTicks(22);
+
+    const resultString = testMission.checkState (p0, m0, fridge);
+    const expectedResult = {"message": "<br>Thanks for remembering to shut the fridge!<br>You wouldn't believe the lack of basic common sense in some people.", "score": 5};
+    const actualResult = resultString;
+    expect(actualResult).toStrictEqual(expectedResult);
 });
 
 test('test we calculate the right number of *initial* attributes for fridge door mission (using and/or)', () => {
