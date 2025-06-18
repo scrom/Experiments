@@ -460,6 +460,7 @@ exports.Action = function Action(player, map, fileManager) {
                     case 'status':
                     case 'tasks':
                     case 'missions':
+                    case 'quests':
                         _ticks = 0;
                         description = _player.status(_map.getMaxScore());
                         break;
