@@ -394,13 +394,13 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire"];
+                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire","dig"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.debug(_name+' subtype validated: '+subType);
             };
             
             if (type == "container") {
-                var validContainerSubTypes = ["", "bottle"];
+                var validContainerSubTypes = ["", "bottle", "box"];
                 if (validContainerSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 if (subType == "bottle" && !_broken && !_destroyed) {
                     _holdsLiquid = true;
@@ -409,7 +409,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
-                var validScenerySubTypes = ["","intangible", "plant", "wall", "floor", "furniture", "art"];
+                var validScenerySubTypes = ["","intangible", "plant", "wall", "floor", "furniture", "art", "sign"];
                 if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
 
