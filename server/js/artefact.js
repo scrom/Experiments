@@ -388,7 +388,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "weapon") {
                 //weapons must have a subtype
-                var validWeaponSubTypes = ["blunt","sharp","projectile"];
+                var validWeaponSubTypes = ["blunt", "sharp", "projectile", "magic", "energy"];
                 if (validWeaponSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.debug(_name+' subtype validated: '+subType);
             };
@@ -400,7 +400,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
             
             if (type == "container") {
-                var validContainerSubTypes = ["", "bottle", "box"];
+                var validContainerSubTypes = ["", "bottle", "box", "magic"]; //magic containers will in futur eallow higher carry wieghts
                 if (validContainerSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
                 if (subType == "bottle" && !_broken && !_destroyed) {
                     _holdsLiquid = true;
@@ -409,7 +409,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
 
             if (type == "scenery") {
                 _hidden = true; //scenery is not shown in inventory etc.
-                var validScenerySubTypes = ["","intangible", "plant", "wall", "floor", "furniture", "art", "sign"];
+                var validScenerySubTypes = ["","intangible", "plant", "wall", "floor", "furniture", "art", "sign", "building"];
                 if (validScenerySubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
             };
 
@@ -419,30 +419,31 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
                 if (_defaultAction == "examine") { throw "vehicle type '" + subType + "' needs a valid default action."; };
             };
 
-            if (type == "food") {
-                //all food is marked as edible. Nutrition could be negative though.
-                var validFoodSubTypes = ["", "snack", "meal", "drink"];
-                if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
-                _edible = true;
-                //food doesn't need charges defined - if they are, it changes how eating them is described. (part vs whole)
-                            //add synonym for splitting - note as we're stil under construction, we use member variables here rather than functions.
+            if (type == "light") {
+                //all lights are marked as "switched". May not need power though
+                var validLightSubTypes = ["", "electric", "natural", "burn", "magic"];
+                if (validLightSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
+                if (subType == "" || subType == "electric") {
+                    _switched = true;
+                };
             };
 
+            if (type == "food") {
+                //all food is marked as edible. Nutrition could be negative though.
+                var validFoodSubTypes = ["", "snack", "meal", "drink", "poison"];
+                if (validFoodSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
+                _edible = true;
+            };
+
+            //food doesn't *need* charges defined - if they are, it changes how eating them is described. (part vs whole)
+            //add synonym for splitting - note as we're stil under construction, we use member variables here rather than functions.
+            //non-food items also use charges
             if (_charges > 0) {
                 if ((_chargeUnit) && _chargeUnit != "charge") {
                     if (self.willDivide(2)) { //minor hack to handle only having 1 charge but still wanting unit synonym.
                             //variants of charge unit. unit alone may clash with other objects (e.g. "cup") so we don't add that in.
                         self.addSyns([_chargeUnit+" of "+_description, _chargeUnit+" of "+_name]);
                     };
-                };
-            };
-
-            if (type == "light") {
-                //all lights are marked as "switched". May not need power though
-                var validLightSubTypes = ["", "electric", "natural", "burn"];
-                if (validLightSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid " + type + " subtype."; };
-                if (subType == "" || subType == "electric") {
-                    _switched = true;
                 };
             };
             
