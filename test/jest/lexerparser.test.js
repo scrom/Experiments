@@ -10,6 +10,14 @@ test('can parse verb', () => {
     expect(actualResult).toStrictEqual(expectedResult);
 });
 
+
+test('can parse verb using alias', () => {
+    const input = 'x an artefact of little consequence';
+    const expectedResult = {"action": "examine", "category": "examination", "target": "an artefact of little consequence"};
+    const actualResult = lp.parseInput(input);
+    expect(actualResult).toStrictEqual(expectedResult);
+});
+
 test('cannot parse unknown verb', () => {
     const input = 'skibidee an artefact of little consequence';
     const expectedResult = {"error": "Unknown verb: \"skibidee\""};
