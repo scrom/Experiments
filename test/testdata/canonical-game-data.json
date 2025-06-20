@@ -1455,7 +1455,7 @@
                 "name": "russell",
                 "displayName": "Russell",
                 "description": "Russell the bike ambulance guy",
-                "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
+                "detailedDescription": "He's a generous and friendly chap. Bikes is his thing. Nobody seems to know his last name be he doesn't seem to mind.",
                 "attributes": {
                     "weight": 140,
                     "money": 50,
@@ -1464,6 +1464,7 @@
                     "type": "friendly",
                     "carryWeight": 18,
                     "health": 225,
+                    "imageName": "russell.jpg",
                     "repairSkills": [
                         "bike"
                     ]
@@ -3835,7 +3836,7 @@
                     "affinity": -1,
                     "canTravel": true,
                     "traveller": true,
-                    "imageName": "joshuawarner.jpg"
+                    "imageName": "joshua-warner.jpg"
                 },
                 "inventory": [
                     {
@@ -5409,7 +5410,7 @@
                     "loops": -1,
                     "loopDelay": 9,
                     "destinationDelay": 5,
-                    "imageName": "josephbaxter.jpg",
+                    "imageName": "joseph-baxter.jpg",
                     "repairSkills": [
                         "coffee machine",
                         "plumbing",
@@ -13967,7 +13968,7 @@
                     "affinity": 1,
                     "canTravel": true,
                     "traveller": true,
-                    "imageName": "chrissanders.jpg"
+                    "imageName": "chris-sanders.jpg"
                 },
                 "inventory": [
                     {
@@ -14418,7 +14419,7 @@
                     "affinity": 1,
                     "canTravel": true,
                     "traveller": true,
-                    "imageName": "sophiestratfordholmes.jpg"
+                    "imageName": "sophie-stratford-holmes.jpg"
                 },
                 "inventory": [
                     {
@@ -16770,7 +16771,7 @@
                     "health": 120,
                     "canTravel": true,
                     "traveller": true,
-                    "imageName": "jaredholloway.jpg"
+                    "imageName": "jared-holloway.jpg"
                 },
                 "inventory": [
                     {
@@ -19132,7 +19133,7 @@
                     "carryWeight": 8,
                     "health": 100,
                     "canTravel": true,
-                    "imageName": "melaniesheldon.jpg"
+                    "imageName": "melanie-sheldon.jpg"
                 },
                 "synonyms": [
                     "melanie",

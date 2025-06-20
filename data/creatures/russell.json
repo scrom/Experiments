@@ -3,14 +3,15 @@
   "name": "russell",
   "displayName": "Russell",
   "description": "Russell the bike ambulance guy",
-  "detailedDescription": "He's a generous and friendly chap. Bikes is his thing.",
+  "detailedDescription": "He's a generous and friendly chap. Bikes is his thing. Nobody seems to know his last name be he doesn't seem to mind.",
   "attributes": {
     "template": "creature-male-l4",
     "canTravel": false,
     "traveller": false,
     "repairSkills": [
       "bike"
-    ]
+    ],
+    "imageName": "russell.jpg"
   },
   "synonyms": [
     "bike guy",
