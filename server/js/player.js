@@ -4462,6 +4462,14 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
 
         self.go = function(verb, direct, map) {//(aDirection, aLocation) {
             if (tools.stringIsEmpty(verb) || verb == direct || verb == direct.substring(0, 1)) {verb = "go";};
+    
+            //trim direct down to first letter then rebuild "direct"...
+            var direction = direct.substring(0, 1);
+            var directionIndex = tools.directions.indexOf(direction) + 1;
+            direct = tools.directions[directionIndex];
+            if (directionIndex < 8) {
+                direct = tools.initCap(direct);
+            };
 
             var vehicleType;
             if (_riding) {
@@ -4508,8 +4516,6 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                 };
             };
 
-            //trim direct down to first letter...
-            var direction = direct.substring(0, 1);
             if (direction == 'b') {
                 //player wants to go "back"
                 direction = self.getReturnDirection();
