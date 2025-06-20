@@ -394,7 +394,7 @@ module.exports.Artefact = function Artefact(name, description, detailedDescripti
             };
 
             if (type == "tool") {
-                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire","dig"];
+                var validToolSubTypes = ["","buff","sharpen","assemble","sharp","clean","fire","dig","hook"];
                 if (validToolSubTypes.indexOf(subType) == -1) { throw "'" + subType + "' is not a valid "+type+" subtype."; };
                 //console.debug(_name+' subtype validated: '+subType);
             };

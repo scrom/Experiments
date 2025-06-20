@@ -641,6 +641,7 @@ exports.Action = function Action(player, map, fileManager) {
                         };
                     case 'attach':
                     case 'hang':
+                    case 'hook':
                     case 'stick':
                         //I'd like to do something smarter with sticking items to others - they're on the surface, not in them.
                     case 'combine':
