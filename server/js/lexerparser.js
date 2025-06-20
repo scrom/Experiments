@@ -1,0 +1,120 @@
+"use strict";
+//action object - manager user actions and pack/unpack JSON equivalents
+module.exports.LexerParser = function LexerParser() {
+    try{
+        const tools = require('./tools.js');
+        const customAction = require('./customaction.js');
+        const fileManagerModule = require('./filemanager.js');
+	    const self = this; //closure so we don't lose this reference in callbacks
+        var dataFolder = '../../data/'; 
+        const fm = new fileManagerModule.FileManager(true, dataFolder);
+
+        //grammar dictionary:
+        const unhandledWordsAndConjunctions = ['and', 'then', 'than', 'or', 'but', 'because', 'coz','cause','cuz', 'therefore', 'while', 'whilst', 'thing','oh'];
+        const yesWords = ['y','yes','yup','yeh','yep','aye','yeah', 'yarp','ok','okay','okey','kay','sure','absolutely', 'certainly', 'definitely','exactly', 'indeed', 'right','totally', 'totes', 'true','truth','great','excellent','marvelous','fantastic','affirmed', 'confirmed','confirmation','affirmative'];
+        const politeWords = ['please', 'thankyou', "thanks", 'tx', 'thx','thanx','fanks','fanx',"cheers", "sorry", "apologies"];
+        const salutations = ["hello", "hi", "hey", "hiya", "ahoy", "good morning", "good afternoon", "good evening"];
+        const goodbyes  =["bye", "good bye", "goodbye","seeya", "later","laters", "goodnight", "good night"]
+        const noWords = ['n','no', 'nay', 'nope', 'narp', 'reject','rejected', 'rejection','deny','denied','refuse','refused', 'refusal','negative', 'negatory']
+        const stopWords = ["the", "some", "a", "an", "again", "are", "any", "there"];
+        const commonTypos = ["fomr", "drpo", "destry", "definately"]
+        const numerals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        const firstPersonPronouns = ['i', 'me', 'my', 'mine', 'myself', 'we', 'us', 'our', 'ours', 'ourselves'];
+        const secondPersonPronouns = ['your', 'yours', 'yourself', 'yourselves'];
+        const thirdPersonPronouns = ['he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves'];
+        const reflexivePronouns = ['myself', 'yourself', 'himself', 'herself', 'itself', 'themself', 'themselves'];
+        const indefinitePronouns = ['someone', 'anyone', 'everybody', 'everyone', 'nobody','noone', 'no one'];
+        /*splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 
+         'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 
+         'fomr', 'for', 'at', 'off and on', 'on and off', 'on', 'off', 'off of', 'as', 'in', 'out', 'is', 'are', 'my', 
+         'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over',]; //the words we'll try to split on.
+         */
+        const adverbs = [
+            'angrily', 'awkwardly', 'boldly', 'bravely', 'brightly', 'briefly', 'carefully', 'cautiously',
+            'closely', 'confidently', 'gently', 'gracefully', 'happily', 'honorably', 'loudly', 'losely',
+            'meticulously', 'noisily', 'precisely', 'quietly', 'quietly', 'sadly', 'searchingly', 'silently',
+            'silently', 'slowly', 'softly', 'strategically', 'tactically', 'thoroughly', 'tightly', 'quickly'
+        ]; //not split words but we need to trim these out and *occasionally* handle them.
+        const questions = ['who','what','why','where','when','how','which','whose'];
+        const moreQuestions = ['do you', 'have you', 'do', 'have', "pardon", "sorry"];
+        const modalVerbs = ['can', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would'];
+        var singleWordActions = ['cheat','help','map','health','stats','stat','status','score','points','tasks','missions','quests','visits','inv', 'inventory',"again", "g","rest", "sit", "zz", "sleep", "nap", "zzz", "wait", "z"]
+        const verbs = fm.readFile("verb-lexicon.json");
+            // 'squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
+        const locationPrepositions = [
+            'in', 'into', 'inside', //container or not has different context
+            'onto', 'on to', 'on top of', 'on', // hook verb or object optional
+            'off of', 'off', // hook verb or object optional
+            'above', 'over', // not the same as on top of - need to hang on a "hook"
+            'under', 'underneath',
+            'below', 'beneath', // same as under unless hanging
+            'behind', // if both object and subject are movable
+            'between', 'beside', 'near',
+            'across', 'in front of', 'through'
+        ];
+
+        const givingPrepositions = ['to', 'for', 'with', 'onto', 'on', 'on to', 'toward', 'towards'];
+        const receivingPrepositions = ['from', 'by', 'at', 'in', 'out', 'out of', 'with',];
+        var sharedPrepositions = ['by', 'at', 'in', 'into', 'in to'];
+
+        //action string components
+        var _inputString = "";
+        var _lastInputString = "";
+        var _analysedInput = {yesNo: "", question: "", firstVerb: "", presentParticipleVerb: "", subject: "", adverb: "", preposition:"", object:""}
+        var _verb = "";
+        var _direction = "";
+        var _splitWord = "";
+        var _adverb = "";
+        var _preposition = ""
+        var _nouns = []; //objects and creatures (include their pronouns and adjectives for the purpose of this lexer)
+        var _subject = ""; //Subject: - noun that performs the verb's action. For example, in the sentence "The dog barked," "dog" is the subject. 
+        var _object = ""; //Object: - noun that receives the action of the verb. In the sentence "The dog chased the ball," "ball" is the object because it is being acted upon by the verb "chased". 
+
+        const sanitiseString = function(aString) {
+            return aString.toLowerCase().substring(0,255).replace(/[^a-z0-9 +-/%]+/g,""); //same as used for client but includes "/" and "%" as well
+        };
+
+
+        self.normaliseVerb = function (word) {
+            word = sanitiseString(word);
+            for (const [canonical, { aliases }] of Object.entries(verbs)) {
+                if (word === canonical || aliases.includes(word)) {
+                    return canonical;
+                };
+            };
+            return null;
+        };
+
+        self.parseInput = function(input) {
+            input = sanitiseString(input);
+            if (_inputString) {
+                //remember last input
+                _lastInputString = _inputString;
+            };
+            _inputString = input; //store for later
+
+            const tokens = input.split(/\s+/)
+            const verb = self.normaliseVerb(tokens[0]);
+            if (!verb) {
+                return { error: `Unknown verb: "${tokens[0]}"` };
+            } else {
+                _verb = verb;
+                _analysedInput.verb = verb;
+            };
+
+            const rest = tokens.slice(1).join(' ');
+            return {
+                action: verb,
+                category: verbs[verb].category,
+                target: rest || null
+            };
+
+        };
+
+
+    }
+    catch(err) {
+	    console.error('Unable to create Lexer object: '+err);
+        throw err;
+    };	    
+};

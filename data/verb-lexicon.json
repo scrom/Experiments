@@ -1,0 +1,806 @@
+{
+  "try": {
+    "category": "system",
+    "aliases": ["attempt"]
+  },
+  "examine": {
+    "category": "examination",
+    "aliases": [
+      "x",
+      "ex",
+      "exam",
+      "examin",
+      "examien",
+      "check", 
+      "browse",
+      "peer",
+      "look",
+      "lookat"
+    ]
+  },
+  "search": {
+    "category": "examination",
+    "aliases": ["inspect", "investigate"]
+  },
+  "go": {
+    "category": "movement",
+    "aliases": []
+  },
+  "walk": {
+    "category": "movement",
+    "aliases": []
+  },
+  "run": {
+    "category": "movement",
+    "aliases": []
+  },
+  "dash": {
+    "category": "movement",
+    "aliases": []
+  },
+  "crawl": {
+    "category": "movement",
+    "aliases": []
+  },
+  "climb": {
+    "category": "movement",
+    "aliases": []
+  },
+  "descend": {
+    "category": "movement",
+    "aliases": ["down"]
+  },
+  "sneak": {
+    "category": "movement",
+    "aliases": []
+  },
+  "slink": {
+    "category": "movement",
+    "aliases": []
+  },
+  "clamber": {
+    "category": "movement",
+    "aliases": []
+  },
+  "jog": {
+    "category": "movement",
+    "aliases": []
+  },
+  "hike": {
+    "category": "movement",
+    "aliases": []
+  },
+  "head": {
+    "category": "movement",
+    "aliases": []
+  },
+  "sprint": {
+    "category": "movement",
+    "aliases": []
+  },
+  "explore": {
+    "category": "movement",
+    "aliases": []
+  },
+  "enter": {
+    "category": "movement",
+    "aliases": ["in"]
+  },
+  "leave": {
+    "category": "movement",
+    "aliases": ["depart", "out", "exit"]
+  },
+  "teleport": {
+    "category": "magic",
+    "aliases": ["fast travel"]
+  },
+  "travel": {
+    "category": "movement",
+    "aliases": []
+  },
+  "return": {
+    "category": "movement",
+    "aliases": []
+  },
+  "jump": {
+    "category": "movement",
+    "aliases": []
+  },
+  "mount": {
+    "category": "movement",
+    "aliases": []
+  },
+  "dismount": {
+    "category": "movement",
+    "aliases": []
+  },
+  "board": {
+    "category": "movement",
+    "aliases": []
+  },
+  "ride": {
+    "category": "movement",
+    "aliases": []
+  },
+  "fly": {
+    "category": "movement",
+    "aliases": []
+  },
+  "drive": {
+    "category": "movement",
+    "aliases": []
+  },
+  "sail": {
+    "category": "movement",
+    "aliases": []
+  },
+  "push": {
+    "category": "interaction_physical",
+    "aliases": ["press"]
+  },
+  "pull": {
+    "category": "interaction_physical",
+    "aliases": []
+  },
+  "shove": {
+    "category": "interaction_physical",
+    "aliases": []
+  },
+  "tap": {
+    "category": "interaction_physical",
+    "aliases": ["poke", "prod", "nudge", "jostle"]
+  },
+  "touch": {
+    "category": "interaction_physical",
+    "aliases": ["feel"]
+  },
+  "pat": {
+    "category": "interaction_physical",
+    "aliases": []
+  },
+  "stroke": {
+    "category": "interaction_physical",
+    "aliases": ["pet", "caress"]
+  },
+  "rub": {
+    "category": "interaction_physical",
+    "aliases": []
+  },
+  "hug": {
+    "category": "interaction_physical",
+    "aliases": ["embrace", "cuddle"]
+  },
+  "snuggle": {
+    "category": "interaction_physical",
+    "aliases": ["nuzzle"]
+  },
+  "squeeze": {
+    "category": "interaction_physical",
+    "aliases": []
+  },
+  "use": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "put": {
+    "category": "item_use",
+    "aliases": ["place", "position", "install", "insert"]
+  },
+  "attach": {
+    "category": "item_use",
+    "aliases": ["stick"]
+  },
+  "hang": {
+    "category": "item_use",
+    "aliases": ["hook"]
+  },
+  "combine": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "combine with": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "join": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "add": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "mix": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "pour": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "fill": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "empty": {
+    "category": "item_use",
+    "aliases": []
+  },
+  "drop": {
+    "category": "item_use",
+    "aliases": [
+      "drpo", "discard", "dump"
+    ]
+  },
+  "give": {
+    "category": "item_use",
+    "aliases": ["present", "hand", "offer", "feed"]
+  },
+
+  "throw": {
+    "category": "item_use",
+    "aliases": ["chuck", "hurl","yeet","lob"]
+  },
+  "attack": {
+    "category": "combat",
+    "aliases": ["hit", "hurt"]
+  },
+  "stab": {
+    "category": "combat",
+    "aliases": ["slash", "cut", "slice"]
+  },
+  "smash": {
+    "category": "combat",
+    "aliases": ["bash", "beat", "whack"]
+  },
+  "whip": {
+    "category": "combat",
+    "aliases": []
+  },
+  "choke": {
+    "category": "combat",
+    "aliases": ["strangle","garrotte", "garotte"]
+  },
+  "fire": {
+    "category": "combat",
+    "aliases": []
+  },
+  "blast": {
+    "category": "combat",
+    "aliases": []
+  },
+  "zap": {
+    "category": "combat",
+    "aliases": []
+  },
+  "shoot": {
+    "category": "combat",
+    "aliases": []
+  },
+  "kick": {
+    "category": "combat",
+    "aliases": []
+  },
+  "punch": {
+    "category": "combat",
+    "aliases": ["thump", "thwack", "thwok", "thwomp", "sock"]
+  },
+  "slap": {
+    "category": "combat",
+    "aliases": ["smack"]
+  },
+  "kill": {
+    "category": "combat",
+    "aliases": []
+  },
+  "nerf": {
+    "category": "combat",
+    "aliases": []
+  },
+  "cast": {
+    "category": "magic",
+    "aliases": ["channel"]
+  },
+  "summon": {
+    "category": "magic",
+    "aliases": []
+  },
+  "dispel": {
+    "category": "magic",
+    "aliases": []
+  },
+  "enchant": {
+    "category": "magic",
+    "aliases": ["imbue"]
+  },
+  "banish": {
+    "category": "magic",
+    "aliases": []
+  },
+  "blink": {
+    "category": "magic",
+    "aliases": []
+  },
+  "vanish": {
+    "category": "magic",
+    "aliases": []
+  },
+  "talk": {
+    "category": "dialogue",
+    "aliases": ["speak","chat"]
+  },
+  "say": {
+    "category": "dialogue",
+    "aliases": ["tell"]
+  },
+  "ask": {
+    "category": "dialogue",
+    "aliases": ["request", "beg"]
+  },
+  "reply": {
+    "category": "dialogue",
+    "aliases": []
+  },
+  "shout": {
+    "category": "dialogue",
+    "aliases": ["scream","howl", "yell"]
+  },
+  "sing": {
+    "category": "dialogue",
+    "aliases": []
+  },
+  "squeak": {
+    "category": "dialogue",
+    "aliases": ["squeal"]
+  },
+  "greet": {
+    "category": "dialogue",
+    "aliases": []
+  },
+  "flatter": {
+    "category": "dialogue",
+    "aliases": []
+  },
+  "persuade": {
+    "category": "dialogue",
+    "aliases": ["bribe","intimidate","threaten","negotiate"]
+  },
+  "get": {
+    "category": "inventory",
+    "aliases": ["take", "grab","pick","collect"]
+  },
+  "remove": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "steal": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "mug": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "borrow": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "equip": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "unequip": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "wear": {
+    "category": "inventory",
+    "aliases": ["don"]
+  },
+  "doff": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "rename": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "label": {
+    "category": "inventory",
+    "aliases": ["mark"]
+  },
+  "split": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "craft": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "uncraft": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "smelt": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "forge": {
+    "category": "inventory",
+    "aliases": []
+  },
+  "build": {
+    "category": "building",
+    "aliases": ["construct"]
+  },
+  "repair": {
+    "category": "building",
+    "aliases": ["mend","fix"]
+  },
+  "reinforce": {
+    "category": "building",
+    "aliases": []
+  },
+  "fortify": {
+    "category": "building",
+    "aliases": []
+  },
+  "smell": {
+    "category": "sensory",
+    "aliases": ["sniff"]
+  },
+  "listen": {
+    "category": "sensory",
+    "aliases": ["hear"]
+  },
+  "watch": {
+    "category": "sensory",
+    "aliases": ["observe","see"]
+  },
+  "taste": {
+    "category": "sensory",
+    "aliases": ["lick"]
+  },
+  "eat": {
+    "category": "food_drink",
+    "aliases": ["bite","chomp", "chew", "gulp","swallow", "devour", "consume", "feast","nibble", "gobble","munch","chomp", "snack", "gorge","wolf","snarf"]
+  },
+  "drink": {
+    "category": "food_drink",
+    "aliases": ["quaff", "neck"]
+  },
+  "think": {
+    "category": "thinking",
+    "aliases": []
+  },
+  "imagine": {
+    "category": "thinking",
+    "aliases": ["dream", "visualize", "visualise","conceptualise","envision","picture","meditate","focus","concentrate"]
+  },
+  "plan": {
+    "category": "thinking",
+    "aliases": []
+  },
+  "note": {
+    "category": "thinking",
+    "aliases": []
+  },
+  "decide": {
+    "category": "thinking",
+    "aliases": []
+  },
+  "remember": {
+    "category": "thinking",
+    "aliases": ["recall"]
+  },
+  "forget": {
+    "category": "thinking",
+    "aliases": []
+  },
+  "save": {
+    "category": "system",
+    "aliases": []
+  },
+  "load": {
+    "category": "system",
+    "aliases": []
+  },
+  "restart": {
+    "category": "system",
+    "aliases": []
+  },
+  "quit": {
+    "category": "system",
+    "aliases": []
+  },
+  "pause": {
+    "category": "tech",
+    "aliases": []
+  },
+  "resume": {
+    "category": "tech",
+    "aliases": []
+  },
+  "debug": {
+    "category": "tech",
+    "aliases": []
+  },
+  "trace": {
+    "category": "tech",
+    "aliases": []
+  },
+  "print": {
+    "category": "tech",
+    "aliases": []
+  },
+  "copy": {
+    "category": "tech",
+    "aliases": []
+  },
+  "delete": {
+    "category": "tech",
+    "aliases": []
+  },
+  "type": {
+    "category": "tech",
+    "aliases": []
+  },
+  "input": {
+    "category": "tech",
+    "aliases": []
+  },
+  "log": {
+    "category": "tech",
+    "aliases": []
+  },
+  "send": {
+    "category": "tech",
+    "aliases": []
+  },
+  "call": {
+    "category": "tech",
+    "aliases": []
+  },
+  "email": {
+    "category": "tech",
+    "aliases": []
+  },
+  "mail": {
+    "category": "tech",
+    "aliases": []
+  },
+  "phone": {
+    "category": "tech",
+    "aliases": []
+  },
+  "scroll": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "zoom": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "hover": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "click": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "select": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "cancel": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "confirm": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "choose": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "toggle": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "open": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "close": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "shut": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "unlock": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "lock": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "seal": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "unfurl": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "furl": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "lower": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "fold": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "roll": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "unpick": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "tie": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "untie": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "tighten": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "pry": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "crack": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "break": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "destroy": {
+    "category": "manipulation",
+    "aliases": [
+      "destry"
+    ]
+  },
+  "force": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "damage": {
+    "category": "manipulation",
+    "aliases": []
+  },
+  "broadcast": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "announce": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "alert": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "report": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "signal": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "respond": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "acknowledge": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "ignore": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "accept": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "reject": {
+    "category": "communication_meta",
+    "aliases": []
+  },
+  "cheat": {
+    "category": "system",
+    "aliases": []
+  },
+  "help": {
+    "category": "system",
+    "aliases": []
+  },
+  "map": {
+    "category": "ui_navigation",
+    "aliases": []
+  },
+  "health": {
+    "category": "system",
+    "aliases": []
+  },
+  "status": {
+    "category": "system",
+    "aliases": ["stat", "stats"]
+  },
+  "score": {
+    "category": "system",
+    "aliases": []
+  },
+  "points": {
+    "category": "system",
+    "aliases": []
+  },
+  "tasks": {
+    "category": "system",
+    "aliases": ["missions", "quests"]
+  },
+  "visits": {
+    "category": "system",
+    "aliases": []
+  },
+  "inventory": {
+    "category": "inventory",
+    "aliases": ["inv"]
+  },
+  "again": {
+    "category": "system",
+    "aliases": ["g"]
+  },
+  "rest": {
+    "category": "resting",
+    "aliases": ["z"]
+  },
+  "sit": {
+    "category": "resting",
+    "aliases": []
+  },
+  "zz": {
+    "category": "resting",
+    "aliases": []
+  },
+  "sleep": {
+    "category": "resting",
+    "aliases": ["zzz"]
+  },
+  "nap": {
+    "category": "resting",
+    "aliases": ["zz"]
+  },
+  "wait": {
+    "category": "resting",
+    "aliases": []
+  }
+}

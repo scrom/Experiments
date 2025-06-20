@@ -1,6 +1,6 @@
 ﻿"use strict";
 //FileManager object - manage JSON, game data and image files
-module.exports.FileManager = function FileManager(useFiles, usergamePath, imagePath) {
+module.exports.FileManager = function FileManager(useFiles, dataFilePath, imagePath) {
     const  _objectName = "filemanager";
     try{
 	    var self = this; //closure so we don't lose this reference in callbacks
@@ -12,7 +12,7 @@ module.exports.FileManager = function FileManager(useFiles, usergamePath, imageP
         const path = require('path');
         const encoding = "utf8";
 
-        var filePath = path.resolve(path.join(__dirname, usergamePath || "../../data/usergames/"));
+        var filePath = path.resolve(path.join(__dirname, dataFilePath || "../../data/usergames/"));
         var imagePath = path.resolve(path.join(__dirname, imagePath || "../../data/images/"));
 
         console.info("FileManager: filePath = "+filePath);
