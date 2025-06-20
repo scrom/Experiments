@@ -7155,7 +7155,7 @@
                 "object": "artefact",
                 "name": "pipe",
                 "description": "big pipes",
-                "detailedDescription": "They're painted bright yellow and blue.<br>They look pretty much indestructible (which I'm sure you'll agree is a good thing).",
+                "detailedDescription": "They're painted bright yellow and blue.<br>They're a little tatty and rusty but despite this they look pretty much indestructible (which I'm sure you'll agree is a good thing).",
                 "attributes": {
                     "weight": 250,
                     "type": "scenery",
