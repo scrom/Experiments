@@ -9,7 +9,8 @@
     "attackStrength": 5,
     "type": "book",
     "canCollect": true,
-    "canDrawOn": true
+    "canDrawOn": true,
+    "imageName": "solid.jpg"
   },
   "synonyms": [
     "solid article",

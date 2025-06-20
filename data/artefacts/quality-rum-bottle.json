@@ -1,6 +1,9 @@
 {
   "object": "artefact",
   "template": "rum-bottle",
+  "attributes": {
+    "imageName": "rum.jpg"
+  },
   "inventory": [
     {
       "file": "quality-rum"

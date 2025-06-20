@@ -18,7 +18,8 @@
     "isEdible": true,
     "nutrition": -3,
     "smell": "It smells like a mixture of farmyards and paint stripper. Maybe that's why this stuff's sometimes called agricultural rum.",
-    "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
+    "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting",
+    "imageName": "cheaprum.jpg"
   },
   "synonyms": [
     "rum",

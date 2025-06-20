@@ -1,0 +1,10 @@
+    {
+      "object": "artefact",
+      "template": "toilet",
+      "detailedDescription": "It looks like the maintenance team have been working on this one.",
+      "attributes": {
+        "defaultResult": "You relieve yourself and flush the toilet...<br>Oh no, it's blocked!<br><br>The water slowly fills up to the brim of the bowl and stops just before the surface tension of the water gives way to disaster.<br>That was close!<br><br>There <b>was</b> a good reason why this cubicle was out of order.<br>As you recover your wits, the water slowly subsides back to normal levels.<br>When you get a chance, you might want to drop an anonymous maintenance request to the Facilities Team to sort your mess out.",
+        "imageName": "brokentoilet.jpg",
+        "smell": "I'll leave it up to your imagination."
+      }
+    }

@@ -6,7 +6,8 @@
   "attributes": {
     "weight": 120,
     "isBreakable": true,
-    "canDrawOn": true
+    "canDrawOn": true,
+    "imageName": "desk.jpg"
   },
   "linkedexits": [
     {

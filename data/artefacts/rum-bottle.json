@@ -14,7 +14,8 @@
     "holdsLiquid": true,
     "canCollect": true,
     "isBreakable": true,
-    "affinityModifier": 0
+    "affinityModifier": 0,
+    "imageName": "cheaprum.jpg"
 },
 "synonyms": [
     "bottle",

@@ -11,7 +11,8 @@
     "canCollect": true,
     "isBreakable": true,
     "affinityModifier": 5,
-    "canDrawOn": true
+    "canDrawOn": true,
+    "imageName": "sketchbook.jpg"
   },
   "synonyms": [
     "book",

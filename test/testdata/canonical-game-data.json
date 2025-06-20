@@ -2411,6 +2411,7 @@
                 "attributes": {
                     "weight": 120,
                     "isBreakable": true,
+                    "imageName": "desk.jpg",
                     "canDrawOn": true
                 },
                 "linkedexits": [
@@ -5816,7 +5817,7 @@
                     "canCollect": true,
                     "isBreakable": true,
                     "affinityModifier": 0,
-                    "imageName": "rum.jpg"
+                    "imageName": "cheaprum.jpg"
                 },
                 "synonyms": [
                     "bottle",
@@ -5843,6 +5844,7 @@
                             "plural": true,
                             "isEdible": true,
                             "nutrition": -3,
+                            "imageName": "cheaprum.jpg",
                             "smell": "It smells like a mixture of farmyards and paint stripper. Maybe that's why this stuff's sometimes called agricultural rum.",
                             "taste": "As you bring it up to your mouth the smell overpowers your senses.<br>There's every chance it's just fine but this definitely isn't rum designed for tasting"
                         },
@@ -6029,6 +6031,7 @@
                     "attackStrength": 5,
                     "type": "book",
                     "canCollect": true,
+                    "imageName": "owasp.jpg",
                     "canDrawOn": true
                 },
                 "synonyms": [
@@ -7079,6 +7082,7 @@
                     "attackStrength": 5,
                     "type": "book",
                     "canCollect": true,
+                    "imageName": "solid.jpg",
                     "canDrawOn": true
                 },
                 "synonyms": [
@@ -12102,7 +12106,7 @@
                                                                 "type": "scenery",
                                                                 "subType": "intangible",
                                                                 "plural": true,
-                                                                "imageName": "tryretracks.jpg"
+                                                                "imageName": "tyretracks.jpg"
                                                             },
                                                             "synonyms": [
                                                                 "tyre",
@@ -15360,6 +15364,7 @@
                             "canCollect": true,
                             "isBreakable": true,
                             "affinityModifier": 5,
+                            "imageName": "sketchbook.jpg",
                             "canDrawOn": true
                         },
                         "synonyms": [
@@ -19055,6 +19060,7 @@
                             "plural": true,
                             "isEdible": true,
                             "nutrition": 1,
+                            "imageName": "rum.jpg",
                             "smell": "This is definitely the good stuff. Admittedly it's not barrel-aged but it's a great smelling spiced rum with a strong scent of vanilla and a hint of lime, cinammon and nutmeg",
                             "taste": "You sip gently at the rum. It's deicious.<br>You never really envision spiced rum as a neat sipping drink but this is worth savouring."
                         },

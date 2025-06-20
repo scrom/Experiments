@@ -5,7 +5,7 @@
     "detailedDescription": "They're too scuffed to see any clear tread marks but they're wide enough to be consistent with a medium-sized goods vehicle.",
     "attributes": {
         "type": "scenery",
-        "imageName": "tryretracks.jpg",
+        "imageName": "tyretracks.jpg",
         "subType": "intangible",
         "plural": true
     },
