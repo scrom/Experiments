@@ -119,6 +119,48 @@ describe('Contagion', () => {
         expect(actualResult).toBe(expectedResult);
     });
 
+    test('issue #617 attempting to collect venom without a syringe should not use it up', () => {
+        const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+        let m0 = mb.buildMap();
+        var venomData = { file: "venom" };
+        var venom = mb.buildArtefact(venomData);
+        var syringeData = { file: "syringe" };
+        var syringe = mb.buildArtefact(syringeData);
+        var mugData = { file: "cup" };
+        var mug = mb.buildArtefact(mugData);
+        let l0 = new location.Location('home', 'home', 'a home location');
+        m0.addLocation(l0);
+        let p0 = new player.Player({"username":"tester"}, m0, mb);
+        p0.setStartLocation(l0);
+        p0.setLocation(l0);
+        l0.addObject(venom);
+        console.debug(p0.get('get', venom.getName()));
+        //p0.put("collect", "venom", "into", "mug");
+        l0.addObject(mug);
+        console.debug("Get - no container - Remaining Venom: "+venom.chargesRemaining());
+        console.debug(p0.get("get", "venom"));
+        console.debug("Get - with mug in location - Remaining Venom: "+venom.chargesRemaining());
+        console.debug(p0.put("pour", "venom", "into", "mug"));
+        console.debug("Put/Pour - Remaining Venom: "+venom.chargesRemaining());
+        console.debug(p0.examine("examine", "mug"));
+
+        console.debug(p0.position("put", "venom", "mug", "into"));
+        console.debug("Position/Put - Remaining Venom: "+venom.chargesRemaining());
+        console.debug(p0.examine("examine", "mug"));
+
+        console.debug(p0.take("collect", "venom", "mug"));
+        console.debug("Collect - Remaining Venom: "+venom.chargesRemaining());
+        console.debug(p0.examine("examine", "mug"));
+
+        l0.addObject(syringe);
+
+        var expectedResult = "xxx";
+        var actualResult = p0.get('get', venom.getName());
+        console.debug("Expected: " + expectedResult);
+        console.debug("Actual  : " + actualResult);
+        expect(actualResult).toBe(expectedResult);
+    });
+
     test('injecting a vaccine provides antibodies', () => {
         const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
         let m0 = new map.Map();
