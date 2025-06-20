@@ -143,9 +143,5 @@ test('test we calculate the right number of *Fail* attributes for "complex" miss
 
 /*add tests for:
 initial, fail, and current attributes against each of the following (as well as potentially testing those inner functions on their own)
-checkTime
-checkFailedConversation
-checkPassedConversation
-
-
+checkTime, checkAllOf, checkAnyOf, checkNoneOf, checkContains, checkAntibodies, checkContagion, criticalDeathFail, checkAttribute (singular), checkAttributes (plural)
 */
