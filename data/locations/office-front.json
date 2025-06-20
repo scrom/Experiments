@@ -2,7 +2,7 @@
   "object": "location",
   "name": "office-front",
   "displayName": "Office front entrance",
-  "description": "You're standing outside the front of the Porta Rossa offices. The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>You can find your way into the office to the South whilst out here there are footpaths and car parks to both the East and West.",
+  "description": "You're standing outside the front of the Porta Rossa offices.<br>The sun is shining and the business park security and maintenance crews are all busy doing their regular rounds.<br>South leads into the main office building, while outside there are footpaths and car parks to both the east and west.",
   "attributes": {
     "type": "outdoor",
     "imageName": "office-front-entrance.jpg",
