@@ -87,6 +87,27 @@ test('"health" verb for creature', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+test('"heal" verb for self', () => {
+    const objectJSON  = fm.readFile("creatures/cat.json"); 
+    const object = mb.buildCreature(objectJSON);
+    l0.addObject(object);
+    const input = "heal self";
+    const expectedResult = "You don't need healing at the moment.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('"heal" verb for creature', () => {
+    const objectJSON  = fm.readFile("creatures/cat.json"); 
+    const object = mb.buildCreature(objectJSON);
+    l0.addObject(object);
+    const input = "heal cat";
+    const expectedResult = "You don't have anything to heal with.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
 test('can call engine with basic player action', () => {
     const input = "wait";
     const expectedResult = "Time passes... ...slowly.<br>";

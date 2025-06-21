@@ -38,6 +38,9 @@ module.exports= {
         health: (verb, player, map, po) => {
           return player.health(po.subject);
         },
+        heal: (verb, player, map, po) => {
+          return player.healCharacter(po.subject);
+        },
         examine: (verb, player, map, po) =>{
           //self.examine = function(verb, artefactName, containerName, map) {
           return player.examine(verb, po.subject, po.object, map);

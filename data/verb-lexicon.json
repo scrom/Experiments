@@ -138,6 +138,10 @@
     "category": "movement",
     "aliases": []
   },
+  "heal": {
+    "category": "interaction_physical",
+    "aliases": ["cure", "restore"]
+  },
   "push": {
     "category": "interaction_physical",
     "aliases": ["press"]
