@@ -32,6 +32,12 @@ module.exports= {
                   "<br>You can save your progress by entering <i>'save'</i>.<br>You can return to a previously saved point from <i>this</i> session by simply typing <i>restore</i><br>You can load a previously saved game by entering '<i>load filename-x</i>' (where <i>filename-x</i> is the name of your previously saved game file.)<br>" +
                   "If you've really had enough of playing, you can enter <i>quit</i> to exit the game (without saving).<br>";
         },
+        map: () => {
+          return "Oh dear, are you lost? This is a text adventure you know.<br>Time to get some graph paper, a pencil and start drawing!";
+        },
+        health: (verb, player, map, po) => {
+          return player.health(po.subject);
+        },
         examine: (verb, player, map, po) =>{
           //self.examine = function(verb, artefactName, containerName, map) {
           return player.examine(verb, po.subject, po.object, map);

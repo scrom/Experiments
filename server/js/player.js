@@ -5557,7 +5557,10 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return creature.health();
         };
 
-        self.health = function() {
+        self.health = function(creatureName) {
+            if (creatureName) {
+                return self.checkCreatureHealth(creatureName);
+            }
             var resultString = "";
             var healthPercent = self.healthPercent();
 

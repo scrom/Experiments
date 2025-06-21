@@ -737,7 +737,7 @@
   },
   "health": {
     "category": "system",
-    "aliases": []
+    "aliases": ["triage"]
   },
   "status": {
     "category": "system",

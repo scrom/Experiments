@@ -55,13 +55,37 @@ test('can call engine with simple action', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-test('"cheat" verb"', () => {
+test('"cheat" verb', () => {
     const input = "cheat";
     const expectedResult = "Hmmm. I'm sure I heard about some cheat codes somewhere";
     const actualResult = engine(input).substring(0,55)
     expect(actualResult).toBe(expectedResult);
 });
 
+test('"map" verb', () => {
+    const input = "map";
+    const expectedResult = "Oh dear, are you lost?";
+    const actualResult = engine(input).substring(0,22)
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('"health" verb for player', () => {
+    const input = "health";
+    const expectedResult = "You're generally the picture of health.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('"health" verb for creature', () => {
+    const objectJSON  = fm.readFile("creatures/cat.json"); 
+    const object = mb.buildCreature(objectJSON);
+    l0.addObject(object);
+    const input = "triage cat";
+    const expectedResult = "It's generally the picture of health.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
 
 test('can call engine with basic player action', () => {
     const input = "wait";
