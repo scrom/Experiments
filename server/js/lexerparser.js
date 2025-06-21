@@ -1,4 +1,7 @@
 "use strict";
+
+const { RootNodesUnavailableError } = require('redis');
+
 //action object - manager user actions and pack/unpack JSON equivalents
 module.exports.LexerParser = function LexerParser() {
     try{
@@ -16,7 +19,7 @@ module.exports.LexerParser = function LexerParser() {
         const salutations = ["hello", "hi", "hey", "hiya", "ahoy", "good morning", "good afternoon", "good evening"];
         const goodbyes  =["bye", "good bye", "goodbye","seeya", "later","laters", "goodnight", "good night"]
         const noWords = ['n','no', 'nay', 'nope', 'narp', 'reject','rejected', 'rejection','deny','denied','refuse','refused', 'refusal','negative', 'negatory']
-        const stopWords = ["the", "some", "a", "an", "again", "are", "any", "there"];
+        const stopWords = ["the", "some", "a", "an", "again", "are", "any", "there", "to", "of", "is", "are"];
         const commonTypos = ["fomr", "drpo", "destry", "definately"]
         const numerals = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
         const firstPersonPronouns = ['i', 'me', 'my', 'mine', 'myself', 'we', 'us', 'our', 'ours', 'ourselves'];
@@ -38,7 +41,7 @@ module.exports.LexerParser = function LexerParser() {
         const questions = ['who','what','why','where','when','how','which','whose'];
         const moreQuestions = ['do you', 'have you', 'do', 'have', "pardon", "sorry"];
         const modalVerbs = ['can', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would'];
-        var singleWordActions = ['cheat','help','map','health','stats','stat','status','score','points','tasks','missions','quests','visits','inv', 'inventory',"again", "g","rest", "sit", "zz", "sleep", "nap", "zzz", "wait", "z"]
+        const singleWordActions = ['cheat','help','map','health','stats','stat','status','score','points','tasks','missions','quests','visits','inv', 'inventory',"again", "g","rest", "sit", "zz", "sleep", "nap", "zzz", "wait", "z"]
         const verbs = fm.readFile("verb-lexicon.json");
             // 'squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
         const locationPrepositions = [
@@ -59,8 +62,6 @@ module.exports.LexerParser = function LexerParser() {
 
         //action string components
         var _inputString = "";
-        var _lastInputString = "";
-        var _analysedInput = {yesNo: "", question: "", firstVerb: "", presentParticipleVerb: "", subject: "", adverb: "", preposition:"", object:""}
         var _verb = "";
         var _direction = "";
         var _splitWord = "";
@@ -70,10 +71,12 @@ module.exports.LexerParser = function LexerParser() {
         var _subject = ""; //Subject: - noun that performs the verb's action. For example, in the sentence "The dog barked," "dog" is the subject. 
         var _object = ""; //Object: - noun that receives the action of the verb. In the sentence "The dog chased the ball," "ball" is the object because it is being acted upon by the verb "chased". 
 
+        //saved state:
+        var _lastInputString = "";
+
         const sanitiseString = function(aString) {
             return aString.toLowerCase().substring(0,255).replace(/[^a-z0-9 +-/%]+/g,""); //same as used for client but includes "/" and "%" as well
         };
-
 
         self.normaliseVerb = function (word) {
             word = sanitiseString(word);
@@ -83,6 +86,78 @@ module.exports.LexerParser = function LexerParser() {
                 };
             };
             return null;
+        };
+
+        self.extractAdverb = function(input) {
+            const tokens = input.split(/\s+/)
+            let rest = input;
+            for (let i=0;i<tokens.length;i++) {
+                if (adverbs.includes(tokens[i])) {
+                    let adverb = tokens[i];
+                    _adverb = adverb;
+                    rest = tokens.splice(i,1).join(' ');
+                    return {"adverb": adverb, "remainder": rest ||null}
+                    break;
+                };
+            };
+            return {"adverb": null, "remainder": rest}
+        };
+
+        self.extractObjectsAndPrepositions = function(input) {
+            let tokens = input.split(/\s+/)
+
+            //remove firstPersonPronouns
+            tokens = tokens.filter(function (value, index, array) {
+                return (!(firstPersonPronouns.includes(value)))
+            });
+
+            const rest = tokens.join(' ');
+
+            //extract and *split* on prepositions...
+            //sharedPrepositions
+            let sharedPreposition = tokens.filter(function (value, index, array) {
+                return (sharedPrepositions.includes(value))
+            });
+            //receivingPrepositions
+            let receivingPreposition = tokens.filter(function (value, index, array) {
+                return (receivingPrepositions.includes(value))
+            });
+            //givingPrepositions 
+            let givingPreposition = tokens.filter(function (value, index, array) {
+                return (givingPrepositions.includes(value))
+            });
+            //locationPrepositions
+            let locationPreposition = tokens.filter(function (value, index, array) {
+                return (locationPrepositions.includes(value))
+            });
+
+            const allFoundPrepositions = sharedPreposition.concat(receivingPreposition.concat(givingPreposition.concat(locationPreposition)));
+            //attempt to split "rest" using prepositions in order.
+            let objects = [rest];
+            let preposition = null;
+            for (p=0; p<allFoundPrepositions.length;p++) {
+                objects = rest.split(allFoundPrepositions[p]);
+                if (objects.length > 1) {
+                    preposition = allFoundPrepositions[p];
+                    break;
+                }
+            };
+            
+            for (o=0; o<objects.length;o++) {
+                objects[o] = objects[o].trim();              
+            };
+            return {objects, preposition, rest}
+   
+        };
+
+        self.removeStopWords = function(input) {
+            let tokens = input.split(/\s+/)
+            //remove stopWords
+            tokens = tokens.filter(function (value, index, array) {
+                return (!(stopWords.includes(value)))
+            });  
+
+            return tokens.join(' ');
         };
 
         self.parseInput = function(input) {
@@ -99,13 +174,28 @@ module.exports.LexerParser = function LexerParser() {
                 return { error: `Unknown verb: "${tokens[0]}"` };
             } else {
                 _verb = verb;
-                _analysedInput.verb = verb;
             };
 
-            const rest = tokens.slice(1).join(' ');
+            let rest = tokens.slice(1).join(' ');
+            rest = self.removeStopWords(rest);
+
+            const extractedAdverbObject = self.extractAdverb(rest)
+            const { adverb, remainder } = extractedAdverbObject;
+            rest = remainder;
+
+            const extractedObjectsAndPrepositions = self.extractObjectsAndPrepositions(rest);
+            const { objects, preposition, rem } = extractedObjectsAndPrepositions;
+            rest = rem;
+
             return {
-                action: verb,
                 category: verbs[verb].category,
+                originalVerb: tokens[0],
+                originalInput: input,
+                action: verb,
+                adverb: adverb,
+                subject: objects[0] || null,
+                object: objects[1] || null,
+                preposition: preposition || null,
                 target: rest || null
             };
 

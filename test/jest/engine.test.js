@@ -1,0 +1,100 @@
+"use strict";
+const player = require('../../server/js/player.js');
+const createEngine = require('../../server/js/engine.js');
+const map = require('../../server/js/map.js');
+const mapBuilder = require('../../server/js/mapbuilder.js');
+const location = require('../../server/js/location.js');
+const mb = new mapBuilder.MapBuilder('../../data/', 'root-locations');
+const fileManager = require('../../server/js/filemanager.js');
+const dataDir = '../../data/';
+const imageDir = '../../images/';
+const fm = new fileManager.FileManager(true, dataDir, imageDir);
+
+var engine;
+var p0;
+var l0;
+var m0;
+
+beforeEach(() =>
+{
+    const playerName = 'tester';
+    const playerAttributes = { "username": playerName};
+    m0 = new mb.buildMap();
+    p0 = new player.Player(playerAttributes, m0, mb);
+    engine = createEngine(p0, m0);
+    l0 = new location.Location('home', 'home', 'a home location');
+    m0.addLocation(l0);
+    l0.addExit("s", "home", "new");
+    p0.setStartLocation(l0);
+    p0.setLocation(l0);
+});
+
+afterEach(() =>
+{
+    playerName = null;
+    playerAttributes = null;
+    p0 = null;
+    l0 = null;
+    m0 = null;
+    engine = null;
+});
+
+test('can call engine with simple action', () => {
+    const input = "help";
+    const expectedResult = "<br> I accept basic commands to move e.g";
+    const actualResult = engine(input).substring(0,40)
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('can call engine with basic player action', () => {
+    const input = "wait";
+    const expectedResult = "Time passes... ...slowly.<br>";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('can call engine with player interacting with single object', () => {
+    const input = "examine floor";
+    const expectedResult = "You look down. Yep, that's the ground beneath your feet.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('can call engine with player interacting with 2 objects', () => {
+    const objectJSON  = fm.readFile("artefacts/bowl.json"); 
+    const object = mb.buildArtefact(objectJSON);
+    const subjectJSON = fm.readFile("artefacts/coco-pops.json");
+    const subject = mb.buildArtefact(subjectJSON);
+    l0.addObject(object);
+    l0.addObject(subject);
+    const input = "put pops in to bowl";
+    const expectedResult = "You put some coco pops in the bowl.<br>$imagebowl.jpg/$image";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('can call engine with player interacting with 2 objects with different preposition', () => {
+    const objectJSON  = fm.readFile("artefacts/bowl.json"); 
+    const object = mb.buildArtefact(objectJSON);
+    const subjectJSON = fm.readFile("artefacts/coco-pops.json");
+    const subject = mb.buildArtefact(subjectJSON);
+    l0.addObject(object);
+    l0.addObject(subject);
+    const input = "put pops into bowl";
+    const expectedResult = "You put some coco pops in the bowl.<br>$imagebowl.jpg/$image";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('BUG - putting an object we dont own into a bowl fails gracefully, not an infinite loop', () => {
+    l0.addExit("u", "home", "atrium");
+    var atrium = m0.getLocation("atrium");
+    atrium.addExit("d", "atrium", "home");  // without this we end up in an infinite loop as pathfinder can't find route home.
+    const objectJSON  = fm.readFile("artefacts/bowl.json"); 
+    const object = mb.buildArtefact(objectJSON);
+    l0.addObject(object);
+    const input = "put beans in to bowl";
+    const expectedResult = "XXXX";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
