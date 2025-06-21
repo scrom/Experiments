@@ -196,23 +196,7 @@
   },
   "combine": {
     "category": "inventory",
-    "aliases": []
-  },
-  "combine with": {
-    "category": "item_use",
-    "aliases": []
-  },
-  "join": {
-    "category": "item_use",
-    "aliases": []
-  },
-  "add": {
-    "category": "item_use",
-    "aliases": []
-  },
-  "mix": {
-    "category": "item_use",
-    "aliases": []
+    "aliases": ["combine with", "add", "join", "mix"]
   },
   "pour": {
     "category": "item_use",

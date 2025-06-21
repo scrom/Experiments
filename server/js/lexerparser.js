@@ -27,11 +27,6 @@ module.exports.LexerParser = function LexerParser() {
         const thirdPersonPronouns = ['he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves'];
         const reflexivePronouns = ['myself', 'yourself', 'himself', 'herself', 'itself', 'themself', 'themselves'];
         const indefinitePronouns = ['someone', 'anyone', 'everybody', 'everyone', 'nobody','noone', 'no one'];
-        /*splitWordArray = ['in with', 'with my', 'with', 'into my', 'into', 'in to my', 'in my', 'in to', 
-         'onto my', 'onto', 'on to my', 'on to', 'on top of my', 'on top of', 'to my', 'to', 'from my', 'from', 'frmo', 
-         'fomr', 'for', 'at', 'off and on', 'on and off', 'on', 'off', 'off of', 'as', 'in', 'out', 'is', 'are', 'my', 
-         'through', 'about', 'around', 'under', 'below', 'behind', 'above', 'over',]; //the words we'll try to split on.
-         */
         const adverbs = [
             'angrily', 'awkwardly', 'boldly', 'bravely', 'brightly', 'briefly', 'carefully', 'cautiously',
             'closely', 'confidently', 'gently', 'gracefully', 'happily', 'honorably', 'loudly', 'losely',
@@ -41,9 +36,7 @@ module.exports.LexerParser = function LexerParser() {
         const questions = ['who','what','why','where','when','how','which','whose'];
         const moreQuestions = ['do you', 'have you', 'do', 'have', "pardon", "sorry"];
         const modalVerbs = ['can', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would'];
-        const singleWordActions = ['cheat','help','map','health','stats','stat','status','score','points','tasks','missions','quests','visits','inv', 'inventory',"again", "g","rest", "sit", "zz", "sleep", "nap", "zzz", "wait", "z"]
-        const verbs = fm.readFile("verb-lexicon.json");
-            // 'squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
+        const verbs = fm.readFile("verb-lexicon.json");  //add  'squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
         const locationPrepositions = [
             'in', 'into', 'inside', //container or not has different context
             'onto', 'on to', 'on top of', 'on', // hook verb or object optional
