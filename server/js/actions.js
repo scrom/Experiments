@@ -41,6 +41,14 @@ module.exports= {
         heal: (verb, player, map, po) => {
           return player.healCharacter(po.subject);
         },
+
+        stats: (verb, player, map, po) => {
+          return player.stats(map);
+        },
+        status: (verb, player, map, po) => {
+          return player.status(map.getMaxScore());
+        },
+        
         examine: (verb, player, map, po) =>{
           //self.examine = function(verb, artefactName, containerName, map) {
           return player.examine(verb, po.subject, po.object, map);

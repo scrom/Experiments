@@ -44,28 +44,28 @@ afterEach(() =>
 test('engine responds appropriately with empty input', () => {
     const input = "";
     const expectedResult = "Sorry, I didn't hear you there";
-    const actualResult = engine(input).substring(0,30)
+    const actualResult = engine(input).substring(0,30);
     expect(actualResult).toBe(expectedResult);
 });
 
 test('can call engine with simple action', () => {
     const input = "help";
     const expectedResult = "<br> I accept basic commands to move e.g";
-    const actualResult = engine(input).substring(0,40)
+    const actualResult = engine(input).substring(0,40);
     expect(actualResult).toBe(expectedResult);
 });
 
 test('"cheat" verb', () => {
     const input = "cheat";
     const expectedResult = "Hmmm. I'm sure I heard about some cheat codes somewhere";
-    const actualResult = engine(input).substring(0,55)
+    const actualResult = engine(input).substring(0,55);
     expect(actualResult).toBe(expectedResult);
 });
 
 test('"map" verb', () => {
     const input = "map";
     const expectedResult = "Oh dear, are you lost?";
-    const actualResult = engine(input).substring(0,22)
+    const actualResult = engine(input).substring(0,22);
     expect(actualResult).toBe(expectedResult);
 });
 
@@ -103,6 +103,22 @@ test('"heal" verb for creature', () => {
     l0.addObject(object);
     const input = "heal cat";
     const expectedResult = "You don't have anything to heal with.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('"stats" verb', () => {
+    const input = "stats";
+    const expectedResult = "<i>Statistics for $player:</i><br>Your score is 0 out of 2055";
+    const actualResult = engine(input).substring(0,61);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('"status" verb', () => {
+    const input = "status";
+    const expectedResult = "<i>Status:</i><br>Your health is at 100%.<br><br>a home location<br>There is a single exit to the South.<br>";
     const actualResult = engine(input);
     expect(actualResult).toBe(expectedResult);
 });

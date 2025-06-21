@@ -743,21 +743,13 @@
     "category": "system",
     "aliases": ["triage"]
   },
+  "stats": {
+    "category": "system",
+    "aliases": ["stat", "statistics", "score", "points"]
+  },
   "status": {
     "category": "system",
-    "aliases": ["stat", "stats"]
-  },
-  "score": {
-    "category": "system",
-    "aliases": []
-  },
-  "points": {
-    "category": "system",
-    "aliases": []
-  },
-  "tasks": {
-    "category": "system",
-    "aliases": ["missions", "quests"]
+    "aliases": ["tasks", "missions", "quests"]
   },
   "visits": {
     "category": "system",
