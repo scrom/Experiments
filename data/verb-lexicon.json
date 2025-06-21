@@ -1,4 +1,8 @@
 {
+  "null": {
+    "category": "system",
+    "aliases": [""]
+  },
   "try": {
     "category": "system",
     "aliases": ["attempt"]

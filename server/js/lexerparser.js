@@ -36,7 +36,7 @@ module.exports.LexerParser = function LexerParser() {
         const questions = ['who','what','why','where','when','how','which','whose'];
         const moreQuestions = ['do you', 'have you', 'do', 'have', "pardon", "sorry"];
         const modalVerbs = ['can', 'could', 'may', 'might', 'must', 'shall', 'should', 'will', 'would'];
-        const verbs = fm.readFile("verb-lexicon.json");  //add  'squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
+        const verbs = fm.readFile("verb-lexicon.json");  //add  'ignore','blank','squeeze','grasp','clutch','clasp','hold','smoosh', 'smear','squish', 'chirp', 'tweet', 'bark', 'meow', 'moo','growl'
         const locationPrepositions = [
             'in', 'into', 'inside', //container or not has different context
             'onto', 'on to', 'on top of', 'on', // hook verb or object optional

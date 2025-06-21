@@ -39,6 +39,15 @@ afterEach(() =>
     engine = null;
 });
 
+
+
+test('engine responds appropriately with empty input', () => {
+    const input = "";
+    const expectedResult = "Sorry, I didn't hear you there";
+    const actualResult = engine(input).substring(0,30)
+    expect(actualResult).toBe(expectedResult);
+});
+
 test('can call engine with simple action', () => {
     const input = "help";
     const expectedResult = "<br> I accept basic commands to move e.g";

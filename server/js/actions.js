@@ -12,6 +12,12 @@ module.exports= {
                 preposition: preposition || null,
                 target: rest || null
   */
+         null: (verb, player, map, po) =>{
+          //self.examine = function(verb, artefactName, containerName, map) {
+          var randomReplies = ["Can you try again?", "It's probably my fault for not listening to you properly.", "Can you try something else?", "I'm sensing that we have a communication problem here.", "Is everything ok?"];
+          var randomIndex = Math.floor(Math.random() * randomReplies.length);
+          return "Sorry, I didn't hear you there. " + randomReplies[randomIndex];
+        },
         examine: (verb, player, map, po) =>{
           //self.examine = function(verb, artefactName, containerName, map) {
           return player.examine(verb, po.subject, po.object, map);
