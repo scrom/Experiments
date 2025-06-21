@@ -164,6 +164,7 @@ module.exports.LexerParser = function LexerParser() {
             const tokens = input.split(/\s+/)
             const verb = self.normaliseVerb(tokens[0]);
             if (!verb) {
+                //@todo - if we don't have a recognised verb here, there's a chance we need to switch to dialogue, yes/no, please/thankyou, salutations, questions etc
                 return { error: `Unknown verb: "${tokens[0]}"` };
             } else {
                 _verb = verb;
