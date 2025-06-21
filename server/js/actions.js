@@ -54,9 +54,12 @@ module.exports= {
           return player.describeInventory();
         },
         examine: (verb, player, map, po) =>{
-          if (po.originalVerb == "search") {verb = "search"};
-          if (po.originalVerb == "look" && po.preposition == "at") {verb = "look at"} 
-          else if (po.originalVerb == "look") {verb = "look"};
+          let keepVerbs = ["search", "investigate", "inspect", "check", "peer", "browse", "stare", "look"]
+          if (keepVerbs.includes(po.originalVerb)) {verb = po.originalVerb};
+          if (["look", "peer", "stare"].includes(po.originalVerb) && po.preposition == "at") {
+            verb = po.originalVerb+" at"
+            po.preposition = "";
+          };
           return player.examine(verb, po.subject, po.object, map, po.adverb, po.preposition);
         },
         put: (verb, player, map, po) =>{

@@ -22,12 +22,10 @@
       "show",
       "look",
       "lookat",
-      "search"
+      "search",
+      "inspect",
+      "investigate"
     ]
-  },
-  "search": {
-    "category": "examination",
-    "aliases": ["inspect", "investigate"]
   },
   "go": {
     "category": "movement",
