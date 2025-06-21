@@ -18,8 +18,11 @@
       "check", 
       "browse",
       "peer",
+      "stare",
+      "show",
       "look",
-      "lookat"
+      "lookat",
+      "search"
     ]
   },
   "search": {

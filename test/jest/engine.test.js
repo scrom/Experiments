@@ -137,8 +137,6 @@ test('"inv" verb', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
-
-
 test('can call engine with basic player action', () => {
     const input = "wait";
     const expectedResult = "Time passes... ...slowly.<br>";
@@ -149,6 +147,50 @@ test('can call engine with basic player action', () => {
 test('can call engine with player interacting with single object', () => {
     const input = "examine floor";
     const expectedResult = "You look down. Yep, that's the ground beneath your feet.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('test basic "look" gets the right words', () => {
+    const input = "look";
+    const expectedResult = "a home location<br>There is a single exit to the South.<br>";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('test "look at" gets the right words', () => {
+    const input = "look at floor";
+    const expectedResult = "You look down. Yep, that's the ground beneath your feet.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('test "look at" with an adverb gets the right words', () => {
+    const input = "look carefully at floor";
+    const expectedResult = "You carefully look at the floor and discover nothing new.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('test "look over" with an adverb gets the right words', () => {
+    const input = "look over the floor carefully";
+    const expectedResult = "You carefully look over the floor and discover nothing new.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('test "look under" gets the right words', () => {
+    const input = "look under the floor";
+    const expectedResult = "You look under the floor and discover nothing new.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
+test('test "search" ets the right words', () => {
+    const input = "search floor";
+    const expectedResult = "You search the floor and discover nothing new.";
     const actualResult = engine(input);
     expect(actualResult).toBe(expectedResult);
 });

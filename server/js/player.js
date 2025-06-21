@@ -3426,11 +3426,12 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return false;
         };
 
-        self.search = function (verb, artefactName, position) {
+        self.search = function (verb, artefactName, adverb, position) {
             //note. Search wil only find objects hidden in other objects.
             //an object hidden in a location cannot be searched for (but can be interacted with).
             //this is deliberate as this is how scenery items are implemented.
-            if (position) {verb = verb+" "+position;};
+            if (!position) {position = ""};
+            if (!adverb) {adverb = ""} else {adverb = adverb+" "};
 
             if (!(self.canSee())) {return "It's too dark to see anything here.";};
             if (tools.stringIsEmpty(artefactName)){ return tools.initCap(verb)+" what?";};
@@ -3455,8 +3456,9 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
                     };
                 };  
             };     
-
-            var resultString =  "You "+verb+" "+artefact.getDisplayName();
+            if (position == "at" || !position ) {position = " "}
+            else { position = " "+position+" ";};
+            var resultString =  "You "+adverb+verb+position+artefact.getDisplayName();
             var hiddenObjectsList = " and discover " + artefact.listHiddenObjects(positionName, _currentLocation);
 
             if (position != "on") {
@@ -3608,7 +3610,30 @@ module.exports.Player = function Player(attributes, map, mapBuilder) {
             return sound;
         };
 
-        self.examine = function(verb, artefactName, containerName, map) {
+        self.examine = function(verb, artefactName, containerName, map, adverb, preposition) {
+            let _ticks = 2 //@todo ticks are for action, not here!
+            //trap a few junk words - will return "look" with no object. 
+            var junkWords = ["exits", "objects", "artefacts", "creatures", "artifacts"]
+            if (junkWords.indexOf(artefactName) > -1) { artefactName = null; };
+            if (!artefactName && !containerName) {
+                _ticks = 1;
+            };
+
+            if (artefactName == "inventory" || artefactName == "inv") {
+                _ticks = 0
+                return self.describeInventory();
+            };
+
+            if (verb == "search") {return self.search(verb, artefactName, adverb, preposition);};
+
+            var positionIndex = tools.positions.indexOf(preposition);
+            var searchAdverbs = ["closely", "carefully", "carefuly", "thoroughly", "meticulously"];
+            if ((positionIndex > 3) ||(searchAdverbs.includes(adverb))) {
+                //support "look under", "look behind" and "look in" etc.
+                 _ticks = tools.baseTickSize*3; //search takes longer
+                return self.search(verb, artefactName, adverb, preposition);
+            };
+
             var resultString = "";
             //console.debug("Examine: "+artefactName+","+containerName)
             var newMissions = [];

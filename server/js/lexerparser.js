@@ -28,7 +28,7 @@ module.exports.LexerParser = function LexerParser() {
         const reflexivePronouns = ['myself', 'yourself', 'himself', 'herself', 'itself', 'themself', 'themselves'];
         const indefinitePronouns = ['someone', 'anyone', 'everybody', 'everyone', 'nobody','noone', 'no one'];
         const adverbs = [
-            'angrily', 'awkwardly', 'boldly', 'bravely', 'brightly', 'briefly', 'carefully', 'cautiously',
+            'angrily', 'awkwardly', 'boldly', 'bravely', 'brightly', 'briefly', 'carefully', 'carefuly', 'cautiously',
             'closely', 'confidently', 'gently', 'gracefully', 'happily', 'honorably', 'loudly', 'losely',
             'meticulously', 'noisily', 'precisely', 'quietly', 'quietly', 'sadly', 'searchingly', 'silently',
             'silently', 'slowly', 'softly', 'strategically', 'tactically', 'thoroughly', 'tightly', 'quickly'
@@ -82,13 +82,15 @@ module.exports.LexerParser = function LexerParser() {
         };
 
         self.extractAdverb = function(input) {
-            const tokens = input.split(/\s+/)
+            let tokens = input.split(/\s+/)
             let rest = input;
-            for (let i=0;i<tokens.length;i++) {
+            for (let i=tokens.length-1; i >=0 ;i--) {
+                //work backwards as we may splice if anything is null.
                 if (adverbs.includes(tokens[i])) {
                     let adverb = tokens[i];
                     _adverb = adverb;
-                    rest = tokens.splice(i,1).join(' ');
+                    tokens.splice(i,1);
+                    rest = tokens.join(' ');
                     return {"adverb": adverb, "remainder": rest ||null}
                     break;
                 };
@@ -136,8 +138,10 @@ module.exports.LexerParser = function LexerParser() {
                 }
             };
             
-            for (o=0; o<objects.length;o++) {
-                objects[o] = objects[o].trim();              
+            for (let o=objects.length-1; o >=0 ;o--) {
+                //work backwards as we may splice if anything is null.
+                objects[o] = objects[o].trim();  
+                if (!objects[o]) {objects.splice(o,1);};
             };
             return {objects, preposition, rest}
    

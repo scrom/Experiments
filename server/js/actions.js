@@ -13,7 +13,6 @@ module.exports= {
                 target: rest || null
   */
          null: () =>{
-          //self.examine = function(verb, artefactName, containerName, map) {
           var randomReplies = ["Can you try again?", "It's probably my fault for not listening to you properly.", "Can you try something else?", "I'm sensing that we have a communication problem here.", "Is everything ok?"];
           var randomIndex = Math.floor(Math.random() * randomReplies.length);
           return "Sorry, I didn't hear you there. " + randomReplies[randomIndex];
@@ -55,8 +54,10 @@ module.exports= {
           return player.describeInventory();
         },
         examine: (verb, player, map, po) =>{
-          //self.examine = function(verb, artefactName, containerName, map) {
-          return player.examine(verb, po.subject, po.object, map);
+          if (po.originalVerb == "search") {verb = "search"};
+          if (po.originalVerb == "look" && po.preposition == "at") {verb = "look at"} 
+          else if (po.originalVerb == "look") {verb = "look"};
+          return player.examine(verb, po.subject, po.object, map, po.adverb, po.preposition);
         },
         put: (verb, player, map, po) =>{
           return player.put(verb, po.subject, po.preposition, po.object);

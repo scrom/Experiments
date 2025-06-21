@@ -506,7 +506,7 @@ exports.Action = function Action(player, map, fileManager) {
                                 if ((_verb == "stare" ||_verb == "look" || _verb == "peer") && _splitWord == "over") {
                                     description = _player.examine(_verb + " " + _splitWord, _object1, null, _map);
                                 } else {
-                                    description = _player.search(_verb, _object1, _splitWord, tools.positions);
+                                    description = _player.search(_verb, _object1, _adverb, _splitWord);
                                 };
                             } else {
                                 description = _player.examine(_verb+" "+_splitWord, _object1, null, _map);
@@ -544,7 +544,7 @@ exports.Action = function Action(player, map, fileManager) {
                         _ticks = _baseTickSize*3; //random searching takes a while! - look under/behind x is faster
                         //would like to add "search for x" support here in future.  
                         if (!_object0) {
-                            description = _player.search(_verb, _object1, _splitWord, tools.positions);
+                            description = _player.search(_verb, _object1, _adverb, _splitWord);
                         } else {            
                             description = _player.search(_verb, _object0);
                         };
@@ -564,10 +564,10 @@ exports.Action = function Action(player, map, fileManager) {
                             description = _player.examine(_verb, _object0, _object1, _map);
                         } else if (tools.positions.indexOf(_splitWord) > -1) {
                             //support "examine under", "examine behind" and "examine in" etc.
-                            description = _player.search(_verb, _object1, _splitWord, tools.positions);
+                            description = _player.search(_verb, _object1, _adverb, _splitWord);
                         } else if (_adverb == "closely" || _adverb == "carefully" || _adverb == "thoroughly" || _adverb == "meticulously") {
                             _ticks = _baseTickSize * 3; //full search takes longer
-                            description = _player.search(_verb, _object0, _splitWord, tools.positions);
+                            description = _player.search(_verb, _object0,  _adverb, _splitWord);
                         } else if (_splitWord == "my") {
                             if (!_object0) {
                                 _object0 = _object1;
