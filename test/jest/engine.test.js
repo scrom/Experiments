@@ -123,6 +123,21 @@ test('"status" verb', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+test('"visits" verb', () => {
+    const input = "visits";
+    const expectedResult = "You have visited this location once.";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+test('"inv" verb', () => {
+    const input = "inv";
+    const expectedResult = "You're carrying nothing.<br>You have &pound;5.00 in cash.<br>";
+    const actualResult = engine(input);
+    expect(actualResult).toBe(expectedResult);
+});
+
+
 
 test('can call engine with basic player action', () => {
     const input = "wait";

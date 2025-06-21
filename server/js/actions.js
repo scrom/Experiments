@@ -48,7 +48,12 @@ module.exports= {
         status: (verb, player, map, po) => {
           return player.status(map.getMaxScore());
         },
-        
+        visits: (verb, player, map, po) => {
+          return player.getVisits();
+        },
+        inventory: (verb, player, map, po) => {
+          return player.describeInventory();
+        },
         examine: (verb, player, map, po) =>{
           //self.examine = function(verb, artefactName, containerName, map) {
           return player.examine(verb, po.subject, po.object, map);
