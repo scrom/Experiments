@@ -864,6 +864,9 @@ exports.Map = function Map() {
                 
             if (!(visitedLocations)) { visitedLocations = [currentLocation.getName()]; }
             else { visitedLocations.push(currentLocation.getName()) };
+            if (visitedLocations.length >= _locations.length) {
+                return [];
+            };
                 
             //console.debug("finding path from "+currentLocation.getName()+" to "+destinationName);
                 
