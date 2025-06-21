@@ -55,6 +55,14 @@ test('can call engine with simple action', () => {
     expect(actualResult).toBe(expectedResult);
 });
 
+test('"cheat" verb"', () => {
+    const input = "cheat";
+    const expectedResult = "Hmmm. I'm sure I heard about some cheat codes somewhere";
+    const actualResult = engine(input).substring(0,55)
+    expect(actualResult).toBe(expectedResult);
+});
+
+
 test('can call engine with basic player action', () => {
     const input = "wait";
     const expectedResult = "Time passes... ...slowly.<br>";
